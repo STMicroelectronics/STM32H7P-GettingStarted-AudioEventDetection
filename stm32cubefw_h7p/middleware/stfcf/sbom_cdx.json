@@ -1,0 +1,94 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:874b2f28-2499-43e4-bb25-42e6cc887466",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2025-10-08T10:51:40Z",
+    "tools": [
+      {
+        "vendor": "Black Duck",
+        "name": "Hub",
+        "version": "2025.1.1"
+      },
+      {
+        "vendor": "CycloneDX",
+        "name": "cyclonedx-core-java",
+        "version": "5.0.5"
+      }
+    ],
+    "authors": [
+      {
+        "name": "STMicroelectronics NV"
+      }
+    ],
+    "component": {
+      "type": "application",
+      "bom-ref": "6016d601-17f7-4f0b-83ab-9fbd9df8e5c0",
+      "supplier": {
+        "name": ""
+      },
+      "name": "MW_STFCF_Pack",
+      "version": "0.6.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "LIMITED LICENSE AGREEMENT FOR ST MATERIALS EVALUATION (SLA0078)"
+          }
+        }
+      ],
+      "pedigree": {
+        "notes": "LIMITED LICENSE AGREEMENT FOR ST MATERIALS EVALUATION (SLA0078)"
+      },
+      "properties": [
+        {
+          "name": "BlackDuck-Component",
+          "value": "5df0a732-a807-423b-b99c-0e6d3452d473"
+        },
+        {
+          "name": "BlackDuck-ComponentVersion",
+          "value": "6016d601-17f7-4f0b-83ab-9fbd9df8e5c0"
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "de5034b0-f8ec-4d13-86b9-07ad784e085b",
+      "supplier": {
+        "name": ""
+      },
+      "name": "STFCF",
+      "version": "0.6.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "Ultimate Liberty license (SLA0044)"
+          }
+        }
+      ],
+      "pedigree": {
+        "notes": "Ultimate Liberty license (SLA0044)"
+      },
+      "properties": [
+        {
+          "name": "BlackDuck-Component",
+          "value": "95d14e4d-027b-4f12-8a40-7be4569d43de"
+        },
+        {
+          "name": "BlackDuck-ComponentVersion",
+          "value": "de5034b0-f8ec-4d13-86b9-07ad784e085b"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "6016d601-17f7-4f0b-83ab-9fbd9df8e5c0",
+      "dependsOn": [
+        "de5034b0-f8ec-4d13-86b9-07ad784e085b"
+      ]
+    }
+  ]
+}

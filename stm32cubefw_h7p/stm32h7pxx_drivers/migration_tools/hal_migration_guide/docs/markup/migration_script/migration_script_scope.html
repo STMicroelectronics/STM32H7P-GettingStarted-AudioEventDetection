@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html data-content_root="../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, automatic migration scope" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     Script Scope — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <script src="../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <link href="../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../search.html" rel="search" title="Search"/>
+    <link href="migration_script_setup.html" rel="next" title="Script setup and usage"/>
+    <link href="migration_script_welcome.html" rel="prev" title="HAL1 automatic detection script"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/migration_script/migration_script_scope" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="migration_script_toc.html">
+            HAL1 detection
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="migration_script_welcome.html">
+              HAL1 automatic detection script
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <input class="md-toggle md-nav__toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+             <label class="md-nav__link md-nav__link--active" for="__toc">
+              Script Scope
+             </label>
+             <a class="md-nav__link md-nav__link--active" href="#">
+              Script Scope
+             </a>
+             <link href="../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+             <nav class="md-nav md-nav--secondary">
+              <label class="md-nav__title" for="__toc">
+               "Contents"
+              </label>
+              <ul class="md-nav__list2" data-md-scrollfix="">
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="#docs-markup-migration-script-migration-script-scope--page-root">
+                 Script Scope
+                </a>
+                <nav class="md-nav">
+                 <ul class="md-nav__list2">
+                  <li class="md-nav__item">
+                   <a class="md-nav__link" href="#hal1-apis-detection-scope">
+                    1. HAL1 APIs detection scope
+                   </a>
+                  </li>
+                  <li class="md-nav__item">
+                   <a class="md-nav__link" href="#hal1-apis-logging-scope">
+                    2. HAL1 APIs logging scope
+                   </a>
+                   <nav class="md-nav">
+                    <ul class="md-nav__list2">
+                     <li class="md-nav__item">
+                      <a class="md-nav__link" href="#console-log">
+                       2.1 Console log
+                      </a>
+                     </li>
+                     <li class="md-nav__item">
+                      <a class="md-nav__link" href="#file-logs">
+                       2.2  File logs
+                      </a>
+                     </li>
+                    </ul>
+                   </nav>
+                  </li>
+                 </ul>
+                </nav>
+               </li>
+              </ul>
+             </nav>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#hal1-apis-detection-scope">
+                1. HAL1 APIs detection scope
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#hal1-apis-logging-scope">
+                2. HAL1 APIs logging scope
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="migration_script_setup.html">
+              Script setup and usage
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="migration_script_features.html">
+              Script stubbing features
+             </a>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../drivers_documentation/drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-migration-script-migration-script-scope--page-root">
+            Script Scope
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal1-apis-detection-scope">
+               1. HAL1 APIs detection scope
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal1-apis-logging-scope">
+               2. HAL1 APIs logging scope
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#console-log">
+                  2.1 Console log
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#file-logs">
+                  2.2  File logs
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="script-scope">
+        <span id="migration-script-scope">
+        </span>
+        <h1 id="docs-markup-migration-script-migration-script-scope--page-root">
+         Script Scope
+         <a class="headerlink" href="#docs-markup-migration-script-migration-script-scope--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <p>
+         The actual script aims to assist users in migrating their projects from the HAL1 environment to the HAL2 environment.
+Based on the command-line arguments provided, it automatically detects all HAL1 APIs within the specified path.
+Upon successful detection, the script generates a comprehensive log files. These logs serve as a detailed guide to assist users in migrating the identified
+HAL1 API code to the HAL2 environment.
+        </p>
+        <section id="hal1-apis-detection-scope">
+         <h2 id="hal1-apis-detection-scope">
+          1. HAL1 APIs detection scope
+          <a class="headerlink" href="#hal1-apis-detection-scope" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          The script utilizes  an internally defined database dictionary to perform an in-depth analysis of your project,
+identifying all occurrences of HAL1 calls and HAL1 implementations (e.g., callbacks).
+         </p>
+         <p>
+          Refer to
+          <a class="reference internal" href="migration_script_setup.html#migration-script-usage">
+           <span class="std std-ref">
+            3.1 Script usage
+           </span>
+          </a>
+          section for more details .
+         </p>
+         <div class="admonition note">
+          <p class="admonition-title">
+           Note
+          </p>
+          <p>
+           Note that the script is capable of filtering out STMicroelectronics driver files (HAL/LL/BSP),
+which will be automatically excluded from the detection process.
+Only HAL1 APIs present within the user application files will be identified.
+          </p>
+         </div>
+        </section>
+        <hr class="docutils"/>
+        <section id="hal1-apis-logging-scope">
+         <h2 id="hal1-apis-logging-scope">
+          2. HAL1 APIs logging scope
+          <a class="headerlink" href="#hal1-apis-logging-scope" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <section id="console-log">
+          <h3 id="console-log">
+           2.1 Console log
+           <a class="headerlink" href="#console-log" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           Upon execution, the script provides comprehensive status via the console log. This includes detailed information on the overall progress of the operation,
+as well as specific messages regarding errors, missing libraries (in the case of Python execution), and other relevant status notifications
+          </p>
+          <a class="reference internal image-reference" href="../../../_images/hal1_detection_console_output.png">
+           <img alt="Console log" class="align-center" src="../../../_images/hal1_detection_console_output.png" style="width: 1000px;">
+           </img>
+          </a>
+          <table id="id1">
+           <caption>
+            <span class="caption-text">
+             Log Summary
+            </span>
+            <a class="headerlink" href="#id1" title="Link to this table">
+             ¶
+            </a>
+           </caption>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               Item
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               Description
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Files Analyzed
+               </strong>
+              </p>
+             </td>
+             <td>
+              <p>
+               Total source files scanned.
+              </p>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               <strong>
+                Progress
+               </strong>
+              </p>
+             </td>
+             <td>
+              <p>
+               Real-time completion indicator.
+              </p>
+             </td>
+            </tr>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Files Detected
+               </strong>
+              </p>
+             </td>
+             <td>
+              <p>
+               Number of files with HAL1 APIs.
+              </p>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               <strong>
+                Log File
+               </strong>
+              </p>
+             </td>
+             <td>
+              <p>
+               Path to the detailed HTML report.
+              </p>
+             </td>
+            </tr>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Execution Time
+               </strong>
+              </p>
+             </td>
+             <td>
+              <p>
+               Total duration of the process.
+              </p>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               <strong>
+                Status
+               </strong>
+              </p>
+             </td>
+             <td>
+              <p>
+               Confirms successful completion.
+              </p>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+         <section id="file-logs">
+          <h3 id="file-logs">
+           2.2  File logs
+           <a class="headerlink" href="#file-logs" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           The generated log files serves as a guide for API migrations,
+offering detailed information about the detected APIs and providing links to relevant documentation.
+          </p>
+          <p>
+           The script generates two types of logs, each serving the same purpose.
+Users can select the log format that they find most user-friendly and best suited to their individual preferences.
+          </p>
+          <p>
+           2.3.1 Global HTML log file
+          </p>
+          <p>
+           A global  HTML
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             HAL1
+            </span>
+            <span class="pre">
+             automatic
+            </span>
+            <span class="pre">
+             detection
+            </span>
+            <span class="pre">
+             log
+            </span>
+           </code>
+           file that  contain an exhaustive list of detected HAL1 APIs  grouped by applicative files.
+          </p>
+          <a class="reference internal image-reference" href="../../../_images/hal1_automatic_detection_log.png">
+           <img alt="Example Image" src="../../../_images/hal1_automatic_detection_log.png" style="width: 800px;"/>
+          </a>
+          <p>
+           2.3.2 User Code Log with Direct Links to Migration Docs
+          </p>
+          <p>
+           An HTML log generated for each file processed , those files presents the user’s application code with all detected HAL1 API references clearly highlighted.
+Each API occurrence is rendered as a clickable link, directing users to the relevant section of the HAL1 to HAL2 migration documentation.
+          </p>
+          <a class="reference internal image-reference" href="../../../_images/individuel_log_files.png">
+           <img alt="Example Image" src="../../../_images/individuel_log_files.png" style="width: 800px;"/>
+          </a>
+          <p>
+           For more details about log file configurations  refer to
+           <a class="reference internal" href="migration_script_setup.html#log-file-configuration">
+            <span class="std std-ref">
+             2.4 Log file message configuration
+            </span>
+           </a>
+           section.
+          </p>
+          <p>
+           For more details about log file usage  refer to
+           <a class="reference internal" href="migration_script_setup.html#log-file-usage">
+            <span class="std std-ref">
+             3.2 Log file usage
+            </span>
+           </a>
+           section.
+          </p>
+         </section>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

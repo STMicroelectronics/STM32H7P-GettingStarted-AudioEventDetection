@@ -1,0 +1,173 @@
+{{!
+  Partial used for LL USART:
+  how to use
+  > USART_LL fct='xxxx' with xxxx:
+    * exported_variables
+    * exported_functions_init
+~}}
+{{!
+############################
+##  exported_variables
+############################
+~}}
+{{#if (eq fct 'exported_variables')}}
+{{> DMA_HAL fct='get_dma_handles' resource=@root.current_resource}}
+
+{{!
+############################
+##  exported_functions_init
+############################
+~}}
+{{else if (eq fct 'exported_functions_init')}}
+USART_TypeDef *{{@root.fct_name}}_init(void)
+{
+  /* Basic configuration */
+{{> RCC fct='generate_peripheral_clock_activation' hw_resource=@root.current_resource~}}
+{{> RCC fct='generate_kernel_clock' hw_resource=@root.current_resource sw_resource='UART'}}
+{{#with main_peripheral_configuration}}
+{{#if nack}}
+{{assign 'nack_state' "1U"}}
+{{else}}
+{{assign 'nack_state' "0U"}}
+{{/if}}
+  LL_USART_SetSmartcardGuardTime({{@root.current_resource}}, {{guard_time_etu}}U);
+  LL_USART_SetSmartcardPrescaler({{@root.current_resource}}, LL_USART_SMARTCARD_PRESCALER_DIV{{sclk_prescaler}});
+
+  LL_USART_SetSmartcardConfig({{@root.current_resource}}, LL_USART_STOP_BIT_{{stop_bit}}, LL_USART_BITORDER_{{first_bit}},
+                              LL_USART_PARITY_{{parity}}, {{@root.nack_state}}, {{auto_retry_count}}U);
+{{#if clock_output}}
+  {{helper_common_gen_ll_code 'LL_USART_SetSmartcardClockConfig' 'LL_USART_CLOCK_OUTPUT_ENABLED' (concat 'LL_USART_CLOCK_POLARITY_' clock_polarity) (concat 'LL_USART_CLOCK_PHASE_' clock_phase "_EDGE")}}
+{{else}}
+  {{helper_common_gen_ll_code 'LL_USART_SetSmartcardClockConfig' 'LL_USART_CLOCK_OUTPUT_DISABLED' (concat 'LL_USART_CLOCK_POLARITY_' clock_polarity) (concat 'LL_USART_CLOCK_PHASE_' clock_phase "_EDGE")}}
+{{/if}}
+  {{helper_common_gen_ll_code 'LL_USART_SetPrescaler' (concat 'LL_USART_PRESCALER_DIV' clock_prescaler)}}
+
+{{assign 'clock_config_object' (helper_rcc_get_clock_source_object @root.current_resource)}}
+  LL_USART_SetBaudRate({{@root.current_resource}}, {{@root.clock_config_object.frequency}}, LL_USART_PRESCALER_DIV{{clock_prescaler}}, LL_USART_OVERSAMPLING_16,
+                       {{baud_rate}}U);
+{{/with}} {{! main_peripheral_configuration ~}}
+{{#with additional_features_configuration}}
+{{#if EnableFifoMode}}
+  /* Fifo configuration */
+  {{helper_common_gen_ll_code 'LL_USART_SetTXFIFOThreshold'(concat 'LL_USART_FIFO_THRESHOLD_' SetTxFifoThreshold)}}
+  {{helper_common_gen_ll_code 'LL_USART_SetRXFIFOThreshold'(concat 'LL_USART_FIFO_THRESHOLD_' SetRxFifoThreshold)}}
+  LL_USART_EnableFIFO({{@root.current_resource}});
+{{/if~}}
+{{#if EnableIOInvert}}
+  /* Tx pin level inversion configuration */
+  LL_USART_SetTXPinLevel({{@root.current_resource}}, LL_USART_TXPIN_LEVEL_INVERTED);
+{{#if EnableTxRxSwap}}
+  LL_USART_SetRXPinLevel({{@root.current_resource}}, LL_USART_TXPIN_LEVEL_INVERTED);
+{{/if~}}
+{{/if~}}
+{{#if EnableDataInvert}}
+  /* Data inversion configuration */
+  LL_USART_SetBinaryDataLogic({{@root.current_resource}}, LL_USART_BINARY_LOGIC_NEGATIVE);
+{{/if~}}
+{{#if EnableTxRxSwap}}
+  /* Tx and Rx pins swapping configuration */
+  LL_USART_SetTXRXSwap({{@root.current_resource}}, LL_USART_TXRX_SWAPPED);
+{{/if~}}
+{{#if DisableRxOverRunDetection}}
+  /* Overrun configuration */
+  LL_USART_DisableOverrunDetect({{@root.current_resource}});
+{{/if~}}
+{{#if EnableDMAStopOnRxError}}
+  /* DMA stop on Rx error configuration */
+  LL_USART_EnableDMADeactOnRxErr({{@root.current_resource}});
+{{/if~}}
+{{#if EnableReceiverTimeout}}
+  /* DMA stop on Rx error configuration */
+  {{helper_common_gen_ll_code 'LL_USART_SetRxTimeout'(concat SetReceiverTimeout 'U')}}
+  LL_USART_EnableRxTimeout({{@root.current_resource}});
+{{/if~}}
+{{#if (eq SetTxCpltIndication "BEFORE")}}
+  /* Enable the SMARTCARD Transmit Complete before guard time Interrupt */
+  LL_USART_EnableIT_TCBGT({{@root.current_resource}});
+{{else}}
+  /* Enable the SMARTCARD Transmit Complete Interrupt */
+  LL_USART_EnableIT_TC({{@root.current_resource}});
+{{/if~}}
+  /* Set the SMARTCARD block length */
+  {{helper_common_gen_ll_code 'LL_USART_SetBlockLength'(concat SetBlockLength 'U')}}
+{{/with}}
+  LL_USART_Enable({{@root.current_resource}});
+{{#with System}}
+{{#with GPIO_Settings}}
+{{assign 'gpio_needs' 'undefined'}}
+{{#if gpio_clk.needs}}
+{{assign 'gpio_needs' (helper_common_concatenate_needs gpio_clk.needs @root.gpio_needs)~}}
+{{/if~}}
+{{#if gpio_tx.needs}}
+{{assign 'gpio_needs' (helper_common_concatenate_needs gpio_tx.needs @root.gpio_needs)~}}
+{{/if~}}
+{{#if gpio_rx.needs}}
+{{assign 'gpio_needs' (helper_common_concatenate_needs gpio_rx.needs @root.gpio_needs)~}}
+{{/if~}}
+{{#if gpio_cts.needs}}
+{{assign 'gpio_needs' (helper_common_concatenate_needs gpio_cts.needs @root.gpio_needs)~}}
+{{/if~}}
+{{#if gpio_rts.needs}}
+{{assign 'gpio_needs' (helper_common_concatenate_needs gpio_rts.needs @root.gpio_needs)~}}
+{{/if~}}
+{{> GPIO_LL fct='init' needs=@root.gpio_needs resource=@root.current_resource}}
+{{/with}}{{! GPIO_Settings ~}}
+{{#if EnableInterruption}}
+  /* Enable interrupt */
+{{assign 'nvic_needs' (helper_common_concatenate_needs nvicConfig.needs @root.nvic_needs)~}}
+{{> CORTEX fct='init' layer=@root.current_layer needs=nvicConfig.needs}}
+{{/if~}}
+{{#if EnableDMA_TX}}
+{{> DMA_LL fct='init' needs=dmaConfigTx.needs~}}
+{{/if~}}
+{{#if EnableDMA_RX}}
+{{> DMA_LL fct='init' needs=dmaConfigRx.needs~}}
+{{/if}}
+{{/with}}{{! System~}}
+  return {{@root.current_resource}};
+}
+
+void {{@root.fct_name}}_deinit(void)
+{
+{{#if System.EnableInterruption}}
+  /* Disable interrupt */
+{{> CORTEX fct='deinit' layer=@root.current_layer}}
+{{/if}}
+  LL_USART_Disable({{@root.current_resource}});
+
+  HAL_RCC_{{@root.current_resource}}_Reset();
+
+  HAL_RCC_{{@root.current_resource}}_DisableClock();
+{{#with System}}
+{{#with GPIO_Settings}}
+{{assign 'gpio_needs' 'undefined'}}
+{{#if gpio_clk.needs}}
+{{assign 'gpio_needs' (helper_common_concatenate_needs gpio_clk.needs @root.gpio_needs)~}}
+{{/if~}}
+{{#if gpio_tx.needs}}
+{{assign 'gpio_needs' (helper_common_concatenate_needs gpio_tx.needs @root.gpio_needs)~}}
+{{/if~}}
+{{#if gpio_rx.needs}}
+{{assign 'gpio_needs' (helper_common_concatenate_needs gpio_rx.needs @root.gpio_needs)~}}
+{{/if~}}
+{{#if gpio_cts.needs}}
+{{assign 'gpio_needs' (helper_common_concatenate_needs gpio_cts.needs @root.gpio_needs)~}}
+{{/if~}}
+{{#if gpio_rts.needs}}
+{{assign 'gpio_needs' (helper_common_concatenate_needs gpio_rts.needs @root.gpio_needs)~}}
+{{/if~}}
+{{> GPIO_LL fct='deinit' needs=@root.gpio_needs resource=@root.current_resource}}
+{{/with}}{{! GPIO_Settings ~}}
+
+{{#if EnableDMA_TX}}
+{{> DMA_LL fct='deinit' needs=dmaConfigTx.needs~}}
+{{/if~}}
+{{#if EnableDMA_RX}}
+{{> DMA_LL fct='deinit' needs=dmaConfigRx.needs~}}
+{{/if~}}
+{{/with}}{{! System~}}
+}
+
+{{else}}
+#warning "step {{step}} in partial USART_LL not managed"
+{{/if}}

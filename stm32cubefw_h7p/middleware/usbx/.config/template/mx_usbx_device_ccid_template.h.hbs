@@ -1,0 +1,55 @@
+{{assign "usbxFilter" (JSONparse '{"cgroup": "STM32CubeMX2 Config", "csub": "USBX"}')~}}
+{{assign 'usbx_context' (@root.SWConfigurationAPI.getInstancesConfiguration @root.usbxFilter)~}}
+{{assign 'usbx_cxt' @root.usbx_context.[0].settings.parameters~}}
+/**
+  ******************************************************************************
+  * file           : mx_usbx_device_ccid.h
+  * brief          : Header for mx_usbx_device_ccid.c file.
+  *                  This file contains the common defines of the application.
+  ******************************************************************************
+  *
+  * Copyright (c) 2025 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef MX_USBX_DEVICE_CCID_H
+#define MX_USBX_DEVICE_CCID_H
+
+{{#with @root.usbx_cxt~}}
+/* Includes ------------------------------------------------------------------*/
+#include "ux_api.h"
+#include "ux_device_class_ccid.h"
+#include "mx_usbx_device.h"
+/* Exported types ------------------------------------------------------------*/
+/* Exported constants --------------------------------------------------------*/
+/* Exported macros -----------------------------------------------------------*/
+/* Exported functions prototypes -------------------------------------------- */
+VOID USBD_CCID_Activate(VOID *ccid_instance);
+VOID USBD_CCID_Deactivate(VOID *ccid_instance);
+
+UINT USBD_CCID_icc_power_on(ULONG slot, UX_DEVICE_CLASS_CCID_MESSAGES *io_msg);
+UINT USBD_CCID_icc_power_off(ULONG slot, UX_DEVICE_CLASS_CCID_MESSAGES *io_msg);
+UINT USBD_CCID_get_slot_status(ULONG slot, UX_DEVICE_CLASS_CCID_MESSAGES *io_msg);
+UINT USBD_CCID_xfr_block(ULONG slot, UX_DEVICE_CLASS_CCID_MESSAGES *io_msg);
+UINT USBD_CCID_get_parameters(ULONG slot, UX_DEVICE_CLASS_CCID_MESSAGES *io_msg);
+UINT USBD_CCID_reset_parameters(ULONG slot, UX_DEVICE_CLASS_CCID_MESSAGES *io_msg);
+UINT USBD_CCID_set_parameters(ULONG slot, UX_DEVICE_CLASS_CCID_MESSAGES *io_msg);
+UINT USBD_CCID_escape(ULONG slot, UX_DEVICE_CLASS_CCID_MESSAGES *io_msg);
+UINT USBD_CCID_icc_clock(ULONG slot, UX_DEVICE_CLASS_CCID_MESSAGES *io_msg);
+UINT USBD_CCID_t0_apdu(ULONG slot, UX_DEVICE_CLASS_CCID_MESSAGES *io_msg);
+UINT USBD_CCID_secure(ULONG slot, UX_DEVICE_CLASS_CCID_MESSAGES *io_msg);
+UINT USBD_CCID_mechanical(ULONG slot, UX_DEVICE_CLASS_CCID_MESSAGES *io_msg);
+UINT USBD_CCID_abort(ULONG slot, UX_DEVICE_CLASS_CCID_MESSAGES *io_msg);
+UINT USBD_CCID_set_data_rate_and_clock_frequency(ULONG slot, UX_DEVICE_CLASS_CCID_MESSAGES *io_msg);
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* MX_USBX_DEVICE_CCID_H */
+{{~/with~}}

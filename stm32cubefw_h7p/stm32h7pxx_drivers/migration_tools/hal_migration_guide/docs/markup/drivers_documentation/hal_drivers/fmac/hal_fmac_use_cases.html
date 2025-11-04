@@ -1,0 +1,2107 @@
+<!DOCTYPE html>
+<html data-content_root="../../../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, HAL1, FMAC, STM32H5, STM32G0, STM32F4, STM32L4, STM32C0, STM32H7" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     HAL FMAC Typical use cases for migration — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/tabs.css?v=a5c4661c" rel="stylesheet" type="text/css"/>
+    <script src="../../../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <script src="../../../../../_static/tabs.js?v=3030b3cb">
+    </script>
+    <link href="../../../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../../../search.html" rel="search" title="Search"/>
+    <link href="hal_fmac_exported_constants.html" rel="next" title="HAL FMAC constants migration"/>
+    <link href="hal_fmac_concepts_list.html" rel="prev" title="HAL FMAC migration: List of applicable concepts"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/drivers_documentation/hal_drivers/fmac/hal_fmac_use_cases" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_script/migration_script_toc.html">
+            HAL1 detection
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../breaking_concepts/breaking_concepts_toc.html">
+              Breaking changes in concepts
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../hal_drivers_toc.html">
+              HAL drivers migration
+             </a>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../adc/hal_adc_toc.html">
+                ADC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../comp/hal_comp_toc.html">
+                COMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cortex/hal_cortex_toc.html">
+                CORTEX
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cordic/hal_cordic_toc.html">
+                CORDIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../crc/hal_crc_toc.html">
+                CRC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cryp/hal_cryp_toc.html">
+                CRYP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dac/hal_dac_toc.html">
+                DAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dcache/hal_dcache_toc.html">
+                DCACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dma/hal_dma_toc.html">
+                DMA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../exti/hal_exti_toc.html">
+                EXTI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="hal_fmac_toc.html">
+                FMAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../generic/hal_generic_toc.html">
+                GENERIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxmmu/hal_gfxmmu_toc.html">
+                GFXMMU
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxtim/hal_gfxtim_toc.html">
+                GFXTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gpio/hal_gpio_toc.html">
+                GPIO
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2c/hal_i2c_toc.html">
+                I2C
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2s/hal_i2s_toc.html">
+                I2S
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../icache/hal_icache_toc.html">
+                ICACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../irda/hal_irda_toc.html">
+                IRDA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../iwdg/hal_iwdg_toc.html">
+                IWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../lptim/hal_lptim_toc.html">
+                LPTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../nor/hal_nor_toc.html">
+                NOR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../opamp/hal_opamp_toc.html">
+                OPAMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ospi/hal_ospi_toc.html">
+                OSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pka/hal_pka_toc.html">
+                PKA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pwr/hal_pwr_toc.html">
+                PWR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../qspi/hal_qspi_toc.html">
+                QSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ramcfg/hal_ramcfg_toc.html">
+                RAMCFG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rcc/hal_rcc_toc.html">
+                RCC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rng/hal_rng_toc.html">
+                RNG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rtc/hal_rtc_toc.html">
+                RTC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sdram/hal_sdram_toc.html">
+                SDRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smartcard/hal_smartcard_toc.html">
+                SMARTCARD
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smbus/hal_smbus_toc.html">
+                SMBUS
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../spi/hal_spi_toc.html">
+                SPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sram/hal_sram_toc.html">
+                SRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../tim/hal_tim_toc.html">
+                TIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../uart/hal_uart_toc.html">
+                UART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../usart/hal_usart_toc.html">
+                USART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../wwdg/hal_wwdg_toc.html">
+                WWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../xspi/hal_xspi_toc.html">
+                XSPI
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../ll_drivers/ll_drivers_toc.html">
+              LL drivers migration
+             </a>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-drivers-documentation-hal-drivers-fmac-hal-fmac-use-cases--page-root">
+            HAL FMAC Typical use cases for migration
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#fir-or-iir-interrupt-input-x1-dma-output-y">
+               FIR or IIR Interrupt input/X1, DMA output/Y
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#sequence-diagram">
+                  Sequence Diagram
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#code-snippet">
+                  Code snippet
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#fir-or-iir-periph-adc-input-x1-dma-output-y">
+               FIR or IIR PERIPH ADC input/X1, DMA output/Y
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#id1">
+                  Sequence Diagram
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#id2">
+                  Code snippet
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="hal-fmac-typical-use-cases-for-migration">
+        <span id="hal-fmac-use-cases">
+        </span>
+        <h1 id="docs-markup-drivers-documentation-hal-drivers-fmac-hal-fmac-use-cases--page-root">
+         HAL FMAC Typical use cases for migration
+         <a class="headerlink" href="#docs-markup-drivers-documentation-hal-drivers-fmac-hal-fmac-use-cases--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <p>
+         This section provides information about the HAL FMAC Typical use cases for migration.
+        </p>
+        <ul class="simple">
+         <li>
+          <p>
+           On the FMAC peripheral, both input and output operations can be configured using a variety of modes, including
+Polling, Interrupt, DMA, or handled by external Peripheral. These modes can be independently selected for input and output,
+allowing for flexible combinations between FIFO input writing and FIFO output reading (as shown in the table of typical combinations).
+          </p>
+         </li>
+         <li>
+          <p>
+           In HAL1, these modes were configured using the InputAccess and OutputAccess fields within the FMAC_FilterConfigTypeDef structure.
+          </p>
+         </li>
+         <li>
+          <p>
+           In HAL2, input data management is performed through the following APIs:
+          </p>
+          <ul>
+           <li>
+            <p>
+             HAL_FMAC_WriteX1()
+            </p>
+           </li>
+           <li>
+            <p>
+             HAL_FMAC_WriteX1_IT()
+            </p>
+           </li>
+           <li>
+            <p>
+             HAL_FMAC_WriteX1_DMA()
+            </p>
+           </li>
+           <li>
+            <p>
+             HAL_FMAC_WriteX1_DMA_Opt()
+            </p>
+           </li>
+          </ul>
+         </li>
+        </ul>
+        <p>
+         When delegating input data handling to another peripheral, these WriteX1 APIs are not called directly.
+        </p>
+        <ul class="simple">
+         <li>
+          <p>
+           Similarly, output data management uses the APIs:
+          </p>
+          <ul>
+           <li>
+            <p>
+             HAL_FMAC_ReadY()
+            </p>
+           </li>
+           <li>
+            <p>
+             HAL_FMAC_ReadY_IT()
+            </p>
+           </li>
+           <li>
+            <p>
+             HAL_FMAC_ReadY_DMA()
+            </p>
+           </li>
+           <li>
+            <p>
+             HAL_FMAC_ReadY_DMA_Opt()
+            </p>
+           </li>
+          </ul>
+         </li>
+        </ul>
+        <p>
+         If output data handling is assigned to another peripheral, the ReadY APIs are not called directly either.
+        </p>
+        <ul class="simple">
+         <li>
+          <p>
+           Typical combinations:
+          </p>
+         </li>
+        </ul>
+        <table>
+         <colgroup>
+          <col style="width: 15.0%"/>
+          <col style="width: 15.0%"/>
+          <col style="width: 35.0%"/>
+          <col style="width: 35.0%"/>
+         </colgroup>
+         <thead>
+          <tr class="row-odd">
+           <th class="head">
+            <p>
+             <strong>
+              Input Mode (HAL1)
+             </strong>
+            </p>
+           </th>
+           <th class="head">
+            <p>
+             <strong>
+              Output Mode (HAL1)
+             </strong>
+            </p>
+           </th>
+           <th class="head">
+            <p>
+             <strong>
+              HAL1 Configuration
+             </strong>
+             (
+             <cite>
+              InputAccess
+             </cite>
+             ,
+             <cite>
+              OutputAccess
+             </cite>
+             )
+            </p>
+           </th>
+           <th class="head">
+            <p>
+             <strong>
+              HAL2 Handling
+             </strong>
+             (Input / Output APIs)
+            </p>
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr class="row-even">
+           <td>
+            <p>
+             Polling
+            </p>
+           </td>
+           <td>
+            <p>
+             Polling
+            </p>
+           </td>
+           <td>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               InputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               FMAC_BUFFER_ACCESS_POLLING
+              </span>
+             </code>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               OutputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               FMAC_BUFFER_ACCESS_POLLING
+              </span>
+             </code>
+            </p>
+           </td>
+           <td>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_WriteX1()
+              </span>
+             </code>
+             /
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_ReadY()
+              </span>
+             </code>
+            </p>
+           </td>
+          </tr>
+          <tr class="row-odd">
+           <td>
+            <p>
+             Polling
+            </p>
+           </td>
+           <td>
+            <p>
+             Interrupt
+            </p>
+           </td>
+           <td>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               InputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               FMAC_BUFFER_ACCESS_POLLING
+              </span>
+             </code>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               OutputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               FMAC_BUFFER_ACCESS_IT
+              </span>
+             </code>
+            </p>
+           </td>
+           <td>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_WriteX1()
+              </span>
+             </code>
+             /
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_ReadY_IT()
+              </span>
+             </code>
+            </p>
+           </td>
+          </tr>
+          <tr class="row-even">
+           <td>
+            <p>
+             Polling
+            </p>
+           </td>
+           <td>
+            <p>
+             DMA
+            </p>
+           </td>
+           <td>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               InputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               FMAC_BUFFER_ACCESS_POLLING
+              </span>
+             </code>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               OutputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               FMAC_BUFFER_ACCESS_DMA
+              </span>
+             </code>
+            </p>
+           </td>
+           <td>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_WriteX1()
+              </span>
+             </code>
+             /
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_ReadY_DMA()
+              </span>
+             </code>
+             or
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_ReadY_DMA_Opt()
+              </span>
+             </code>
+            </p>
+           </td>
+          </tr>
+          <tr class="row-odd">
+           <td>
+            <p>
+             Interrupt
+            </p>
+           </td>
+           <td>
+            <p>
+             Polling
+            </p>
+           </td>
+           <td>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               InputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               FMAC_BUFFER_ACCESS_IT
+              </span>
+             </code>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               OutputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               FMAC_BUFFER_ACCESS_POLLING
+              </span>
+             </code>
+            </p>
+           </td>
+           <td>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_WriteX1_IT()
+              </span>
+             </code>
+             /
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_ReadY()
+              </span>
+             </code>
+            </p>
+           </td>
+          </tr>
+          <tr class="row-even">
+           <td>
+            <p>
+             Interrupt
+            </p>
+           </td>
+           <td>
+            <p>
+             Interrupt
+            </p>
+           </td>
+           <td>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               InputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               FMAC_BUFFER_ACCESS_IT
+              </span>
+             </code>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               OutputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               FMAC_BUFFER_ACCESS_IT
+              </span>
+             </code>
+            </p>
+           </td>
+           <td>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_WriteX1_IT()
+              </span>
+             </code>
+             /
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_ReadY_IT()
+              </span>
+             </code>
+            </p>
+           </td>
+          </tr>
+          <tr class="row-odd">
+           <td>
+            <p>
+             Interrupt
+            </p>
+           </td>
+           <td>
+            <p>
+             DMA
+            </p>
+           </td>
+           <td>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               InputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               FMAC_BUFFER_ACCESS_IT
+              </span>
+             </code>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               OutputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               FMAC_BUFFER_ACCESS_DMA
+              </span>
+             </code>
+            </p>
+           </td>
+           <td>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_WriteX1_IT()
+              </span>
+             </code>
+             /
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_ReadY_DMA()
+              </span>
+             </code>
+             or
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_ReadY_DMA_Opt()
+              </span>
+             </code>
+            </p>
+           </td>
+          </tr>
+          <tr class="row-even">
+           <td>
+            <p>
+             DMA
+            </p>
+           </td>
+           <td>
+            <p>
+             Polling
+            </p>
+           </td>
+           <td>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               InputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               FMAC_BUFFER_ACCESS_DMA
+              </span>
+             </code>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               OutputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               FMAC_BUFFER_ACCESS_POLLING
+              </span>
+             </code>
+            </p>
+           </td>
+           <td>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_WriteX1_DMA()
+              </span>
+             </code>
+             or
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_WriteX1_DMA_Opt()
+              </span>
+             </code>
+             /
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_ReadY()
+              </span>
+             </code>
+            </p>
+           </td>
+          </tr>
+          <tr class="row-odd">
+           <td>
+            <p>
+             DMA
+            </p>
+           </td>
+           <td>
+            <p>
+             Interrupt
+            </p>
+           </td>
+           <td>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               InputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               FMAC_BUFFER_ACCESS_DMA
+              </span>
+             </code>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               OutputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               FMAC_BUFFER_ACCESS_IT
+              </span>
+             </code>
+            </p>
+           </td>
+           <td>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_WriteX1_DMA()
+              </span>
+             </code>
+             or
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_WriteX1_DMA_Opt()
+              </span>
+             </code>
+             /
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_ReadY_IT()
+              </span>
+             </code>
+            </p>
+           </td>
+          </tr>
+          <tr class="row-even">
+           <td>
+            <p>
+             DMA
+            </p>
+           </td>
+           <td>
+            <p>
+             DMA
+            </p>
+           </td>
+           <td>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               InputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               FMAC_BUFFER_ACCESS_DMA
+              </span>
+             </code>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               OutputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               FMAC_BUFFER_ACCESS_DMA
+              </span>
+             </code>
+            </p>
+           </td>
+           <td>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_WriteX1_DMA()
+              </span>
+             </code>
+             or
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_WriteX1_DMA_Opt()
+              </span>
+             </code>
+             /
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_ReadY_DMA()
+              </span>
+             </code>
+             or
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_FMAC_ReadY_DMA_Opt()
+              </span>
+             </code>
+            </p>
+           </td>
+          </tr>
+          <tr class="row-odd">
+           <td>
+            <p>
+             External Device (e.g., ADC)
+            </p>
+           </td>
+           <td>
+            <p>
+             Any
+            </p>
+           </td>
+           <td>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               InputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               FMAC_BUFFER_ACCESS_NONE
+              </span>
+             </code>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               OutputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               [any
+              </span>
+              <span class="pre">
+               valid
+              </span>
+              <span class="pre">
+               mode]
+              </span>
+             </code>
+            </p>
+           </td>
+           <td>
+            <p>
+             Do
+             <strong>
+              not
+             </strong>
+             call Write APIs / Use appropriate Read API or external handling
+            </p>
+           </td>
+          </tr>
+          <tr class="row-even">
+           <td>
+            <p>
+             Any
+            </p>
+           </td>
+           <td>
+            <p>
+             External Device
+            </p>
+           </td>
+           <td>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               InputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               [any
+              </span>
+              <span class="pre">
+               valid
+              </span>
+              <span class="pre">
+               mode]
+              </span>
+             </code>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               OutputAccess
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               FMAC_BUFFER_ACCESS_NONE
+              </span>
+             </code>
+            </p>
+           </td>
+           <td>
+            <p>
+             Use appropriate Write API or external handling / Do
+             <strong>
+              not
+             </strong>
+             call Read APIs
+            </p>
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <section id="fir-or-iir-interrupt-input-x1-dma-output-y">
+         <span id="fmac-fir-or-iir-interrupt-input-x1-dma-output-y">
+         </span>
+         <h2 id="fir-or-iir-interrupt-input-x1-dma-output-y">
+          FIR or IIR Interrupt input/X1, DMA output/Y
+          <a class="headerlink" href="#fir-or-iir-interrupt-input-x1-dma-output-y" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <ul class="simple">
+          <li>
+           <p>
+            In the following use case the input X1 FIFO is managed with interrupt process, and the output Y FIFO is managed with DMA process
+           </p>
+          </li>
+         </ul>
+         <section id="sequence-diagram">
+          <h3 id="sequence-diagram">
+           Sequence Diagram
+           <a class="headerlink" href="#sequence-diagram" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <div class="sphinx-tabs docutils container">
+           <div aria-label="Tabbed content" class="closeable" role="tablist">
+            <button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">
+             HAL1 sequence diagram
+            </button>
+            <button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">
+             HAL2 sequence diagram
+            </button>
+           </div>
+           <div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0">
+            <p class="plantuml">
+             <img alt='@startuml
+title: FIR filter with :\n  - input/X1 managed with interrupt process \n  - output/Y managed with DMA process
+
+participant App as "User application"
+participant App
+participant "&lt;font color=Black&gt;&lt;b&gt;HAL FMAC&lt;/b&gt;&lt;/font&gt;" as FMAC
+participant "&lt;font color=green&gt;&lt;b&gt;HAL DMA&lt;/b&gt;&lt;/font&gt;" as DMA
+participant "FMACx_IRQHandler"
+participant "DMAx_IRQHandler"
+
+App -&gt; FMAC : HAL_FMAC_Init()
+App &lt;-- FMAC : HAL_OK
+
+group FMAC System initialization: can be called before FMAC HAL initialization
+App -[hidden]&gt;FMAC
+end
+
+App -&gt; FMAC : HAL_FMAC_FilterConfig()
+note right : The interrupt mode configuration for input X1 is carried out in this function by setting FMAC_BUFFER_ACCESS_IT\nin the InputAccess parameter within FMAC_FilterConfigTypeDef structure.\nThe DMA mode configuration for output Y is carried out in this function by setting FMAC_BUFFER_ACCESS_DMA\nin the OutputAccess parameter within FMAC_FilterConfigTypeDef structure.
+App &lt;-- FMAC : HAL_OK
+
+App -&gt; FMAC : HAL_FMAC_AppendFilterData()
+App &lt;-- FMAC : HAL_OK
+
+App -&gt; FMAC : HAL_FMAC_FilterStart()
+App &lt;-- FMAC :HAL_OK
+
+FMAC &lt;- "FMACx_IRQHandler" : HAL_FMAC_IRQHandler()
+FMAC --&gt; "FMACx_IRQHandler"
+
+FMAC-&gt; App : HAL_FMAC_GetDataCallback()
+FMAC&lt;-- App
+
+"DMAx_IRQHandler" &lt;- : DMAx half complete interrupt
+"DMAx_IRQHandler" -&gt; "DMA" : HAL_DMA_IRQHandler()
+"DMA" -&gt; FMAC : XferCpltCallback
+FMAC-&gt; App : HAL_FMAC_HalfOutputDataReadyCallback()
+"DMA" &lt;-- FMAC
+"DMAx_IRQHandler" &lt;-- "DMA"
+"DMAx_IRQHandler" --&gt;
+
+"DMAx_IRQHandler" &lt;- : DMAx complete interrupt
+"DMAx_IRQHandler" -&gt; "DMA" : HAL_DMA_IRQHandler()
+"DMA" -&gt; FMAC : XferCpltCallback
+FMAC-&gt; App : HAL_FMAC_OutputDataReadyCallback()
+"DMA" &lt;-- FMAC
+"DMAx_IRQHandler" &lt;-- "DMA"
+"DMAx_IRQHandler" --&gt;
+
+App -&gt; FMAC : HAL_FMAC_FilterStop()
+App &lt;-- FMAC :HAL_OK
+
+App-&gt;FMAC : HAL_FMAC_DeInit()
+App&lt;--FMAC
+
+@enduml' src="../../../../../_images/plantuml-14b451da0bc343d8939b137f0ee2c5a8617e52f3.png">
+             </img>
+            </p>
+           </div>
+           <div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0">
+            <p class="plantuml">
+             <img alt='@startuml
+title: FIR filter with :\n  - input/X1 managed with interrupt process \n  - output/Y managed with DMA  process
+
+participant App as "User application"
+participant App
+participant "&lt;font color=Black&gt;&lt;b&gt;HAL FMAC&lt;/b&gt;&lt;/font&gt;" as FMAC
+participant "&lt;font color=green&gt;&lt;b&gt;HAL DMA&lt;/b&gt;&lt;/font&gt;" as DMA
+participant "FMACx_IRQHandler"
+participant "DMAx_IRQHandler"
+
+App -&gt; FMAC : HAL_FMAC_Init
+App &lt;-- FMAC : HAL_OK
+
+group FMAC System initialization: can be called before FMAC HAL initialization
+App -[hidden]&gt;FMAC
+end
+
+App -&gt; FMAC : HAL_FMAC_SetConfig
+App &lt;-- FMAC :HAL_OK
+
+==Advanced FMAC Configuration (optional)==
+App -&gt; FMAC : HAL_FMAC_SetX1FullWatermark
+App &lt;-- FMAC :HAL_OK
+App -&gt; FMAC : HAL_FMAC_SetYEmptyWatermark
+App &lt;-- FMAC :HAL_OK
+App -&gt; FMAC : HAL_FMAC_EnableClip
+App &lt;-- FMAC :HAL_OK
+
+note over App : Driver state is IDLE,\nUser can start any process or execute any configuration.
+
+== FIR filter with :\n  - input/X1 managed with interrupt process \n  - output/Y managed with DMA  process ==
+
+note over App : Preload of filter coefficients
+App -&gt; FMAC : HAL_FMAC_PreloadX2()
+App &lt;-- FMAC :HAL_OK
+
+App -&gt; FMAC : HAL_FMAC_WriteX1_IT()
+note right : Write data to X1 in interrupt mode
+App &lt;-- FMAC :HAL_OK
+
+App -&gt; FMAC : HAL_FMAC_ReadY_DMA()
+note right : Read data from Y in DMA mode
+App &lt;-- FMAC :HAL_OK
+
+App -&gt; FMAC : HAL_FMAC_StartFilterFIR() or HAL_FMAC_StartFilterIIR()
+App &lt;-- FMAC :HAL_OK
+
+FMAC &lt;- "FMACx_IRQHandler" : HAL_FMAC_IRQHandler()
+FMAC --&gt; "FMACx_IRQHandler"
+
+FMAC-&gt; App : HAL_FMAC_WriteX1CpltCallback()
+FMAC&lt;-- App
+
+note over App : X1 state is IDLE,\nUser can start any Write X1 process.
+
+"DMAx_IRQHandler" &lt;- : DMAx half complete interrupt
+"DMAx_IRQHandler" -&gt; "DMA" : HAL_DMA_IRQHandler()
+"DMA" -&gt; FMAC : XferCpltCallback
+FMAC-&gt; App : HAL_FMAC_ReadYHalfCpltCallback()
+"DMA" &lt;-- FMAC
+"DMAx_IRQHandler" &lt;-- "DMA"
+"DMAx_IRQHandler" --&gt;
+
+"DMAx_IRQHandler" &lt;- : DMAx complete interrupt
+"DMAx_IRQHandler" -&gt; "DMA" : HAL_DMA_IRQHandler()
+"DMA" -&gt; FMAC : XferCpltCallback
+FMAC-&gt; App : HAL_FMAC_ReadYCpltCallback()
+"DMA" &lt;-- FMAC
+"DMAx_IRQHandler" &lt;-- "DMA"
+"DMAx_IRQHandler" --&gt;
+
+note over App : Y state is IDLE,\nUser can start any Read Y process.
+
+App -&gt; FMAC : HAL_FMAC_StopFilter()
+App &lt;-- FMAC :HAL_OK
+
+note over App : Filter state is IDLE,\nUser can start any filter or preload process.
+
+App-&gt;FMAC : HAL_FMAC_DeInit
+App&lt;--FMAC
+
+@enduml' src="../../../../../_images/plantuml-5f1a70e871d2a163e172bb8aac63969c75242b79.png"/>
+            </p>
+           </div>
+          </div>
+         </section>
+         <section id="code-snippet">
+          <h3 id="code-snippet">
+           Code snippet
+           <a class="headerlink" href="#code-snippet" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">HAL_FMAC_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">)</span>
+
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">InputBaseAddress</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">INPUT_BUFFER_BASE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">InputBufferSize</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">INPUT_BUFFER_SIZE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">InputThreshold</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">INPUT_THRESHOLD</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">CoeffBaseAddress</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">COEFFICIENT_BUFFER_BASE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">CoeffBufferSize</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">COEFFICIENT_BUFFER_SIZE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">OutputBaseAddress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OUTPUT_BUFFER_BASE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">OutputBufferSize</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">OUTPUT_BUFFER_SIZE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">OutputThreshold</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">OUTPUT_THRESHOLD</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">pCoeffA</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="n">aFilterCoeffA</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">CoeffASize</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">COEFF_VECTOR_A_SIZE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">pCoeffB</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="n">aFilterCoeffB</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">CoeffBSize</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">COEFF_VECTOR_B_SIZE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">Filter</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="n">FMAC_FUNC_IIR_DIRECT_FORM_1</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">InputAccess</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">FMAC_BUFFER_ACCESS_IT</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">OutputAccess</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">FMAC_BUFFER_ACCESS_DMA</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">Clip</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="n">FMAC_CLIP_DISABLED</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">P</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="n">COEFF_VECTOR_B_SIZE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">Q</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="n">COEFF_VECTOR_A_SIZE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">R</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="n">GAIN</span><span class="p">;</span>
+
+<span class="n">HAL_FMAC_FilterConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sFmacConfig</span><span class="p">);</span>
+
+<span class="n">HAL_FMAC_AppendFilterData</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">,</span><span class="w"> </span><span class="n">Input</span><span class="p">);</span>
+<span class="n">HAL_FMAC_FilterStart</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">,</span><span class="w"> </span><span class="n">Output</span><span class="p">,</span><span class="w"> </span><span class="n">OutputDataSize</span><span class="p">);</span>
+
+<span class="n">HAL_FMAC_FilterStop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">);</span>
+
+<span class="n">HAL_FMAC_DeInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">gh_fmac</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">HAL_FMAC_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">hal_fmac_t</span><span class="p">)</span><span class="n">FMAC</span><span class="p">);</span>
+
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">x1_buf</span><span class="p">.</span><span class="n">base_half_word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">INPUT_BUFFER_BASE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">x1_buf</span><span class="p">.</span><span class="n">size_half_word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">INPUT_BUFFER_SIZE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">x2_buf</span><span class="p">.</span><span class="n">base_half_word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">COEFFICIENT_BUFFER_BASE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">x2_buf</span><span class="p">.</span><span class="n">size_half_word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">COEFFICIENT_BUFFER_SIZE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">y_buf</span><span class="p">.</span><span class="n">base_half_word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">COEFFICIENT_BUFFER_SIZE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">y_buf</span><span class="p">.</span><span class="n">size_half_word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OUTPUT_BUFFER_BASE</span><span class="p">;</span>
+
+<span class="n">HAL_FMAC_SetConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sFmacConfig</span><span class="p">);</span>
+
+<span class="n">data</span><span class="p">.</span><span class="n">coeff_a_size_half_word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">COEFF_VECTOR_A_SIZE</span><span class="p">;</span>
+<span class="n">data</span><span class="p">.</span><span class="n">p_coeff_a</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="n">aFilterCoeffA</span><span class="p">;</span>
+<span class="n">data</span><span class="p">.</span><span class="n">coeff_b_size_half_word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">COEFF_VECTOR_B_SIZE</span><span class="p">;</span>
+<span class="n">data</span><span class="p">.</span><span class="n">p_coeff_b</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="n">aFilterCoeffB</span><span class="p">;</span>
+
+<span class="n">HAL_FMAC_PreloadX2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">data</span><span class="p">);</span>
+
+<span class="n">HAL_FMAC_Write_IT</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">,</span><span class="w"> </span><span class="n">Input</span><span class="p">);</span>
+<span class="n">HAL_FMAC_ReadY_DMA</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">,</span><span class="w"> </span><span class="n">Output</span><span class="p">,</span><span class="w"> </span><span class="n">OutputDataSize</span><span class="p">);</span>
+
+<span class="n">HAL_FMAC_StartFilterIIR</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">,</span><span class="w"> </span><span class="n">COEFF_VECTOR_B_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">COEFF_VECTOR_A_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">GAIN</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_FMAC_OPT_IT_FILTER_SATURATION_ERROR</span><span class="p">);</span>
+
+<span class="n">HAL_FMAC_StopFilter</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">);</span>
+
+<span class="n">HAL_FMAC_DeInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">gh_fmac</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+        </section>
+        <section id="fir-or-iir-periph-adc-input-x1-dma-output-y">
+         <span id="fmac-fir-or-iir-adc-input-x1-dma-output-y">
+         </span>
+         <h2 id="fir-or-iir-periph-adc-input-x1-dma-output-y">
+          FIR or IIR PERIPH ADC input/X1, DMA output/Y
+          <a class="headerlink" href="#fir-or-iir-periph-adc-input-x1-dma-output-y" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <blockquote>
+          <div>
+           <ul class="simple">
+            <li>
+             <p>
+              In the following use case, the X1 FIFO input is fed by the ADC driver using ADC APIs that sample data
+for the FMAC driver managed by ADC, and the Y FIFO output is managed by the DMA process.
+             </p>
+            </li>
+           </ul>
+          </div>
+         </blockquote>
+         <section id="id1">
+          <h3 id="id1">
+           Sequence Diagram
+           <a class="headerlink" href="#id1" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <div class="sphinx-tabs docutils container">
+           <div aria-label="Tabbed content" class="closeable" role="tablist">
+            <button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">
+             HAL1 sequence diagram
+            </button>
+            <button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">
+             HAL2 sequence diagram
+            </button>
+           </div>
+           <div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0">
+            <p class="plantuml">
+             <img alt='@startuml
+title: FIR filter with :\n  - input/X1 managed by the ADC driver \n  - output/Y managed with DMA  process
+
+participant App as "User application"
+participant App
+participant "&lt;font color=Black&gt;&lt;b&gt;HAL FMAC&lt;/b&gt;&lt;/font&gt;" as FMAC
+participant "&lt;font color=green&gt;&lt;b&gt;HAL DMA&lt;/b&gt;&lt;/font&gt;" as DMA
+participant "&lt;font color=red&gt;&lt;b&gt;HAL ADC&lt;/b&gt;&lt;/font&gt;" as ADC
+participant "FMACx_IRQHandler"
+participant "DMAx_IRQHandler"
+
+App -&gt; ADC : HAL_ADC_Init
+App &lt;-- ADC : HAL_OK
+
+App -&gt; FMAC : HAL_FMAC_Init
+App &lt;-- FMAC : HAL_OK
+
+group ADC System initialization: can be called before ADC HAL initialization
+App -[hidden]&gt;ADC
+end
+
+group FMAC System initialization: can be called before FMAC HAL initialization
+App -[hidden]&gt;FMAC
+end
+
+App -&gt; FMAC : HAL_FMAC_FilterConfig()
+note right : The ADC management configuration for input X1 is carried out in this function by setting FMAC_BUFFER_ACCESS_NONE\nin the InputAccess parameter within FMAC_FilterConfigTypeDef structure.\nThe DMA mode configuration for output Y is carried out in this function by setting FMAC_BUFFER_ACCESS_DMA\nin the OutputAccess parameter within FMAC_FilterConfigTypeDef structure.
+App &lt;-- FMAC : HAL_OK
+
+App -&gt; FMAC : HAL_FMAC_AppendFilterData()
+App &lt;-- FMAC : HAL_OK
+
+App -&gt; FMAC : HAL_FMAC_FilterStart()
+App &lt;-- FMAC :HAL_OK
+
+App -&gt; ADC : HAL_ADC_Start_DMA
+note right : Start ADC conversion and store the result in FMAC Write Data register address (@WDATA)
+App &lt;-- ADC : HAL_OK
+
+"DMAx_IRQHandler" &lt;- : DMAx half complete interrupt
+"DMAx_IRQHandler" -&gt; "DMA" : HAL_DMA_IRQHandler()
+"DMA" -&gt; ADC : XferCpltCallback
+ADC-&gt; App : HAL_ADC_ConvHalfCpltCallback()
+"DMA" &lt;-- ADC
+"DMAx_IRQHandler" &lt;-- "DMA"
+"DMAx_IRQHandler" --&gt;
+
+"DMAx_IRQHandler" &lt;- : DMAx complete interrupt
+"DMAx_IRQHandler" -&gt; "DMA" : HAL_DMA_IRQHandler()
+"DMA" -&gt; ADC : XferCpltCallback
+ADC-&gt; App : HAL_ADC_ConvCpltCallback()
+"DMA" &lt;-- ADC
+"DMAx_IRQHandler" &lt;-- "DMA"
+"DMAx_IRQHandler" --&gt;
+
+"DMAx_IRQHandler" &lt;- : DMAx half complete interrupt
+"DMAx_IRQHandler" -&gt; "DMA" : HAL_DMA_IRQHandler()
+"DMA" -&gt; FMAC : XferCpltCallback
+FMAC-&gt; App : HAL_FMAC_HalfOutputDataReadyCallback()
+"DMA" &lt;-- FMAC
+"DMAx_IRQHandler" &lt;-- "DMA"
+"DMAx_IRQHandler" --&gt;
+
+"DMAx_IRQHandler" &lt;- : DMAx complete interrupt
+"DMAx_IRQHandler" -&gt; "DMA" : HAL_DMA_IRQHandler()
+"DMA" -&gt; FMAC : XferCpltCallback
+FMAC-&gt; App : HAL_FMAC_OutputDataReadyCallback()
+"DMA" &lt;-- FMAC
+"DMAx_IRQHandler" &lt;-- "DMA"
+"DMAx_IRQHandler" --&gt;
+
+App -&gt; FMAC : HAL_FMAC_FilterStop()
+App &lt;-- FMAC :HAL_OK
+
+App-&gt;FMAC : HAL_FMAC_DeInit()
+App&lt;--FMAC
+
+@enduml' src="../../../../../_images/plantuml-ef7454e77e9bbe0e7529bb3ca6ab1689773e5230.png"/>
+            </p>
+           </div>
+           <div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0">
+            <p class="plantuml">
+             <img alt='@startuml
+title: FIR filter with :\n  - input/X1 managed by the ADC driver \n  - output/Y managed with DMA process
+
+participant App as "User application"
+participant App
+participant "&lt;font color=Black&gt;&lt;b&gt;HAL FMAC&lt;/b&gt;&lt;/font&gt;" as FMAC
+participant "&lt;font color=green&gt;&lt;b&gt;HAL DMA&lt;/b&gt;&lt;/font&gt;" as DMA
+participant "&lt;font color=red&gt;&lt;b&gt;HAL ADC&lt;/b&gt;&lt;/font&gt;" as ADC
+participant "FMACx_IRQHandler"
+participant "DMAx_IRQHandler"
+
+App -&gt; ADC : HAL_ADC_Init
+App &lt;-- ADC : HAL_OK
+
+App -&gt; FMAC : HAL_FMAC_Init
+App &lt;-- FMAC : HAL_OK
+
+group ADC System initialization: can be called before ADC HAL initialization
+App -[hidden]&gt;ADC
+end
+
+group FMAC System initialization: can be called before FMAC HAL initialization
+App -[hidden]&gt;FMAC
+end
+
+App -&gt; FMAC : HAL_FMAC_SetConfig
+App &lt;-- FMAC :HAL_OK
+
+==Advanced FMAC Configuration (optional)==
+App -&gt; FMAC : HAL_FMAC_SetX1FullWatermark
+App &lt;-- FMAC :HAL_OK
+App -&gt; FMAC : HAL_FMAC_SetYEmptyWatermark
+App &lt;-- FMAC :HAL_OK
+App -&gt; FMAC : HAL_FMAC_EnableClip
+App &lt;-- FMAC :HAL_OK
+
+note over App : Driver state is IDLE,\nUser can start any process or execute any configuration
+
+== FIR filter with :\n  - input/X1 managed directly by ADC periph\n  - output/Y managed with DMA  process ==
+
+note over App : Preload of filter coefficients
+App -&gt; FMAC : HAL_FMAC_PreloadX2
+App &lt;-- FMAC :HAL_OK
+
+note over App : Get Write Register address.
+App -&gt; FMAC : HAL_FMAC_GetX1Address
+note right : This function obtains the address of the FMAC Write Data register address (@WDATA), which is then used as the destination\nfor ADC conversion data in the HAL_ADC_REG_StartConv_DMA function.
+App &lt;-- FMAC :HAL_OK
+
+App -&gt; FMAC : HAL_FMAC_LockX1WriteAccessForExternPeriph
+note right : Update the state of X1 fifo to protect the FMAC driver against accidental\ncalls to the Write X1 APIs in case of input data managed by an external peripheral
+App &lt;-- FMAC :HAL_OK
+
+App -&gt; FMAC : HAL_FMAC_ReadY_DMA
+note right : Read data from Y in DMA mode
+App &lt;-- FMAC :HAL_OK
+
+App -&gt; FMAC : HAL_FMAC_StartFilterFIR or HAL_FMAC_StartFilterIIR
+App &lt;-- FMAC :HAL_OK
+
+App -&gt; ADC : HAL_ADC_Start
+App &lt;-- ADC : HAL_OK
+
+App -&gt; ADC : HAL_ADC_REG_StartConv_DMA
+note right : Start ADC conversion and store the result in FMAC Write Data register address (@WDATA) via DMA\nthe address is recuperated from HAL_FMAC_GetX1Address function
+App &lt;-- ADC : HAL_OK
+
+"DMAx_IRQHandler" &lt;- : DMAx half complete interrupt
+"DMAx_IRQHandler" -&gt; "DMA" : HAL_DMA_IRQHandler()
+"DMA" -&gt; ADC : XferCpltCallback
+ADC-&gt; App : HAL_ADC_REG_DataTransferHalfCallback()
+"DMA" &lt;-- ADC
+"DMAx_IRQHandler" &lt;-- "DMA"
+"DMAx_IRQHandler" --&gt;
+
+"DMAx_IRQHandler" &lt;- : DMAx complete interrupt
+"DMAx_IRQHandler" -&gt; "DMA" : HAL_DMA_IRQHandler()
+"DMA" -&gt; ADC : XferCpltCallback
+ADC-&gt; App : HAL_ADC_REG_DataTransferCpltCallback()
+"DMA" &lt;-- ADC
+"DMAx_IRQHandler" &lt;-- "DMA"
+"DMAx_IRQHandler" --&gt;
+
+"DMAx_IRQHandler" &lt;- : DMAx half complete interrupt
+"DMAx_IRQHandler" -&gt; "DMA" : HAL_DMA_IRQHandler
+"DMA" -&gt; FMAC : XferCpltCallback
+FMAC-&gt; App : HAL_FMAC_ReadYHalfCpltCallback
+"DMA" &lt;-- FMAC
+"DMAx_IRQHandler" &lt;-- "DMA"
+"DMAx_IRQHandler" --&gt;
+
+"DMAx_IRQHandler" &lt;- : DMAx complete interrupt
+"DMAx_IRQHandler" -&gt; "DMA" : HAL_DMA_IRQHandler
+"DMA" -&gt; FMAC : XferCpltCallback
+FMAC-&gt; App : HAL_FMAC_ReadYCpltCallback
+"DMA" &lt;-- FMAC
+"DMAx_IRQHandler" &lt;-- "DMA"
+"DMAx_IRQHandler" --&gt;
+
+note over App : Y state is IDLE,\nUser can start any Read Y process.
+
+App -&gt; FMAC : HAL_FMAC_UnlockX1WriteAccessForExternPeriph
+note right : Update the state of X1 fifo to unlock the FMAC driver protection that prevents calls to Write X1 APIs
+App &lt;-- FMAC :HAL_OK
+
+note over App : X1 state is IDLE,\nUser can start any Read Y process.
+
+App -&gt; FMAC : HAL_FMAC_StopFilter()
+App &lt;-- FMAC :HAL_OK
+
+note over App : Filter state is IDLE,\nUser can start any filter or preload process
+
+App-&gt;FMAC : HAL_FMAC_DeInit
+App&lt;--FMAC
+
+@enduml' src="../../../../../_images/plantuml-bdf271c7d32a867a47fbae4c6ccb36b7006a5a8f.png"/>
+            </p>
+           </div>
+          </div>
+         </section>
+         <section id="id2">
+          <h3 id="id2">
+           Code snippet
+           <a class="headerlink" href="#id2" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">ADC_MultiModeTypeDef</span><span class="w"> </span><span class="n">multimode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<span class="n">ADC_ChannelConfTypeDef</span><span class="w"> </span><span class="n">sConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+<span class="cm">/* FMAC WDATA register address (for DMA transfer) */</span>
+<span class="cp">#define FMAC_WDATA (0x40021418)</span>
+
+<span class="n">hadc1</span><span class="p">.</span><span class="n">Instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADC1</span><span class="p">;</span>
+<span class="n">hadc1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">ClockPrescaler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADC_CLOCK_SYNC_PCLK_DIV4</span><span class="p">;</span>
+<span class="n">hadc1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">Resolution</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADC_RESOLUTION_12B</span><span class="p">;</span>
+<span class="n">hadc1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">DataAlign</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADC_DATAALIGN_LEFT</span><span class="p">;</span>
+<span class="n">hadc1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">GainCompensation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="n">hadc1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">ScanConvMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADC_SCAN_DISABLE</span><span class="p">;</span>
+<span class="n">hadc1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">EOCSelection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADC_EOC_SINGLE_CONV</span><span class="p">;</span>
+<span class="n">hadc1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">LowPowerAutoWait</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DISABLE</span><span class="p">;</span>
+<span class="n">hadc1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">ContinuousConvMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DISABLE</span><span class="p">;</span>
+<span class="n">hadc1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">NbrOfConversion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="n">hadc1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">DiscontinuousConvMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DISABLE</span><span class="p">;</span>
+<span class="n">hadc1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">ExternalTrigConv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADC_EXTERNALTRIG_HRTIM_TRG1</span><span class="p">;</span>
+<span class="n">hadc1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">ExternalTrigConvEdge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADC_EXTERNALTRIGCONVEDGE_RISING</span><span class="p">;</span>
+<span class="n">hadc1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">DMAContinuousRequests</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ENABLE</span><span class="p">;</span>
+<span class="n">hadc1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">Overrun</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADC_OVR_DATA_OVERWRITTEN</span><span class="p">;</span>
+<span class="n">hadc1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">OversamplingMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DISABLE</span><span class="p">;</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_ADC_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hadc1</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">multimode</span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADC_MODE_INDEPENDENT</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_ADCEx_MultiModeConfigChannel</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hadc1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">multimode</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">sConfig</span><span class="p">.</span><span class="n">Channel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADC_CHANNEL_4</span><span class="p">;</span>
+<span class="n">sConfig</span><span class="p">.</span><span class="n">Rank</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADC_REGULAR_RANK_1</span><span class="p">;</span>
+<span class="n">sConfig</span><span class="p">.</span><span class="n">SamplingTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADC_SAMPLETIME_2CYCLES_5</span><span class="p">;</span>
+<span class="n">sConfig</span><span class="p">.</span><span class="n">SingleDiff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADC_SINGLE_ENDED</span><span class="p">;</span>
+<span class="n">sConfig</span><span class="p">.</span><span class="n">OffsetNumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADC_OFFSET_1</span><span class="p">;</span>
+<span class="n">sConfig</span><span class="p">.</span><span class="n">Offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">REF</span><span class="p">;</span>
+<span class="n">sConfig</span><span class="p">.</span><span class="n">OffsetSign</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADC_OFFSET_SIGN_NEGATIVE</span><span class="p">;</span>
+<span class="n">sConfig</span><span class="p">.</span><span class="n">OffsetSaturation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DISABLE</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_ADC_ConfigChannel</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hadc1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sConfig</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">HAL_FMAC_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">);</span>
+
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">InputBaseAddress</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">INPUT_BUFFER_BASE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">InputBufferSize</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">INPUT_BUFFER_SIZE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">InputThreshold</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">INPUT_THRESHOLD</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">CoeffBaseAddress</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">COEFFICIENT_BUFFER_BASE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">CoeffBufferSize</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">COEFFICIENT_BUFFER_SIZE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">OutputBaseAddress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OUTPUT_BUFFER_BASE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">OutputBufferSize</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">OUTPUT_BUFFER_SIZE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">OutputThreshold</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">OUTPUT_THRESHOLD</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">pCoeffA</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="n">aFilterCoeffA</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">CoeffASize</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">COEFF_VECTOR_A_SIZE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">pCoeffB</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="n">aFilterCoeffB</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">CoeffBSize</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">COEFF_VECTOR_B_SIZE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">Filter</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="n">FMAC_FUNC_IIR_DIRECT_FORM_1</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">InputAccess</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">FMAC_BUFFER_ACCESS_NONE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">OutputAccess</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">FMAC_BUFFER_ACCESS_DMA</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">Clip</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="n">FMAC_CLIP_DISABLED</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">P</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="n">COEFF_VECTOR_B_SIZE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">Q</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="n">COEFF_VECTOR_A_SIZE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">R</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="n">GAIN</span><span class="p">;</span>
+
+<span class="n">HAL_FMAC_FilterConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sFmacConfig</span><span class="p">);</span>
+
+<span class="n">HAL_FMAC_FilterStart</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">,</span><span class="w"> </span><span class="n">Output</span><span class="p">,</span><span class="w"> </span><span class="n">OutputDataSize</span><span class="p">);</span>
+
+<span class="cm">/* Assign FMAC Write Data register (@WDATA) to Fmac_Wdata */</span>
+<span class="n">Fmac_Wdata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">FMAC_WDATA</span><span class="p">;</span>
+
+<span class="cm">/* Start ADC and DMA */</span>
+<span class="n">HAL_ADC_Start_DMA</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hadc1</span><span class="p">,</span><span class="w"> </span><span class="n">Fmac_Wdata</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT_BUFFER_SIZE</span><span class="o">*</span><span class="mi">4</span><span class="p">);</span>
+
+<span class="n">HAL_FMAC_FilterStop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">);</span>
+
+<span class="n">HAL_FMAC_DeInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">gh_fmac</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_adc_config_t</span><span class="w"> </span><span class="n">adc_config</span><span class="p">;</span>
+
+<span class="n">HAL_ADC_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hADC1</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_ADC1</span><span class="p">);</span>
+
+<span class="n">adc_config</span><span class="p">.</span><span class="n">resolution</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_ADC_RESOLUTION_12_BIT</span><span class="p">;</span>
+<span class="n">adc_config</span><span class="p">.</span><span class="n">sampling_mode</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_ADC_SAMPLING_MODE_NORMAL</span><span class="p">;</span>
+<span class="n">HAL_ADC_SetConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hADC1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">adc_config</span><span class="p">);</span>
+
+<span class="n">hal_adc_reg_config_t</span><span class="w"> </span><span class="n">reg_config</span><span class="p">;</span>
+<span class="n">reg_config</span><span class="p">.</span><span class="n">trigger_src</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_ADC_REG_TRIG_SOFTWARE_START</span><span class="p">;</span>
+<span class="n">reg_config</span><span class="p">.</span><span class="n">trigger_edge</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_ADC_REG_TRIG_EDGE_NONE</span><span class="p">;</span>
+<span class="n">reg_config</span><span class="p">.</span><span class="n">sequencer_length</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="n">reg_config</span><span class="p">.</span><span class="n">sequencer_discont</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_ADC_REG_SEQ_DISCONT_DISABLE</span><span class="p">;</span>
+<span class="n">reg_config</span><span class="p">.</span><span class="n">continuous</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_ADC_REG_CONV_SINGLE</span><span class="p">;</span>
+<span class="n">reg_config</span><span class="p">.</span><span class="n">overrun</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_ADC_REG_OVR_DATA_OVERWRITTEN</span><span class="p">;</span>
+<span class="n">reg_config</span><span class="p">.</span><span class="n">data_transfer</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_ADC_REG_DATA_TRANSFER_NONE</span><span class="p">;</span>
+<span class="n">HAL_ADC_REG_SetConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hADC1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">reg_config</span><span class="p">);</span>
+
+<span class="n">hal_adc_channel_config_t</span><span class="w"> </span><span class="n">adc_channel_config</span><span class="p">;</span>
+<span class="n">adc_channel_config</span><span class="p">.</span><span class="n">group</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_ADC_GROUP_REGULAR</span><span class="p">;</span>
+<span class="n">adc_channel_config</span><span class="p">.</span><span class="n">sequencer_rank</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="n">adc_channel_config</span><span class="p">.</span><span class="n">input_mode</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_ADC_IN_SINGLE_ENDED</span><span class="p">;</span>
+<span class="n">adc_channel_config</span><span class="p">.</span><span class="n">sampling_time</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_ADC_SAMPLING_TIME_2CYCLES_5</span><span class="p">;</span>
+<span class="n">HAL_ADC_SetConfigChannel</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hADC1</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_ADC_CHANNEL_4</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">adc_channel_config</span><span class="p">);</span>
+
+<span class="n">HAL_FMAC_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">hal_fmac_t</span><span class="p">)</span><span class="n">FMAC</span><span class="p">);</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">x1_buf</span><span class="p">.</span><span class="n">base_half_word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">INPUT_BUFFER_BASE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">x1_buf</span><span class="p">.</span><span class="n">size_half_word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">INPUT_BUFFER_SIZE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">x2_buf</span><span class="p">.</span><span class="n">base_half_word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">COEFFICIENT_BUFFER_BASE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">x2_buf</span><span class="p">.</span><span class="n">size_half_word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">COEFFICIENT_BUFFER_SIZE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">y_buf</span><span class="p">.</span><span class="n">base_half_word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">COEFFICIENT_BUFFER_SIZE</span><span class="p">;</span>
+<span class="n">sFmacConfig</span><span class="p">.</span><span class="n">y_buf</span><span class="p">.</span><span class="n">size_half_word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OUTPUT_BUFFER_BASE</span><span class="p">;</span>
+
+<span class="n">HAL_FMAC_SetConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sFmacConfig</span><span class="p">);</span>
+
+<span class="n">data</span><span class="p">.</span><span class="n">coeff_a_size_half_word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">COEFF_VECTOR_A_SIZE</span><span class="p">;</span>
+<span class="n">data</span><span class="p">.</span><span class="n">p_coeff_a</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="n">aFilterCoeffA</span><span class="p">;</span>
+<span class="n">data</span><span class="p">.</span><span class="n">coeff_b_size_half_word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">COEFF_VECTOR_B_SIZE</span><span class="p">;</span>
+<span class="n">data</span><span class="p">.</span><span class="n">p_coeff_b</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="n">aFilterCoeffB</span><span class="p">;</span>
+
+<span class="n">HAL_FMAC_PreloadX2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">data</span><span class="p">);</span>
+
+<span class="n">HAL_FMAC_LockX1WriteAccessForExternPeriph</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">);</span>
+
+<span class="n">HAL_FMAC_ReadY_DMA</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">,</span><span class="w"> </span><span class="n">Output</span><span class="p">,</span><span class="w"> </span><span class="n">OutputDataSize</span><span class="p">);</span>
+
+<span class="n">HAL_FMAC_StartFilterIIR</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">,</span><span class="w"> </span><span class="n">COEFF_VECTOR_B_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">COEFF_VECTOR_A_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">GAIN</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_FMAC_OPT_IT_FILTER_SATURATION_ERROR</span><span class="p">);</span>
+
+
+
+<span class="cm">/* Obtain the FMAC Write Data register (@WDATA) and assign it to to Fmac_Wdata */</span>
+<span class="n">Fmac_Wdata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_FMAC_GetX1Address</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">);</span>
+
+<span class="cm">/* Start ADC and DMA */</span>
+<span class="n">HAL_ADC_Start</span><span class="p">(</span><span class="n">hadc1</span><span class="p">);</span>
+<span class="n">HAL_ADC_REG_StartConv_DMA</span><span class="p">(</span><span class="n">hadc1</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">Fmac_Wdata</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT_BUFFER_SIZE</span><span class="o">*</span><span class="mi">4</span><span class="p">);</span>
+
+<span class="n">HAL_FMAC_StopFilter</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hfmac</span><span class="p">);</span>
+
+<span class="n">HAL_FMAC_DeInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">gh_fmac</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <p>
+           Related examples in HAL2
+          </p>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                Example Name
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                Description
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               example_hal_fmac_fir_dma_to_it
+              </p>
+             </td>
+             <td>
+              <p>
+               Demonstrate how to use the FMAC peripheral to filter a noisy signal using the DMA for input and using the IT mode to read the results
+              </p>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

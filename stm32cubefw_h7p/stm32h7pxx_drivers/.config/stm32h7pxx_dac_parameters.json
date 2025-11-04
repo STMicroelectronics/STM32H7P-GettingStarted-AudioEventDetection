@@ -1,0 +1,1162 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "version": "0.0.1",
+  "componentid": "::Device:STM32CubeMX2 Config:DAC",
+  "type": "object",
+  "functions": [
+    {
+      "path": ".config/template/helpers/dac_helpers.js",
+      "accessor": "common"
+    }
+  ],
+  "grammarVersion": "3.1",
+  "properties": {
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "object",
+          "title": "Software information",
+          "properties": {
+            "labels": {
+              "type": "array",
+              "title": "Label for peripheral instance",
+              "description": "Labels allow to create aliases inside mx_hal_def.h file like '<label>_init', '<label>_deinit' and '<label>_gethandle'. These aliases can be used on application side.",
+              "items": {
+                "type": "string",
+                "pattern": "^([a-zA-Z_][a-zA-Z0-9_]{1,31})?$",
+                "minLength": 0,
+                "maxLength": 32,
+                "unique": "project",
+                "default": ""
+              }
+            },
+            "layer": {
+              "type": "string",
+              "title": "Layer",
+              "oneOf": [
+                {
+                  "const": "HAL"
+                },
+                {
+                  "const": "LL"
+                }
+              ],
+              "variables": [
+                {
+                  "on": "update-value",
+                  "name": "HAL_DAC_PROJECT_USE_HAL",
+                  "condition": "$value === 'HAL'",
+                  "semaphore": true
+                }
+              ],
+              "default": "HAL"
+            },
+            "init_type": {
+              "type": "string",
+              "title": "resource initialization code generation",
+              "description": "generate or not the DAC init code, call it or not at boot",
+              "$comment": "generate the init code of your DAC or not (enabled/disabled), call it automatically at startup or not (called/enabled)",
+              "oneOf": [
+                {
+                  "const": "called"
+                },
+                {
+                  "const": "enabled"
+                },
+                {
+                  "const": "disabled"
+                }
+              ],
+              "default": "called"
+            }
+          }
+        },
+        "high_frequency_mode": {
+          "type": "object",
+          "title": "High frequency mode",
+          "properties": {
+            "clock_frequency": {
+              "title": "Kernel clock (unit: Hz)",
+              "description": "DAC interface bus clock frequency",
+              "type": "number",
+              "default": 1000000,
+              "unit": "Hz",
+              "actions": [
+                {
+                  "type": "set",
+                  "condition": "true",
+                  "computed": {
+                    "const": "Number($get('clock.frequency', $resource.id + '_Clock_Source'))"
+                  }
+                },
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ]
+            },
+            "auto_freq_mode": {
+              "title": "Auto",
+              "type": "boolean",
+              "default": true,
+              "description": "Compute high frequency mode from input clock frequency"
+            },
+            "high_freq_mode": {
+              "title": "High Frequency Mode",
+              "type": "string",
+              "oneOf": [
+                {
+                  "title": "80 MHz",
+                  "const": "ABOVE_80MHZ"
+                },
+                {
+                  "title": "160 MHz",
+                  "const": "ABOVE_160MHZ"
+                },
+                {
+                  "title": "Disabled",
+                  "const": "DISABLED"
+                }
+              ],
+              "actions": [
+                {
+                  "type": "disable",
+                  "condition": "$high_frequency_mode.auto_freq_mode"
+                },
+                {
+                  "type": "set",
+                  "condition": "$high_frequency_mode.auto_freq_mode",
+                  "computed": {
+                    "const": "$common.helper_dac_get_frequency_step($high_frequency_mode.clock_frequency)"
+                  }
+                }
+              ],
+              "default": "DISABLED"
+            }
+          }
+        },
+        "dual": {
+          "title": "Dual Mode Config",
+          "type": "object",
+          "properties": {
+            "enable": {
+              "title": "Dual Channel Mode",
+              "description": "Enable Dual channel mode",
+              "type": "boolean",
+              "default": false,
+              "variables": [
+                {
+                  "on": "update-value",
+                  "name": "DAC_CORE_USE_HAL_DAC_DUAL_CHANNEL",
+                  "computed_value": "$dual.enable === true"
+                }
+              ]
+            },
+            "alignment": {
+              "type": "string",
+              "description": "DAC dual channel data alignment.",
+              "default": "12_BITS_RIGHT",
+              "oneOf": [
+                {
+                  "title": "12 bits right alignment",
+                  "const": "12_BITS_RIGHT"
+                },
+                {
+                  "title": "12 bits left alignment",
+                  "const": "12_BITS_LEFT",
+                  "description": "Equivalent to 16 bits with LSB ignored"
+                },
+                {
+                  "title": "8 bits right alignment",
+                  "const": "8_BITS_RIGHT"
+                }
+              ],
+              "title": "Dual Alignment",
+              "actions": [
+                {
+                  "type": "enable",
+                  "condition": "$dual.enable"
+                }
+              ]
+            },
+            "dma": {
+              "type": "object",
+              "title": "DMA",
+              "properties": {
+                "enable": {
+                  "title": "Dual DMA",
+                  "description": "DAC dual channel DMA",
+                  "type": "boolean",
+                  "default": false,
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "$dual.enable"
+                    }
+                  ]
+                },
+                "udr": {
+                  "type": "boolean",
+                  "default": false,
+                  "title": "Underrun Interruption",
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "$dual.dma.enable && $dual.enable"
+                    },
+                    {
+                      "type": "set",
+                      "condition": "!$dual.dma.enable",
+                      "attributes": {
+                        "default": false
+                      },
+                      "computed": {
+                        "const": "false"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "actions": [
+            {
+              "type": "include",
+              "condition": "($resource.features.dual === 1)"
+            }
+          ]
+        },
+        "channels": {
+          "title": "Channels config",
+          "rendering": "channels-tabs",
+          "type": "array",
+          "strictMaxItems": false,
+          "source": "Array.from({ length : ($resource.features.dual + 1)}, (_, i) => ({ id: i, name: `Channel ${i+1}` }))",
+          "itemTitle": "name",
+          "itemId": "id",
+          "itemVar": "channel",
+          "items": {
+            "type": "object",
+            "properties": {
+              "use_channel": {
+                "title": "Enable channel",
+                "type": "boolean",
+                "default": false,
+                "actions": [
+                  {
+                    "type": "disable",
+                    "condition": "$dual.enable"
+                  },
+                  {
+                    "type": "set",
+                    "condition": "$dual.enable",
+                    "computed": {
+                      "const": "true"
+                    }
+                  },
+                  {
+                    "type": "set",
+                    "condition": "($channel?.id ?? 0) == 0",
+                    "attributes": {
+                      "default": "true"
+                    }
+                  }
+                ]
+              },
+              "basic": {
+                "type": "object",
+                "description": "DAC channel configuration structure definition.",
+                "title": "Basic channel features",
+                "properties": {
+                  "alignment": {
+                    "type": "string",
+                    "default": "12_BITS_RIGHT",
+                    "oneOf": [
+                      {
+                        "title": "12 bits right alignment",
+                        "const": "12_BITS_RIGHT"
+                      },
+                      {
+                        "title": "12 bits left alignment",
+                        "const": "12_BITS_LEFT",
+                        "description": "Equivalent to 16 bits with LSB ignored"
+                      },
+                      {
+                        "title": "8 bits right alignment",
+                        "const": "8_BITS_RIGHT"
+                      }
+                    ],
+                    "title": "Alignment",
+                    "actions": [
+                      {
+                        "type": "disable",
+                        "condition": "$dual.enable"
+                      },
+                      {
+                        "type": "set",
+                        "condition": "$dual.enable",
+                        "attributes": {
+                          "description": "DAC channel alignment managed in Dual mode\nNote : managed in Dual mode"
+                        }
+                      },
+                      {
+                        "type": "disable",
+                        "condition": "$info.layer === 'LL'"
+                      },
+                      {
+                        "type": "set",
+                        "condition": "$info.layer === 'LL'",
+                        "attributes": {
+                          "description": "Layer LL: Managed by the applicative code (refer to function LL_DAC_ConvertData12RightAligned() or LL_DAC_ConvertData12LeftAligned() or LL_DAC_ConvertData8RightAligned())"
+                        }
+                      }
+                    ]
+                  },
+                  "trigger_enable": {
+                    "title": "Enable trigger",
+                    "type": "boolean",
+                    "description": "The conversion can then be triggered by an external event. When disabled data is converted continuously.",
+                    "default": false
+                  },
+                  "trigger": {
+                    "type": "object",
+                    "objectType": "query",
+                    "default": "No trigger",
+                    "query": {
+                      "entity": "peripheral.interconnect.input trigger",
+                      "parent": "$resource.id",
+                      "title": "{{source.toUpperCase().replace('SW TRIGGER', 'SOFTWARE').replace('EXT', 'EXTI').replace('_TGO', '_TRGO').replace('[', '').replace(']', '').replace('_IT', '').replace('_CKTIM', '').replace('EXTII', 'EXTI')}}",
+                      "sort": {},
+                      "sharing": false,
+                      "where": "!$entity.ip_signal.includes(\"step\")"
+                    },
+                    "select": "first",
+                    "actions": [
+                      {
+                        "type": "enable",
+                        "condition": "$item.basic.trigger_enable"
+                      }
+                    ]
+                  },
+                  "output_buffer": {
+                    "description": "The output buffer can be enabled to obtain a high drive capability. Before enabling the output buffer, the voltage offset needs to be calibrated.",
+                    "type": "boolean",
+                    "default": true,
+                    "title": "Output buffer"
+                  },
+                  "output_connection": {
+                    "type": "string",
+                    "default": "EXTERNAL",
+                    "oneOf": [
+                      {
+                        "title": "To external pin",
+                        "const": "EXTERNAL",
+                        "description": "DAC channel output is connected to external pin. Note: Depending on other parameters (mode normal or sample and hold, output buffer state), output can also be connected to on-chip peripherals, refer to ref manual."
+                      },
+                      {
+                        "title": "To on-chip peripherals",
+                        "const": "INTERNAL",
+                        "description": "DAC channel output is connected to on-chip peripherals (via internal paths). Note: Depending on other parameters (mode normal or sample and hold, output buffer state), output can also be connected to external pin, refer to ref manual."
+                      }
+                    ],
+                    "title": "Output connection"
+                  },
+                  "data_sign_format": {
+                    "type": "string",
+                    "default": "UNSIGNED",
+                    "title": "Data sign format",
+                    "oneOf": [
+                      {
+                        "title": "Unsigned",
+                        "const": "UNSIGNED"
+                      },
+                      {
+                        "title": "Signed",
+                        "const": "SIGNED"
+                      }
+                    ]
+                  }
+                }
+              },
+              "additional_features": {
+                "type": "object",
+                "description": "All Functions Configuration",
+                "title": "Additional Channel Features",
+                "properties": {
+                  "wave": {
+                    "title": "Wave generation",
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "title": "Wave type",
+                        "type": "string",
+                        "oneOf": [
+                          {
+                            "title": "Disabled",
+                            "const": "DISABLED"
+                          },
+                          {
+                            "title": "Triangle",
+                            "const": "TRIANGLE",
+                            "actions": [
+                              {
+                                "type": "include",
+                                "condition": "$resource.features.triangle === 1"
+                              }
+                            ]
+                          },
+                          {
+                            "const": "NOISE",
+                            "title": "Noise",
+                            "actions": [
+                              {
+                                "type": "include",
+                                "condition": "$resource.features.lfsr === 1"
+                              }
+                            ]
+                          },
+                          {
+                            "title": "Sawtooth",
+                            "const": "SAWTOOTH",
+                            "actions": [
+                              {
+                                "type": "include",
+                                "condition": "$resource.features.saw === 1"
+                              }
+                            ]
+                          }
+                        ],
+                        "default": "DISABLED",
+                        "description": "Waveforme type"
+                      },
+                      "noise_amplitude": {
+                        "type": "integer",
+                        "description": "Pseudo noise amplitude to be added to DAC channel output (unit LSB)",
+                        "default": 255,
+                        "oneOf": [
+                          {
+                            "const": 1,
+                            "title": "1"
+                          },
+                          {
+                            "title": "3",
+                            "const": 3
+                          },
+                          {
+                            "title": "7",
+                            "const": 7
+                          },
+                          {
+                            "title": "15",
+                            "const": 15
+                          },
+                          {
+                            "title": "31",
+                            "const": 31
+                          },
+                          {
+                            "title": "63",
+                            "const": 63
+                          },
+                          {
+                            "title": "127",
+                            "const": 127
+                          },
+                          {
+                            "title": "255",
+                            "const": 255
+                          },
+                          {
+                            "title": "511",
+                            "const": 511
+                          },
+                          {
+                            "title": "1023",
+                            "const": 1023
+                          },
+                          {
+                            "title": "2047",
+                            "const": 2047
+                          },
+                          {
+                            "title": "4095",
+                            "const": 4095
+                          }
+                        ],
+                        "title": "Amplitude",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$item.additional_features.wave.type == 'NOISE'"
+                          }
+                        ]
+                      },
+                      "sawtooth_config": {
+                        "title": "Sawtooth Config",
+                        "type": "object",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$item.additional_features.wave.type === 'SAWTOOTH'"
+                          }
+                        ],
+                        "properties": {
+                          "reset_trigger": {
+                            "description": "Reset trigger",
+                            "type": "object",
+                            "objectType": "query",
+                            "query": {
+                              "entity": "peripheral.interconnect.input trigger",
+                              "parent": "$resource.id",
+                              "title": "{{source.toUpperCase().replace('SW TRIGGER', 'SOFTWARE').replace('EXT', 'EXTI').replace('_TGO', '_TRGO').replace('[', '').replace(']', '').replace('_IT', '').replace('_CKTIM', '').replace('EXTII', 'EXTI')}}",
+                              "sort": {},
+                              "sharing": false,
+                              "where": "!$entity.ip_signal.includes(\"step\")"
+                            },
+                            "select": "first",
+                            "title": "Reset trigger"
+                          },
+                          "step_trigger": {
+                            "description": "Step trigger",
+                            "type": "object",
+                            "objectType": "query",
+                            "query": {
+                              "entity": "peripheral.interconnect.input trigger",
+                              "parent": "$resource.id",
+                              "title": "{{source.toUpperCase().replace('SW TRIGGER', 'SOFTWARE').replace('EXT', 'EXTI').replace('_TGO', '_TRGO').replace('[', '').replace(']', '').replace('_IT', '').replace('_CKTIM', '').replace('EXTII', 'EXTI')}}",
+                              "sort": {},
+                              "sharing": false,
+                              "where": "$entity.ip_signal.includes(\"step\")"
+                            },
+                            "select": "first",
+                            "title": "Step trigger"
+                          },
+                          "direction": {
+                            "title": "Direction",
+                            "type": "string",
+                            "oneOf": [
+                              {
+                                "title": "Increment ",
+                                "const": "INCREMENT"
+                              },
+                              {
+                                "title": "Decrement",
+                                "const": "DECREMENT"
+                              }
+                            ],
+                            "default": "INCREMENT"
+                          },
+                          "reset": {
+                            "title": "Reset value",
+                            "type": "integer",
+                            "minimum": 0,
+                            "default": 0,
+                            "display_format": [
+                              "dec",
+                              "hex"
+                            ],
+                            "unit": "LSB"
+                          },
+                          "step ": {
+                            "title": "Step value",
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 0,
+                            "maximum": 4095,
+                            "display_format": [
+                              "dec",
+                              "hex"
+                            ],
+                            "unit": "LSB"
+                          }
+                        }
+                      },
+                      "triangle_amplitude": {
+                        "type": "integer",
+                        "description": "Triangle wave amplitude to be added to DAC channel output (unit LSB)",
+                        "default": 255,
+                        "oneOf": [
+                          {
+                            "const": 1,
+                            "title": "1"
+                          },
+                          {
+                            "title": "3",
+                            "const": 3
+                          },
+                          {
+                            "title": "7",
+                            "const": 7
+                          },
+                          {
+                            "title": "15",
+                            "const": 15
+                          },
+                          {
+                            "title": "31",
+                            "const": 31
+                          },
+                          {
+                            "title": "63",
+                            "const": 63
+                          },
+                          {
+                            "title": "127",
+                            "const": 127
+                          },
+                          {
+                            "title": "255",
+                            "const": 255
+                          },
+                          {
+                            "title": "511",
+                            "const": 511
+                          },
+                          {
+                            "title": "1023",
+                            "const": 1023
+                          },
+                          {
+                            "title": "2047",
+                            "const": 2047
+                          },
+                          {
+                            "title": "4095",
+                            "const": 4095
+                          }
+                        ],
+                        "title": "Amplitude",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$item.additional_features.wave.type === 'TRIANGLE'"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "dma": {
+                    "title": "DMA ",
+                    "type": "object",
+                    "properties": {
+                      "enable": {
+                        "title": "DMA",
+                        "description": "The DAC channel has a DMA capability. One DMA channel is used to service DAC channel DMA request and transfer data from memory to DAC channel data holding register.",
+                        "type": "boolean",
+                        "default": false,
+                        "actions": [
+                          {
+                            "type": "disable",
+                            "condition": "$instance_config.dual.enable"
+                          },
+                          {
+                            "type": "set",
+                            "condition": "$instance_config.dual.enable",
+                            "attributes": {
+                              "default": false
+                            },
+                            "computed": {
+                              "const": "false"
+                            }
+                          }
+                        ]
+                      },
+                      "udr": {
+                        "type": "boolean",
+                        "default": false,
+                        "title": "Underrun interruption",
+                        "description": "Enable the DMA underrun interruption",
+                        "actions": [
+                          {
+                            "type": "enable",
+                            "condition": "$item.additional_features.dma.enable"
+                          },
+                          {
+                            "type": "set",
+                            "condition": "!$item.additional_features.dma.enable",
+                            "attributes": {
+                              "default": false
+                            },
+                            "computed": {
+                              "const": "false"
+                            }
+                          }
+                        ]
+                      },
+                      "double_data_mode": {
+                        "title": "DMA double data mode",
+                        "type": "boolean",
+                        "default": false,
+                        "description": "DMA double data mode allow the application to efficiently use the bus bandwidth. When the DMA controller is used in normal mode, only 12-bit (or 8-bit) data are transferred by a DMA request. As the AHB width is 32 bits, two 12-bit data may be transferred simultaneously. In DMA double data mode, a DAC DMA request is generated every two external triggers",
+                        "actions": [
+                          {
+                            "type": "enable",
+                            "condition": "$item.additional_features.dma.enable"
+                          },
+                          {
+                            "type": "set",
+                            "condition": "!$item.additional_features.dma.enable",
+                            "attributes": {
+                              "default": false
+                            },
+                            "computed": {
+                              "const": "false"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "sample_and_hold": {
+                    "type": "object",
+                    "title": "Sample and hold",
+                    "properties": {
+                      "enable": {
+                        "type": "boolean",
+                        "description": "The DAC core converts data and then holds the converted voltage on a capacitor. When not converting, the DAC cores and buffer are completely turned off, therefore reducing the overall power consumption",
+                        "default": false,
+                        "title": "Sample and Hold"
+                      },
+                      "sample_cycles": {
+                        "title": "Sample time (unit: clock cycles)",
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 1023,
+                        "display_format": [
+                          "dec",
+                          "hex"
+                        ],
+                        "unit": "cycles",
+                        "description": "Sample phase: the sample/hold element is charged to the desired voltage. The charging time depends on capacitor value (internal or external, selected by the user).",
+                        "default": 0,
+                        "actions": [
+                          {
+                            "type": "enable",
+                            "condition": "$item.additional_features.sample_and_hold.enable"
+                          }
+                        ]
+                      },
+                      "sample_time": {
+                        "title": "Sample time (unit: us)",
+                        "type": "number",
+                        "description": "Computed sample phase time (using sample and hold clock frequency)",
+                        "default": 0,
+                        "unit": "us",
+                        "actions": [
+                          {
+                            "type": "disable",
+                            "condition": "true"
+                          },
+                          {
+                            "type": "set",
+                            "condition": "true",
+                            "computed": {
+                              "const": "$common.helper_dac_compute_cycle_time($item.additional_features.sample_and_hold.sample_cycles, $item.additional_features.sample_and_hold.clock_frequency)"
+                            }
+                          }
+                        ]
+                      },
+                      "hold_cycles": {
+                        "title": "Hold time (unit: clock cycles)",
+                        "type": "integer",
+                        "default": 1,
+                        "minimum": 0,
+                        "maximum": 1023,
+                        "display_format": [
+                          "dec",
+                          "hex"
+                        ],
+                        "unit": "cycles",
+                        "description": "Hold phase: the DAC output channel is tri-stated, the DAC core and the buffer are turned off",
+                        "actions": [
+                          {
+                            "type": "enable",
+                            "condition": "$item.additional_features.sample_and_hold.enable"
+                          }
+                        ]
+                      },
+                      "hold_time": {
+                        "title": "Hold time (unit: us)",
+                        "type": "number",
+                        "description": "Computed hold phase time (using sample and hold clock frequency)",
+                        "default": 0,
+                        "unit": "us",
+                        "actions": [
+                          {
+                            "type": "disable",
+                            "condition": "true"
+                          },
+                          {
+                            "type": "set",
+                            "condition": "true",
+                            "computed": {
+                              "const": "$common.helper_dac_compute_cycle_time($item.additional_features.sample_and_hold.hold_cycles, $item.additional_features.sample_and_hold.clock_frequency)"
+                            }
+                          }
+                        ]
+                      },
+                      "refresh_cycles": {
+                        "title": "Refresh time (unit: clock cycles)",
+                        "type": "integer",
+                        "default": 1,
+                        "minimum": 0,
+                        "maximum": 255,
+                        "display_format": [
+                          "dec",
+                          "hex"
+                        ],
+                        "unit": "cycles",
+                        "description": "",
+                        "actions": [
+                          {
+                            "type": "enable",
+                            "condition": "$item.additional_features.sample_and_hold.enable"
+                          }
+                        ]
+                      },
+                      "refresh_time": {
+                        "title": "Refresh time (unit: us)",
+                        "type": "number",
+                        "description": "Computed refresh phase time (using sample and hold clock frequency)",
+                        "default": 0,
+                        "unit": "us",
+                        "actions": [
+                          {
+                            "type": "disable",
+                            "condition": "true"
+                          },
+                          {
+                            "type": "set",
+                            "condition": "true",
+                            "computed": {
+                              "const": "$common.helper_dac_compute_cycle_time($item.additional_features.sample_and_hold.refresh_cycles, $item.additional_features.sample_and_hold.clock_frequency)"
+                            }
+                          }
+                        ]
+                      },
+                      "clock_frequency": {
+                        "title": " Sample and hold clock (uint: Hz)",
+                        "description": "Low power clock used for the sample and hold",
+                        "type": "number",
+                        "default": 1000000,
+                        "unit": "Hz",
+                        "actions": [
+                          {
+                            "type": "set",
+                            "condition": "true",
+                            "computed": {
+                              "const": "Number($get('clock.frequency', $resource.id + 'SH_Clock_Source'))"
+                            }
+                          },
+                          {
+                            "type": "disable",
+                            "condition": "true"
+                          }
+                        ]
+                      }
+                    },
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$resource.features.sample === 1"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "additional_features": {
+          "title": "Additional Features",
+          "type": "object",
+          "properties": {
+            "AM_Enable": {
+              "type": "boolean",
+              "description": "Enable the DAC Autonomous mode.",
+              "default": false,
+              "title": "Autonomous mode",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$resource.features.autonom === 1"
+                }
+              ]
+            }
+          },
+          "actions": [
+            {
+              "type": "include",
+              "condition": "($resource.features.autonom === 1) || ($resource.features.optionreg_out_g === 1)"
+            }
+          ]
+        },
+        "System": {
+          "title": "System Config",
+          "type": "object",
+          "properties": {
+            "dma": {
+              "type": "object",
+              "title": "DMA Settings",
+              "properties": {
+                "dma_need_dual": {
+                  "type": "object",
+                  "objectType": "need.dma.channels",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_DMA_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id + '_CH1'",
+                  "title": "DMA config",
+                  "needs": [
+                    {
+                      "selector": "CH1",
+                      "constraints": {
+                        "dest_data_width": {
+                          "const": "WORD"
+                        },
+                        "src_inc": {
+                          "default": "INCREMENTED"
+                        },
+                        "dest_inc": {
+                          "const": "FIXED"
+                        },
+                        "direction": {
+                          "const": "MEMORY_TO_PERIPH"
+                        },
+                        "src_data_width": {
+                          "default": "WORD"
+                        },
+                        "DMA_Mode": {
+                          "default": 2
+                        }
+                      }
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$config.instance_dual.dma.enable && $instance_config.dual.enable"
+                    }
+                  ]
+                },
+                "dma_need_ch1": {
+                  "type": "object",
+                  "objectType": "need.dma.channels",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_DMA_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id + '_CH1'",
+                  "title": "DMA config",
+                  "needs": [
+                    {
+                      "selector": "CH1",
+                      "constraints": {
+                        "dest_data_width": {
+                          "const": "WORD"
+                        },
+                        "src_inc": {
+                          "default": "INCREMENTED"
+                        },
+                        "dest_inc": {
+                          "const": "FIXED"
+                        },
+                        "direction": {
+                          "const": "MEMORY_TO_PERIPH"
+                        },
+                        "src_data_width": {
+                          "default": "WORD"
+                        },
+                        "DMA_Mode": {
+                          "default": 2
+                        }
+                      }
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$common.helper_dac_get_param_in_channel_config($channels, 0, 'additional_features.dma.enable')"
+                    }
+                  ]
+                },
+                "dma_need_ch2": {
+                  "type": "object",
+                  "objectType": "need.dma.channels",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_DMA_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id + '_CH2'",
+                  "title": "DMA config",
+                  "needs": [
+                    {
+                      "selector": "CH2",
+                      "constraints": {
+                        "dest_data_width": {
+                          "const": "WORD"
+                        },
+                        "src_inc": {
+                          "default": "INCREMENTED"
+                        },
+                        "dest_inc": {
+                          "const": "FIXED"
+                        },
+                        "direction": {
+                          "const": "MEMORY_TO_PERIPH"
+                        },
+                        "src_data_width": {
+                          "default": "WORD"
+                        },
+                        "DMA_Mode": {
+                          "default": 2
+                        }
+                      }
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$common.helper_dac_get_param_in_channel_config($channels, 1, 'additional_features.dma.enable')"
+                    }
+                  ]
+                }
+              }
+            },
+            "gpio": {
+              "type": "object",
+              "description": "GPIO settings",
+              "properties": {
+                "channel1_gpio": {
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_GPIO_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "OUT1",
+                      "constraints": {
+                        "mode": {
+                          "const": "ANALOG"
+                        },
+                        "pull": {
+                          "const": "NO"
+                        }
+                      }
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($common.helper_dac_get_param_in_channel_config($channels, 0, 'use_channel')) && (($common.helper_dac_get_param_in_channel_config($channels, 0, 'basic.output_connection') == 'EXTERNAL') || $common.helper_dac_get_param_in_channel_config($channels, 0, 'basic.output_buffer')) && ($get('pinout.peripheralCanBeMapped', $resource.id, 'OUT1') == true)"
+                    }
+                  ]
+                },
+                "channel2_gpio": {
+                  "type": "object",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($common.helper_dac_get_param_in_channel_config($channels, 1, 'use_channel')) && (($common.helper_dac_get_param_in_channel_config($channels, 1, 'basic.output_connection') == 'EXTERNAL') || $common.helper_dac_get_param_in_channel_config($channels, 1, 'basic.output_buffer')) && ($get('pinout.peripheralCanBeMapped', $resource.id, 'OUT2') == true)"
+                    }
+                  ],
+                  "objectType": "need.pinout.signals",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_GPIO_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "OUT2",
+                      "constraints": {
+                        "mode": {
+                          "const": "ANALOG"
+                        },
+                        "pull": {
+                          "const": "NO"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "EnableInterruption": {
+              "type": "boolean",
+              "description": "Enable interruption mode for the peripheral.",
+              "default": false,
+              "actions": [
+                {
+                  "type": "enable",
+                  "condition": "$common.helper_dac_get_param_in_channel_config($channels, 0, 'additional_features.dma.udr') || $common.helper_dac_get_param_in_channel_config($channels, 1, 'additional_features.dma.udr') || $dual.dma.udr && $dual.enable"
+                }
+              ]
+            },
+            "irq_handler_generation": {
+              "type": "boolean",
+              "title": "IRQ Handler generation",
+              "default": true,
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$System.EnableInterruption && $info.layer === 'HAL'"
+                }
+              ]
+            },
+            "nvicConfig": {
+              "title": "NVIC DAC UDR configuration",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$System.EnableInterruption"
+                }
+              ],
+              "type": "object",
+              "objectType": "need.interrupt.lines",
+              "variables": [
+                {
+                  "on": "update-value",
+                  "name": "HAL_CORTEX_PROJECT_USE_HAL",
+                  "condition": "$info.layer === 'HAL'",
+                  "semaphore": true
+                }
+              ],
+              "owner": "$resource.id",
+              "needs": [
+                {
+                  "selector": "*"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

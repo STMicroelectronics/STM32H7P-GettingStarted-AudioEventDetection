@@ -1,0 +1,3087 @@
+<!DOCTYPE html>
+<html data-content_root="../../../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, HAL1, PWR, STM32H5, STM32G0, STM32F4, STM32L4, STM32C0, STM32H7" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     HAL PWR voltage monitoring functions migration — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <script src="../../../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <link href="../../../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../../../search.html" rel="search" title="Search"/>
+    <link href="hal_pwr_supply_control_functions.html" rel="next" title="HAL PWR supply control functions migration"/>
+    <link href="hal_pwr_control_functions.html" rel="prev" title="HAL PWR control function migration"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/drivers_documentation/hal_drivers/pwr/hal_pwr_voltage_monitoring_functions" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_script/migration_script_toc.html">
+            HAL1 detection
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../breaking_concepts/breaking_concepts_toc.html">
+              Breaking changes in concepts
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../hal_drivers_toc.html">
+              HAL drivers migration
+             </a>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../adc/hal_adc_toc.html">
+                ADC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../comp/hal_comp_toc.html">
+                COMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cortex/hal_cortex_toc.html">
+                CORTEX
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cordic/hal_cordic_toc.html">
+                CORDIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../crc/hal_crc_toc.html">
+                CRC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cryp/hal_cryp_toc.html">
+                CRYP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dac/hal_dac_toc.html">
+                DAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dcache/hal_dcache_toc.html">
+                DCACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dma/hal_dma_toc.html">
+                DMA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../exti/hal_exti_toc.html">
+                EXTI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../fmac/hal_fmac_toc.html">
+                FMAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../generic/hal_generic_toc.html">
+                GENERIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxmmu/hal_gfxmmu_toc.html">
+                GFXMMU
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxtim/hal_gfxtim_toc.html">
+                GFXTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gpio/hal_gpio_toc.html">
+                GPIO
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2c/hal_i2c_toc.html">
+                I2C
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2s/hal_i2s_toc.html">
+                I2S
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../icache/hal_icache_toc.html">
+                ICACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../irda/hal_irda_toc.html">
+                IRDA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../iwdg/hal_iwdg_toc.html">
+                IWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../lptim/hal_lptim_toc.html">
+                LPTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../nor/hal_nor_toc.html">
+                NOR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../opamp/hal_opamp_toc.html">
+                OPAMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ospi/hal_ospi_toc.html">
+                OSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pka/hal_pka_toc.html">
+                PKA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="hal_pwr_toc.html">
+                PWR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../qspi/hal_qspi_toc.html">
+                QSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ramcfg/hal_ramcfg_toc.html">
+                RAMCFG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rcc/hal_rcc_toc.html">
+                RCC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rng/hal_rng_toc.html">
+                RNG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rtc/hal_rtc_toc.html">
+                RTC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sdram/hal_sdram_toc.html">
+                SDRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smartcard/hal_smartcard_toc.html">
+                SMARTCARD
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smbus/hal_smbus_toc.html">
+                SMBUS
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../spi/hal_spi_toc.html">
+                SPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sram/hal_sram_toc.html">
+                SRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../tim/hal_tim_toc.html">
+                TIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../uart/hal_uart_toc.html">
+                UART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../usart/hal_usart_toc.html">
+                USART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../wwdg/hal_wwdg_toc.html">
+                WWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../xspi/hal_xspi_toc.html">
+                XSPI
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../ll_drivers/ll_drivers_toc.html">
+              LL drivers migration
+             </a>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-drivers-documentation-hal-drivers-pwr-hal-pwr-voltage-monitoring-functions--page-root">
+            HAL PWR voltage monitoring functions migration
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enable-disable-voltage-monitoring-pvm1">
+               HAL PWR enable/disable voltage monitoring PVM1
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enable-disable-voltage-monitoring-pvm2">
+               HAL PWR enable/disable voltage monitoring PVM2
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enable-disable-voltage-monitoring-pvm3">
+               HAL PWR enable/disable voltage monitoring PVM3
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enable-disable-voltage-monitoring-pvm4">
+               HAL PWR enable/disable voltage monitoring PVM4
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enable-disable-battery-charging">
+               HAL PWR enable/disable battery charging
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enable-disable-ucp-dead-battery">
+               HAL PWR enable/disable UCP Dead battery
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enable-disable-avd">
+               HAL PWR enable/Disable AVD
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enable-disable-ucpd-stand-by-mode">
+               HAL PWR enable/disable UCPD stand by mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enable-disable-temperature-vdd-monitoring">
+               HAL PWR enable/disable Temperature Vdd monitoring
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enable-disable-vdd-usb">
+               HAL PWR enable/disable vdd usb
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enable-disable-pvm-usb">
+               HAL PWR enable/disable PVM USB
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enable-disable-pvd">
+               HAL PWR enable/disable PVD
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enable-disable-vdd11-usb">
+               HAL PWR enable/Disable VDD11 USB
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enable-disable-otghsphy-lowpower-retention">
+               HAL PWR enable/disable OTGHSPHY LowPower Retention
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-disable-pvd">
+               HAL PWR enable/disable PVD
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enable-disable-usbhs-transceiver-supply">
+               HAL PWR enable/disable USBHS transceiver supply
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enable-disable-avm2">
+               HAL PWR enable/disable AVM2
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enable-disable-avm1">
+               HAL PWR enable/disable AVM1
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enable-disable-o2vm">
+               HAL PWR enable/disable O2VM
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enable-disable-uvm">
+               HAL PWR enable/disable UVM
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enable-disable-vdda">
+               HAL PWR enable/disable VddA
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enable-disable-vddio2">
+               HAL PWR enable/disable VddIO2
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-configure-pvd">
+               HAL PWR Configure PVD
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-configure-pvm">
+               HAL PWR Configure PVM
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-configure-avd">
+               HAL PWR Configure AVD
+              </a>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="hal-pwr-voltage-monitoring-functions-migration">
+        <span id="hal-pwr-voltage-monitoring-functions">
+        </span>
+        <h1 id="docs-markup-drivers-documentation-hal-drivers-pwr-hal-pwr-voltage-monitoring-functions--page-root">
+         HAL PWR voltage monitoring functions migration
+         <a class="headerlink" href="#docs-markup-drivers-documentation-hal-drivers-pwr-hal-pwr-voltage-monitoring-functions--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <p>
+         This section provides information about the HAL PWR voltage monitoring functions migration .
+        </p>
+        <section id="hal-pwr-enable-disable-voltage-monitoring-pvm1">
+         <span id="hal-pwrex-disable-pvm1">
+         </span>
+         <span id="hal-pwrex-enable-pvm1">
+         </span>
+         <h2 id="hal-pwr-enable-disable-voltage-monitoring-pvm1">
+          HAL PWR enable/disable voltage monitoring PVM1
+          <a class="headerlink" href="#hal-pwr-enable-disable-voltage-monitoring-pvm1" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_EnablePVM1()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_EnableVoltageMonitor()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_DisablePVM1()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_DisableVoltageMonitor()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-enable-disable-voltage-monitoring-pvm2">
+         <span id="hal-pwrex-disable-pvm2">
+         </span>
+         <span id="hal-pwrex-enable-pvm2">
+         </span>
+         <h2 id="hal-pwr-enable-disable-voltage-monitoring-pvm2">
+          HAL PWR enable/disable voltage monitoring PVM2
+          <a class="headerlink" href="#hal-pwr-enable-disable-voltage-monitoring-pvm2" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_EnablePVM2()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_EnableVoltageMonitor()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_DisablePVM2()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_DisableVoltageMonitor()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-enable-disable-voltage-monitoring-pvm3">
+         <span id="hal-pwrex-disable-pvm3">
+         </span>
+         <span id="hal-pwrex-enable-pvm3">
+         </span>
+         <h2 id="hal-pwr-enable-disable-voltage-monitoring-pvm3">
+          HAL PWR enable/disable voltage monitoring PVM3
+          <a class="headerlink" href="#hal-pwr-enable-disable-voltage-monitoring-pvm3" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_EnablePVM3()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_EnableVoltageMonitor()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_DisablePVM3()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_DisableVoltageMonitor()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-enable-disable-voltage-monitoring-pvm4">
+         <span id="hal-pwrex-disable-pvm4">
+         </span>
+         <span id="hal-pwrex-enable-pvm4">
+         </span>
+         <h2 id="hal-pwr-enable-disable-voltage-monitoring-pvm4">
+          HAL PWR enable/disable voltage monitoring PVM4
+          <a class="headerlink" href="#hal-pwr-enable-disable-voltage-monitoring-pvm4" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_EnablePVM4()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_EnableVoltageMonitor()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_DisablePVM4()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_DisableVoltageMonitor()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-enable-disable-battery-charging">
+         <span id="hal-pwrex-enable-battery-charging">
+         </span>
+         <span id="hal-pwrex-disable-battery-charging">
+         </span>
+         <h2 id="hal-pwr-enable-disable-battery-charging">
+          HAL PWR enable/disable battery charging
+          <a class="headerlink" href="#hal-pwr-enable-disable-battery-charging" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_DisableBatteryCharging()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_DisableBatteryCharging()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_EnableBatteryCharging()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_EnableBatteryCharging()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-enable-disable-ucp-dead-battery">
+         <span id="hal-pwrex-enable-ucpd-deadbattery">
+         </span>
+         <span id="hal-pwrex-disable-ucp-dead-battery">
+         </span>
+         <h2 id="hal-pwr-enable-disable-ucp-dead-battery">
+          HAL PWR enable/disable UCP Dead battery
+          <a class="headerlink" href="#hal-pwr-enable-disable-ucp-dead-battery" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_DisableUCPDDeadBattery()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_LP_DisableUCPDDeadBattery()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_EnableUCPDDeadBattery()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_LP_EnableUCPDDeadBattery()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-enable-disable-avd">
+         <span id="hal-pwrex-disable-avd">
+         </span>
+         <span id="hal-pwrex-enable-avd">
+         </span>
+         <h2 id="hal-pwr-enable-disable-avd">
+          HAL PWR enable/Disable AVD
+          <a class="headerlink" href="#hal-pwr-enable-disable-avd" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_EnableAVD()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_EnableAnalogVoltageDetector()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_DisableAVD()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_DisableAnalogVoltageDetector()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-enable-disable-ucpd-stand-by-mode">
+         <span id="hal-pwrex-disable-ucpd-standby-mode">
+         </span>
+         <span id="hal-pwrex-enable-ucpd-stand-by-mode">
+         </span>
+         <h2 id="hal-pwr-enable-disable-ucpd-stand-by-mode">
+          HAL PWR enable/disable UCPD stand by mode
+          <a class="headerlink" href="#hal-pwr-enable-disable-ucpd-stand-by-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_EnableUCPDStandbyMode()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_LP_EnableUCPDRetention()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_DisableUCPDStandbyMode()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_LP_DisableUCPDRetention()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-enable-disable-temperature-vdd-monitoring">
+         <span id="hal-pwrex-enable-monitoring">
+         </span>
+         <span id="hal-pwrex-disable-monitoring">
+         </span>
+         <h2 id="hal-pwr-enable-disable-temperature-vdd-monitoring">
+          HAL PWR enable/disable Temperature Vdd monitoring
+          <a class="headerlink" href="#hal-pwr-enable-disable-temperature-vdd-monitoring" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_DisableMonitoring()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_DisableTemperatureVddMonitor()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_EnableMonitoring()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_EnableTemperatureVddMonitor()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-enable-disable-vdd-usb">
+         <span id="hal-pwrex-enable-vdd-usb">
+         </span>
+         <span id="hal-pwrex-disable-vdd-usb">
+         </span>
+         <h2 id="hal-pwr-enable-disable-vdd-usb">
+          HAL PWR enable/disable vdd usb
+          <a class="headerlink" href="#hal-pwr-enable-disable-vdd-usb" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_DisableVddUSB()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_DisableIndependentVddUSBSupply()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_EnableVddUSB()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_EnableIndependentVddUSBSupply()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-enable-disable-pvm-usb">
+         <span id="hal-pwrex-enable-pvm-usb">
+         </span>
+         <span id="id1">
+         </span>
+         <span id="hal-pwrex-disable-pvm-usb">
+         </span>
+         <h2 id="hal-pwr-enable-disable-pvm-usb">
+          HAL PWR enable/disable PVM USB
+          <a class="headerlink" href="#hal-pwr-enable-disable-pvm-usb" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_DisablePVMUSB()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_DisableVoltageMonitor()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_EnablePVMUSB()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_EnableVoltageMonitor()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-enable-disable-pvd">
+         <span id="hal-pwrex-enable-pvd">
+         </span>
+         <span id="hal-pwrex-disable-pvd">
+         </span>
+         <h2 id="hal-pwr-enable-disable-pvd">
+          HAL PWR enable/disable PVD
+          <a class="headerlink" href="#hal-pwr-enable-disable-pvd" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_DisablePVD()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_DisableProgrammableVoltageDetector()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_EnablePVD()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_EnableProgrammableVoltageDetector()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-enable-disable-vdd11-usb">
+         <span id="hal-pwrex-enable-vdd11-usb">
+         </span>
+         <span id="hal-pwrex-disable-vdd11-usb">
+         </span>
+         <h2 id="hal-pwr-enable-disable-vdd11-usb">
+          HAL PWR enable/Disable VDD11 USB
+          <a class="headerlink" href="#hal-pwr-enable-disable-vdd11-usb" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_DisableVDD11USB()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_DisableVdd11USBIndependentSupply()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_EnableVDD11USB()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_EnableVdd11USBIndependentSupply()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-enable-disable-otghsphy-lowpower-retention">
+         <span id="hal-pwrex-enable-otgh-sphy-low-power-retention">
+         </span>
+         <span id="hal-pwrex-disable-otghsphy-lowpower-retention">
+         </span>
+         <h2 id="hal-pwr-enable-disable-otghsphy-lowpower-retention">
+          HAL PWR enable/disable OTGHSPHY LowPower Retention
+          <a class="headerlink" href="#hal-pwr-enable-disable-otghsphy-lowpower-retention" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_DisableOTGHSPHYLowPowerRetention()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_LP_DisableOTGHSPHYRetention()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_EnableOTGHSPHYLowPowerRetention()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_LP_EnableOTGHSPHYRetention()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-disable-pvd">
+         <span id="hal-pwr-enable-pvd">
+         </span>
+         <span id="id2">
+         </span>
+         <h2 id="hal-pwr-disable-pvd">
+          HAL PWR enable/disable PVD
+          <a class="headerlink" href="#hal-pwr-disable-pvd" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_EnablePVD()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_EnableProgrammableVoltageDetector()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_DisablePVD()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_DisableProgrammableVoltageDetector()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-enable-disable-usbhs-transceiver-supply">
+         <span id="hal-pwrex-enable-usbhs-tranceiver-supply">
+         </span>
+         <span id="hal-pwrex-disable-usbhs-tranceiver-supply">
+         </span>
+         <h2 id="hal-pwr-enable-disable-usbhs-transceiver-supply">
+          HAL PWR enable/disable USBHS transceiver supply
+          <a class="headerlink" href="#hal-pwr-enable-disable-usbhs-transceiver-supply" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_DisableUSBHSTranceiverSupply()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_DisableVddUSBHSTransceiverSupply()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_EnableUSBHSTranceiverSupply()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_EnableVddUSBHSTransceiverSupply()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-enable-disable-avm2">
+         <span id="hal-pwrex-enable-avm2">
+         </span>
+         <span id="hal-pwrex-disable-avm2">
+         </span>
+         <h2 id="hal-pwr-enable-disable-avm2">
+          HAL PWR enable/disable AVM2
+          <a class="headerlink" href="#hal-pwr-enable-disable-avm2" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_DisableAVM2()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_DisableVddAMonitor2()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_EnableAVM2()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_EnableVddAMonitor2()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-enable-disable-avm1">
+         <span id="hal-pwrex-disable-avm1">
+         </span>
+         <span id="hal-pwrex-enable-avm1">
+         </span>
+         <h2 id="hal-pwr-enable-disable-avm1">
+          HAL PWR enable/disable AVM1
+          <a class="headerlink" href="#hal-pwr-enable-disable-avm1" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_DisableAVM1()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_DisableVddAMonitor1()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_EnableAVM1()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_EnableVddAMonitor1()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-enable-disable-o2vm">
+         <span id="hal-pwrex-enable-o2vm">
+         </span>
+         <span id="hal-pwrex-disable-o2vm">
+         </span>
+         <h2 id="hal-pwr-enable-disable-o2vm">
+          HAL PWR enable/disable O2VM
+          <a class="headerlink" href="#hal-pwr-enable-disable-o2vm" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_DisableO2VM()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_DisableVddIO2IndependentSupply()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_EnableO2VM()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_EnableVddIO2IndependentSupply()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-enable-disable-uvm">
+         <span id="hal-pwrex-enable-uvm">
+         </span>
+         <span id="hal-pwrex-disable-uvm">
+         </span>
+         <h2 id="hal-pwr-enable-disable-uvm">
+          HAL PWR enable/disable UVM
+          <a class="headerlink" href="#hal-pwr-enable-disable-uvm" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_DisableUVM()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_DisableVddUSBIndependentSupply()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_EnableUVM()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_EnableVddUSBIndependentSupply()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-enable-disable-vdda">
+         <span id="hal-pwrex-enable-vdda">
+         </span>
+         <span id="hal-pwrex-disable-vdda">
+         </span>
+         <h2 id="hal-pwr-enable-disable-vdda">
+          HAL PWR enable/disable VddA
+          <a class="headerlink" href="#hal-pwr-enable-disable-vdda" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_DisableVddA()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_DisableVddAIndependentSupply()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_EnableVddA()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_EnableVddAIndependentSupply()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-enable-disable-vddio2">
+         <span id="hal-pwrex-enable-vddio2">
+         </span>
+         <span id="hal-pwrex-disable-vddio2">
+         </span>
+         <h2 id="hal-pwr-enable-disable-vddio2">
+          HAL PWR enable/disable VddIO2
+          <a class="headerlink" href="#hal-pwr-enable-disable-vddio2" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_DisableVddIO2()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_DisableVddIO2IndependentSupply()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_EnableVddIO2()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_EnableVddIO2IndependentSupply()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-configure-pvd">
+         <span id="hal-pwr-config-pvd">
+         </span>
+         <h2 id="hal-pwr-configure-pvd">
+          HAL PWR Configure PVD
+          <a class="headerlink" href="#hal-pwr-configure-pvd" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_ConfigPVD()
+                </cite>
+                OR
+                <cite>
+                 HAL_PWREx_ConfigPVD
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                in HAL2, use the following sequence to configure PVD
+               </p>
+              </li>
+             </ul>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* Set PLS[7:5] bits according to PVDLevel value */</span>
+<span class="n">HAL_PWR_SetProgrammableVoltageDetectorLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+</pre>
+              </div>
+             </div>
+             <ul>
+              <li>
+               <p>
+                for the EXTI management use the hal EXTI instead to initialize , configure  and enable the corresponding exti line .
+               </p>
+               <p>
+                <strong>
+                 Related use case
+                </strong>
+                <a class="reference internal" href="hal_pwr_use_cases.html#hal-pwr-pvd-with-exti-wakeup">
+                 <span class="std std-ref">
+                  Power Voltage Detector (PVD) with EXTI wakeup
+                 </span>
+                </a>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-configure-pvm">
+         <span id="hal-pwr-config-pvm">
+         </span>
+         <h2 id="hal-pwr-configure-pvm">
+          HAL PWR Configure PVM
+          <a class="headerlink" href="#hal-pwr-configure-pvm" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWR_ConfigPVM()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul>
+              <li>
+               <p>
+                In HAL2, the PVM configuration is managed using the EXTI driver. For EXTI management, use the HAL EXTI instead to initialize,
+configure, and enable the corresponding EXTI line.
+               </p>
+               <p>
+                <strong>
+                 Related use case
+                </strong>
+                <a class="reference internal" href="hal_pwr_use_cases.html#hal-pwr-pvd-with-exti-wakeup">
+                 <span class="std std-ref">
+                  Power Voltage Detector (PVD) with EXTI wakeup
+                 </span>
+                </a>
+                .
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pwr-configure-avd">
+         <span id="hal-pwr-config-avd">
+         </span>
+         <h2 id="hal-pwr-configure-avd">
+          HAL PWR Configure AVD
+          <a class="headerlink" href="#hal-pwr-configure-avd" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Function name
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <cite>
+                 HAL_PWREx_ConfigAVD()
+                </cite>
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul>
+              <li>
+               <p>
+                In HAL2, the AVD configuration is managed using the EXTI driver. For EXTI management, use the HAL EXTI instead to initialize,
+configure, and enable the corresponding EXTI line.
+               </p>
+               <p>
+                <strong>
+                 Related use case
+                </strong>
+                <a class="reference internal" href="hal_pwr_use_cases.html#hal-pwr-pvd-with-exti-wakeup">
+                 <span class="std std-ref">
+                  Power Voltage Detector (PVD) with EXTI wakeup
+                 </span>
+                </a>
+                .
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

@@ -1,0 +1,2448 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "componentid": "::Device:STM32CubeMX2 Config:PWR",
+  "grammarVersion": "3.1",
+  "version": "1.0.0",
+  "type": "object",
+  "functions": [
+    {
+      "path": ".config/template/helpers/pwr_helpers.js",
+      "accessor": "common"
+    }
+  ],
+  "properties": {
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "title": "Software information",
+          "type": "object",
+          "properties": {
+            "labels": {
+              "type": "array",
+              "title": "Label for peripheral instance",
+              "description": "Labels allow to create aliases inside mx_hal_def.h file like '<label>_init', '<label>_deinit' and '<label>_gethandle'. These aliases can be used on application side.",
+              "items": {
+                "type": "string",
+                "pattern": "^([a-zA-Z_][a-zA-Z0-9_]{1,31})?$",
+                "minLength": 0,
+                "maxLength": 32,
+                "unique": "project",
+                "default": ""
+              }
+            },
+            "layer": {
+              "title": "Layer",
+              "type": "string",
+              "oneOf": [
+                {
+                  "const": "HAL"
+                },
+                {
+                  "const": "LL"
+                }
+              ],
+              "default": "HAL",
+              "variables": [
+                {
+                  "on": "update-value",
+                  "name": "HAL_PWR_PROJECT_USE_HAL",
+                  "condition": "$value === 'HAL'",
+                  "semaphore": true
+                }
+              ]
+            },
+            "init_type": {
+              "title": "resource initialization code generation",
+              "description": "Generate or not the PWR init code, call it or not at boot",
+              "$comment": "Generate the init code of your PWR or not (enabled/disabled), call it automatically at startup or not (called/enaled)",
+              "type": "string",
+              "oneOf": [
+                {
+                  "const": "called"
+                },
+                {
+                  "const": "enabled"
+                },
+                {
+                  "const": "disabled"
+                }
+              ],
+              "default": "called"
+            }
+          }
+        },
+        "Additional_configuration": {
+          "title": "Additional features configuration",
+          "type": "object",
+          "properties": {
+            "Main_supply_configuration": {
+              "title": "Main Supply configuration",
+              "type": "object",
+              "description": "MCU main supply configuration",
+              "actions": [
+                {
+                  "type": "exclude",
+                  "condition": "$isNeed"
+                }
+              ],
+              "properties": {
+                "MCU_main_supply": {
+                  "type": "string",
+                  "description": "Specify the MCU main supply source",
+                  "actions": [
+                    {
+                      "type": "exclude",
+                      "condition": "$isNeed"
+                    }
+                  ],
+                  "oneOf": [
+                    {
+                      "title": "Internal regulator (depends on the package)",
+                      "const": "NOT_BYPASSED"
+                    },
+                    {
+                      "title": "External supply (Bypass)",
+                      "const": "BYPASSED"
+                    }
+                  ],
+                  "default": "NOT_BYPASSED"
+                },
+                "Voltage_scaling": {
+                  "type": "string",
+                  "description": "Specifies the Voltage Scaling selection",
+                  "actions": [
+                    {
+                      "type": "exclude",
+                      "condition": "$isNeed"
+                    },
+                    {
+                      "type": "set",
+                      "condition": "!($common.helper_pwr_is_voltage_scaling_compatible($resource.features,  $Additional_configuration.Main_supply_configuration.Voltage_scaling, $get('clock.frequency','System_Clock_Frequency')))",
+                      "computed": {
+                        "const": "$common.helper_pwr_get_first_voltage_scaling_compatible($resource.features, $get('clock.frequency','System_Clock_Frequency'))"
+                      }
+                    }
+                  ],
+                  "oneOf": [
+                    {
+                      "title": "VOS0",
+                      "const": "VOLT_SCALE_0",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$common.helper_pwr_is_voltage_scaling_compatible($resource.features, 'VOLT_SCALE_0', $get('clock.frequency','System_Clock_Frequency'))"
+                        },
+                        {
+                          "type": "set",
+                          "condition": "true",
+                          "computed": {
+                            "title": "'VOS0 ('+($resource.features.vos0_min/1000000)+' MHz to '+($resource.features.vos0_max/1000000)+' MHz)'"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "title": "VOS0 with Overdrive",
+                      "const": "VOLT_SCALE_0_OVERDRIVE",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$common.helper_pwr_is_voltage_scaling_compatible($resource.features,  'VOLT_SCALE_0_OVERDRIVE', $get('clock.frequency','System_Clock_Frequency'))"
+                        },
+                        {
+                          "type": "set",
+                          "condition": "true",
+                          "computed": {
+                            "title": "'VOS0 with Overdrive ('+($resource.features.vos0_ovd_min/1000000)+' MHz to '+($resource.features.vos0_ovd_max/1000000)+' MHz)'"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "title": "VOS1",
+                      "const": "VOLT_SCALE_1",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$common.helper_pwr_is_voltage_scaling_compatible($resource.features,  'VOLT_SCALE_1', $get('clock.frequency','System_Clock_Frequency'))"
+                        },
+                        {
+                          "type": "set",
+                          "condition": "true",
+                          "computed": {
+                            "title": "'VOS1 ('+($resource.features.vos1_min/1000000)+' MHz to '+($resource.features.vos1_max/1000000)+' MHz)'"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "title": "VOS1 with Overdrive",
+                      "const": "VOLT_SCALE_1_OVERDRIVE",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$common.helper_pwr_is_voltage_scaling_compatible($resource.features,  'VOLT_SCALE_1_OVERDRIVE', $get('clock.frequency','System_Clock_Frequency'))"
+                        },
+                        {
+                          "type": "set",
+                          "condition": "true",
+                          "computed": {
+                            "title": "'VOS1 with Overdrive ('+($resource.features.vos1_ovd_min/1000000)+' MHz to '+($resource.features.vos1_ovd_max/1000000)+' MHz)'"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "title": "VOS2",
+                      "const": "VOLT_SCALE_2",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$common.helper_pwr_is_voltage_scaling_compatible($resource.features,  'VOLT_SCALE_2', $get('clock.frequency','System_Clock_Frequency'))"
+                        },
+                        {
+                          "type": "set",
+                          "condition": "true",
+                          "computed": {
+                            "title": "'VOS2 ('+($resource.features.vos2_min/1000000)+' MHz to '+($resource.features.vos2_max/1000000)+' MHz)'"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "title": "VOS2 with Overdrive",
+                      "const": "VOLT_SCALE_2_OVERDRIVE",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$common.helper_pwr_is_voltage_scaling_compatible($resource.features,  'VOLT_SCALE_2_OVERDRIVE', $get('clock.frequency','System_Clock_Frequency'))"
+                        },
+                        {
+                          "type": "set",
+                          "condition": "true",
+                          "computed": {
+                            "title": "'VOS2 with Overdrive ('+($resource.features.vos2_ovd_min/1000000)+' MHz to '+($resource.features.vos2_ovd_max/1000000)+' MHz)'"
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "default": "VOLT_SCALE_1"
+                }
+                ,
+                "Stop_Voltage_scaling": {
+                  "type": "string",
+                  "description": "Specifies the Stop Voltage Scaling selection",
+                  "actions": [
+                    {
+                      "type": "exclude",
+                      "condition": "$isNeed"
+                    }
+                  ],
+                  "oneOf": [
+                    {
+                      "title": "SVOS_HIGH",
+                      "const": "VOLT_SCALE_HIGH",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.svos_high"
+                        }
+                      ]
+                    },
+                    {
+                      "title": "SVOS_LOW",
+                      "const": "VOLT_SCALE_LOW",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.svos_low"
+                        }
+                      ]
+                    }
+                  ],
+                  "default": "VOLT_SCALE_HIGH"
+                }
+              }
+            },
+            "Wakeup_pins_configuration": {
+              "title": "Wakeup pin(s) configuration",
+              "type": "object",
+              "description": "Wakeup Pins configuration",
+              "actions": [
+                {
+                  "type": "exclude",
+                  "condition": "$common.helper_pwr_is_wakeup_available($resource.features) == false"
+                }
+              ],
+              "properties": {
+                "Wk_1_configuration": {
+                  "title": "Wakeup Pin 1",
+                  "type": "object",
+                  "description": "Wakeup Pin 1 configuration",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.wkup0"
+                    }
+                  ],
+                  "properties": {
+                    "enable": {
+                      "type": "boolean",
+                      "description": "Enable Wakeup Pin 1. (Not clickable if this feature is not available on that package)",
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "enable",
+                          "condition": "$get('pinout.peripheralCanBeMapped', $resource.id, 'WKUP1') == true",
+                          "message": "This feature is not available on that package."
+                        }
+                      ]
+                    },
+                    "polarity": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin polarity",
+                      "oneOf": [
+                        {
+                          "title": "High",
+                          "const": "HIGH"
+                        },
+                        {
+                          "title": "Low",
+                          "const": "LOW"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_polarity"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_1_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 1 is enabled."
+                        }
+                      ],
+                      "default": "HIGH"
+                    },
+                    "pull": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin pull configuration",
+                      "oneOf": [
+                        {
+                          "title": "None",
+                          "const": "NO"
+                        },
+                        {
+                          "title": "Pull-Up",
+                          "const": "UP"
+                        },
+                        {
+                          "title": "Pull-Down",
+                          "const": "DOWN"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_pull"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_1_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 1 is enabled."
+                        }
+                      ],
+                      "default": "NO"
+                    },
+                    "source": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin source selection",
+                      "oneOf": [
+                        {
+                          "title": "Source 0",
+                          "const": "SOURCE_0"
+                        },
+                        {
+                          "title": "Source 1",
+                          "const": "SOURCE_1"
+                        },
+                        {
+                          "title": "Source 2",
+                          "const": "SOURCE_2"
+                        },
+                        {
+                          "title": "Source 3",
+                          "const": "SOURCE_3"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_source"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_1_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 1 is enabled."
+                        }
+                      ],
+                      "default": "SOURCE_0"
+                    },
+                    "enableEXTI": {
+                      "type": "boolean",
+                      "description": "Enable interruption mode for the Wakeup Pin 1.",
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_exti"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "Wk_2_configuration": {
+                  "title": "Wakeup Pin 2",
+                  "type": "object",
+                  "description": "Wakeup Pin 2 configuration",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.wkup1"
+                    }
+                  ],
+                  "properties": {
+                    "enable": {
+                      "type": "boolean",
+                      "description": "Enable Wakeup Pin 2. (Not clickable if this feature is not available on that package)",
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "enable",
+                          "condition": "$get('pinout.peripheralCanBeMapped', $resource.id, 'WKUP2') == true",
+                          "message": "This feature is not available on that package."
+                        }
+                      ]
+                    },
+                    "polarity": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin polarity",
+                      "oneOf": [
+                        {
+                          "title": "High",
+                          "const": "HIGH"
+                        },
+                        {
+                          "title": "Low",
+                          "const": "LOW"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_polarity === true"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_2_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 2 is enabled."
+                        }
+                      ],
+                      "default": "HIGH"
+                    },
+                    "pull": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin pull configuration",
+                      "oneOf": [
+                        {
+                          "title": "None",
+                          "const": "NO"
+                        },
+                        {
+                          "title": "Pull-Up",
+                          "const": "UP"
+                        },
+                        {
+                          "title": "Pull-Down",
+                          "const": "DOWN"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_pull"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_2_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 2 is enabled."
+                        }
+                      ],
+                      "default": "NO"
+                    },
+                    "source": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin source selection",
+                      "oneOf": [
+                        {
+                          "title": "Source 0",
+                          "const": "SOURCE_0"
+                        },
+                        {
+                          "title": "Source 1",
+                          "const": "SOURCE_1"
+                        },
+                        {
+                          "title": "Source 2",
+                          "const": "SOURCE_2"
+                        },
+                        {
+                          "title": "Source 3",
+                          "const": "SOURCE_3"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_source"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_2_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 2 is enabled."
+                        }
+                      ],
+                      "default": "SOURCE_0"
+                    },
+                    "enableEXTI": {
+                      "type": "boolean",
+                      "description": "Enable interruption mode for the Wakeup Pin 2.",
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_exti"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "Wk_3_configuration": {
+                  "title": "Wakeup Pin 3",
+                  "type": "object",
+                  "description": "Wakeup Pin 3 configuration",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.wkup2"
+                    }
+                  ],
+                  "properties": {
+                    "enable": {
+                      "type": "boolean",
+                      "description": "Enable Wakeup Pin 3. (Not clickable if this feature is not available on that package)",
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "enable",
+                          "condition": "$get('pinout.peripheralCanBeMapped', $resource.id, 'WKUP3') == true",
+                          "message": "This feature is not available on that package."
+                        }
+                      ]
+                    },
+                    "polarity": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin polarity",
+                      "oneOf": [
+                        {
+                          "title": "High",
+                          "const": "HIGH"
+                        },
+                        {
+                          "title": "Low",
+                          "const": "LOW"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_polarity === true"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_3_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 3 is enabled."
+                        }
+                      ],
+                      "default": "HIGH"
+                    },
+                    "pull": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin pull configuration",
+                      "oneOf": [
+                        {
+                          "title": "None",
+                          "const": "NO"
+                        },
+                        {
+                          "title": "Pull-Up",
+                          "const": "UP"
+                        },
+                        {
+                          "title": "Pull-Down",
+                          "const": "DOWN"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_pull"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_3_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 3 is enabled."
+                        }
+                      ],
+                      "default": "NO"
+                    },
+                    "source": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin source selection",
+                      "oneOf": [
+                        {
+                          "title": "Source 0",
+                          "const": "SOURCE_0"
+                        },
+                        {
+                          "title": "Source 1",
+                          "const": "SOURCE_1"
+                        },
+                        {
+                          "title": "Source 2",
+                          "const": "SOURCE_2"
+                        },
+                        {
+                          "title": "Source 3",
+                          "const": "SOURCE_3"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_source"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_3_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 3 is enabled."
+                        }
+                      ],
+                      "default": "SOURCE_0"
+                    },
+                    "enableEXTI": {
+                      "type": "boolean",
+                      "description": "Enable interruption mode for the Wakeup Pin 3.",
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_exti"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "Wk_4_configuration": {
+                  "title": "Wakeup Pin 4",
+                  "type": "object",
+                  "description": "Wakeup Pin 4 configuration",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.wkup3"
+                    }
+                  ],
+                  "properties": {
+                    "enable": {
+                      "type": "boolean",
+                      "description": "Enable Wakeup Pin 4. (Not clickable if this feature is not available on that package)",
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "enable",
+                          "condition": "$get('pinout.peripheralCanBeMapped', $resource.id, 'WKUP4') == true",
+                          "message": "This feature is not available on that package."
+                        }
+                      ]
+                    },
+                    "polarity": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin polarity",
+                      "oneOf": [
+                        {
+                          "title": "High",
+                          "const": "HIGH"
+                        },
+                        {
+                          "title": "Low",
+                          "const": "LOW"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_polarity === true"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_4_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 4 is enabled."
+                        }
+                      ],
+                      "default": "HIGH"
+                    },
+                    "pull": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin pull configuration",
+                      "oneOf": [
+                        {
+                          "title": "None",
+                          "const": "NO"
+                        },
+                        {
+                          "title": "Pull-Up",
+                          "const": "UP"
+                        },
+                        {
+                          "title": "Pull-Down",
+                          "const": "DOWN"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_pull"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_4_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 4 is enabled."
+                        }
+                      ],
+                      "default": "NO"
+                    },
+                    "source": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin source selection",
+                      "oneOf": [
+                        {
+                          "title": "Source 0",
+                          "const": "SOURCE_0"
+                        },
+                        {
+                          "title": "Source 1",
+                          "const": "SOURCE_1"
+                        },
+                        {
+                          "title": "Source 2",
+                          "const": "SOURCE_2"
+                        },
+                        {
+                          "title": "Source 3",
+                          "const": "SOURCE_3"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_source"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_4_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 4 is enabled."
+                        }
+                      ],
+                      "default": "SOURCE_0"
+                    },
+                    "enableEXTI": {
+                      "type": "boolean",
+                      "description": "Enable interruption mode for the Wakeup Pin 4.",
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_exti"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "Wk_5_configuration": {
+                  "title": "Wakeup Pin 5",
+                  "type": "object",
+                  "description": "Wakeup Pin 5 configuration",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.wkup4"
+                    }
+                  ],
+                  "properties": {
+                    "enable": {
+                      "type": "boolean",
+                      "description": "Enable Wakeup Pin 5. (Not clickable if this feature is not available on that package)",
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "enable",
+                          "condition": "$get('pinout.peripheralCanBeMapped', $resource.id, 'WKUP5') == true",
+                          "message": "This feature is not available on that package."
+                        }
+                      ]
+                    },
+                    "polarity": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin polarity",
+                      "oneOf": [
+                        {
+                          "title": "High",
+                          "const": "HIGH"
+                        },
+                        {
+                          "title": "Low",
+                          "const": "LOW"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_polarity === true"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_5_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 5 is enabled."
+                        }
+                      ],
+                      "default": "HIGH"
+                    },
+                    "pull": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin pull configuration",
+                      "oneOf": [
+                        {
+                          "title": "None",
+                          "const": "NO"
+                        },
+                        {
+                          "title": "Pull-Up",
+                          "const": "UP"
+                        },
+                        {
+                          "title": "Pull-Down",
+                          "const": "DOWN"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_pull"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_5_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 5 is enabled."
+                        }
+                      ],
+                      "default": "NO"
+                    },
+                    "source": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin source selection",
+                      "oneOf": [
+                        {
+                          "title": "Source 0",
+                          "const": "SOURCE_0"
+                        },
+                        {
+                          "title": "Source 1",
+                          "const": "SOURCE_1"
+                        },
+                        {
+                          "title": "Source 2",
+                          "const": "SOURCE_2"
+                        },
+                        {
+                          "title": "Source 3",
+                          "const": "SOURCE_3"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_source"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_5_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 5 is enabled."
+                        }
+                      ],
+                      "default": "SOURCE_0"
+                    },
+                    "enableEXTI": {
+                      "type": "boolean",
+                      "description": "Enable interruption mode for the Wakeup Pin 5.",
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_exti"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "Wk_6_configuration": {
+                  "title": "Wakeup Pin 6",
+                  "type": "object",
+                  "description": "Wakeup Pin 6 configuration",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.wkup5"
+                    }
+                  ],
+                  "properties": {
+                    "enable": {
+                      "type": "boolean",
+                      "description": "Enable Wakeup Pin 6. (Not clickable if this feature is not available on that package)",
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "enable",
+                          "condition": "$get('pinout.peripheralCanBeMapped', $resource.id, 'WKUP6') == true",
+                          "message": "This feature is not available on that package."
+                        }
+                      ]
+                    },
+                    "polarity": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin polarity",
+                      "oneOf": [
+                        {
+                          "title": "High",
+                          "const": "HIGH"
+                        },
+                        {
+                          "title": "Low",
+                          "const": "LOW"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_polarity === true"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_6_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 6 is enabled."
+                        }
+                      ],
+                      "default": "HIGH"
+                    },
+                    "pull": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin pull configuration",
+                      "oneOf": [
+                        {
+                          "title": "None",
+                          "const": "NO"
+                        },
+                        {
+                          "title": "Pull-Up",
+                          "const": "UP"
+                        },
+                        {
+                          "title": "Pull-Down",
+                          "const": "DOWN"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_pull"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_6_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 6 is enabled."
+                        }
+                      ],
+                      "default": "NO"
+                    },
+                    "source": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin source selection",
+                      "oneOf": [
+                        {
+                          "title": "Source 0",
+                          "const": "SOURCE_0"
+                        },
+                        {
+                          "title": "Source 1",
+                          "const": "SOURCE_1"
+                        },
+                        {
+                          "title": "Source 2",
+                          "const": "SOURCE_2"
+                        },
+                        {
+                          "title": "Source 3",
+                          "const": "SOURCE_3"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_source"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_6_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 6 is enabled."
+                        }
+                      ],
+                      "default": "SOURCE_0"
+                    },
+                    "enableEXTI": {
+                      "type": "boolean",
+                      "description": "Enable interruption mode for the Wakeup Pin 6.",
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_exti"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "Wk_7_configuration": {
+                  "title": "Wakeup Pin 7",
+                  "type": "object",
+                  "description": "Wakeup Pin 7 configuration",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.wkup6"
+                    }
+                  ],
+                  "properties": {
+                    "enable": {
+                      "type": "boolean",
+                      "description": "Enable Wakeup Pin 7. (Not clickable if this feature is not available on that package)",
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "enable",
+                          "condition": "$get('pinout.peripheralCanBeMapped', $resource.id, 'WKUP7') == true",
+                          "message": "This feature is not available on that package."
+                        }
+                      ]
+                    },
+                    "polarity": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin polarity",
+                      "oneOf": [
+                        {
+                          "title": "High",
+                          "const": "HIGH"
+                        },
+                        {
+                          "title": "Low",
+                          "const": "LOW"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_polarity === true"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_7_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 7 is enabled."
+                        }
+                      ],
+                      "default": "HIGH"
+                    },
+                    "pull": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin pull configuration",
+                      "oneOf": [
+                        {
+                          "title": "None",
+                          "const": "NO"
+                        },
+                        {
+                          "title": "Pull-Up",
+                          "const": "UP"
+                        },
+                        {
+                          "title": "Pull-Down",
+                          "const": "DOWN"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_pull"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_7_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 7 is enabled."
+                        }
+                      ],
+                      "default": "NO"
+                    },
+                    "source": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin source selection",
+                      "oneOf": [
+                        {
+                          "title": "Source 0",
+                          "const": "SOURCE_0"
+                        },
+                        {
+                          "title": "Source 1",
+                          "const": "SOURCE_1"
+                        },
+                        {
+                          "title": "Source 2",
+                          "const": "SOURCE_2"
+                        },
+                        {
+                          "title": "Source 3",
+                          "const": "SOURCE_3"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_source"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_7_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 7 is enabled."
+                        }
+                      ],
+                      "default": "SOURCE_0"
+                    },
+                    "enableEXTI": {
+                      "type": "boolean",
+                      "description": "Enable interruption mode for the Wakeup Pin 7.",
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_exti"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "Wk_8_configuration": {
+                  "title": "Wakeup Pin 8",
+                  "type": "object",
+                  "description": "Wakeup Pin 8 configuration",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.wkup7"
+                    }
+                  ],
+                  "properties": {
+                    "enable": {
+                      "type": "boolean",
+                      "description": "Enable Wakeup Pin 8. (Not clickable if this feature is not available on that package)",
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "enable",
+                          "condition": "$get('pinout.peripheralCanBeMapped', $resource.id, 'WKUP8') == true",
+                          "message": "This feature is not available on that package."
+                        }
+                      ]
+                    },
+                    "polarity": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin polarity",
+                      "oneOf": [
+                        {
+                          "title": "High",
+                          "const": "HIGH"
+                        },
+                        {
+                          "title": "Low",
+                          "const": "LOW"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_polarity === true"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_8_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 8 is enabled."
+                        }
+                      ],
+                      "default": "HIGH"
+                    },
+                    "pull": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin pull configuration",
+                      "oneOf": [
+                        {
+                          "title": "None",
+                          "const": "NO"
+                        },
+                        {
+                          "title": "Pull-Up",
+                          "const": "UP"
+                        },
+                        {
+                          "title": "Pull-Down",
+                          "const": "DOWN"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_pull"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_8_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 8 is enabled."
+                        }
+                      ],
+                      "default": "NO"
+                    },
+                    "source": {
+                      "type": "string",
+                      "description": "Specifies the Wakeup Pin source selection",
+                      "oneOf": [
+                        {
+                          "title": "Source 0",
+                          "const": "SOURCE_0"
+                        },
+                        {
+                          "title": "Source 1",
+                          "const": "SOURCE_1"
+                        },
+                        {
+                          "title": "Source 2",
+                          "const": "SOURCE_2"
+                        },
+                        {
+                          "title": "Source 3",
+                          "const": "SOURCE_3"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_source"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_8_configuration.enable == true",
+                          "message": "Can be configured only when the wakeup pin 8 is enabled."
+                        }
+                      ],
+                      "default": "SOURCE_0"
+                    },
+                    "enableEXTI": {
+                      "type": "boolean",
+                      "description": "Enable interruption mode for the Wakeup Pin 8.",
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.wkup_exti"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "Status_pins_configuration": {
+              "title": "Status Pin configuration",
+              "type": "object",
+              "description": "Status pins configuration",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "($resource.features.csleep) || ($resource.features.cstop) || ($resource.features.srdstop)"
+                }
+              ],
+              "properties": {
+                "enableCSLEEP": {
+                  "type": "boolean",
+                  "description": "Enable CSLEEP pin. (Not clickable if this feature is not available on that package)",
+                  "default": false,
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.csleep === true"
+                    },
+                    {
+                      "type": "enable",
+                      "condition": "$get('pinout.peripheralCanBeMapped', $resource.id, 'CSLEEP') == true",
+                      "message": "This feature is not available on that package."
+                    }
+                  ]
+                },
+                "enableCSTOP": {
+                  "type": "boolean",
+                  "description": "Enable CSTOP pin. (Not clickable if this feature is not available on that package)",
+                  "default": false,
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.cstop === true"
+                    },
+                    {
+                      "type": "enable",
+                      "condition": "$get('pinout.peripheralCanBeMapped', $resource.id, 'CSTOP') == true",
+                      "message": "This feature is not available on that package."
+                    }
+                  ]
+                },
+                "enableSRDSTOP": {
+                  "description": "Enable SRDSTOP pin. (Not clickable if this feature is not available on that package)",
+                  "type": "boolean",
+                  "default": false,
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.srdstop === true"
+                    },
+                    {
+                      "type": "enable",
+                      "condition": "$get('pinout.peripheralCanBeMapped', $resource.id, 'SRDSTOP') == true",
+                      "message": "This feature is not available on that package."
+                    }
+                  ]
+                }
+              }
+            },
+            "Ram_configuration": {
+              "title": "RAM configuration",
+              "type": "object",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$common.helper_pwr_sram_mode_availability($resource.features, 'run') || $common.helper_pwr_sram_mode_availability($resource.features, 'stop') || $common.helper_pwr_sram_mode_availability($resource.features, 'standby')"
+                }
+              ],
+              "properties": {
+                "RunMode": {
+                  "title": "RAM power supply configuration in Run Mode",
+                  "type": "array",
+                  "source": "$common.helper_pwr_sram_mode_get_info($resource.features, 'run')",
+                  "description": "Enable SRAM power supply in Run Mode.",
+                  "itemId": "name",
+                  "itemVar": "pages",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "Configuration": {
+                        "type": "array",
+                        "source": "$common.helper_pwr_srampages_info($pages)",
+                        "itemId": "pagename",
+                        "itemVar": "pagename",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "enable": {
+                              "title": "Enable supply",
+                              "type": "boolean",
+                              "default": true
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$common.helper_pwr_sram_mode_availability($resource.features, 'run')"
+                    }
+                  ]
+                },
+                "StopMode": {
+                  "title": "RAM retention in Stop Mode",
+                  "type": "array",
+                  "source": "$common.helper_pwr_sram_mode_get_info($resource.features, 'stop')",
+                  "description": "Enable SRAM retention in Stop Mode.",
+                  "itemId": "name",
+                  "itemVar": "pages",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "Configuration": {
+                        "type": "array",
+                        "source": "$common.helper_pwr_srampages_info($pages)",
+                        "itemId": "pagename",
+                        "itemVar": "pagename",
+                        "itemTitle": "$pagename.name",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "enable": {
+                              "title": "Enable retention",
+                              "type": "boolean",
+                              "default": true
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$common.helper_pwr_sram_mode_availability($resource.features, 'stop')"
+                    }
+                  ]
+                },
+                "StandbyMode": {
+                  "title": "RAM retention configuration in Standby Mode",
+                  "type": "array",
+                  "source": "$common.helper_pwr_sram_mode_get_info($resource.features, 'standby')",
+                  "description": "Enable SRAM retention in Standby Mode.",
+                  "itemId": "name",
+                  "itemVar": "pages",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "Configuration": {
+                        "type": "array",
+                        "source": "$common.helper_pwr_srampages_info($pages)",
+                        "itemId": "pagename",
+                        "itemVar": "pagename",
+                        "itemTitle": "$pagename.name",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "enable": {
+                              "title": "Enable retention",
+                              "type": "boolean",
+                              "default": true
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$common.helper_pwr_sram_mode_availability($resource.features, 'standby')"
+                    }
+                  ]
+                }
+              }
+            },
+            "Flash_lowpower_configuration": {
+              "title": "Flash low power mode configuration",
+              "type": "object",
+              "description": "Flash low power mode configuration",
+              "actions": [
+                {
+                  "type": "exclude",
+                  "condition": "$isNeed"
+                }
+              ],
+              "properties": {
+                "enableFLASHLowPowerMode": {
+                  "type": "boolean",
+                  "description": "Enable FLASH Low power mode.",
+                  "default": false
+                }
+              }
+            },
+            "UCPD_configuration": {
+              "title": "UCPD configuration",
+              "type": "object",
+              "description": "Configuration of UCPD features",
+              "properties": {
+                "enableDeadBatteryMode": {
+                  "type": "boolean",
+                  "description": "Enable the Dead Battery Mode feature.",
+                  "default": false,
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.dead_battery"
+                    }
+                  ]
+                },
+                "enableUCPDConfigRetention": {
+                  "type": "boolean",
+                  "description": "Enable the retention of UCPD configuration in Standby Mode.",
+                  "default": false,
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.ucpd_retention_stby"
+                    }
+                  ]
+                }
+              }
+            },
+            "Battery_configuration": {
+              "title": "Battery management configuration",
+              "type": "object",
+              "description": "Configuration of Battery management features",
+              "properties": {
+                "enableBatteryCharging": {
+                  "type": "boolean",
+                  "description": "Enable Battery charging feature.",
+                  "default": false,
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.battery_charging"
+                    }
+                  ]
+                },
+                "batteryChargingResistorSelection": {
+                  "type": "string",
+                  "description": "Configure the battery charging resistor.",
+                  "oneOf": [
+                    {
+                      "title": "1.5 kOhm",
+                      "const": "1_5K"
+                    },
+                    {
+                      "title": "5 kOhm",
+                      "const": "5K"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.battery_resistor"
+                    }
+                  ],
+                  "default": "5K"
+                }
+              }
+            },
+            "Voltage_detection_configuration": {
+              "title": "Voltage detection configuration",
+              "type": "object",
+              "description": "Voltage detector(s) configuration",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$resource.features.avd_en || $resource.features.pvd_en || $resource.features.vbat_temp || $resource.features.vdd_temp"
+                }
+              ],
+              "properties": {
+                "Pvd_configuration": {
+                  "title": "Programmable Voltage Detector (PVD)",
+                  "type": "object",
+                  "description": "Programmable Voltage Detector configuration",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.pvd_en == true"
+                    }
+                  ],
+                  "properties": {
+                    "enable": {
+                      "type": "boolean",
+                      "description": "Enable the PVD.",
+                      "default": false
+                    },
+                    "level_selection": {
+                      "type": "string",
+                      "description": "Specifies the PVD level threshold",
+                      "oneOf": [
+                        {
+                          "title": "Level 0",
+                          "const": "LEVEL_0",
+                          "actions": [
+                            {
+                              "type": "exclude",
+                              "condition": "$resource.features.pvd_level_0_desc == 'NonApplicable' || $resource.features.pvd_level_0_desc == undefined"
+                            },
+                            {
+                              "type": "set",
+                              "condition": "$resource.features.pvd_level_0_desc !== 'NonApplicable'",
+                              "computed": {
+                                "title": "$common.helper_pwr_get_level_string('Level 0', $resource.features.pvd_level_0_desc, 'PVD_IN', 'LEVEL_0')"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Level 1",
+                          "const": "LEVEL_1",
+                          "actions": [
+                            {
+                              "type": "exclude",
+                              "condition": "$resource.features.pvd_level_1_desc == 'NonApplicable' || $resource.features.pvd_level_1_desc == undefined"
+                            },
+                            {
+                              "type": "set",
+                              "condition": "$resource.features.pvd_level_1_desc !== 'NonApplicable'",
+                              "computed": {
+                                "title": "$common.helper_pwr_get_level_string('Level 1', $resource.features.pvd_level_1_desc, 'PVD_IN', 'LEVEL_1')"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Level 2",
+                          "const": "LEVEL_2",
+                          "actions": [
+                            {
+                              "type": "exclude",
+                              "condition": "$resource.features.pvd_level_2_desc == 'NonApplicable' || $resource.features.pvd_level_2_desc == undefined"
+                            },
+                            {
+                              "type": "set",
+                              "condition": "$resource.features.pvd_level_2_desc !== 'NonApplicable'",
+                              "computed": {
+                                "title": "$common.helper_pwr_get_level_string('Level 2', $resource.features.pvd_level_2_desc, 'PVD_IN', 'LEVEL_2')"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Level 3",
+                          "const": "LEVEL_3",
+                          "actions": [
+                            {
+                              "type": "exclude",
+                              "condition": "$resource.features.pvd_level_3_desc == 'NonApplicable' || $resource.features.pvd_level_3_desc == undefined"
+                            },
+                            {
+                              "type": "set",
+                              "condition": "$resource.features.pvd_level_3_desc !== 'NonApplicable'",
+                              "computed": {
+                                "title": "$common.helper_pwr_get_level_string('Level 3', $resource.features.pvd_level_3_desc, 'PVD_IN', 'LEVEL_3')"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Level 4",
+                          "const": "LEVEL_4",
+                          "actions": [
+                            {
+                              "type": "exclude",
+                              "condition": "$resource.features.pvd_level_4_desc == 'NonApplicable' || $resource.features.pvd_level_4_desc == undefined"
+                            },
+                            {
+                              "type": "set",
+                              "condition": "$resource.features.pvd_level_4_desc !== 'NonApplicable'",
+                              "computed": {
+                                "title": "$common.helper_pwr_get_level_string('Level 4', $resource.features.pvd_level_4_desc, 'PVD_IN', 'LEVEL_4')"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Level 5",
+                          "const": "LEVEL_5",
+                          "actions": [
+                            {
+                              "type": "exclude",
+                              "condition": "$resource.features.pvd_level_5_desc == 'NonApplicable' || $resource.features.pvd_level_5_desc == undefined"
+                            },
+                            {
+                              "type": "set",
+                              "condition": "$resource.features.pvd_level_5_desc !== 'NonApplicable'",
+                              "computed": {
+                                "title": "$common.helper_pwr_get_level_string('Level 5', $resource.features.pvd_level_5_desc, 'PVD_IN', 'LEVEL_5')"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Level 6",
+                          "const": "LEVEL_6",
+                          "actions": [
+                            {
+                              "type": "exclude",
+                              "condition": "$resource.features.pvd_level_6_desc == 'NonApplicable' || $resource.features.pvd_level_6_desc == undefined"
+                            },
+                            {
+                              "type": "set",
+                              "condition": "$resource.features.pvd_level_6_desc !== 'NonApplicable'",
+                              "computed": {
+                                "title": "$common.helper_pwr_get_level_string('Level 6', $resource.features.pvd_level_6_desc, 'PVD_IN', 'LEVEL_6')"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Level 7",
+                          "const": "LEVEL_7",
+                          "actions": [
+                            {
+                              "type": "exclude",
+                              "condition": "$resource.features.pvd_level_7_desc == 'NonApplicable' || $resource.features.pvd_level_7_desc == undefined"
+                            },
+                            {
+                              "type": "set",
+                              "condition": "$resource.features.pvd_level_7_desc !== 'NonApplicable'",
+                              "computed": {
+                                "title": "$common.helper_pwr_get_level_string('Level 7', $resource.features.pvd_level_7_desc, 'PVD_IN', 'LEVEL_7')"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Level 8",
+                          "const": "LEVEL_8",
+                          "actions": [
+                            {
+                              "type": "exclude",
+                              "condition": "$resource.features.pvd_level_8_desc == 'NonApplicable' || $resource.features.pvd_level_8_desc == undefined"
+                            },
+                            {
+                              "type": "set",
+                              "condition": "$resource.features.pvd_level_8_desc !== 'NonApplicable'",
+                              "computed": {
+                                "title": "$common.helper_pwr_get_level_string('Level 8', $resource.features.pvd_level_8_desc, 'PVD_IN', 'LEVEL_8')"
+                              }
+                            }
+                          ]
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.pvd_level == true"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Voltage_detection_configuration.Pvd_configuration.enable == true"
+                        }
+                      ],
+                      "default": "LEVEL_1"
+                    },
+                    "enableEXTI": {
+                      "type": "boolean",
+                      "description": "Enable interruption mode for the PVD.",
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "exclude",
+                          "condition": "$resource.features.pvd_exti_line_number === $resource.features.avd_exti_line_number"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Voltage_detection_configuration.Pvd_configuration.enable == true"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "Avd_configuration": {
+                  "title": "Analog Voltage Detector (AVD)",
+                  "type": "object",
+                  "description": "Analog Voltage Detector configuration",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.avd_en == true"
+                    }
+                  ],
+                  "properties": {
+                    "enable": {
+                      "type": "boolean",
+                      "description": "Enable the AVD.",
+                      "default": false
+                    },
+                    "level_selection": {
+                      "type": "string",
+                      "description": "Specifies the AVD level threshold",
+                      "oneOf": [
+                        {
+                          "title": "Level 0",
+                          "const": "LEVEL_0",
+                          "actions": [
+                            {
+                              "type": "exclude",
+                              "condition": "$resource.features.avd_level_0_desc == 'NonApplicable' || $resource.features.avd_level_0_desc == undefined"
+                            },
+                            {
+                              "type": "set",
+                              "condition": "$resource.features.avd_level_0_desc != 'NonApplicable'",
+                              "computed": {
+                                "title": "'Level 0 ('+$resource.features.avd_level_0_desc+')'"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Level 1",
+                          "const": "LEVEL_1",
+                          "actions": [
+                            {
+                              "type": "exclude",
+                              "condition": "$resource.features.avd_level_1_desc == 'NonApplicable' || $resource.features.avd_level_1_desc == undefined"
+                            },
+                            {
+                              "type": "set",
+                              "condition": "$resource.features.avd_level_1_desc != 'NonApplicable'",
+                              "computed": {
+                                "title": "'Level 1 ('+$resource.features.avd_level_1_desc+')'"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Level 2",
+                          "const": "LEVEL_2",
+                          "actions": [
+                            {
+                              "type": "exclude",
+                              "condition": "$resource.features.avd_level_2_desc == 'NonApplicable' || $resource.features.avd_level_2_desc == undefined"
+                            },
+                            {
+                              "type": "set",
+                              "condition": "$resource.features.avd_level_2_desc != 'NonApplicable'",
+                              "computed": {
+                                "title": "'Level 2 ('+$resource.features.avd_level_2_desc+')'"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Level 3",
+                          "const": "LEVEL_3",
+                          "actions": [
+                            {
+                              "type": "exclude",
+                              "condition": "$resource.features.avd_level_3_desc == 'NonApplicable' || $resource.features.avd_level_3_desc == undefined"
+                            },
+                            {
+                              "type": "set",
+                              "condition": "$resource.features.avd_level_3_desc != 'NonApplicable'",
+                              "computed": {
+                                "title": "'Level 3 ('+$resource.features.avd_level_3_desc+')'"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Level 4",
+                          "const": "LEVEL_4",
+                          "actions": [
+                            {
+                              "type": "exclude",
+                              "condition": "$resource.features.avd_level_4_desc == 'NonApplicable' || $resource.features.avd_level_4_desc == undefined"
+                            },
+                            {
+                              "type": "set",
+                              "condition": "$resource.features.avd_level_4_desc != 'NonApplicable'",
+                              "computed": {
+                                "title": "'Level 4 ('+$resource.features.avd_level_4_desc+')'"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Level 5",
+                          "const": "LEVEL_5",
+                          "actions": [
+                            {
+                              "type": "exclude",
+                              "condition": "$resource.features.avd_level_5_desc == 'NonApplicable' || $resource.features.avd_level_5_desc == undefined"
+                            },
+                            {
+                              "type": "set",
+                              "condition": "$resource.features.avd_level_5_desc != 'NonApplicable'",
+                              "computed": {
+                                "title": "'Level 5 ('+$resource.features.avd_level_5_desc+')'"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Level 6",
+                          "const": "LEVEL_6",
+                          "actions": [
+                            {
+                              "type": "exclude",
+                              "condition": "$resource.features.avd_level_6_desc == 'NonApplicable' || $resource.features.avd_level_6_desc == undefined"
+                            },
+                            {
+                              "type": "set",
+                              "condition": "$resource.features.avd_level_6_desc != 'NonApplicable'",
+                              "computed": {
+                                "title": "'Level 6 ('+$resource.features.avd_level_6_desc+')'"
+                              }
+                            }
+                          ]
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$resource.features.avd_level == true"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Voltage_detection_configuration.Avd_configuration.enable == true"
+                        }
+                      ],
+                      "default": "LEVEL_1"
+                    },
+                    "enableEXTI": {
+                      "type": "boolean",
+                      "description": "Enable interruption mode for the AVD.",
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "exclude",
+                          "condition": "$resource.features.pvd_exti_line_number === $resource.features.avd_exti_line_number"
+                        },
+                        {
+                          "type": "enable",
+                          "condition": "$Additional_configuration.Voltage_detection_configuration.Avd_configuration.enable == true"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "enableEXTI": {
+                  "type": "boolean",
+                  "description": "Enable EXTI for the AVD/PVD.",
+                  "default": false,
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.pvd_exti_line_number === $resource.features.avd_exti_line_number"
+                    },
+                    {
+                      "type": "enable",
+                      "condition": "$Additional_configuration.Voltage_detection_configuration.Avd_configuration.enable == true || $Additional_configuration.Voltage_detection_configuration.Pvd_configuration.enable == true"
+                    }
+                  ]
+                },
+                "Temperature_vbat_monitoring": {
+                  "title": "Temperature and VBAT monitoring",
+                  "description": "Temperature and VBAT monitoring configuration",
+                  "type": "object",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.vbat_temp_mon"
+                    }
+                  ],
+                  "properties": {
+                    "enable": {
+                      "description": "Enable the Temperature and VBAT monitoring",
+                      "type": "boolean",
+                      "default": false
+                    }
+                  }
+                },
+                "Temperature_vdd_monitoring": {
+                  "title": "Temperature and VDD monitoring",
+                  "description": "Temperature and VDD monitoring configuration",
+                  "type": "object",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.vdd_temp_mon"
+                    }
+                  ],
+                  "properties": {
+                    "enable": {
+                      "description": "Enable the Temperature and VDD monitoring",
+                      "type": "boolean",
+                      "default": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "System_configuration": {
+          "title": "System configuration",
+          "type": "object",
+          "description": "System configuration",
+          "actions": [
+            {
+              "type": "include",
+              "condition": "($common.helper_pwr_is_gpio_configured($Additional_configuration.Status_pins_configuration, $Additional_configuration.Voltage_detection_configuration.Pvd_configuration) === true) || ($common.helper_pwr_is_exti_configured($Additional_configuration) === true)"
+            }
+          ],
+          "properties": {
+            "EXTI": {
+              "type": "object",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$common.helper_pwr_is_exti_configured($Additional_configuration) === true"
+                }
+              ],
+              "properties": {
+                "WK1_EXTI_Config": {
+                  "title": "Wakeup 1 EXTI configuration",
+                  "type": "object",
+                  "objectType": "need.exti.lines",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_EXTI_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_1_configuration.enableEXTI  === true"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "WKUP1"
+                    }
+                  ]
+                },
+                "WK2_EXTI_Config": {
+                  "title": "Wakeup 2 EXTI configuration",
+                  "type": "object",
+                  "objectType": "need.exti.lines",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_EXTI_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_2_configuration.enableEXTI  === true"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "WKUP2"
+                    }
+                  ]
+                },
+                "WK3_EXTI_Config": {
+                  "title": "Wakeup 3 EXTI configuration",
+                  "type": "object",
+                  "objectType": "need.exti.lines",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_EXTI_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_3_configuration.enableEXTI  === true"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "WKUP3"
+                    }
+                  ]
+                },
+                "WK4_EXTI_Config": {
+                  "title": "Wakeup 4 EXTI configuration",
+                  "type": "object",
+                  "objectType": "need.exti.lines",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_EXTI_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_4_configuration.enableEXTI  === true"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "WKUP4"
+                    }
+                  ]
+                },
+                "WK5_EXTI_Config": {
+                  "title": "Wakeup 5 EXTI configuration",
+                  "type": "object",
+                  "objectType": "need.exti.lines",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_EXTI_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_5_configuration.enableEXTI  === true"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "WKUP5"
+                    }
+                  ]
+                },
+                "WK6_EXTI_Config": {
+                  "title": "Wakeup 6 EXTI configuration",
+                  "type": "object",
+                  "objectType": "need.exti.lines",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_EXTI_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_6_configuration.enableEXTI === true"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "WKUP6"
+                    }
+                  ]
+                },
+                "WK7_EXTI_Config": {
+                  "title": "Wakeup 7 EXTI configuration",
+                  "type": "object",
+                  "objectType": "need.exti.lines",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_EXTI_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_7_configuration.enableEXTI === true"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "WKUP7"
+                    }
+                  ]
+                },
+                "WK8_EXTI_Config": {
+                  "title": "Wakeup 8 EXTI configuration",
+                  "type": "object",
+                  "objectType": "need.exti.lines",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_EXTI_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Additional_configuration.Wakeup_pins_configuration.Wk_8_configuration.enableEXTI === true"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "WKUP8"
+                    }
+                  ]
+                },
+                "PVD_EXTI_Config": {
+                  "title": "PVD EXTI configuration",
+                  "type": "object",
+                  "objectType": "need.exti.lines",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_EXTI_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($Additional_configuration.Voltage_detection_configuration.Pvd_configuration.enableEXTI === true) && ($Additional_configuration.Voltage_detection_configuration.Pvd_configuration.enable === true)"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "*"
+                    }
+                  ]
+                },
+                "AVD_EXTI_Config": {
+                  "title": "AVD EXTI configuration",
+                  "type": "object",
+                  "objectType": "need.exti.lines",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_EXTI_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($Additional_configuration.Voltage_detection_configuration.Avd_configuration.enableEXTI === true) && ($Additional_configuration.Voltage_detection_configuration.Avd_configuration.enable === true)"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "*"
+                    }
+                  ]
+                },
+                "PVD_AVD_EXTI_Config": {
+                  "title": "PVD/AVD EXTI configuration",
+                  "type": "object",
+                  "objectType": "need.exti.lines",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_EXTI_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Additional_configuration.Voltage_detection_configuration.enableEXTI && ($Additional_configuration.Voltage_detection_configuration.Pvd_configuration.enable || $Additional_configuration.Voltage_detection_configuration.Avd_configuration.enable)"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "PVD and AVD"
+                    }
+                  ]
+                }
+              }
+            },
+            "GPIO": {
+              "type": "object",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$common.helper_pwr_is_gpio_configured($Additional_configuration.Status_pins_configuration, $Additional_configuration.Voltage_detection_configuration.Pvd_configuration) === true"
+                }
+              ],
+              "properties": {
+                "CSLEEP_gpio": {
+                  "title": "Configure CSLEEP GPIO",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_GPIO_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Additional_configuration.Status_pins_configuration.enableCSLEEP === true"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "CSLEEP",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        },
+                        "pull": {
+                          "const": "NO"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "CSTOP_gpio": {
+                  "title": "Configure CSTOP GPIO",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_GPIO_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Additional_configuration.Status_pins_configuration.enableCSTOP === true"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "CSTOP",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        },
+                        "pull": {
+                          "const": "NO"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "SRDSTOP_gpio": {
+                  "title": "Configure SRDSTOP GPIO",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_GPIO_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Additional_configuration.Status_pins_configuration.enableSRDSTOP === true"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "SRDSTOP",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        },
+                        "pull": {
+                          "const": "NO"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "PVD_IN_gpio": {
+                  "title": "Configure PVD_IN GPIO",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_GPIO_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($Additional_configuration.Voltage_detection_configuration.Pvd_configuration.level_selection !== undefined) && ($common.helper_pwr_pvdin_conf_check($Additional_configuration.Voltage_detection_configuration.Pvd_configuration.level_selection, 'PVD_IN', $Additional_configuration.Voltage_detection_configuration.Pvd_configuration.enable)) === true"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "PVD_IN",
+                      "constraints": {
+                        "pull": {
+                          "const": "NO"
+                        },
+                        "mode": {
+                          "const": "ANALOG"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

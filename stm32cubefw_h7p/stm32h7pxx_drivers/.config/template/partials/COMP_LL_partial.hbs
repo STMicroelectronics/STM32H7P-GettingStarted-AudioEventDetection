@@ -1,0 +1,66 @@
+{{!--
+  Partial used for LL COMP:
+  how to use
+  > COMP_LL fct='xxxx' with xxxx:
+    * init
+    * deinit
+--}}
+{{!==================== partial function: init ====================~}}
+{{#if (eq fct 'init')}}
+{{#if (eq comp_mode "mode_independent")}}
+  LL_COMP_ConfigInputs({{uppercase @root.current_resource}}, LL_COMP_INPUT_MINUS_{{helper_comp_transform_input_name feat_basic.input.input_minus.source}}, LL_COMP_INPUT_PLUS_{{helper_comp_transform_input_name feat_basic.input.input_plus.source}});
+  {{helper_common_gen_ll_code 'LL_COMP_SetInputHysteresis' (concat 'LL_COMP_HYSTERESIS_' feat_basic.input.input_hysteresis)}}
+  {{helper_common_gen_ll_code 'LL_COMP_SetOutputPolarity' (concat 'LL_COMP_OUTPUTPOL_' feat_basic.output.output_polarity)}}
+
+{{#with feat_opt~}}
+{{#if output_blanking_state}}
+  {{helper_common_gen_ll_code 'LL_COMP_SetOutputBlankingSource' (concat 'LL_COMP_BLANKINGSRC_' (helper_comp_transform_blk_src_name output_blanking_src.source))}}
+{{/if}}
+{{/with~}}{{!feat_opt}}
+{{else}}
+{{#if (eq (helper_comp_is_window_instance_main @root.current_resource) false)}}
+  /* Window mode: configuration performed by other comparator:
+     COMP{{helper_comp_get_window_other_instance_nb @root.current_resource}}
+  */
+{{else}}
+  /* Configure window mode */
+{{~helper_common_initialize_ll_code @root.optim_enable @root.lut_table (concat 'LL_COMP_COMMON_INSTANCE(' @root.current_resource ')')}}
+  LL_COMP_SetCommonWindowMode(LL_COMP_COMMON_INSTANCE({{uppercase @root.current_resource}}), LL_COMP_WINDOW_INPUT_PLUS_ODD);
+  LL_COMP_SetCommonWindowOutput(LL_COMP_COMMON_INSTANCE({{uppercase @root.current_resource}}), LL_COMP_WINDOW_OUTPUT_INDEPT);
+  //{{helper_common_gen_ll_code 'LL_COMP_SetCommonWindowOutput' (concat 'LL_COMP_WINDOW_OUTPUT_' feat_basic.?)}}
+
+  /* Configure main comparator instance */
+{{~helper_common_initialize_ll_code @root.optim_enable @root.lut_table @root.current_resource}}
+  LL_COMP_ConfigInputs({{uppercase @root.current_resource}}, LL_COMP_INPUT_MINUS_{{helper_comp_transform_input_name feat_basic.input.input_minus.source}}, LL_COMP_INPUT_PLUS_{{helper_comp_transform_input_name feat_basic.input.input_plus.source}});
+  {{helper_common_gen_ll_code 'LL_COMP_SetInputHysteresis' (concat 'LL_COMP_HYSTERESIS_' feat_basic.input.input_hysteresis)}}
+  {{helper_common_gen_ll_code 'LL_COMP_SetOutputPolarity' (concat 'LL_COMP_OUTPUTPOL_' feat_basic.output.output_polarity)}}
+
+{{#with feat_opt~}}
+{{#if output_blanking_state}}
+  {{helper_common_gen_ll_code 'LL_COMP_SetOutputBlankingSource' (concat 'LL_COMP_BLANKINGSRC_' (helper_comp_transform_blk_src_name output_blanking_src.source))}}
+{{/if}}
+{{/with~}}{{!feat_opt}}
+
+  /* Get other comparator handle */
+//hal_comp_handle_t* p_handle_other_comp = mx_comp{{helper_comp_get_window_other_instance_nb @root.current_resource~}}_hal_comp_gethandle();
+
+  /* Configure other comparator instance */
+{{~helper_common_initialize_ll_code @root.optim_enable @root.lut_table 'p_handle_other_comp'}}
+  {{helper_common_gen_ll_code 'LL_COMP_SetPowerMode' (concat 'LL_COMP_POWER_MODE_' feat_basic.power_mode)}}
+  {{helper_common_gen_ll_code 'LL_COMP_ConfigInputs' (concat 'LL_COMP_INPUT_MINUS_' feat_basic.input.input_minus) (concat 'LL_COMP_INPUT_PLUS_' feat_basic.input_plus)}}
+  {{helper_common_gen_ll_code 'LL_COMP_SetInputHysteresis' (concat 'LL_COMP_HYSTERESIS_' feat_basic.input.input_hysteresis)}}
+  {{helper_common_gen_ll_code 'LL_COMP_SetOutputPolarity' (concat 'LL_COMP_OUTPUTPOL_' feat_basic.output.output_polarity)}}
+
+{{#with feat_opt~}}
+{{#if output_blanking_state}}
+  {{helper_common_gen_ll_code 'LL_COMP_SetOutputBlankingSource' (concat 'LL_COMP_BLANKINGSRC_' (helper_comp_transform_blk_src_name output_blanking_src.source))}}
+{{/if}}{{!output_blanking_state}}
+{{/with~}}{{!feat_opt}}
+{{/if~}} {{!helper_comp_is_window_instance_main}}
+{{/if~}}{{!comp_mode}}
+{{!==================== partial function: deinit ====================~}}
+{{else if (eq fct 'deinit')}}
+  /* No action */
+{{else}}
+#warning "step {{fct}} in partial COMP_LL not managed"
+{{/if}}

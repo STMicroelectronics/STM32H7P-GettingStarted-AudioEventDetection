@@ -1,0 +1,585 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "version": "0.0.1",
+  "componentid": "::Device:STM32CubeMX2 Config:CORTEX MPU",
+  "grammarVersion": "3.5",
+  "type": "object",
+  "functions": [
+    {
+      "path": ".config/template/helpers/mpu_helpers.js",
+      "accessor": "mpu"
+    }
+  ],
+  "properties": {
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "object",
+          "title": "Software information",
+          "properties": {
+            "labels": {
+              "type": "array",
+              "title": "Label for peripheral instance",
+              "description": "Labels allow to create aliases inside mx_hal_def.h file like '<label>_init', '<label>_deinit' and '<label>_gethandle'. These aliases can be used on application side.",
+              "items": {
+                "type": "string",
+                "pattern": "^([a-zA-Z_][a-zA-Z0-9_]{1,31})?$",
+                "minLength": 0,
+                "maxLength": 32,
+                "unique": "project",
+                "default": ""
+              }
+            },
+            "layer": {
+              "title": "Layer",
+              "type": "string",
+              "oneOf": [
+                {
+                  "const": "HAL"
+                },
+                {
+                  "title": "ARM CMSIS",
+                  "const": "LL"
+                }
+              ],
+              "default": "HAL"
+            },
+            "init_type": {
+              "title": "resource initialization code generation",
+              "type": "string",
+              "description": "generate or not the HAL CORTEX init code, call it or not at boot",
+              "$comment": "generate the init code of your CORTEX or not (enabled/disabled), call it automatically at startup or not (called/enabled)",
+              "oneOf": [
+                {
+                  "const": "called"
+                },
+                {
+                  "const": "enabled"
+                },
+                {
+                  "const": "disabled"
+                }
+              ],
+              "default": "called"
+            },
+            "note": {
+              "type": "string",
+              "description": "MPU default configuration:\n\nBecause the instruction cache is enabled, the MPU must be enabled with the OTP/RO data area defined as a non-cacheable read-only region (0x08FF FE00-0x08FF FFFF range cover the full area)",
+              "default": "MPU default configuration:\n\nBecause the instruction cache is enabled, the MPU must be enabled with the OTP/RO data area defined as a non-cacheable read-only region (0x08FF FE00-0x08FF FFFF range cover the full area)",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "($get('envVar.value', 'HAL_ICACHE_CORE_ENABLED') == true)"
+                },
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ]
+            }
+          }
+        },
+        "Basic": {
+          "type": "object",
+          "title": "Additional Configuration",
+          "properties": {
+            "MPUEnabled": {
+              "type": "boolean",
+              "description": "If the box is checked, the CORTEX MPU is enabled.",
+              "default": true
+            },
+            "DefaultMapEnabled": {
+              "type": "string",
+              "description": "This option enables the default MPU memory configuration. If an address is not covered by any MPU region is accessed with this option enabled the base memoy mapping applies. If the option is disabled, any memory access not covered by an MPU region triggers a MemManage Fault.",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$Basic.MPUEnabled"
+                }
+              ],
+              "oneOf": [
+                {
+                  "title": "Enabled",
+                  "const": "ONLY_PRIV"
+                },
+                {
+                  "title": "Disabled",
+                  "const": "ALL"
+                }
+              ],
+              "default": "ONLY_PRIV"
+            },
+            "DuringHardfault": {
+              "type": "string",
+              "description": "This option enables the MPU while in NMIFault and HardFault",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$Basic.MPUEnabled"
+                }
+              ],
+              "oneOf": [
+                {
+                  "title": "Enabled",
+                  "const": "ENABLE"
+                },
+                {
+                  "title": "Disabled",
+                  "const": "DISABLE"
+                }
+              ],
+              "default": "DISABLE"
+            },
+            "Regions": {
+              "title": "Regions",
+              "type": "array",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$Basic.MPUEnabled"
+                }
+              ],
+              "source": "Array.from({ length: ($resource.features.MPU)}, (_, i) => ({ id: ('REGION_' + i ) }))",
+              "itemId": "id",
+              "itemVar": "region",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "use_region": {
+                    "type": "boolean",
+                    "description": "Use and configure the region",
+                    "default": false
+                  },
+                  "BaseAddress": {
+                    "type": "integer",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$item.use_region"
+                      }
+                    ],
+                    "description": "Base address of the MPU region. This address must be 32-byte aligned.",
+                    "minimum": 0,
+                    "maximum": 4294967295,
+                    "display_format": [
+                      "hex"
+                    ],
+                    "default": 0
+                  },
+                  "Size": {
+                    "type": "string",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$item.use_region"
+                      },
+                      {
+                        "type": "warning",
+                        "condition": "($value <= 4)",
+                        "message": "SIZE field values less than 4 are reserved, because the smallest supported region size is 32 bytes.The last word in the GCM GMAC algorithm should be 0x00000002"
+                      }
+                    ],
+                    "oneOf": [
+                      {
+                        "title": "32B",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_32B"
+                      },
+                      {
+                        "title": "64B",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_64B"
+                      },
+                      {
+                        "title": "128B",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_128B"
+                      },
+                      {
+                        "title": "256B",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_256B"
+                      },
+                      {
+                        "title": "512B",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_512B"
+                      },
+                      {
+                        "title": "1KB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_1KB"
+                      },
+                      {
+                        "title": "2KB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_2KB"
+                      },
+                      {
+                        "title": "4KB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_4KB"
+                      },
+                      {
+                        "title": "8KB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_8KB"
+                      },
+                      {
+                        "title": "16KB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_16KB"
+                      },
+                      {
+                        "title": "32KB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_32KB"
+                      },
+                      {
+                        "title": "64KB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_64KB"
+                      },
+                      {
+                        "title": "128KB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_128KB"
+                      },
+                      {
+                        "title": "256KB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_256KB"
+                      },
+                      {
+                        "title": "512KB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_512KB"
+                      },
+                      {
+                        "title": "1MB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_1MB"
+                      },
+                      {
+                        "title": "2MB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_2MB"
+                      },
+                      {
+                        "title": "4MB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_4MB"
+                      },
+                      {
+                        "title": "8MB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_8MB"
+                      },
+                      {
+                        "title": "16MB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_16MB"
+                      },
+                      {
+                        "title": "32MB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_32MB"
+                      },
+                      {
+                        "title": "64MB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_64MB"
+                      },
+                      {
+                        "title": "128MB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_128MB"
+                      },
+                      {
+                        "title": "256MB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_256MB"
+                      },
+                      {
+                        "title": "512MB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_512MB"
+                      },
+                      {
+                        "title": "1GB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_1GB"
+                      },
+                      {
+                        "title": "2GB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_2GB"
+                      },
+                      {
+                        "title": "4GB",
+                        "const": "HAL_CORTEX_MPU_REGION_SIZE_4GB"
+                      }
+                    ],
+                    "default": "HAL_CORTEX_MPU_REGION_SIZE_256B"
+                  },
+                  "AccessPermission": {
+                    "type": "string",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$item.use_region"
+                      }
+                    ],
+                    "description": "This defines which types of accesses are allowed for the region.",
+                    "oneOf": [
+                      {
+                        "title": "None",
+                        "const": "ALL_RW_FAULT"
+                      },
+                      {
+                        "title": "Privilege read/write",
+                        "const": "ONLY_PRIV_RW"
+                      },
+                      {
+                        "title": "No unprivileged write",
+                        "const": "NPRIV_W_FAULT"
+                      },
+                      {
+                        "title": "All read",
+                        "const": "ALL_RO"
+                      },
+                      {
+                        "title": "Privilege read",
+                        "const": "ONLY_PRIV_RO"
+                      },
+                      {
+                        "title": "All read/write",
+                        "const": "ALL_RW"
+                      }
+                    ],
+                    "default": "ONLY_PRIV_RW"
+                  },
+                  "Attributes": {
+                    "title": "Attributes",
+                    "type": "object",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$item.use_region"
+                      }
+                    ],
+                    "properties": {
+                      "MemoryType": {
+                        "type": "string",
+                        "description": "This parameter sets the type of memory. Normal should be used for RAMs and Flash and exposes cacheability attributes. Device should be used for peripherals, sets a region as non cacheable and exposes bus configuration options.",
+                        "oneOf": [
+                          {
+                            "title": "Strongly ordered",
+                            "const": "SO"
+                          },
+                          {
+                            "title": "Device",
+                            "const": "DEVICE"
+                          },
+                          {
+                            "title": "Normal",
+                            "const": "NORMAL"
+                          }
+                        ],
+                        "default": "SO"
+                      },
+                      "Shareability": {
+                        "type": "string",
+                        "description": "This attribute defines the shareabilty of the region.",
+                        "actions": [
+                          {
+                            "type": "disabled",
+                            "condition": "$item.Attributes.MemoryType === 'SO'"
+                          }
+                        ],
+                        "oneOf": [
+                          {
+                            "title": "Shareable",
+                            "const": "SHAREABLE"
+                          },
+                          {
+                            "title": "Non-shareable",
+                            "const": "NSHAREABLE",
+                            "actions": [
+                              {
+                                "type": "exclude",
+                                "condition": "$item.Attributes.MemoryType === 'SO'"
+                              }
+                            ]
+                          }
+                        ],
+                        "default": "SHAREABLE"
+                      },
+                      "WritePolicy": {
+                        "type": "string",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$item.Attributes.MemoryType === 'NORMAL'"
+                          }
+                        ],
+                        "description": "This attribute defines the write policy of the region.",
+                        "oneOf": [
+                          {
+                            "title": "Not Cacheable",
+                            "const": "_IO_NCACHEABLE"
+                          },
+                          {
+                            "title": "Write Through",
+                            "const": "_IO_WT"
+                          },
+                          {
+                            "title": "Write Back",
+                            "const": "_IO_WB"
+                          }
+                        ],
+                        "default": "_IO_WT"
+                      },
+                      "AllocationPolicy": {
+                        "type": "string",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "($item.Attributes.MemoryType === 'NORMAL') && !($item.Attributes.WritePolicy === '_IO_NCACHEABLE')"
+                          }
+                        ],
+                        "description": "This option defines the cache line allocation policy.",
+                        "oneOf": [
+                          {
+                            "title": "Read/Write allocate",
+                            "const": "_RWA"
+                          },
+                          {
+                            "title": "No write allocate",
+                            "const": "_NWA"
+                          }
+                        ],
+                        "default": "_NWA"
+                      }
+                    }
+                  },
+                  "InstructionAccess": {
+                    "type": "string",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$item.use_region"
+                      }
+                    ],
+                    "description": "Enable instruction access in the MPU region.",
+                    "oneOf": [
+                      {
+                        "title": "Disabled",
+                        "const": "DISABLE"
+                      },
+                      {
+                        "title": "Enabled",
+                        "const": "ENABLE"
+                      }
+                    ],
+                    "default": "ENABLE"
+                  },
+                  "Subregions": {
+                    "type": "object",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "($item.use_region) && !(($item.Size === 'HAL_CORTEX_MPU_REGION_SIZE_32B') || ($item.Size === 'HAL_CORTEX_MPU_REGION_SIZE_64B') || ($item.Size === 'HAL_CORTEX_MPU_REGION_SIZE_128B'))"
+                      }
+                    ],
+                    "description": "Specifies the subregion(s) to enable/disable. For any region of 256 bytes or larger, the MPU divides the region into eight equally-sized subregions.",
+                    "properties": {
+                      "EnableSubregion1": {
+                        "actions": [
+                          {
+                            "type": "set",
+                            "condition": "true",
+                            "computed":{
+                              "title": "$mpu.helper_cortex_mpu_get_subregion_title($item.Size, $item.BaseAddress, 1)"
+                            }
+                          }
+                        ],
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "EnableSubregion2": {
+                        "actions": [
+                          {
+                            "type": "set",
+                            "condition": "true",
+                            "computed":{
+                              "title": "$mpu.helper_cortex_mpu_get_subregion_title($item.Size, $item.BaseAddress, 2)"
+                            }
+                          }
+                        ],
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "EnableSubregion3": {
+                        "actions": [
+                          {
+                            "type": "set",
+                            "condition": "true",
+                            "computed":{
+                              "title": "$mpu.helper_cortex_mpu_get_subregion_title($item.Size, $item.BaseAddress, 3)"
+                            }
+                          }
+                        ],
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "EnableSubregion4": {
+                        "actions": [
+                          {
+                            "type": "set",
+                            "condition": "true",
+                            "computed":{
+                              "title": "$mpu.helper_cortex_mpu_get_subregion_title($item.Size, $item.BaseAddress, 4)"
+                            }
+                          }
+                        ],
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "EnableSubregion5": {
+                        "actions": [
+                          {
+                            "type": "set",
+                            "condition": "true",
+                            "computed":{
+                              "title": "$mpu.helper_cortex_mpu_get_subregion_title($item.Size, $item.BaseAddress, 5)"
+                            }
+                          }
+                        ],
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "EnableSubregion6": {
+                        "actions": [
+                          {
+                            "type": "set",
+                            "condition": "true",
+                            "computed":{
+                              "title": "$mpu.helper_cortex_mpu_get_subregion_title($item.Size, $item.BaseAddress, 6)"
+                            }
+                          }
+                        ],
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "EnableSubregion7": {
+                        "actions": [
+                          {
+                            "type": "set",
+                            "condition": "true",
+                            "computed":{
+                              "title": "$mpu.helper_cortex_mpu_get_subregion_title($item.Size, $item.BaseAddress, 7)"
+                            }
+                          }
+                        ],
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "EnableSubregion8": {
+                        "actions": [
+                          {
+                            "type": "set",
+                            "condition": "true",
+                            "computed":{
+                              "title": "$mpu.helper_cortex_mpu_get_subregion_title($item.Size, $item.BaseAddress, 8)"
+                            }
+                          }
+                        ],
+                        "type": "boolean",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

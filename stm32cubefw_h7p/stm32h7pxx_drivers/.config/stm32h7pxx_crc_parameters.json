@@ -1,0 +1,263 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "version": "0.0.1",
+  "componentid": "::Device:STM32CubeMX2 Config:CRC",
+  "grammarVersion": "3.1",
+  "type": "object",
+  "properties": {
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "object",
+          "properties": {
+            "labels": {
+              "title": "Label",
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^([a-zA-Z_][a-zA-Z0-9_]{1,31})?$",
+                "minLength": 0,
+                "maxLength": 32,
+                "default": ""
+              }
+            },
+            "layer": {
+              "title": "Software Layer",
+              "type": "string",
+              "oneOf": [
+                {
+                  "const": "HAL"
+                },
+                {
+                  "const": "LL"
+                }
+              ],
+              "variables": [
+                {
+                  "on": "update-value",
+                  "name": "HAL_CRC_PROJECT_USE_HAL",
+                  "condition": "$value === 'HAL'",
+                  "semaphore": true
+                }
+              ],
+              "default": "HAL"
+            },
+            "init_type": {
+              "title": "resource initialization code generation",
+              "type": "string",
+              "oneOf": [
+                {
+                  "const": "called"
+                },
+                {
+                  "const": "enabled"
+                },
+                {
+                  "const": "disabled"
+                }
+              ],
+              "description": "generate or not the CRC init code, call it or not at boot",
+              "$comment": "generate the init code of your CRC or not (enabled/disabled), call it automatically at startup or not (called/enabled)",
+              "default": "called"
+            }
+          }
+        },
+        "basic": {
+          "type": "object",
+          "description": "Main configuration",
+          "actions": [
+            {
+              "type": "include",
+              "condition": "$resource.features.full_poly==1"
+            }
+          ],
+          "properties": {
+            "DefaultPolynomial": {
+              "type": "boolean",
+              "description": "Configure CRC with its default value",
+              "default": true,
+              "title": "Default Polynomial"
+            },
+            "CRC_Polynomial": {
+              "type": "object",
+              "description": "Set CRC generating polynomial as a 7, 8, 16 or 32-bit long value for a polynomial degree respectively equal to 7, 8, 16 or 32.",
+              "objectType": "polynomial",
+              "size": [
+                32,
+                16,
+                8
+              ],
+              "force": [
+                0
+              ],
+              "default": {
+                "size": 32,
+                "value": 79764919
+              },
+              "actions": [
+                {
+                  "type": "disable",
+                  "condition": "$basic.DefaultPolynomial"
+                },
+                {
+                  "type": "set",
+                  "attributes": {
+                    "const": {
+                      "size": 32,
+                      "value": 79764919
+                    }
+                  },
+                  "condition": "$basic.DefaultPolynomial"
+                }
+              ],
+              "title": "CRC Polynomial"
+            },
+            "crc_init_value": {
+              "type": "integer",
+              "description": "Initialisation value to initiate CRC computation.",
+              "title": "Initialisation value",
+              "actions": [
+                {
+                  "type": "disable",
+                  "condition": "$basic.DefaultPolynomial"
+                },
+                {
+                  "type": "set",
+                  "condition": "$basic.DefaultPolynomial",
+                  "computed": {},
+                  "attributes": {
+                    "const": 4294967295
+                  }
+                }
+              ],
+              "default": 4294967295,
+              "display_format": [
+                "dec",
+                "hex"
+              ],
+              "maximum": 4294967295,
+              "minimum": 0
+            },
+            "Input_data_reverse_mode": {
+              "type": "string",
+              "title": "Invert Input Data",
+              "description": "Input data inversion mode.",
+              "actions": [
+                {
+                  "type": "disable",
+                  "condition": "$basic.DefaultPolynomial"
+                },
+                {
+                  "type": "set",
+                  "computed": {
+                    "const": "NONE"
+                  },
+                  "condition": "$basic.DefaultPolynomial"
+                }
+              ],
+              "oneOf": [
+                {
+                  "description": "No input data inversion",
+                  "title": "None",
+                  "const": "NONE"
+                },
+                {
+                  "description": "The bit-reversal is done by byte, 0x1A2B3C4D becomes 0x58D43CB2",
+                  "const": "BYTE",
+                  "title": "Bit by byte"
+                },
+                {
+                  "description": "The bit-reversal is done by half word, 0x1A2B3C4D becomes 0xD458B23C",
+                  "const": "HALFWORD",
+                  "title": "Bit by halfword"
+                },
+                {
+                  "description": "The bit-reversal is done on the full word, 0x1A2B3C4D becomes 0xB23CD458",
+                  "const": "WORD",
+                  "title": "Bit by Word"
+                },
+                {
+                  "title": "Halfword by word",
+                  "const": "HALFWORD_BYWORD",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.peripheralVersionNum >= 2.4"
+                    }
+                  ],
+                  "description": "The reversibility is done by half word by word, 0x1A2B3C4D becomes 0x3C4D1A2B."
+                },
+                {
+                  "title": "Byte by word",
+                  "const": "BYTE_BYWORD",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.peripheralVersionNum >= 2.4"
+                    }
+                  ],
+                  "description": "The reversibility is done byte by word, 0x1A2B3C4D becomes 0x4D3C2B1A."
+                }
+              ],
+              "default": "NONE"
+            },
+            "Output_data_reverse_mode": {
+              "title": "Invert Output Data",
+              "description": "Output data inversion mode.",
+              "type": "string",
+              "oneOf": [
+                {
+                  "title": "None",
+                  "const": "NONE",
+                  "description": "The bit order of the output data is not affected."
+                },
+                {
+                  "title": "Bit by word",
+                  "const": "BIT",
+                  "description": "The bit-reversal of the output data is done by word"
+                },
+                {
+                  "title": "Halfword by word",
+                  "const": "HALFWORD_BYWORD",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.peripheralVersionNum >= 2.4"
+                    }
+                  ],
+                  "description": "The reversibility is done half word by word."
+                },
+                {
+                  "const": "BYTE_BYWORD",
+                  "description": "The reversibility is done byte by word.",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.peripheralVersionNum >= 2.4"
+                    }
+                  ],
+                  "title": "Byte by word"
+                }
+              ],
+              "actions": [
+                {
+                  "type": "disable",
+                  "condition": "$basic.DefaultPolynomial"
+                },
+                {
+                  "type": "set",
+                  "computed": {
+                    "const": "NONE"
+                  },
+                  "condition": "$basic.DefaultPolynomial"
+                }
+              ],
+              "default": "NONE"
+            }
+          }
+        }
+      }
+    }
+  }
+}

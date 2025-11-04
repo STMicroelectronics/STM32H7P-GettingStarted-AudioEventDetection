@@ -1,0 +1,735 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "version": "0.0.1",
+  "componentid": "::Device:STM32CubeMX2 Config:SMBUS",
+  "grammarVersion": "3.1",
+  "type": "object",
+  "functions": [
+    {
+      "path": ".config/template/helpers/i2c_helpers.js",
+      "accessor": "common"
+    }
+  ],
+  "properties": {
+
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "object",
+          "properties": {
+            "labels": {
+              "type": "array",
+              "title": "Label",
+              "$comment": "label associated to the instance of the peripheral, can be overridden at sample level. In this case it becomes read-only",
+              "items": {
+                "type": "string",
+                "pattern": "^([a-zA-Z_][a-zA-Z0-9_]{1,31})?$",
+                "minLength": 0,
+                "maxLength": 32,
+                "default": ""
+              }
+            },
+            "layer": {
+              "type": "string",
+              "title": "Software Layer",
+              "oneOf": [
+                {
+                  "const": "HAL"
+                },
+                {
+                  "const": "LL"
+                }
+              ],
+              "default": "HAL"
+            },
+            "init_type": {
+              "type": "string",
+              "title": "resource initialization code generation",
+              "description": "generate or not the SMBUS init code, call it or not at boot",
+              "$comment": "generate the init code of your SMBUS or not (enabled/disabled), call it automatically at startup or not (called/enabled)",
+              "oneOf": [
+                {
+                  "const": "called"
+                },
+                {
+                  "const": "enabled"
+                },
+                {
+                  "const": "disabled"
+                }
+              ],
+              "default": "called"
+            },
+            "function_type": {
+              "type": "string",
+              "title": "Function used by the component",
+              "description": "This component is a standard component which can be used HW instance available on another component. The notion of function is used to distinguish the usage of each HW instance",
+              "actions": [
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ],
+              "default": "SMBUS"
+            }
+          }
+        },
+
+              "Basic": {
+                "type": "object",
+                "title": "Main peripheral configuration",
+                "properties": {
+                  "AdvancedTimingConfiguration": {
+                    "type": "boolean",
+                    "title": "Advanced configuration for the timing calculation",
+                    "default": false
+                  },
+                  "Speed_Frequency_Hz": {
+                    "actions": [
+                      {
+                        "type": "exclude",
+                        "condition": "$Basic.AdvancedTimingConfiguration"
+                      }
+                    ],
+                    "type": "integer",
+                    "description": "SMBUS Speed Frequency (KHz)",
+                    "oneOf": [
+                      {
+                        "title": "Standard Mode - 100 KHz",
+                        "const": 100000
+                      },
+                      {
+                        "title": "Fast Mode - 400 KHz",
+                        "const": 400000
+                      },
+                      {
+                        "title": "Fast Mode Plus - 1 MHz",
+                        "const": 1000000
+                      }
+                    ],
+                    "default": 100000
+                  },
+                  "timing": {
+                    "type": "integer",
+                    "description": "This timing is directly calculated by CubeMX2",
+                    "display_format": ["hex"],
+                    "maximum": 4043309055,
+                    "default": 0,
+                    "actions": [
+                      {
+                        "type": "exclude",
+                        "condition": "$Basic.AdvancedTimingConfiguration"
+                      },
+                      {
+                        "type": "disable",
+                        "condition": "\"true\""
+                      },
+                      {
+                        "type": "set",
+                        "computed": {
+                          "const": "$common.helper_compute_timing_basic($get('clock.frequency',$resource.id), $Basic.Speed_Frequency_Hz).timing_reg"
+                        }
+                      }
+                    ]
+                  },
+                  "ClockTimingConfiguration": {
+                    "type": "object",
+                    "title": "Clock Timing Configuration",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$Basic.AdvancedTimingConfiguration"
+                      }
+                    ],
+                    "properties": {
+                      "Speed_Frequency_Custom": {
+                        "type": "integer",
+                        "description": "SMBUS Speed Frequency (Hz)",
+                        "minimum": 1,
+                        "maximum": 1000000,
+                        "default": 100000,
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$Basic.AdvancedTimingConfiguration"
+                          }
+                        ]
+                      },
+                      "rise_time": {
+                        "type": "integer",
+                        "description": "Rise Time (ns)",
+                        "maximum": 1000,
+                        "default": 0,
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$Basic.AdvancedTimingConfiguration"
+                          },
+                          {
+                            "type": "set",
+                            "condition": "$Basic.ClockTimingConfiguration.Speed_Frequency_Custom <= 100000",
+                            "attributes": {
+                              "maximum": 1000
+                            }
+                          },
+                          {
+                            "type": "set",
+                            "condition": "$Basic.ClockTimingConfiguration.Speed_Frequency_Custom > 100000 && $Basic.ClockTimingConfiguration.Speed_Frequency_Custom <= 400000",
+                            "attributes": {
+                              "maximum": 300
+                            }
+                          },
+                          {
+                            "type": "set",
+                            "condition": "$Basic.ClockTimingConfiguration.Speed_Frequency_Custom> 400000",
+                            "attributes": {
+                              "maximum": 120
+                            }
+                          }
+                        ]
+                      },
+                      "fall_time": {
+                        "type": "integer",
+                        "description": "Fall Time (ns)",
+                        "maximum": 300,
+                        "default": 0,
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$Basic.AdvancedTimingConfiguration"
+                          },
+                          {
+                            "type": "set",
+                            "condition": "$Basic.ClockTimingConfiguration.Speed_Frequency_Custom <= 400000",
+                            "attributes": {
+                              "maximum": 300
+                            }
+                          },
+                          {
+                            "type": "set",
+                            "condition": "$Basic.ClockTimingConfiguration.Speed_Frequency_Custom > 400000",
+                            "attributes": {
+                              "maximum": 120
+                            }
+                          }
+                        ]
+                      },
+                      "EnableAnalogFilter": {
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$Basic.AdvancedTimingConfiguration"
+                          }
+                        ],
+                        "type": "boolean",
+                        "title": "Analog noise filter",
+                        "default": true
+                      },
+                      "DigitalNoiseFilter": {
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$Basic.AdvancedTimingConfiguration"
+                          }
+                        ],
+                        "type": "integer",
+                        "title": "Coefficient of digital noise filter ",
+                        "description": "Value is between 0x00 and 0x0F",
+                        "minimum": 0,
+                        "maximum": 15,
+                        "default": 0
+                      },
+                      "timing": {
+                        "type": "integer",
+                        "description": "This timing is directly calculated by CubeMX2",
+                        "display_format": [
+                          "hex"
+                        ],
+                        "maximum": 4043309055,
+                        "default": 0,
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$Basic.AdvancedTimingConfiguration"
+                          },
+                          {
+                            "type": "disable",
+                            "condition": "\"true\""
+                          },
+                          {
+                            "type": "set",
+                            "computed": {
+                              "const": "$common.helper_compute_timing_advanced($get('clock.frequency',$resource.id), $Basic.ClockTimingConfiguration.Speed_Frequency_Custom, $Basic.ClockTimingConfiguration.rise_time, $Basic.ClockTimingConfiguration.fall_time, $Basic.ClockTimingConfiguration.DigitalNoiseFilter, $Basic.ClockTimingConfiguration.EnableAnalogFilter).timing_reg"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "own_address1": {
+                    "type": "integer",
+                    "title": "Own Primary Address",
+                    "description": "First device own 7-bit address",
+                    "minimum": 0,
+                    "maximum": 1023,
+                    "display_format": [
+                      "hex",
+                      "dec"
+                    ],
+                    "default": 0
+                  },
+                  "device_mode": {
+                    "type": "string",
+                    "title": "SMBUS Peripheral Mode",
+                    "description": "SMBUS functional Mode",
+                    "default": "HOST",
+                    "oneOf": [
+                      {
+                        "title": "SMBUS Mode Host",
+                        "const": "HOST"
+                      },
+                      {
+                        "title": "SMBUS Mode Slave",
+                        "const": "SLAVE"
+                      },
+                      {
+                        "title": "SMBUS Mode Slave ARP",
+                        "const": "SLAVE_ARP"
+                      }
+                    ]
+                  }
+                }
+              },
+              "Advanced": {
+                "type": "object",
+                "title": "Additional features configuration",
+                "properties": {
+                  "EnableTimeoutA": {
+                    "type": "boolean",
+                    "title": "Timeout A",
+                    "default": false
+                  },
+                  "TimeoutAConfiguration": {
+                    "type" : "object",
+                    "title": "Configuration timeout A",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$Advanced.EnableTimeoutA"
+                      }
+                    ],
+                    "properties": {
+                      "Timeout_A": {
+                        "type": "integer",
+                        "description": "Timeout A in nanosecond",
+                        "title": "Timeout A (ns)",
+                        "default": 0,
+                        "actions": [
+                          {
+                            "type": "set",
+                            "condition": "$Advanced.TimeoutAConfiguration.Timeout_A_Mode === 'SCL_LOW'",
+                            "attributes": {
+                              "maximum": 35000000,
+                              "minimum": 25000000
+                            }
+                          },
+                          {
+                            "type": "set",
+                            "condition": "$Advanced.TimeoutAConfiguration.Timeout_A_Mode === 'SDA_SCL_HIGH'",
+                            "attributes": {
+                              "maximum": 16383999,
+                              "minimum": 0
+                            }
+                          }
+                        ]
+                      },
+                      "Timeout_A_Mode": {
+                        "type": "string",
+                        "description": "Timeout A mode",
+                        "default": "SCL_LOW",
+                        "oneOf": [
+                          {
+                            "title": "Timeout increase on SCL low",
+                            "const": "SCL_LOW"
+                          },
+                          {
+                            "title": "Timeout increase on SCL/SDA High",
+                            "const": "SDA_SCL_HIGH"
+                          }
+                        ],
+                        "actions": [
+                          {
+                            "type": "enable"
+                          }
+                        ]
+                      },
+                      "timeoutA_register": {
+                        "type": "integer",
+                        "description": "This timeout register is directly calculated by CubeMX2",
+                        "display_format": [
+                          "hex"
+                        ],
+                        "maximum": 4043309055,
+                        "default": 0,
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$Advanced.TimeoutAConfiguration"
+                          },
+                          {
+                            "type": "disable",
+                            "condition": "\"true\""
+                          },
+                          {
+                            "type": "set",
+                            "computed": {
+                              "const": "$common.helper_compute_timeouta($get('clock.frequency',$resource.id), $Advanced.TimeoutAConfiguration.Timeout_A_Mode, $Advanced.TimeoutAConfiguration.Timeout_A)"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "EnableTimeoutB": {
+                    "type": "boolean",
+                    "title": "Timeout B",
+                    "default": false
+                  },
+                  "TimeoutBConfiguration": {
+                    "type": "object",
+                    "title": "Configuration timeout B",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$Advanced.EnableTimeoutB"
+                      }
+                    ],
+                    "properties": {
+                      "Timeout_B": {
+                        "type": "integer",
+                        "description": "Timeout B in nanosecond",
+                        "title": "Timeout B (ns)",
+                        "default": 0,
+                        "actions": [
+                          {
+                            "type": "set",
+                            "condition": "$Basic.device_mode !== 'HOST'",
+                            "attributes": {
+                              "maximum": 25000000
+                            }
+                          },
+                          {
+                            "type": "set",
+                            "condition": "$Basic.device_mode === 'HOST'",
+                            "attributes": {
+                              "maximum": 10000000
+                            }
+                          }
+                        ]
+                      },
+                      "timeoutB_register": {
+                        "type": "integer",
+                        "description": "This timeout register is directly calculated by CubeMX2",
+                        "display_format": [
+                          "hex"
+                        ],
+                        "maximum": 4043309055,
+                        "default": 0,
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$Advanced.TimeoutBConfiguration"
+                          },
+                          {
+                            "type": "disable",
+                            "condition": "\"true\""
+                          },
+                          {
+                            "type": "set",
+                            "computed": {
+                              "const": "$common.helper_compute_timeoutb($get('clock.frequency',$resource.id), $Basic.device_mode, $Advanced.TimeoutBConfiguration.Timeout_B)"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "EnableAutonomousMode": {
+                    "type": "boolean",
+                    "title": "Autonomous mode",
+                    "default": false,
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$resource.features.auton > 0"
+                      }
+                    ]
+                  },
+                  "AutonomousConfiguration": {
+                    "type": "object",
+                    "title": "Advanced configuration",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$Advanced.EnableAutonomousMode"
+                      }
+                    ],
+                    "properties": {
+                      "source": {
+                        "type": "object",
+                        "description": "Autonomous Mode Trigger Selection",
+                        "objectType": "query",
+                        "query": {
+                          "entity": "peripheral.interconnect.input trigger",
+                          "parent": "$resource.id",
+                          "title": "{{source}}"
+                        }
+                      },
+                      "polarity": {
+                        "type": "string",
+                        "description": "Autonomous Mode Trigger Polarity",
+                        "oneOf": [
+                          {
+                            "title": "RISING",
+                            "const": "RISING"
+                          },
+                          {
+                            "title": "FALLING",
+                            "const": "FALLING"
+                          }
+                        ],
+                        "default": "RISING"
+                      }
+                    }
+                  },
+                  "EnableFastModePlus": {
+                    "type": "boolean",
+                    "title": "Enable IO 20 mA Fast mode plus",
+                    "default": false
+                  },
+                  "EnableWakeUp": {
+                    "type": "boolean",
+                    "title": "Slave Wakeup from Stop mode",
+                    "default": false
+                  },
+                  "EnableAckGeneralCall": {
+                    "type": "boolean",
+                    "title": "Slave Acknowledge General Call",
+                    "default": false
+                  },
+                  "EnableOwnAddress2": {
+                    "type": "boolean",
+                    "title": "Slave Secondary Address",
+                    "default": false
+                  },
+                  "OwnAddress2Configuration": {
+                    "type": "object",
+                    "title": "Slave Secondary Address Configuration",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$Advanced.EnableOwnAddress2"
+                      }
+                    ],
+                    "properties": {
+                      "own_address2": {
+                        "type": "integer",
+                        "title": "Own Secondary Address",
+                        "description": "7-Bit Secondary Address",
+                        "display_format": [
+                          "hex",
+                          "dec"
+                        ],
+                        "minimum": 0,
+                        "maximum": 127,
+                        "default": 0
+                      },
+                      "MaskAddress2": {
+                        "type": "string",
+                        "title": "Slave Secondary Address Mask",
+                        "description": "Secondary Address Acknowledgement Mask",
+                        "oneOf": [
+                          {
+                            "title": "No mask",
+                            "const": "NOMASK"
+                          },
+                          {
+                            "title": "Mask 01",
+                            "const": "MASK01"
+                          },
+                          {
+                            "title": "Mask 02",
+                            "const": "MASK02"
+                          },
+                          {
+                            "title": "Mask 03",
+                            "const": "MASK03"
+                          },
+                          {
+                            "title": "Mask 04",
+                            "const": "MASK04"
+                          },
+                          {
+                            "title": "Mask 05",
+                            "const": "MASK05"
+                          },
+                          {
+                            "title": "Mask 06",
+                            "const": "MASK06"
+                          },
+                          {
+                            "title": "Mask 07",
+                            "const": "MASK07"
+                          }
+                        ],
+                        "default": "NOMASK"
+                      }
+                    }
+                  },
+                  "EnablePacketErrorCheck": {
+                    "type": "boolean",
+                    "title": "Packet Error Check",
+                    "default": false
+                  },
+                  "EnableHostAlertDetection": {
+                    "type": "boolean",
+                    "title": "Host Alert Detection",
+                    "default": false
+                  }
+                }
+              },
+              "System": {
+                "type": "object",
+                "description": "SMBUS Global Configuration Structure definition",
+                "properties": {
+                  "gpio": {
+                    "type": "object",
+                    "objectType": "need.pinout.signals",
+                    "owner": "$resource.id",
+                    "needs": [
+                      {
+                        "selector": "SCL",
+                        "constraints": {
+                          "pull": {
+                            "allow": [
+                              "UP",
+                              "NO"
+                            ]
+                          },
+                          "mode": {
+                            "const": "ALTERNATE"
+                          },
+                          "output_type": {
+                            "const": "OPENDRAIN"
+                          }
+                        }
+                      },
+                      {
+                        "selector": "SDA",
+                        "constraints": {
+                          "pull": {
+                            "allow": [
+                              "UP",
+                              "NO"
+                            ]
+                          },
+                          "mode": {
+                            "const": "ALTERNATE"
+                          },
+                          "output_type": {
+                            "const": "OPENDRAIN"
+                          }
+                        }
+                      },
+                      {
+                        "selector": "SMBA",
+                        "constraints": {
+                          "pull": {
+                            "allow": [
+                              "UP",
+                              "NO"
+                            ]
+                          },
+                          "mode": {
+                            "const": "ALTERNATE"
+                          },
+                          "output_type": {
+                            "const": "OPENDRAIN"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "EnableEventInterruption": {
+                    "type": "boolean",
+                    "description": "Enable interruption mode for the peripheral",
+                    "default": false
+                  },
+                  "event_irq_handler_generation": {
+                    "type": "boolean",
+                    "title": "IRQ Handler generation",
+                    "default": true,
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$System.EnableEventInterruption && $info.layer === 'HAL'"
+                      }
+                    ]
+                  },
+                  "nvicConfigEvent": {
+                    "title": "NVIC Event configuration",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$System.EnableEventInterruption"
+                      }
+                    ],
+                    "type": "object",
+                    "objectType": "need.interrupt.lines",
+                    "owner": "$resource.id",
+                    "needs": [
+                      {
+                        "selector": "EV"
+                      }
+                    ]
+                  },
+                  "EnableErrorInterruption": {
+                    "type": "boolean",
+                    "description": "Enable interruption mode for the peripheral",
+                    "default": false
+                  },
+                  "error_irq_handler_generation": {
+                    "type": "boolean",
+                    "title": "IRQ Handler generation",
+                    "default": true,
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$System.EnableErrorInterruption && $info.layer === 'HAL'"
+                      }
+                    ]
+                  },
+                  "nvicConfigError": {
+                    "title": "NVIC Error configuration",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$System.EnableErrorInterruption"
+                      }
+                    ],
+                    "type": "object",
+                    "objectType": "need.interrupt.lines",
+                    "owner": "$resource.id",
+                    "needs": [
+                      {
+                        "selector": "ERR"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+}

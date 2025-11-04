@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html data-content_root="../../../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, HAL1, SMBUS, STM32H5, STM32G0, STM32F4, STM32L4, STM32C0, STM32H7" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     HAL SMBUS initialization and configuration functions migration — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <script src="../../../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <link href="../../../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../../../search.html" rel="search" title="Search"/>
+    <link href="hal_smbus_exported_functions_io_operation_and_peripheral_control.html" rel="next" title="HAL SMBUS io operation functions migration"/>
+    <link href="hal_smbus_exported_types.html" rel="prev" title="HAL SMBUS types migration"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/drivers_documentation/hal_drivers/smbus/hal_smbus_exported_functions_init_config" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_script/migration_script_toc.html">
+            HAL1 detection
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../breaking_concepts/breaking_concepts_toc.html">
+              Breaking changes in concepts
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../hal_drivers_toc.html">
+              HAL drivers migration
+             </a>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../adc/hal_adc_toc.html">
+                ADC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../comp/hal_comp_toc.html">
+                COMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cortex/hal_cortex_toc.html">
+                CORTEX
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cordic/hal_cordic_toc.html">
+                CORDIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../crc/hal_crc_toc.html">
+                CRC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cryp/hal_cryp_toc.html">
+                CRYP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dac/hal_dac_toc.html">
+                DAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dcache/hal_dcache_toc.html">
+                DCACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dma/hal_dma_toc.html">
+                DMA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../exti/hal_exti_toc.html">
+                EXTI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../fmac/hal_fmac_toc.html">
+                FMAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../generic/hal_generic_toc.html">
+                GENERIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxmmu/hal_gfxmmu_toc.html">
+                GFXMMU
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxtim/hal_gfxtim_toc.html">
+                GFXTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gpio/hal_gpio_toc.html">
+                GPIO
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2c/hal_i2c_toc.html">
+                I2C
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2s/hal_i2s_toc.html">
+                I2S
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../icache/hal_icache_toc.html">
+                ICACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../irda/hal_irda_toc.html">
+                IRDA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../iwdg/hal_iwdg_toc.html">
+                IWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../lptim/hal_lptim_toc.html">
+                LPTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../nor/hal_nor_toc.html">
+                NOR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../opamp/hal_opamp_toc.html">
+                OPAMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ospi/hal_ospi_toc.html">
+                OSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pka/hal_pka_toc.html">
+                PKA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pwr/hal_pwr_toc.html">
+                PWR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../qspi/hal_qspi_toc.html">
+                QSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ramcfg/hal_ramcfg_toc.html">
+                RAMCFG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rcc/hal_rcc_toc.html">
+                RCC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rng/hal_rng_toc.html">
+                RNG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rtc/hal_rtc_toc.html">
+                RTC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sdram/hal_sdram_toc.html">
+                SDRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smartcard/hal_smartcard_toc.html">
+                SMARTCARD
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="hal_smbus_toc.html">
+                SMBUS
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../spi/hal_spi_toc.html">
+                SPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sram/hal_sram_toc.html">
+                SRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../tim/hal_tim_toc.html">
+                TIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../uart/hal_uart_toc.html">
+                UART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../usart/hal_usart_toc.html">
+                USART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../wwdg/hal_wwdg_toc.html">
+                WWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../xspi/hal_xspi_toc.html">
+                XSPI
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../ll_drivers/ll_drivers_toc.html">
+              LL drivers migration
+             </a>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-drivers-documentation-hal-drivers-smbus-hal-smbus-exported-functions-init-config--page-root">
+            HAL SMBUS initialization and configuration functions migration
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#smbus-configuration-settings">
+               SMBUS configuration settings
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#clock-timing-configuration-for-smbus">
+               Clock timing configuration for SMBUS
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#additional-features-and-secondary-address-configuration-for-smbus">
+               Additional features and secondary address configuration for SMBUS
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#gpio-configuration-for-smbus">
+               GPIO configuration for SMBUS
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#nvic-configuration-for-smbus">
+               NVIC configuration for SMBUS
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#software-layer-and-resource-initialization-configuration">
+               Software layer and resource initialization configuration
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#generated-smbus-initialization-sequence">
+               Generated SMBUS initialization sequence
+              </a>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="hal-smbus-initialization-and-configuration-functions-migration">
+        <span id="hal-smbus-exported-functions-init-config">
+        </span>
+        <h1 id="docs-markup-drivers-documentation-hal-drivers-smbus-hal-smbus-exported-functions-init-config--page-root">
+         HAL SMBUS initialization and configuration functions migration
+         <a class="headerlink" href="#docs-markup-drivers-documentation-hal-drivers-smbus-hal-smbus-exported-functions-init-config--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <p>
+         The goal of this page is to show how to migrate the Init sequence using
+         <strong>
+          STM32CubeMX2
+         </strong>
+         :
+        </p>
+        <ul class="simple">
+         <li>
+          <p>
+           Open STM32CubeMX2 SMBUS configuration panel
+          </p>
+         </li>
+         <li>
+          <p>
+           Configure the SMBUS
+          </p>
+         </li>
+         <li>
+          <p>
+           Configure the additional features of the SMBUS if needed
+          </p>
+         </li>
+         <li>
+          <p>
+           Configure the GPIOs needed by the SMBUS
+          </p>
+         </li>
+         <li>
+          <p>
+           Configure the NVIC if the application requires the SMBUS interrupts
+          </p>
+         </li>
+         <li>
+          <p>
+           Configure the SW layer HAL/LL
+          </p>
+         </li>
+         <li>
+          <p>
+           Generate the code
+          </p>
+         </li>
+        </ul>
+        <div class="admonition note">
+         <p class="admonition-title">
+          Note
+         </p>
+         <p>
+          The configuration below might varies from a series to another.
+         </p>
+        </div>
+        <section id="smbus-configuration-settings">
+         <h2 id="smbus-configuration-settings">
+          SMBUS configuration settings
+          <a class="headerlink" href="#smbus-configuration-settings" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <ul class="simple">
+          <li>
+           <p>
+            Open STM32CubeMX2 SMBUS configuration panel
+           </p>
+          </li>
+          <li>
+           <p>
+            Configure the SMBUS
+           </p>
+          </li>
+         </ul>
+         <a class="reference internal image-reference" href="../../../../../_images/config_mx2.png">
+          <img alt="Example Image" class="align-center" src="../../../../../_images/config_mx2.png" style="width: 700px;">
+          </img>
+         </a>
+        </section>
+        <section id="clock-timing-configuration-for-smbus">
+         <h2 id="clock-timing-configuration-for-smbus">
+          Clock timing configuration for SMBUS
+          <a class="headerlink" href="#clock-timing-configuration-for-smbus" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <ul class="simple">
+          <li>
+           <p>
+            Configure the SMBUS clock timing
+           </p>
+          </li>
+         </ul>
+         <a class="reference internal image-reference" href="../../../../../_images/clock_config.png">
+          <img alt="Example Image" class="align-center" src="../../../../../_images/clock_config.png" style="width: 700px;"/>
+         </a>
+        </section>
+        <section id="additional-features-and-secondary-address-configuration-for-smbus">
+         <h2 id="additional-features-and-secondary-address-configuration-for-smbus">
+          Additional features and secondary address configuration for SMBUS
+          <a class="headerlink" href="#additional-features-and-secondary-address-configuration-for-smbus" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <ul class="simple">
+          <li>
+           <p>
+            Configure the additional features of the SMBUS if needed
+           </p>
+          </li>
+         </ul>
+         <a class="reference internal image-reference" href="../../../../../_images/additional_features.png">
+          <img alt="Example Image" class="align-center" src="../../../../../_images/additional_features.png" style="width: 700px;"/>
+         </a>
+        </section>
+        <section id="gpio-configuration-for-smbus">
+         <h2 id="gpio-configuration-for-smbus">
+          GPIO configuration for SMBUS
+          <a class="headerlink" href="#gpio-configuration-for-smbus" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <ul class="simple">
+          <li>
+           <p>
+            Configure the GPIOs needed by the SMBUS
+           </p>
+          </li>
+         </ul>
+         <a class="reference internal image-reference" href="../../../../../_images/gpio_config.png">
+          <img alt="Example Image" class="align-center" src="../../../../../_images/gpio_config.png" style="width: 700px;"/>
+         </a>
+        </section>
+        <section id="nvic-configuration-for-smbus">
+         <h2 id="nvic-configuration-for-smbus">
+          NVIC configuration for SMBUS
+          <a class="headerlink" href="#nvic-configuration-for-smbus" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <ul class="simple">
+          <li>
+           <p>
+            Configure the NVIC if the application requires the SMBUS interrupts
+           </p>
+          </li>
+         </ul>
+         <a class="reference internal image-reference" href="../../../../../_images/nvic_confg.png">
+          <img alt="Example Image" class="align-center" src="../../../../../_images/nvic_confg.png" style="width: 700px;"/>
+         </a>
+        </section>
+        <section id="software-layer-and-resource-initialization-configuration">
+         <h2 id="software-layer-and-resource-initialization-configuration">
+          Software layer and resource initialization configuration
+          <a class="headerlink" href="#software-layer-and-resource-initialization-configuration" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <ul class="simple">
+          <li>
+           <p>
+            Configure the SW layer HAL/LL
+           </p>
+          </li>
+         </ul>
+         <a class="reference internal image-reference" href="../../../../../_images/layer_resource_init.png">
+          <img alt="MX2 SMBUS Configuration" class="align-center" src="../../../../../_images/layer_resource_init.png" style="width: 700px;"/>
+         </a>
+        </section>
+        <section id="generated-smbus-initialization-sequence">
+         <h2 id="generated-smbus-initialization-sequence">
+          Generated SMBUS initialization sequence
+          <a class="headerlink" href="#generated-smbus-initialization-sequence" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <ul class="simple">
+          <li>
+           <p>
+            Generate the code
+           </p>
+          </li>
+          <li>
+           <p>
+            The SMBUS initialisation sequence is generated in the
+            <strong>
+             mx_smbus_hal_init
+            </strong>
+            function in
+            <strong>
+             mx_smbus.c file
+            </strong>
+            under
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              $YOUR_PORJECT_NAME$/$YOUR_PORJECT_NAME$_SW/generated/STM32Cube_CodeGen
+             </span>
+            </code>
+            .
+           </p>
+          </li>
+          <li>
+           <p>
+            No Msp Callback in HAL2.
+           </p>
+          </li>
+         </ul>
+         <div class="admonition note">
+          <p class="admonition-title">
+           Note
+          </p>
+          <p>
+           <strong>
+            Related  concept
+           </strong>
+           :
+          </p>
+          <ul class="simple">
+           <li>
+            <p>
+             <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_A.html#breaking-concepts-concept-a1">
+              <span class="std std-ref">
+               Split legacy HAL_PPP_Init into Init (build handle object) and config (apply configuration)
+              </span>
+             </a>
+            </p>
+           </li>
+           <li>
+            <p>
+             <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_A.html#breaking-concepts-concept-a5">
+              <span class="std std-ref">
+               Remove MspInit and MspDeInit callbacks
+              </span>
+             </a>
+            </p>
+           </li>
+          </ul>
+         </div>
+         <table id="id1">
+          <caption>
+           <span class="caption-text">
+            STM32CubeMX2 Generated : SMBUS initialization and de-initialization sequences
+           </span>
+           <a class="headerlink" href="#id1" title="Link to this table">
+            ¶
+           </a>
+          </caption>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               Topic
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               Code Snippet HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               Code Snippet HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              Handle declaration
+             </p>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">SMBUS_HandleTypeDef</span><span class="w"> </span><span class="n">hsmbus</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">static</span><span class="w"> </span><span class="n">hal_smbus_handle_t</span><span class="w"> </span><span class="n">hsmbus</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Init, config and Msp sequence function
+             </p>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">MX_I2C1_SMBUS_Init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+
+<span class="w">  </span><span class="cm">/* USER CODE BEGIN I2C1_Init 0 */</span>
+
+<span class="w">  </span><span class="cm">/* USER CODE END I2C1_Init 0 */</span>
+
+<span class="w">  </span><span class="n">SMBUS_AutonomousModeConfTypeDef</span><span class="w"> </span><span class="n">sConfigI2C1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+<span class="w">  </span><span class="cm">/* USER CODE BEGIN I2C1_Init 1 */</span>
+
+<span class="w">  </span><span class="cm">/* USER CODE END I2C1_Init 1 */</span>
+<span class="w">  </span><span class="n">hsmbus</span><span class="p">.</span><span class="n">Instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">I2C1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hsmbus</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">Timing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x80D25052</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hsmbus</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">AnalogFilter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SMBUS_ANALOGFILTER_ENABLE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hsmbus</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">OwnAddress1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">1U</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hsmbus</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">AddressingMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SMBUS_ADDRESSINGMODE_7BIT</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hsmbus</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">DualAddressMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SMBUS_DUALADDRESS_ENABLE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hsmbus</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">OwnAddress2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0xFF</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hsmbus</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">OwnAddress2Masks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SMBUS_OA2_NOMASK</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hsmbus</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">GeneralCallMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SMBUS_GENERALCALL_DISABLE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hsmbus</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">NoStretchMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SMBUS_NOSTRETCH_DISABLE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hsmbus</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">PacketErrorCheckMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SMBUS_PEC_DISABLE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hsmbus</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">PeripheralMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SMBUS_PERIPHERAL_MODE_SMBUS_HOST</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hsmbus</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">SMBusTimeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x00008493</span><span class="p">;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_SMBUS_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hsmbus</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="cm">/* Configure Autonomous Mode*/</span>
+<span class="w">  </span><span class="n">sConfigI2C1</span><span class="p">.</span><span class="n">TriggerState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SMBUS_AUTO_MODE_ENABLE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sConfigI2C1</span><span class="p">.</span><span class="n">TriggerSelection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SMBUS_GRP1_EXTI5_TRG</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sConfigI2C1</span><span class="p">.</span><span class="n">TriggerPolarity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SMBUS_TRIG_POLARITY_RISING</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_SMBUSEx_SetConfigAutonomousMode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hsmbus</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sConfigI2C1</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="cm">/* USER CODE BEGIN I2C1_Init 2 */</span>
+
+<span class="w">  </span><span class="cm">/* USER CODE END I2C1_Init 2 */</span>
+
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">HAL_SMBUS_MspInit</span><span class="p">(</span><span class="n">SMBUS_HandleTypeDef</span><span class="o">*</span><span class="w"> </span><span class="n">hsmbus</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">GPIO_InitTypeDef</span><span class="w"> </span><span class="n">GPIO_InitStruct</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<span class="w">  </span><span class="n">RCC_PeriphCLKInitTypeDef</span><span class="w"> </span><span class="n">PeriphClkInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">hsmbus</span><span class="o">-&gt;</span><span class="n">Instance</span><span class="o">==</span><span class="n">I2C1</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="cm">/* USER CODE BEGIN I2C1_MspInit 0 */</span>
+
+<span class="w">  </span><span class="cm">/* USER CODE END I2C1_MspInit 0 */</span>
+
+<span class="w">  </span><span class="cm">/** Initializes the peripherals clock</span>
+<span class="cm">  */</span>
+<span class="w">    </span><span class="n">PeriphClkInit</span><span class="p">.</span><span class="n">PeriphClockSelection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RCC_PERIPHCLK_I2C1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">PeriphClkInit</span><span class="p">.</span><span class="n">I2C1ClockSelection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RCC_I2C1CLKSOURCE_PCLK1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_RCCEx_PeriphCLKConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">PeriphClkInit</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">__HAL_RCC_GPIOB_CLK_ENABLE</span><span class="p">();</span>
+<span class="w">    </span><span class="n">__HAL_RCC_GPIOA_CLK_ENABLE</span><span class="p">();</span>
+
+<span class="w">    </span><span class="cm">/**I2C1 GPIO Configuration</span>
+<span class="cm">    PB6     ------&gt; I2C1_SCL</span>
+<span class="cm">    PB7     ------&gt; I2C1_SDA</span>
+<span class="cm">    PA1     ------&gt; I2C1_SMBA</span>
+<span class="cm">    */</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_PIN_6</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_MODE_AF_OD</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Pull</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_NOPULL</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_SPEED_FREQ_LOW</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Alternate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_AF4_I2C1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">GPIOB</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">GPIO_InitStruct</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_PIN_7</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_MODE_AF_OD</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Pull</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_NOPULL</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_SPEED_FREQ_LOW</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Alternate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_AF4_I2C1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">GPIOB</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">GPIO_InitStruct</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_PIN_1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_MODE_AF_OD</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Pull</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_NOPULL</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_SPEED_FREQ_LOW</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Alternate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_AF4_I2C1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">GPIOA</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">GPIO_InitStruct</span><span class="p">);</span>
+
+<span class="w">    </span><span class="cm">/* Peripheral clock enable */</span>
+<span class="w">    </span><span class="n">__HAL_RCC_I2C1_CLK_ENABLE</span><span class="p">();</span>
+<span class="w">    </span><span class="cm">/* I2C1 interrupt Init */</span>
+<span class="w">    </span><span class="n">HAL_NVIC_SetPriority</span><span class="p">(</span><span class="n">I2C1_EV_IRQn</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">HAL_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">I2C1_EV_IRQn</span><span class="p">);</span>
+<span class="w">    </span><span class="n">HAL_NVIC_SetPriority</span><span class="p">(</span><span class="n">I2C1_ER_IRQn</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">HAL_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">I2C1_ER_IRQn</span><span class="p">);</span>
+<span class="w">  </span><span class="cm">/* USER CODE BEGIN I2C1_MspInit 1 */</span>
+
+<span class="w">  </span><span class="cm">/* USER CODE END I2C1_MspInit 1 */</span>
+
+<span class="w"> </span><span class="p">}</span>
+
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_smbus_handle_t</span><span class="w"> </span><span class="o">*</span><span class="nf">mx_i2c1_hal_smbus_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">hal_smbus_config_t</span><span class="w"> </span><span class="n">smbus_config</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_SMBUS_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hsmbus</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_SMBUS1</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="n">HAL_RCC_I2C1_EnableClock</span><span class="p">();</span>
+
+<span class="w">  </span><span class="cm">/*</span>
+<span class="cm">    Timing automatically calculated with:</span>
+<span class="cm">     - I2C1 input clock at 160000000 Hz</span>
+<span class="cm">     - I2C clock speed at 100000 Hz</span>
+<span class="cm">  */</span>
+<span class="w">  </span><span class="n">smbus_config</span><span class="p">.</span><span class="n">timing</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="mh">0x80D25052</span><span class="p">;</span>
+<span class="w">  </span><span class="n">smbus_config</span><span class="p">.</span><span class="n">own_address1</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">1U</span><span class="p">;</span>
+<span class="w">  </span><span class="n">smbus_config</span><span class="p">.</span><span class="n">device_mode</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_SMBUS_PERIPHERAL_MODE_HOST</span><span class="p">;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_SMBUS_SetConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hsmbus</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">smbus_config</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="cm">/* Default value set for digital filter */</span>
+<span class="w">  </span><span class="cm">/* HAL_SMBUS_SetDigitalFilter(&amp;hsmbus, 0); */</span>
+
+<span class="w">  </span><span class="n">HAL_SMBUS_EnableAnalogFilter</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hsmbus</span><span class="p">);</span>
+<span class="w">  </span><span class="n">HAL_SMBUS_SetConfigOwnAddress2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hsmbus</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_SMBUS_OWN_ADDR2_NOMASK</span><span class="p">);</span>
+<span class="w">  </span><span class="n">HAL_SMBUS_EnableOwnAddress2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hsmbus</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">HAL_SMBUS_SLAVE_EnableWakeUp</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hsmbus</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">HAL_SMBUS_SLAVE_EnableAckGeneralCall</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hsmbus</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">HAL_SMBUS_EnableFastModePlus</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hsmbus</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">HAL_SMBUS_EnablePacketErrorCheck</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hsmbus</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">HAL_SMBUS_MASTER_EnableAlertIT</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hsmbus</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">hal_smbus_timeout_config_t</span><span class="w"> </span><span class="n">timeout_config</span><span class="p">;</span>
+
+<span class="w">  </span><span class="cm">/* Configure the timeout */</span>
+<span class="w">  </span><span class="n">timeout_config</span><span class="p">.</span><span class="n">timeout_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x493</span><span class="p">;</span>
+<span class="w">  </span><span class="n">timeout_config</span><span class="p">.</span><span class="n">timeout_a_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_SMBUS_TIMEOUTA_MODE_SCL_LOW</span><span class="p">;</span>
+<span class="w">  </span><span class="n">timeout_config</span><span class="p">.</span><span class="n">timeout_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x84</span><span class="p">;</span>
+<span class="w">  </span><span class="cm">/*Set timeout configuration */</span>
+<span class="w">  </span><span class="n">HAL_SMBUS_SetConfigTimeout</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hsmbus2</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">timeout_config</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">hal_smbus_am_trig_config_t</span><span class="w"> </span><span class="n">autonomous_trig_config</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="p">.</span><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_SMBUS_AM_TRIG_GRP1_EXTI5</span><span class="p">,</span>
+<span class="w">    </span><span class="p">.</span><span class="n">trigger_polarity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_SMBUS_AM_TRIG_RISING</span>
+<span class="w">  </span><span class="p">};</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_SMBUS_AM_SetConfigTrigger</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hsmbus</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">autonomous_trig_config</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="n">HAL_SMBUS_AM_EnableTrigger</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hsmbus</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">HAL_RCC_GPIOB_EnableClock</span><span class="p">();</span>
+
+<span class="w">  </span><span class="n">HAL_RCC_GPIOA_EnableClock</span><span class="p">();</span>
+
+<span class="w">  </span><span class="n">hal_gpio_config_t</span><span class="w">  </span><span class="n">gpio_config</span><span class="p">;</span>
+
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">    I2C1 GPIO Configuration</span>
+<span class="cm">    PB6   ---------&gt;  I2C1_SCL</span>
+<span class="cm">    PB7   ---------&gt;  I2C1_SDA</span>
+<span class="cm">    **/</span>
+<span class="w">  </span><span class="n">gpio_config</span><span class="p">.</span><span class="n">mode</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_MODE_ALTERNATE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">gpio_config</span><span class="p">.</span><span class="n">output_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_OUTPUT_OPENDRAIN</span><span class="p">;</span>
+<span class="w">  </span><span class="n">gpio_config</span><span class="p">.</span><span class="n">pull</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_PULL_NO</span><span class="p">;</span>
+<span class="w">  </span><span class="n">gpio_config</span><span class="p">.</span><span class="n">speed</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_SPEED_FREQ_LOW</span><span class="p">;</span>
+<span class="w">  </span><span class="n">gpio_config</span><span class="p">.</span><span class="n">alternate</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_AF_4</span><span class="p">;</span>
+<span class="w">  </span><span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">HAL_GPIOB</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_GPIO_PIN_6</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">HAL_GPIO_PIN_7</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">gpio_config</span><span class="p">);</span>
+
+
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">    I2C1 GPIO Configuration</span>
+<span class="cm">    PA1   ---------&gt;  I2C1_SMBA</span>
+<span class="cm">    **/</span>
+<span class="w">  </span><span class="n">gpio_config</span><span class="p">.</span><span class="n">mode</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_MODE_ALTERNATE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">gpio_config</span><span class="p">.</span><span class="n">output_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_OUTPUT_OPENDRAIN</span><span class="p">;</span>
+<span class="w">  </span><span class="n">gpio_config</span><span class="p">.</span><span class="n">pull</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_PULL_NO</span><span class="p">;</span>
+<span class="w">  </span><span class="n">gpio_config</span><span class="p">.</span><span class="n">speed</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_SPEED_FREQ_LOW</span><span class="p">;</span>
+<span class="w">  </span><span class="n">gpio_config</span><span class="p">.</span><span class="n">alternate</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_AF_4</span><span class="p">;</span>
+<span class="w">  </span><span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">HAL_GPIOA</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_GPIO_PIN_1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">gpio_config</span><span class="p">);</span>
+
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_RCC_I2C1_SetKernelClkSource</span><span class="p">(</span><span class="n">HAL_RCC_I2C1_CLK_SRC_PCLK1</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="cm">/* Enable the Event interruption for I2C */</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SetPriority</span><span class="p">(</span><span class="n">I2C1_EV_IRQn</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_0</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_0</span><span class="p">);</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">I2C1_EV_IRQn</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* Enable the Error interruption for I2C */</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SetPriority</span><span class="p">(</span><span class="n">I2C1_ERR_IRQn</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_0</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_0</span><span class="p">);</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">I2C1_ERR_IRQn</span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="o">&amp;</span><span class="n">hsmbus</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Deinit sequence function
+             </p>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">MX_SMBUS_DeInit</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_SMBUS_DeInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hsmbus</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">HAL_SMBUS_MspDeInit</span><span class="p">(</span><span class="n">SMBUS_HandleTypeDef</span><span class="o">*</span><span class="w"> </span><span class="n">hsmbus</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">hsmbus</span><span class="o">-&gt;</span><span class="n">Instance</span><span class="o">==</span><span class="n">SMBUS1</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+
+<span class="w">    </span><span class="n">__HAL_RCC_SMBUS1_CLK_DISABLE</span><span class="p">();</span>
+<span class="w">    </span><span class="n">HAL_GPIO_DeInit</span><span class="p">(</span><span class="n">GPIOB</span><span class="p">,</span><span class="w"> </span><span class="n">GPIO_PIN_6</span><span class="p">);</span>
+<span class="w">    </span><span class="n">HAL_GPIO_DeInit</span><span class="p">(</span><span class="n">GPIOB</span><span class="p">,</span><span class="w"> </span><span class="n">GPIO_PIN_7</span><span class="p">);</span>
+<span class="w">    </span><span class="n">HAL_GPIO_DeInit</span><span class="p">(</span><span class="n">GPIOA</span><span class="p">,</span><span class="w"> </span><span class="n">GPIO_PIN_1</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">HAL_DMA_DeInit</span><span class="p">(</span><span class="n">hsmbus</span><span class="o">-&gt;</span><span class="n">hdmarx</span><span class="p">);</span>
+<span class="w">    </span><span class="n">HAL_DMA_DeInit</span><span class="p">(</span><span class="n">hsmbus</span><span class="o">-&gt;</span><span class="n">hdmatx</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">HAL_NVIC_DisableIRQ</span><span class="p">(</span><span class="n">SMBUS1_EV_IRQn</span><span class="p">);</span>
+<span class="w">    </span><span class="n">HAL_NVIC_DisableIRQ</span><span class="p">(</span><span class="n">SMBUS1_ER_IRQn</span><span class="p">);</span>
+
+<span class="w">  </span><span class="p">}</span>
+
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">mx_i2c1_hal_smbus_deinit</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="cm">/* Disable the Event interruption for I2C */</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_DisableIRQ</span><span class="p">(</span><span class="n">I2C1_ERR_IRQn</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* Disable the Error interruption for I2C */</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_DisableIRQ</span><span class="p">(</span><span class="n">I2C1_ERR_IRQn</span><span class="p">);</span>
+
+<span class="w">  </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">HAL_SMBUS_DeInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hsmbus</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">HAL_RCC_I2C1_Reset</span><span class="p">();</span>
+
+<span class="w">  </span><span class="n">HAL_RCC_I2C1_DisableClock</span><span class="p">();</span>
+
+<span class="w">  </span><span class="cm">/* Deinitialization of I2C1: I2C1_SCL,I2C1_SDA  */</span>
+<span class="w">  </span><span class="n">HAL_GPIO_DeInit</span><span class="p">(</span><span class="n">HAL_GPIOB</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_GPIO_PIN_6</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">HAL_GPIO_PIN_7</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* Deinitialization of I2C1: I2C1_SMBA  */</span>
+<span class="w">  </span><span class="n">HAL_GPIO_DeInit</span><span class="p">(</span><span class="n">HAL_GPIOA</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_GPIO_PIN_1</span><span class="p">);</span>
+
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              IRQ handle function
+             </p>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">I2C1_EV_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_SMBUS_EV_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hsmbus</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">I2C1_ERR_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_SMBUS_ER_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hsmbus</span><span class="p">);</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">I2C1_EV_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_SMBUS_EV_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hsmbus</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">I2C1_ERR_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_SMBUS_ER_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hsmbus</span><span class="p">);</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

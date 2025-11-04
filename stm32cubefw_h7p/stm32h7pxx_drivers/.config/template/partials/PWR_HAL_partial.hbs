@@ -1,0 +1,81 @@
+{{~log "PWR_HAL_partial generation started"~}}
+{{~log "PWR root="@root~}}
+{{~helper_pwr_globalize_API @root~}}
+{{~assign 'context' (helper_pwr_get_context 'STMicroelectronics::Device:STM32CubeMX2 Config:PWR')~}}
+{{~log "PWR_HAL_partial generate_main_supply_config: context="@root.context~}}
+{{!
+ * @file Partial used to generate HAL code for PWR:
+ * @author GPM Application Team
+ * @license
+ * Copyright (c) 2025 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ *
+ * how to use
+ * > PWR_HAL fct='xxxx' with xxxx:
+ *   * generate_main_supply_config
+ *   * generate_vos_config
+ *   * generate_write_protection_disable
+ *   * generate_write_protection_enable
+ *   * generate_pull_standby periph="[I3C, XSPI]" gpio="PXXX"(e.g PA1 PC12) pull="[PULL_NO, PULL_UP, PULL_DOWN]"
+~}}
+{{#if (eq fct 'generate_main_supply_config')}}
+{{!
+ Generate the PWR HAL code to configure the main supply
+~}}
+{{~log "PWR_HAL_partial generate_main_supply_config: supply="@root.context.Additional_configuration.Main_supply_configuration.MCU_main_supply~}}
+    {{~log "PWR_HAL_partial generate_main_supply_config: in condition"}}
+  /* Configure the Power Supply source */
+  if (HAL_PWR_SetMainRegulatorSupply(HAL_PWR_REGULATOR_{{@root.context.Additional_configuration.Main_supply_configuration.MCU_main_supply}}) != HAL_OK)
+  {{~log "PWR_HAL_partial generate_main_supply_config: out condition"~}}
+{{else if (eq fct 'generate_vos_config')}}
+{{!
+ Generate the PWR HAL code to configure the voltage scaling
+~}}
+  {{~log "PWR_HAL_partial generate_vos_config: context="@root.context.Additional_configuration.Main_supply_configuration.Voltage_scaling~}}
+  {{#unless (eq @root.context.Additional_configuration.Main_supply_configuration.Voltage_scaling 'VOLT_SCALE_1')}}
+  /* Configure the Voltage scaling level */
+  if (HAL_PWR_SetMainRegulatorVoltageScalingRange(HAL_PWR_{{@root.context.Additional_configuration.Main_supply_configuration.Voltage_scaling}}) != HAL_OK)
+  {{else}}
+  /* Voltage scaling VOLT_SCALE_1 is selected by default */
+  {{/unless}}
+{{else if (eq fct 'generate_write_protection_disable')}}
+{{!
+ Generate the PWR HAL code to disable the RTC Domain Write protection
+~}}
+{{!> RCC fct='generate_peripheral_clock_activation' resource=@root.current_resource}}
+
+  /* Disable RTC Domain Write Protection */
+  HAL_PWR_DisableRTCDomainWriteProtection();
+
+{{!> RCC fct='generate_peripheral_clock_deactivation' resource=@root.current_resource}}
+{{else if (eq fct 'generate_write_protection_enable')}}
+{{!
+ Generate the PWR HAL code to enable the RTC Domain Write protection
+~}}
+{{!> RCC fct='generate_peripheral_clock_activation' resource=@root.current_resource}}
+
+  /* Enable RTC Domain Write Protection */
+  HAL_PWR_EnableRTCDomainWriteProtection();
+
+{{!> RCC fct='generate_peripheral_clock_deactivation' resource=@root.current_resource}}
+{{else if (eq fct 'generate_pull_standby')}}
+{{! > PWR_HAL fct='generate_pull_standby' periph="[I3C, XSPI]" gpio="PXXX"(e.g PA1 PC12) pull="[PULL_NO, PULL_UP, PULL_DOWN]"}}
+{{!
+ Generate the PWR HAL code to configure pull of a specific GPIO during standby
+~}}
+  {{~log "PWR_HAL_partial generate_pull_standby input periph ="periph}}
+  {{~log "PWR_HAL_partial generate_pull_standby input gpio  ="gpio}}
+  {{~log "PWR_HAL_partial generate_pull_standby input pull ="pull}}
+  /* Set GPIO {{gpio}} for peripheral {{periph}} in {{pull}} config, effective only after HAL_PWR_EnableGPIOPull call */
+  HAL_PWR_SetConfigGPIOPull(HAL_PWR_PULL_PERIPH_{{periph}}, HAL_PWR_{{periph}}_PULL_{{gpio}}, HAL_PWR_GPIO_{{pull}});
+{{else}}
+{{!
+ Default case which should not occur
+~}}
+#warning "Function {{fct}} not present in partial PWR_HAL_partial.hbs"
+{{/if}}

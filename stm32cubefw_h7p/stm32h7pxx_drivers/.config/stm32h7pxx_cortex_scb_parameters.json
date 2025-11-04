@@ -1,0 +1,109 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "version": "0.0.1",
+  "componentid": "::Device:STM32CubeMX2 Config:CORTEX SCB",
+  "grammarVersion": "3.5",
+  "type": "object",
+  "properties": {
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "object",
+          "title": "Software information",
+          "properties": {
+            "labels": {
+              "type": "array",
+              "title": "Label for peripheral instance",
+              "description": "Labels allow to create aliases inside mx_hal_def.h file like '<label>_init', '<label>_deinit' and '<label>_gethandle'. These aliases can be used on application side.",
+              "items": {
+                "type": "string",
+                "pattern": "^([a-zA-Z_][a-zA-Z0-9_]{1,31})?$",
+                "minLength": 0,
+                "maxLength": 32,
+                "unique": "project",
+                "default": ""
+              }
+            },
+            "layer": {
+              "title": "Layer",
+              "type": "string",
+              "oneOf": [
+                {
+                  "const": "HAL"
+                },
+                {
+                  "title": "ARM CMSIS",
+                  "const": "LL"
+                }
+              ],
+              "default": "HAL"
+            },
+            "init_type": {
+              "title": "resource initialization code generation",
+              "type": "string",
+              "description": "generate or not the CORTEX SYSTICK init code, call it or not at boot",
+              "$comment": "generate the init code of your CORTEX SYSTICK or not (enabled/disabled), call it automatically at startup or not (called/enabled)",
+              "actions": [
+                {
+                  "type": "warning",
+                  "condition": "$info.init_type != 'called'",
+                  "message": "CORTEX SYSTICK is not called automatically at startup"
+                }
+              ],
+              "oneOf": [
+                {
+                  "const": "called"
+                },
+                {
+                  "const": "enabled"
+                },
+                {
+                  "const": "disabled"
+                }
+              ],
+              "variables": [
+                {
+                  "on": "update-value",
+                  "name": "HAL_CORTEX SYSTICK_CORE_ENABLED",
+                  "value": true
+                }
+              ],
+              "default": "called"
+            }
+          }
+        },
+        "Basic": {
+          "type": "object",
+          "title": "Main Configuration",
+          "properties": {
+            "FaultManagement": {
+              "type": "object",
+              "title": "Fault Management",
+              "properties": {
+                "EnableUsageFault": {
+                  "title": "UsageFault Hardfault escalation",
+                  "type": "boolean",
+                  "description": "If the box is checked, UsageFault are enabled and won't escalate to Hardfault.",
+                  "default": true
+                },
+                "EnableBusFault": {
+                  "title": "BusFault Hardfault escalation",
+                  "type": "boolean",
+                  "description": "If the box is checked, EnableBusFault are enabled and won't escalate to Hardfault.",
+                  "default": true
+                },
+                "EnableMemManagementFault": {
+                  "title": "MemManagementFault Hardfault escalation",
+                  "type": "boolean",
+                  "description": "If the box is checked, MemManagementFault are enabled and won't escalate to Hardfault.",
+                  "default": true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+    "Globals": {
+    },
+    "Profiles": {
+        "default-h7": {
+                "memory_pool": "./my_mpools/stm32h7p.mpool",
+                "options": "--enable-virtual-mem-pools --native-float --cache-maintenance --all-buffers-info --network-name network --enable-epoch-controller"
+            }
+    }
+}

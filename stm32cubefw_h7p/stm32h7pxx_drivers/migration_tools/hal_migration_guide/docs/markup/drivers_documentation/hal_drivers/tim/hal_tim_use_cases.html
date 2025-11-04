@@ -1,0 +1,4084 @@
+<!DOCTYPE html>
+<html data-content_root="../../../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, HAL1, TIM, STM32H5, STM32G0, STM32F4, STM32L4, STM32C0, STM32H7" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     HAL TIM Typical use cases for migration — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/tabs.css?v=a5c4661c" rel="stylesheet" type="text/css"/>
+    <script src="../../../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <script src="../../../../../_static/tabs.js?v=3030b3cb">
+    </script>
+    <link href="../../../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../../../search.html" rel="search" title="Search"/>
+    <link href="hal_tim_exported_constants.html" rel="next" title="HAL TIM constants migration"/>
+    <link href="hal_tim_concepts_list.html" rel="prev" title="HAL TIM migration: List of applicable concepts"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/drivers_documentation/hal_drivers/tim/hal_tim_use_cases" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_script/migration_script_toc.html">
+            HAL1 detection
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../breaking_concepts/breaking_concepts_toc.html">
+              Breaking changes in concepts
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../hal_drivers_toc.html">
+              HAL drivers migration
+             </a>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../adc/hal_adc_toc.html">
+                ADC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../comp/hal_comp_toc.html">
+                COMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cortex/hal_cortex_toc.html">
+                CORTEX
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cordic/hal_cordic_toc.html">
+                CORDIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../crc/hal_crc_toc.html">
+                CRC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cryp/hal_cryp_toc.html">
+                CRYP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dac/hal_dac_toc.html">
+                DAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dcache/hal_dcache_toc.html">
+                DCACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dma/hal_dma_toc.html">
+                DMA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../exti/hal_exti_toc.html">
+                EXTI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../fmac/hal_fmac_toc.html">
+                FMAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../generic/hal_generic_toc.html">
+                GENERIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxmmu/hal_gfxmmu_toc.html">
+                GFXMMU
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxtim/hal_gfxtim_toc.html">
+                GFXTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gpio/hal_gpio_toc.html">
+                GPIO
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2c/hal_i2c_toc.html">
+                I2C
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2s/hal_i2s_toc.html">
+                I2S
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../icache/hal_icache_toc.html">
+                ICACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../irda/hal_irda_toc.html">
+                IRDA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../iwdg/hal_iwdg_toc.html">
+                IWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../lptim/hal_lptim_toc.html">
+                LPTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../nor/hal_nor_toc.html">
+                NOR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../opamp/hal_opamp_toc.html">
+                OPAMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ospi/hal_ospi_toc.html">
+                OSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pka/hal_pka_toc.html">
+                PKA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pwr/hal_pwr_toc.html">
+                PWR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../qspi/hal_qspi_toc.html">
+                QSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ramcfg/hal_ramcfg_toc.html">
+                RAMCFG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rcc/hal_rcc_toc.html">
+                RCC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rng/hal_rng_toc.html">
+                RNG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rtc/hal_rtc_toc.html">
+                RTC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sdram/hal_sdram_toc.html">
+                SDRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smartcard/hal_smartcard_toc.html">
+                SMARTCARD
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smbus/hal_smbus_toc.html">
+                SMBUS
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../spi/hal_spi_toc.html">
+                SPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sram/hal_sram_toc.html">
+                SRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="hal_tim_toc.html">
+                TIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../uart/hal_uart_toc.html">
+                UART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../usart/hal_usart_toc.html">
+                USART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../wwdg/hal_wwdg_toc.html">
+                WWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../xspi/hal_xspi_toc.html">
+                XSPI
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../ll_drivers/ll_drivers_toc.html">
+              LL drivers migration
+             </a>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-drivers-documentation-hal-drivers-tim-hal-tim-use-cases--page-root">
+            HAL TIM Typical use cases for migration
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#specific-tim-concept">
+               <strong>
+                Specific TIM Concept
+               </strong>
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#tim-use-cases">
+               <strong>
+                TIM use cases
+               </strong>
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#time-base-in-interrupt-mode">
+               Time Base in interrupt mode
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#sequence-diagram">
+                  Sequence diagram
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#code-snippet">
+                  code snippet
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#pwm-output-in-interrupt-mode">
+               PWM Output in interrupt mode
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#id1">
+                  Sequence diagram
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#id2">
+                  code snippet
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#input-capture-in-interrupt-mode">
+               Input Capture in interrupt mode
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#id3">
+                  Sequence diagram
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#id4">
+                  code snippet
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#encoder-interface-in-interrupt-mode">
+               Encoder Interface in Interrupt Mode
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#id5">
+                  Sequence diagram
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#id6">
+                  Code snippet
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#external-trigger-synchro">
+               External Trigger Synchro
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#id7">
+                  Sequence diagram
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#code-snippets">
+                  Code Snippets
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="hal-tim-typical-use-cases-for-migration">
+        <span id="hal-tim-use-cases">
+        </span>
+        <h1 id="docs-markup-drivers-documentation-hal-drivers-tim-hal-tim-use-cases--page-root">
+         HAL TIM Typical use cases for migration
+         <a class="headerlink" href="#docs-markup-drivers-documentation-hal-drivers-tim-hal-tim-use-cases--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <section id="specific-tim-concept">
+         <span id="hal-tim-concept">
+         </span>
+         <h2 id="specific-tim-concept">
+          <strong>
+           Specific TIM Concept
+          </strong>
+          <a class="headerlink" href="#specific-tim-concept" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <span id="hal-tim-init">
+         </span>
+         <table id="id8">
+          <caption>
+           <span class="caption-text">
+            HAL1 vs HAL2 Initialization
+           </span>
+           <a class="headerlink" href="#id8" title="Link to this table">
+            ¶
+           </a>
+          </caption>
+          <colgroup>
+           <col style="width: 5.0%"/>
+           <col style="width: 45.0%"/>
+           <col style="width: 50.0%"/>
+          </colgroup>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               Functionality
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Initialization
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                In HAL1, each process has its own initialization function. To initialize any functionalities of the Timer (TIM) peripheral, you need to call specific functions for each functionality:
+               </p>
+               <ul>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_Base_Init(&amp;htim)
+                   </span>
+                  </code>
+                  for the
+                  <a class="reference internal" href="hal_tim_exported_functions_peripheral_control.html#hal-tim-base-init-function">
+                   <span class="std std-ref">
+                    TIM time base
+                   </span>
+                  </a>
+                  .
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_PWM_Init(&amp;htim)
+                   </span>
+                  </code>
+                  for the
+                  <a class="reference internal" href="hal_tim_exported_functions_peripheral_control.html#hal-tim-pwm-init-function">
+                   <span class="std std-ref">
+                    TIM PWM time base
+                   </span>
+                  </a>
+                  .
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_OC_Init(&amp;htim)
+                   </span>
+                  </code>
+                  for the
+                  <a class="reference internal" href="hal_tim_exported_functions_peripheral_control.html#hal-tim-oc-init-function">
+                   <span class="std std-ref">
+                    TIM output compare time base
+                   </span>
+                  </a>
+                  .
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_IC_Init(&amp;htim)
+                   </span>
+                  </code>
+                  for the
+                  <a class="reference internal" href="hal_tim_exported_functions_peripheral_control.html#hal-tim-ic-init-function">
+                   <span class="std std-ref">
+                    TIM input capture time base
+                   </span>
+                  </a>
+                  .
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_OnePulse_Init(&amp;htim,
+                   </span>
+                   <span class="pre">
+                    OnePulseMode)
+                   </span>
+                  </code>
+                  for the
+                  <a class="reference internal" href="hal_tim_exported_functions_peripheral_control.html#hal-tim-one-pulse-init-function">
+                   <span class="std std-ref">
+                    TIM one-pulse time base
+                   </span>
+                  </a>
+                  .
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_Encoder_Init(&amp;htim,
+                   </span>
+                   <span class="pre">
+                    &amp;sConfig)
+                   </span>
+                  </code>
+                  for the
+                  <a class="reference internal" href="hal_tim_exported_functions_peripheral_control.html#hal-tim-encoder-init-function">
+                   <span class="std std-ref">
+                    TIM encoder interface initialization
+                   </span>
+                  </a>
+                  .
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIMEx_HallSensor_Init(&amp;htim,
+                   </span>
+                   <span class="pre">
+                    &amp;sConfig)
+                   </span>
+                  </code>
+                  for the
+                  <a class="reference internal" href="hal_tim_exported_functions_peripheral_control.html#hal-tim-hall-sensor-init-function">
+                   <span class="std std-ref">
+                    TIM Hall sensor interface initialization
+                   </span>
+                  </a>
+                  .
+                 </p>
+                </li>
+               </ul>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul>
+              <li>
+               <p>
+                In contrast, HAL2 simplifies this process by replacing all these individual initialization functions with a single function followed by a configuration function:
+               </p>
+               <ul class="simple">
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_Init(&amp;htim,
+                   </span>
+                   <span class="pre">
+                    HAL_TIMi)
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_SetConfig(&amp;htim,
+                   </span>
+                   <span class="pre">
+                    &amp;p_config)
+                   </span>
+                  </code>
+                 </p>
+                </li>
+               </ul>
+               <div class="admonition important">
+                <p class="admonition-title">
+                 Important
+                </p>
+                <p>
+                 In HAL1, the functions
+                 <code class="docutils literal notranslate">
+                  <span class="pre">
+                   HAL_TIM_OnePulse_Init
+                  </span>
+                 </code>
+                 ,
+                 <code class="docutils literal notranslate">
+                  <span class="pre">
+                   HAL_TIM_Encoder_Init
+                  </span>
+                 </code>
+                 , and
+                 <code class="docutils literal notranslate">
+                  <span class="pre">
+                   HAL_TIMEx_HallSensor_Init
+                  </span>
+                 </code>
+                 include additional configurations beyond the basic setup. Therefore, in HAL2, in addition to
+                 <code class="docutils literal notranslate">
+                  <span class="pre">
+                   HAL_TIM_Init
+                  </span>
+                 </code>
+                 and
+                 <code class="docutils literal notranslate">
+                  <span class="pre">
+                   HAL_TIM_SetConfig
+                  </span>
+                 </code>
+                 , other functions must be called to achieve the same behavior as in HAL1.
+                </p>
+               </div>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+         <table id="id9">
+          <caption>
+           <span class="caption-text">
+            HAL1 vs HAL2 Deinitialization
+           </span>
+           <a class="headerlink" href="#id9" title="Link to this table">
+            ¶
+           </a>
+          </caption>
+          <colgroup>
+           <col style="width: 10.0%"/>
+           <col style="width: 45.0%"/>
+           <col style="width: 45.0%"/>
+          </colgroup>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               Functionality
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Deinitialization
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                Similarly to Initialization, HAL1 requires individual deinitialization functions for each process:
+               </p>
+               <ul>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_Base_DeInit(&amp;htim)
+                   </span>
+                  </code>
+                  for the base timer.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_OC_DeInit(&amp;htim)
+                   </span>
+                  </code>
+                  for the output compare.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_PWM_DeInit(&amp;htim)
+                   </span>
+                  </code>
+                  for the PWM.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_IC_DeInit(&amp;htim)
+                   </span>
+                  </code>
+                  for the input capture.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_OnePulse_DeInit(&amp;htim)
+                   </span>
+                  </code>
+                  for the one-pulse mode.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_Encoder_DeInit(&amp;htim)
+                   </span>
+                  </code>
+                  for the encoder interface.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIMEx_HallSensor_DeInit(&amp;htim)
+                   </span>
+                  </code>
+                  for the Hall sensor.
+                 </p>
+                </li>
+               </ul>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                In HAL2, the deinitialization process is simplified with a single function for all processes:
+               </p>
+               <ul>
+                <li>
+                 <p>
+                  Deinitialize the timer using
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_DeInit(&amp;htim)
+                   </span>
+                  </code>
+                  .
+                 </p>
+                </li>
+               </ul>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+         <table id="id10">
+          <caption>
+           <span class="caption-text">
+            HAL1 vs HAL2 Start and Stop
+           </span>
+           <a class="headerlink" href="#id10" title="Link to this table">
+            ¶
+           </a>
+          </caption>
+          <colgroup>
+           <col style="width: 10.0%"/>
+           <col style="width: 35.0%"/>
+           <col style="width: 55.0%"/>
+          </colgroup>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               Functionality
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Start and Stop
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                In HAL1, each process has its own function for start and stop:
+               </p>
+               <ul>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_Base_Start/IT/DMA
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_Base_Stop/IT/DMA
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_OC_Start/IT/DMA
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_OC_Stop/IT/DMA
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIMEx_OCN_Start/IT/DMA
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIMEx_OCN_Stop/IT/DMA
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_PWM_Start/IT/DMA
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_PWM_Stop/IT/DMA
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIMEx_PWMN_Start/IT/DMA
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIMEx_PWMN_Stop/IT/DMA
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_IC_Start/IT/DMA
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_IC_Stop(&amp;htim)
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_OnePulse_Start/IT
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_OnePulse_Stop/IT
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIMEx_OnePulse_Start/IT
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIMEx_OnePulse_Stop/IT
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_Encoder_Start/IT/DMA
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_Encoder_Stop/IT/DMA
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIMEx_HallSensor_Start/IT/DMA
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIMEx_HallSensor_Stop/IT/DMA
+                   </span>
+                  </code>
+                 </p>
+                </li>
+               </ul>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul>
+              <li>
+               <p>
+                In HAL2, depending on the function to be performed by the timer and depending on the way the channel is used, either output or input, there are specific functions to use:
+               </p>
+               <ul class="simple">
+                <li>
+                 <p>
+                  If the process is for simple Time base:
+                 </p>
+                 <ul>
+                  <li>
+                   <p>
+                    <code class="docutils literal notranslate">
+                     <span class="pre">
+                      HAL_TIM_Start/IT/DMA
+                     </span>
+                    </code>
+                   </p>
+                  </li>
+                  <li>
+                   <p>
+                    <code class="docutils literal notranslate">
+                     <span class="pre">
+                      HAL_TIM_Stop/IT/DMA
+                     </span>
+                    </code>
+                   </p>
+                  </li>
+                 </ul>
+                </li>
+                <li>
+                 <p>
+                  If the process is for an output compare, we call upon the function that allows starting the channel process in output mode:
+                 </p>
+                 <ul>
+                  <li>
+                   <p>
+                    <code class="docutils literal notranslate">
+                     <span class="pre">
+                      HAL_TIM_OC_StartChannel/IT/DMA/DMA_opt
+                     </span>
+                    </code>
+                   </p>
+                  </li>
+                  <li>
+                   <p>
+                    <code class="docutils literal notranslate">
+                     <span class="pre">
+                      HAL_TIM_Start
+                     </span>
+                    </code>
+                   </p>
+                  </li>
+                 </ul>
+                </li>
+                <li>
+                 <p>
+                  If the process is for an input capture, we call upon the function that allows starting the channel process in input mode:
+                 </p>
+                 <ul>
+                  <li>
+                   <p>
+                    <code class="docutils literal notranslate">
+                     <span class="pre">
+                      HAL_TIM_IC_StartChannel/IT/DMA/DMA_opt
+                     </span>
+                    </code>
+                   </p>
+                  </li>
+                  <li>
+                   <p>
+                    <code class="docutils literal notranslate">
+                     <span class="pre">
+                      HAL_TIM_Start
+                     </span>
+                    </code>
+                   </p>
+                  </li>
+                 </ul>
+                </li>
+               </ul>
+               <div class="admonition note">
+                <p class="admonition-title">
+                 Note
+                </p>
+                <p>
+                 DMA_opt is a new feature in HAL2 that allows configuring the DMA optionally, i.e., configuring the DMA with the possibility of not generating an interruption.
+                </p>
+               </div>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+         <table id="id11">
+          <caption>
+           <span class="caption-text">
+            HAL1 vs HAL2 Channel Configuration
+           </span>
+           <a class="headerlink" href="#id11" title="Link to this table">
+            ¶
+           </a>
+          </caption>
+          <colgroup>
+           <col style="width: 10.0%"/>
+           <col style="width: 45.0%"/>
+           <col style="width: 45.0%"/>
+          </colgroup>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               Functionality
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Channel Configuration
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                In HAL1, each process has its own function for channel configuration:
+               </p>
+               <ul>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_OC_ConfigChannel
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_PWM_ConfigChannel
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_IC_ConfigChannel
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_OnePulse_ConfigChannel
+                   </span>
+                  </code>
+                 </p>
+                </li>
+               </ul>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                In HAL2, depending on the way the channel is used, either output or input, there are specific functions to use:
+               </p>
+               <ul>
+                <li>
+                 <p>
+                  If the channel is used for output:
+                 </p>
+                 <ul>
+                  <li>
+                   <p>
+                    <code class="docutils literal notranslate">
+                     <span class="pre">
+                      HAL_TIM_OC_SetConfigChannel
+                     </span>
+                    </code>
+                   </p>
+                  </li>
+                  <li>
+                   <p>
+                    <code class="docutils literal notranslate">
+                     <span class="pre">
+                      HAL_TIM_OC_SetConfigCompareUnit
+                     </span>
+                    </code>
+                   </p>
+                  </li>
+                 </ul>
+                </li>
+                <li>
+                 <p>
+                  If the channel is used for input:
+                 </p>
+                 <ul>
+                  <li>
+                   <p>
+                    <code class="docutils literal notranslate">
+                     <span class="pre">
+                      HAL_TIM_IC_SetConfigChannel
+                     </span>
+                    </code>
+                   </p>
+                  </li>
+                  <li>
+                   <p>
+                    <code class="docutils literal notranslate">
+                     <span class="pre">
+                      HAL_TIM_IC_SetConfigCaptureUnit
+                     </span>
+                    </code>
+                   </p>
+                  </li>
+                 </ul>
+                </li>
+               </ul>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <hr class="docutils"/>
+        <section id="tim-use-cases">
+         <h2 id="tim-use-cases">
+          <strong>
+           TIM use cases
+          </strong>
+          <a class="headerlink" href="#tim-use-cases" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+        </section>
+        <section id="time-base-in-interrupt-mode">
+         <span id="hal-tim-time-base">
+         </span>
+         <h2 id="time-base-in-interrupt-mode">
+          Time Base in interrupt mode
+          <a class="headerlink" href="#time-base-in-interrupt-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <colgroup>
+           <col style="width: 10.0%"/>
+           <col style="width: 45.0%"/>
+           <col style="width: 45.0%"/>
+          </colgroup>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               Functionality
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL 1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL 2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Start TIMx in IT mode
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                The function
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_Base_Start_IT()
+                 </span>
+                </code>
+                is used to enable :
+               </p>
+               <ul>
+                <li>
+                 <p>
+                  The TIMx peripheral.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  The update event interrupt
+                 </p>
+                </li>
+               </ul>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                The function
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_Start_IT()
+                 </span>
+                </code>
+                is used to enable :
+               </p>
+               <ul>
+                <li>
+                 <p>
+                  The TIMx peripheral.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  The update event interrupt
+                 </p>
+                </li>
+               </ul>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               TIMx IRQ handler
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                Inside the interrupt handler for TIMx user call The The global IRQ handler  of TIM driver
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_IRQHandler()
+                 </span>
+                </code>
+                to handle the update interrupt request.
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                Inside the interrupt handler for TIMx, the user can call either:
+               </p>
+               <ul>
+                <li>
+                 <p>
+                  The global IRQ handler
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_IRQHandler()
+                   </span>
+                  </code>
+                  to handle the TIMx interrupt request, or
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  The single process IRQ handler for specific interrupt events in this case
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_UPD_IRQHandler()
+                   </span>
+                  </code>
+                  .
+                 </p>
+                </li>
+               </ul>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Callback function
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                The function
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_PeriodElapsedCallback()
+                 </span>
+                </code>
+                is called when the period elapses.
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                The function
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_UpdateCallback()
+                 </span>
+                </code>
+                is called when the period elapses.
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <section id="sequence-diagram">
+          <h3 id="sequence-diagram">
+           Sequence diagram
+           <a class="headerlink" href="#sequence-diagram" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <div class="sphinx-tabs docutils container">
+           <div aria-label="Tabbed content" class="closeable" role="tablist">
+            <button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">
+             HAL1 Sequence diagram
+            </button>
+            <button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">
+             HAL2 Sequence diagram
+            </button>
+           </div>
+           <div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0">
+            <p class="plantuml">
+             <img alt="@startuml
+' To add a number by line
+'autonumber
+
+title &quot;Timer as basic counter HAL 1&quot;
+
+' Fix order of each column
+participant &quot;User Application&quot; as App
+participant &quot;HAL TIM&quot; as HAL_TIM
+participant &quot;MSP&quot; as MSP
+participant &quot;IT&quot; as IT
+
+group Initialization
+App -[hidden]&gt;HAL_TIM
+end
+
+group Start TIMx in IT mode
+App -&gt; HAL_TIM: &lt;b&gt;&lt;font color=blue&gt;HAL_TIM_Base_Start_IT&lt;/b&gt;()
+HAL_TIM -&gt; HAL_TIM: Enable UPDATE interrupt\nEnable TIMx counter
+IT &lt;[#red]-] : &lt;font color=red&gt;&lt;b&gt;TIMx IRQ
+IT -&gt; HAL_TIM: TIMx IRQ
+HAL_TIM -&gt; HAL_TIM: HAL_TIM_IRQHandler()
+HAL_TIM -&gt; HAL_TIM: Clear flag
+HAL_TIM -&gt; App: &lt;b&gt;&lt;font color=green&gt;HAL_TIM_PeriodElapsedCallback&lt;/b&gt;()
+end
+@enduml" src="../../../../../_images/plantuml-91a6e9cdec8b814311f1ee5f433f1b8eaad58e67.png">
+             </img>
+            </p>
+           </div>
+           <div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0">
+            <p class="plantuml">
+             <img alt="@startuml
+' To add a number by line
+'autonumber
+
+title &quot;Timer as basic counter HAL 2&quot;
+
+' Fix order of each column
+participant &quot;User Application&quot; as App
+participant &quot;HAL TIM&quot; as Driver
+participant &quot;IT&quot; as IT
+
+group Initialization and Configuration
+App -[hidden]&gt;Driver
+end
+
+group Start TIMx in IT mode
+App-&gt;Driver : &lt;b&gt;&lt;font color=blue&gt;HAL_TIM_Start_IT&lt;/b&gt;()
+Driver-&gt;Driver : Enable UPDATE interrupt\nEnable TIMx counter
+Driver --&gt; App : HAL_OK
+IT &lt;[#red]-] : &lt;font color=red&gt;&lt;b&gt;TIMx IRQ
+IT -&gt; Driver : HAL_TIM_IRQHandler()
+Driver -&gt; Driver : Clear flag
+Driver -&gt; App: &lt;b&gt;&lt;font color=green&gt;HAL_TIM_UpdateCallback&lt;/b&gt;()
+App --&gt; Driver
+Driver --&gt; IT
+end
+@enduml" src="../../../../../_images/plantuml-8a93ec9cecc740c768a39d931c5ac4d56a07f4c0.png"/>
+            </p>
+           </div>
+          </div>
+          <div class="admonition note">
+           <p class="admonition-title">
+            Note
+           </p>
+           <p>
+            The unique differences between HAL1 and HAL2 in the time base interrupt mode use case are the initialization sequence, the TIM Start API naming, and the update callback API naming.
+           </p>
+          </div>
+         </section>
+         <section id="code-snippet">
+          <h3 id="code-snippet">
+           code snippet
+           <a class="headerlink" href="#code-snippet" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                Example of code  in HAL 1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                Example of code  in HAL 2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* Declaration of the tim handle */</span>
+<span class="n">TIM_HandleTypeDef</span><span class="w"> </span><span class="n">htim2</span><span class="p">;</span>
+
+<span class="cm">/* Ensure that all required peripherals</span>
+<span class="cm">(TIM, GPIO, NVIC, etc.) are configured properly</span>
+<span class="cm">before starting the timer.*/</span>
+<span class="p">.............</span>
+
+<span class="cm">/* Start the timer TIMx in interrupt mode */</span>
+<span class="n">HAL_TIM_Base_Start_IT</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim2</span><span class="p">);</span>
+
+<span class="cm">/* User must call the Interrupt Handler</span>
+<span class="cm">  functions in TIMx global interrupt */</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">TIM2_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="cm">/* Code to execute at each interrupt */</span>
+<span class="w">    </span><span class="n">HAL_TIM_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim2</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/* Call the callback function */</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">HAL_TIM_PeriodElapsedCallback</span><span class="p">(</span><span class="n">TIM_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">htim</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">        </span><span class="cm">/* Code to execute at each interrupt</span>
+<span class="cm">          For example, toggle an LED */</span>
+<span class="w">        </span><span class="n">HAL_GPIO_TogglePin</span><span class="p">(</span><span class="n">GPIOA</span><span class="p">,</span><span class="w"> </span><span class="n">GPIO_PIN_5</span><span class="p">);</span>
+<span class="p">}</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* Declaration of the tim handle */</span>
+<span class="n">hal_tim_handle_t</span><span class="w"> </span><span class="n">htim2</span><span class="p">;</span>
+
+<span class="cm">/* Ensure that all required peripherals</span>
+<span class="cm">(TIM, GPIO, NVIC, etc.) are configured properly</span>
+<span class="cm">before starting the timer.*/</span>
+<span class="w">     </span><span class="p">.............</span>
+
+<span class="cm">/* Start the timer TIMx in interrupt mode */</span>
+<span class="n">HAL_TIM_Start_IT</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim2</span><span class="p">);</span>
+
+<span class="cm">/* User must call the Interrupt Handler</span>
+<span class="cm"> functions in TIM2 global interrupt */</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">TIM2_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="cm">/* Code to execute at each interrupt */</span>
+<span class="w">    </span><span class="n">HAL_TIM_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim2</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/* Call the callback function */</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">HAL_TIM_UpdateCallback</span><span class="p">(</span><span class="n">hal_tim_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">htim</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="cm">/* Code to execute at each interrupt</span>
+<span class="cm">       For example, toggle an LED */</span>
+<span class="w">    </span><span class="n">HAL_GPIO_TogglePin</span><span class="p">(</span><span class="n">HAL_GPIOA</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_GPIO_PIN_5</span><span class="p">);</span>
+<span class="p">}</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <hr class="docutils"/>
+          <p>
+           Related Examples in HAL2
+          </p>
+          <p>
+           For more details, you can refer to the complete example under the firmware directory
+          </p>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                Example Name
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                Brief
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               timebase
+              </p>
+             </td>
+             <td>
+              <p>
+               How to use an STM32 timer instead of the Cortex Systick to reconfigure the HAL tick source.
+              </p>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <hr class="docutils"/>
+         </section>
+        </section>
+        <section id="pwm-output-in-interrupt-mode">
+         <span id="hal-tim-pwm-output">
+         </span>
+         <h2 id="pwm-output-in-interrupt-mode">
+          PWM Output in interrupt mode
+          <a class="headerlink" href="#pwm-output-in-interrupt-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <colgroup>
+           <col style="width: 10.0%"/>
+           <col style="width: 45.0%"/>
+           <col style="width: 45.0%"/>
+          </colgroup>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               Functionality
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL 1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL 2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Channel Configuration
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                In HAL1 to initializes the TIM PWM channels according to the specified parameters  you need to call:
+               </p>
+               <ul>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_PWM_ConfigChannel
+                   </span>
+                  </code>
+                  .
+                 </p>
+                </li>
+               </ul>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                In HAL2 just replace by the following sequence:
+               </p>
+               <ul>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_OC_SetConfigChannel
+                   </span>
+                  </code>
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_OC_SetConfigCompareUnit
+                   </span>
+                  </code>
+                 </p>
+                </li>
+               </ul>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Start the pwm signal in IT mode
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                The function
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_PWM_Start_IT(&amp;htim,
+                 </span>
+                 <span class="pre">
+                  TIM_CHANNEL_x)
+                 </span>
+                </code>
+                is used to enable:
+               </p>
+               <ul>
+                <li>
+                 <p>
+                  The TIMx peripheral.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  The selected channel x .
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  The capture compare x interrupt.
+                 </p>
+                </li>
+               </ul>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                The function
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_OC_StartChannel_IT(&amp;htim,
+                 </span>
+                 <span class="pre">
+                  TIM_CHANNEL_x)
+                 </span>
+                </code>
+                is used to enable :
+               </p>
+               <ol class="arabic simple">
+                <li>
+                 <p>
+                  The selected channel x .
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  The capture compare x interrupt.
+                 </p>
+                </li>
+               </ol>
+              </li>
+              <li>
+               <p>
+                The function
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_Start()
+                 </span>
+                </code>
+                is used to enable and start the TIMx.
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               TIMx IRQ handler
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                Inside the interrupt handler for TIMx user call The The global IRQ handler  of TIM driver
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_IRQHandler()
+                 </span>
+                </code>
+                to handle the capture compare x interrupt request.
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                Inside the interrupt handler for TIMx, the user can call either:
+               </p>
+               <ul>
+                <li>
+                 <p>
+                  The global IRQ handler
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_IRQHandler()
+                   </span>
+                  </code>
+                  to handle the capture compare x interrupt request, or
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  The single process IRQ handler for specific interrupt events in this case
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_CC_IRQHandler()
+                   </span>
+                  </code>
+                  .
+                 </p>
+                </li>
+               </ul>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Callback function
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                The function
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_PWM_PulseFinishedCallback()
+                 </span>
+                </code>
+                is called when the PWM pulse is finished.
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                The function
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_CompareMatchCallback()
+                 </span>
+                </code>
+                is called when the output compare event occurs.
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <div class="admonition important">
+          <p class="admonition-title">
+           Important
+          </p>
+          <p>
+           When using PWM with DMA, it is mandatory to call the function
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             HAL_TIM_OC_EnableChannelComparePreload
+            </span>
+           </code>
+           .
+          </p>
+         </div>
+         <section id="id1">
+          <h3 id="id1">
+           Sequence diagram
+           <a class="headerlink" href="#id1" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <div class="sphinx-tabs docutils container">
+           <div aria-label="Tabbed content" class="closeable" role="tablist">
+            <button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">
+             HAL1 Sequence diagram
+            </button>
+            <button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">
+             HAL2 Sequence diagram
+            </button>
+           </div>
+           <div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0">
+            <p class="plantuml">
+             <img alt="@startuml
+skinparam maxMessageSize 440
+' To add a number by line
+'autonumber
+
+title &quot;PWM Output in HAL 1&quot;
+
+' Fix order of each column
+participant &quot;User Application&quot; as App
+participant &quot;HAL TIM&quot; as Driver
+
+participant &quot;IT&quot; as IT
+
+group Initialization and configuration of TIMx
+App -[hidden]&gt;Driver
+end
+
+
+group Configuration of channel
+
+
+App -&gt; Driver : \n&lt;b&gt;&lt;font color=purple&gt;HAL_TIM_PWM_ConfigChannel&lt;/b&gt;(channel = &lt;font color=blue&gt;HAL_TIM_CHANNEL_&lt;b&gt;x&lt;/b&gt;,\n(TIM_OC_InitTypeDef) {\n.OCPolarity = TIM_OCPOLARITY_HIGH,\n.OCIdleState = TIM_OCIDLESTATE_RESET,\n.OCMode = TIM_OCMODE_PWM1,\n.Pulse = PULSE1_VALUE})
+Driver --&gt; App : HAL_O
+
+end
+
+group Start TIMx in IT mode
+
+App -&gt; Driver : &lt;b&gt;&lt;font color=blue&gt;HAL_TIM_PWM_Start_IT&lt;/b&gt;(&amp;htim, HAL_TIM_CHANNEL_&lt;b&gt;x&lt;/b&gt;)
+Driver --&gt; App : HAL_OK
+Driver-&gt;Driver : Enable capture compare interrupt\nEnable TIMx counter
+Driver --&gt; App : HAL_OK
+IT &lt;[#red]-] : &lt;font color=red&gt;&lt;b&gt;TIMx IRQ
+IT -&gt; Driver : HAL_TIM_IRQHandler()
+Driver -&gt; Driver : Clear flag
+Driver -&gt; App: &lt;b&gt;&lt;font color=green&gt;HAL_TIM_PWM_PulseFinishedCallback&lt;/b&gt;()
+App --&gt; Driver
+Driver --&gt; IT
+
+end
+@enduml" src="../../../../../_images/plantuml-324187394a28883e3cb3e52332ff631e855a6caf.png"/>
+            </p>
+           </div>
+           <div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0">
+            <p class="plantuml">
+             <img alt="@startuml
+skinparam maxMessageSize 440
+' To add a number by line
+'autonumber
+
+title &quot;PWM Output in HAL 2&quot;
+
+' Fix order of each column
+participant &quot;User Application&quot; as App
+participant &quot;HAL TIM&quot; as Driver
+
+participant &quot;IT&quot; as IT
+
+group Initialization and configuration of TIMx
+App -[hidden]&gt;Driver
+end
+
+
+group Configuration of channel
+
+
+App -&gt; Driver : \n&lt;b&gt;&lt;font color=purple&gt;HAL_TIM_OC_SetConfigChannel&lt;/b&gt;(channel = &lt;font color=blue&gt;HAL_TIM_CHANNEL_&lt;b&gt;x&lt;/b&gt;,\n(hal_tim_oc_channel_config_t) {\n.polarity = HAL_TIM_OC_HIGH,\n.idle_state = HAL_TIM_OC_IDLE_STATE_RESET})
+Driver --&gt; App : HAL_OK
+
+App -&gt; Driver : \n&lt;b&gt;&lt;font color=purple&gt;HAL_TIM_OC_SetConfigCompareUnit&lt;/b&gt;(\ncompare_unit = &lt;font color=blue&gt;HAL_TIM_OC_COMPARE_UNIT_&lt;b&gt;x&lt;/b&gt;,\n(hal_tim_oc_compare_unit_config_t ) {\n.mode = &lt;font color=black&gt;HAL_TIM_OC_PWM1,\n.pulse = PULSE1_VALUE})
+Driver --&gt; App : HAL_OK
+
+end
+
+group Start TIMx in IT mode
+
+App -&gt; Driver : &lt;b&gt;&lt;font color=blue&gt;HAL_TIM_OC_StartChannel_IT&lt;/b&gt;(&amp;htimx, HAL_TIM_CHANNEL_&lt;b&gt;x&lt;/b&gt;)
+Driver --&gt; App : HAL_OK
+Driver-&gt;Driver : Enable the channel\nEnable capture compare interrupt.
+Driver --&gt; App : HAL_OK
+IT &lt;[#red]-] : &lt;font color=red&gt;&lt;b&gt;TIMx IRQ
+IT -&gt; Driver : HAL_TIM_CC_IRQHandler()
+Driver -&gt; Driver : Clear flag
+App -&gt; Driver : &lt;b&gt;&lt;font color=blue&gt;HAL_TIM_Start&lt;/b&gt;()
+Driver-&gt;Driver : Enable TIMx counter
+Driver --&gt; App : HAL_OK
+Driver -&gt; App: &lt;b&gt;&lt;font color=green&gt;HAL_TIM_CompareMatchCallback&lt;/b&gt;()
+
+end
+@enduml" src="../../../../../_images/plantuml-1c607e401de75909368e3eb634ccf56a61191d2d.png"/>
+            </p>
+           </div>
+          </div>
+         </section>
+         <section id="id2">
+          <h3 id="id2">
+           code snippet
+           <a class="headerlink" href="#id2" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                Example of code  in HAL 1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                Example of code  in HAL 2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* Declaration of tim handle */</span>
+<span class="n">TIM_HandleTypeDef</span><span class="w"> </span><span class="n">htim3</span><span class="p">;</span>
+
+<span class="cm">/* Ensure that all required peripherals</span>
+<span class="cm">(TIM(timer, channel), GPIO, NVIC, etc.) are configured properly</span>
+<span class="cm">before starting PWM output.*/</span>
+<span class="p">.............</span>
+
+<span class="cm">/* Start the PWM output in interrupt mode */</span>
+<span class="n">HAL_TIM_PWM_Start_IT</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim3</span><span class="p">,</span><span class="w"> </span><span class="n">TIM_CHANNEL_2</span><span class="p">);</span>
+
+<span class="cm">/* User must call the Interrupt Handler</span>
+<span class="cm">  functions in TIM3 global interrupt */</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">TIM3_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="cm">/* Code to execute at each interrupt */</span>
+<span class="w">    </span><span class="n">HAL_TIM_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim3</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/* Call the callback function */</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">HAL_TIM_PWM_PulseFinishedCallback</span><span class="p">(</span><span class="n">TIM_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">htim</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">        </span><span class="cm">/* Code to execute at each compare match interrupt</span>
+<span class="cm">          For example, toggle an LED */</span>
+<span class="w">        </span><span class="n">HAL_GPIO_TogglePin</span><span class="p">(</span><span class="n">GPIOA</span><span class="p">,</span><span class="w"> </span><span class="n">GPIO_PIN_5</span><span class="p">);</span>
+<span class="p">}</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="w"> </span><span class="cm">/* Declaration of the tim handle */</span>
+<span class="w"> </span><span class="n">hal_tim_handle_t</span><span class="w"> </span><span class="n">htim3</span><span class="p">;</span>
+
+<span class="w"> </span><span class="cm">/* Ensure that all required peripherals</span>
+<span class="cm"> (TIM(timer, channel), GPIO, NVIC, etc.) are configured properly</span>
+<span class="cm"> before starting PWM output.*/</span>
+<span class="w">      </span><span class="p">.............</span>
+
+<span class="cm">/* Start a timer's output channel in interrupt mode. */</span>
+<span class="w"> </span><span class="n">HAL_TIM_OC_StartChannel_IT</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim3</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_TIM_CHANNEL_2</span><span class="p">);</span>
+
+<span class="w"> </span><span class="cm">/* Start the timer */</span>
+<span class="w"> </span><span class="n">HAL_TIM_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim3</span><span class="p">);</span>
+
+<span class="w"> </span><span class="cm">/* User must call the Interrupt Handler</span>
+<span class="cm">  functions in TIM2 global interrupt */</span>
+
+<span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">TIM2_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="cm">/* Code to execute at each interrupt */</span>
+<span class="w">     </span><span class="n">HAL_TIM_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim3</span><span class="p">);</span>
+<span class="w"> </span><span class="p">}</span>
+
+<span class="w"> </span><span class="cm">/* Call the callback function */</span>
+
+<span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">HAL_TIM_CompareMatchCallback</span><span class="p">(</span><span class="n">hal_tim_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">htim</span><span class="p">,</span>
+<span class="w">                          </span><span class="n">hal_tim_channel_t</span><span class="w"> </span><span class="n">channel</span><span class="p">);</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="cm">/* Code to execute at each interrupt</span>
+<span class="cm">        For example, toggle an LED */</span>
+<span class="w">     </span><span class="n">HAL_GPIO_TogglePin</span><span class="p">(</span><span class="n">HAL_GPIOA</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_GPIO_PIN_5</span><span class="p">);</span>
+<span class="w"> </span><span class="p">}</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <hr class="docutils"/>
+          <p>
+           Related Examples in HAL2
+          </p>
+          <p>
+           For more details, you can refer to the complete example under the firmware directory
+          </p>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                Example Name
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                Brief
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               pwm_output
+              </p>
+             </td>
+             <td>
+              <p>
+               How to configure the TIM peripheral in PWM (Pulse Width Modulation) mode.
+The PWM waveforms generated by the timer channels can be displayed using an oscilloscope.
+              </p>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <hr class="docutils"/>
+         </section>
+        </section>
+        <section id="input-capture-in-interrupt-mode">
+         <span id="hal-tim-input-capture">
+         </span>
+         <h2 id="input-capture-in-interrupt-mode">
+          Input Capture in interrupt mode
+          <a class="headerlink" href="#input-capture-in-interrupt-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <colgroup>
+           <col style="width: 10.0%"/>
+           <col style="width: 45.0%"/>
+           <col style="width: 45.0%"/>
+          </colgroup>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               Functionality
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL 1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL 2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Start the pwm signal in IT mode
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                The function
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_IC_Start_IT(&amp;htim,
+                 </span>
+                 <span class="pre">
+                  TIM_CHANNEL_x)
+                 </span>
+                </code>
+                is used to enable:
+               </p>
+               <ul>
+                <li>
+                 <p>
+                  The TIMx peripheral.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  The selected channel x .
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  The capture compare x interrupt.
+                 </p>
+                </li>
+               </ul>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                The function
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_IC_StartChannel_IT(&amp;htim,
+                 </span>
+                 <span class="pre">
+                  TIM_CHANNEL_x)
+                 </span>
+                </code>
+                is used to enable :
+               </p>
+               <ol class="arabic simple">
+                <li>
+                 <p>
+                  The selected channel x .
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  The capture compare x interrupt.
+                 </p>
+                </li>
+               </ol>
+              </li>
+              <li>
+               <p>
+                The function
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_Start()
+                 </span>
+                </code>
+                is used to enable and start the TIMx.
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               TIMx IRQ handler
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                Inside the interrupt handler for TIMx user call The The global IRQ handler  of TIM driver
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_IRQHandler()
+                 </span>
+                </code>
+                to handle the capture compare x interrupt request.
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                Inside the interrupt handler for TIMx, the user can call either:
+               </p>
+               <ul>
+                <li>
+                 <p>
+                  The global IRQ handler
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_IRQHandler()
+                   </span>
+                  </code>
+                  to handle the capture compare x interrupt request, or
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  The single process IRQ handler for specific interrupt events in this case
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_CC_IRQHandler()
+                   </span>
+                  </code>
+                  .
+                 </p>
+                </li>
+               </ul>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Callback function
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                The function
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_IC_CaptureCallback()
+                 </span>
+                </code>
+                is called when the input capture occurs.
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                The function
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_InputCaptureCallback()
+                 </span>
+                </code>
+                is called when input capture event occurs.
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <section id="id3">
+          <h3 id="id3">
+           Sequence diagram
+           <a class="headerlink" href="#id3" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <div class="sphinx-tabs docutils container">
+           <div aria-label="Tabbed content" class="closeable" role="tablist">
+            <button aria-controls="panel-2-2-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-2-2-0" name="2-0" role="tab" tabindex="0">
+             HAL1 Sequence diagram
+            </button>
+            <button aria-controls="panel-2-2-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-2-2-1" name="2-1" role="tab" tabindex="-1">
+             HAL2 Sequence diagram
+            </button>
+           </div>
+           <div aria-labelledby="tab-2-2-0" class="sphinx-tabs-panel" id="panel-2-2-0" name="2-0" role="tabpanel" tabindex="0">
+            <p class="plantuml">
+             <img alt="@startuml
+skinparam maxMessageSize 440
+' To add a number by line
+'autonumber
+
+title &quot;Input Capture in HAL 1&quot;
+
+' Fix order of each column
+participant &quot;User Application&quot; as App
+participant &quot;HAL TIM&quot; as Driver
+
+participant &quot;IT&quot; as IT
+
+group Initialization and configuration of TIMx
+App -[hidden]&gt;Driver
+end
+
+
+group Configuration of channel
+
+
+App -&gt; Driver : \n&lt;b&gt;&lt;font color=blue&gt;HAL_TIM_IC_ConfigChannel&lt;/b&gt;(channel = &lt;font color=blue&gt;HAL_TIM_CHANNEL_&lt;b&gt;x&lt;/b&gt;,\n(TIM_IC_InitTypeDef) {\n.ICPolarity = TIM_ICPOLARITY_RISING,\n.ICSelection = TIM_ICSELECTION_DIRECTTI,\n.ICPrescaler = TIM_ICPSC_DIV1,\n.ICFilter = 0})
+Driver --&gt; App : HAL_OK
+
+end
+
+group Start TIMx in IT mode
+
+App -&gt; Driver : HAL_TIM_IC_Start_IT(&amp;htim, HAL_TIM_CHANNEL_&lt;b&gt;x&lt;/b&gt;)
+Driver --&gt; App : HAL_OK
+Driver-&gt;Driver : Enable capture compare interrupt\nEnable TIMx counter
+Driver --&gt; App : HAL_OK
+IT &lt;[#red]-] : &lt;font color=red&gt;&lt;b&gt;TIMx IRQ
+IT -&gt; Driver : HAL_TIM_IRQHandler()
+Driver -&gt; Driver : Clear flag
+Driver -&gt; App: HAL_TIM_IC_CaptureCallback()
+App --&gt; Driver
+Driver --&gt; IT
+
+end
+@enduml" src="../../../../../_images/plantuml-53c9d9cb604a15066a911e0beb9ca4a5e82566af.png"/>
+            </p>
+           </div>
+           <div aria-labelledby="tab-2-2-1" class="sphinx-tabs-panel" hidden="true" id="panel-2-2-1" name="2-1" role="tabpanel" tabindex="0">
+            <p class="plantuml">
+             <img alt="@startuml
+skinparam maxMessageSize 440
+' To add a number by line
+'autonumber
+
+title &quot;Input Capture in HAL 2&quot;
+
+' Fix order of each column
+participant &quot;User Application&quot; as App
+participant &quot;HAL TIM&quot; as Driver
+
+participant &quot;IT&quot; as IT
+
+group Initialization and configuration of TIMx
+App -[hidden]&gt;Driver
+end
+
+
+group Configuration of channel
+
+
+App -&gt; Driver : \n&lt;b&gt;&lt;font color=blue&gt;HAL_TIM_IC_SetConfigChannel&lt;/b&gt;(channel = &lt;font color=blue&gt;HAL_TIM_CHANNEL_&lt;b&gt;x&lt;/b&gt;,\n(hal_tim_ic_channel_config_t) {\n.polarity = HAL_TIM_IC_RISING,\n.selection = HAL_TIM_IC_DIRECTTI,\n.prescaler = HAL_TIM_IC_DIV1,\n.filter = 0})
+Driver --&gt; App : HAL_OK
+
+App -&gt; Driver : \n&lt;b&gt;&lt;font color=blue&gt;HAL_TIM_IC_SetConfigCaptureUnit&lt;/b&gt;(\ncompare_unit = &lt;font color=blue&gt;HAL_TIM_IC_CAPTURE_UNIT_&lt;b&gt;x&lt;/b&gt;,\n(hal_tim_ic_capture_unit_config_t ) {\n.mode = &lt;font color=black&gt;HAL_TIM_IC_PWM1})
+Driver --&gt; App : HAL_OK
+
+end
+
+group Start TIMx in IT mode
+
+App -&gt; Driver : HAL_TIM_IC_StartChannel_IT(HAL_TIM_CHANNEL_&lt;b&gt;x&lt;/b&gt;)
+Driver --&gt; App : HAL_OK
+Driver-&gt;Driver : Enable the channel\nEnable capture compare interrupt.
+Driver --&gt; App : HAL_OK
+IT &lt;[#red]-] : &lt;font color=red&gt;&lt;b&gt;TIMx IRQ
+IT -&gt; Driver : HAL_TIM_IRQHandler()
+Driver -&gt; Driver : Clear flag
+App -&gt; Driver : HAL_TIM_Start()
+Driver-&gt;Driver : Enable TIMx counter
+Driver --&gt; App : HAL_OK
+Driver -&gt; App: HAL_TIM_InputCaptureCallback()
+
+end
+@enduml" src="../../../../../_images/plantuml-4b62b0d0dc0d80a9ceb5dff6d5ceb8a40a5fe6df.png"/>
+            </p>
+           </div>
+          </div>
+         </section>
+         <section id="id4">
+          <h3 id="id4">
+           code snippet
+           <a class="headerlink" href="#id4" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                Example of code  in HAL 1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                Example of code  in HAL 2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* Declaration of tim handle */</span>
+<span class="n">TIM_HandleTypeDef</span><span class="w"> </span><span class="n">htim3</span><span class="p">;</span>
+
+<span class="cm">/* Ensure that all required peripherals</span>
+<span class="cm">(TIM(timer, channel), GPIO, NVIC, etc.) are configured properly</span>
+<span class="cm">before starting the input capture.*/</span>
+<span class="p">.............</span>
+
+<span class="cm">/* Start the Input Capture in interrupt mode */</span>
+<span class="n">HAL_TIM_IC_Start_IT</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim3</span><span class="p">,</span><span class="w"> </span><span class="n">TIM_CHANNEL_2</span><span class="p">);</span>
+
+<span class="cm">/* User must call the Interrupt Handler</span>
+<span class="cm">  functions in TIM3 global interrupt */</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">TIM3_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="cm">/* Code to execute at each interrupt */</span>
+<span class="w">    </span><span class="n">HAL_TIM_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim3</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/* Call the callback function */</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">HAL_TIM_IC_CaptureCallback</span><span class="p">(</span><span class="n">TIM_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">htim</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">      </span><span class="cm">/* Get the Input Capture value */</span>
+<span class="w">      </span><span class="n">uwIC2Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_TIM_ReadCapturedValue</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim3</span><span class="p">,</span><span class="w"> </span><span class="n">TIM_CHANNEL_2</span><span class="p">);</span>
+<span class="p">}</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="w"> </span><span class="cm">/* Declaration of the tim handle */</span>
+<span class="w"> </span><span class="n">hal_tim_handle_t</span><span class="w"> </span><span class="n">htim3</span><span class="p">;</span>
+
+<span class="w"> </span><span class="cm">/* Ensure that all required peripherals</span>
+<span class="cm"> (TIM(timer, channel), GPIO, NVIC, etc.) are configured properly</span>
+<span class="cm"> before starting the input capture.*/</span>
+<span class="w">      </span><span class="p">.............</span>
+
+<span class="cm">/* Start a timer's output channel in interrupt mode. */</span>
+<span class="w"> </span><span class="n">HAL_TIM_IC_StartChannel_IT</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim3</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_TIM_CHANNEL_2</span><span class="p">);</span>
+
+<span class="w"> </span><span class="cm">/* Start the timer */</span>
+<span class="w"> </span><span class="n">HAL_TIM_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim3</span><span class="p">);</span>
+
+<span class="w"> </span><span class="cm">/* User must call the Interrupt Handler</span>
+<span class="cm">  functions in TIM3 global interrupt */</span>
+
+<span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">TIM3_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="cm">/* Code to execute at each interrupt */</span>
+<span class="w">     </span><span class="n">HAL_TIM_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim3</span><span class="p">);</span>
+<span class="w"> </span><span class="p">}</span>
+
+<span class="w"> </span><span class="cm">/* Call the callback function */</span>
+
+<span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">HAL_TIM_InputCaptureCallback</span><span class="p">(</span><span class="n">hal_tim_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">htim</span><span class="p">,</span>
+<span class="w">                          </span><span class="n">hal_tim_channel_t</span><span class="w"> </span><span class="n">channel</span><span class="p">);</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="cm">/* Get the Input Capture value */</span>
+<span class="w">     </span><span class="n">uwIC2Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_TIM_IC_ReadChannelCapturedValue</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim3</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_TIM_CHANNEL_2</span><span class="p">)</span>
+<span class="w"> </span><span class="p">}</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <hr class="docutils"/>
+          <p>
+           Related Examples in HAL2
+          </p>
+          <p>
+           For more details, you can refer to the complete example under the firmware directory
+          </p>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                Example Name
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                Brief
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               input_capture
+              </p>
+             </td>
+             <td>
+              <p>
+               How to configure the TIM peripheral in input capture mode to measure the frequency of an external signal.
+              </p>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <hr class="docutils"/>
+         </section>
+        </section>
+        <section id="encoder-interface-in-interrupt-mode">
+         <span id="hal-tim-encoder-mode">
+         </span>
+         <h2 id="encoder-interface-in-interrupt-mode">
+          Encoder Interface in Interrupt Mode
+          <a class="headerlink" href="#encoder-interface-in-interrupt-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <colgroup>
+           <col style="width: 5.0%"/>
+           <col style="width: 35.0%"/>
+           <col style="width: 60.0%"/>
+          </colgroup>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               Functionality
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL 1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL 2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Initialization &amp; Configuration
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                The function
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_Encoder_Init(&amp;htim1,
+                 </span>
+                 <span class="pre">
+                  &amp;sConfig)
+                 </span>
+                </code>
+                is used to configure:
+               </p>
+               <ul>
+                <li>
+                 <p>
+                  The TIMx peripheral.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  Encoder mode.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  The TIMx CH1 and CH2.
+                 </p>
+                </li>
+               </ul>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                The functions
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_Init
+                 </span>
+                </code>
+                and
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_SetConfig
+                 </span>
+                </code>
+                are used to configure:
+               </p>
+               <ul>
+                <li>
+                 <p>
+                  The TIMx peripheral.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  Encoder mode.
+                 </p>
+                </li>
+               </ul>
+              </li>
+              <li>
+               <p>
+                The functions
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_IC_SetConfigChannel
+                 </span>
+                </code>
+                and
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_IC_SetConfigCaptureUnit
+                 </span>
+                </code>
+                are used to configure TIMx channel(CH1 and CH2).
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Start the encoder interface in interrupt mode
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                The function
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_Encoder_Start_IT
+                 </span>
+                </code>
+                is used to start the TIM Encoder Interface in interrupt mode.
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                The function
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_IC_StartChannel_IT
+                 </span>
+                </code>
+                and
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_Start()
+                 </span>
+                </code>
+                are used to start the TIM Encoder Interface in interrupt mode.
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               TIMx IRQ handler
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                Inside the interrupt handler for TIMx user call The The global IRQ handler  of TIM driver
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_IRQHandler()
+                 </span>
+                </code>
+                to handle the capture compare x interrupt request.
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                Inside the interrupt handler for TIMx, the user can call either:
+               </p>
+               <ul>
+                <li>
+                 <p>
+                  The global IRQ handler
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_IRQHandler()
+                   </span>
+                  </code>
+                  to handle the capture compare x interrupt request, or
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  The single process IRQ handler for specific interrupt events in this case
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_CC_IRQHandler()
+                   </span>
+                  </code>
+                  .
+                 </p>
+                </li>
+               </ul>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Callback function
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                The function
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_IC_CaptureCallback()
+                 </span>
+                </code>
+                is called when the input capture occurs.
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                The function
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_InputCaptureCallback()
+                 </span>
+                </code>
+                is called when input capture event occurs.
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <section id="id5">
+          <h3 id="id5">
+           Sequence diagram
+           <a class="headerlink" href="#id5" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <div class="sphinx-tabs docutils container">
+           <div aria-label="Tabbed content" class="closeable" role="tablist">
+            <button aria-controls="panel-3-3-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-3-3-0" name="3-0" role="tab" tabindex="0">
+             HAL1 Sequence diagram
+            </button>
+            <button aria-controls="panel-3-3-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-3-3-1" name="3-1" role="tab" tabindex="-1">
+             HAL2 Sequence diagram
+            </button>
+           </div>
+           <div aria-labelledby="tab-3-3-0" class="sphinx-tabs-panel" id="panel-3-3-0" name="3-0" role="tabpanel" tabindex="0">
+            <p class="plantuml">
+             <img alt='@startuml
+title "Encoder Mode in HAL 1"
+
+participant "User Application" as App
+participant "HAL TIM" as Driver
+participant "MSP" as MSP
+
+group Initialization and Configuration
+    App -&gt; Driver: &lt;b&gt;&lt;font color=purple&gt;HAL_TIM_Encoder_Init&lt;/b&gt;(&amp;(TIM_Encoder_InitTypeDef){\nSet Instance (TIMx)\nSet Init structure\nEncoderMode = TIM_ENCODERMODE_TI12,\nIC1Polarity = TIM_ICPOLARITY_RISING,\nIC1Selection = TIM_ICSELECTION_DIRECTTI,\nIC1Prescaler = TIM_ICPSC_DIV1,\nIC1Filter = 0,\nIC2Polarity = TIM_ICPOLARITY_RISING,\nIC2Selection = TIM_ICSELECTION_DIRECTTI,\nIC2Prescaler = TIM_ICPSC_DIV1,\nIC2Filter = 0})
+    Driver -&gt; MSP: HAL_TIM_ENCODER_MspInit()
+    MSP -&gt; Driver: Enable TIMx clock\nCH1, CH2 GPIO AF config
+end
+
+group Start TIMx in IT Mode
+    App -&gt; Driver: &lt;b&gt;&lt;font color=green&gt;HAL_TIM_Encoder_Start_IT&lt;/b&gt;(TIM_CHANNEL_ALL)
+    Driver-&gt;Driver : Enable capture compare interrupt\nEnable TIMx counter
+    Driver --&gt; App : HAL_OK
+    IT &lt;[#red]-] : &lt;font color=red&gt;&lt;b&gt;TIMx IRQ
+    IT -&gt; Driver : HAL_TIM_IRQHandler()
+    Driver -&gt; Driver : Clear flag
+    Driver -&gt; App: HAL_TIM_IC_CaptureCallback()
+    App --&gt; Driver
+    Driver --&gt; IT
+    end
+@enduml' src="../../../../../_images/plantuml-9fbf41d24bcb6fa5fcd7d669ea8565c2ea7b61b3.png"/>
+            </p>
+           </div>
+           <div aria-labelledby="tab-3-3-1" class="sphinx-tabs-panel" hidden="true" id="panel-3-3-1" name="3-1" role="tabpanel" tabindex="0">
+            <p class="plantuml">
+             <img alt="@startuml
+skinparam maxMessageSize 440
+' To add a number by line
+'autonumber
+
+title &quot;Encoder Mode in HAL 2&quot;
+
+' Fix order of each column
+participant &quot;User Application&quot; as App
+participant &quot;HAL TIM&quot; as Driver
+
+group Initialization
+App -&gt; Driver : &lt;b&gt;&lt;font color=purple&gt;HAL_TIM_Init()&lt;/b&gt;
+Driver -&gt; MSP: TIM_MspInit()
+MSP -&gt; Driver: Enable TIMx clock\nEnable TIMx interrupt
+Driver --&gt; App : HAL_OK
+end
+ group Configuration
+App-&gt;Driver : &lt;b&gt;&lt;font color=purple&gt;HAL_TIM_SetConfig&lt;/b&gt;((hal_tim_config_t) {\n.prescaler = α\n.counter_mode = HAL_TIM_COUNTER_UP,\n.period = β,\n.clock_source =  HAL_TIM_CLK_ENCODER_X4_TI12}
+Driver -&gt; Driver : Configure TIMx time base
+Driver --&gt; App : HAL_OK
+
+App -&gt; Driver : &lt;b&gt;&lt;font color=purple&gt;HAL_TIM_IC_SetConfigChannel&lt;/b&gt;(channel = HAL_TIM_CHANNEL_1,\nhal_tim_ic_channel_config_t {\nsource = HAL_TIMx_TI1_GPIO,\npolarity = HAL_TIM_IC_POLARITY_RISING,\nfilter = HAL_TIM_FDIV1})
+Driver --&gt; App : HAL_OK
+
+App -&gt; Driver : &lt;b&gt;&lt;font color=purple&gt;HAL_TIM_IC_SetConfigCaptureUnit&lt;/b&gt;(capture_unit = HAL_TIM_CAPTURE_UNIT_1,\nhal_tim_ic_capture_config_t {\nactive_input = HAL_TIM_IC_DIRECT,\nprescaler = HAL_TIM_IC_DIV1})
+Driver --&gt; App : HAL_OK
+
+App -&gt; Driver : &lt;b&gt;&lt;font color=purple&gt;HAL_TIM_IC_SetConfigChannel&lt;/b&gt;(channel = HAL_TIM_CHANNEL_2,\nhal_tim_ic_channel_config_t {\nsource = HAL_TIMx_TI2_GPIO,\npolarity = HAL_TIM_IC_POLARITY_RISING,\nfilter = HAL_TIM_FDIV1})
+Driver --&gt; App : HAL_OK
+
+App -&gt; Driver : &lt;b&gt;&lt;font color=purple&gt;HAL_TIM_IC_SetConfigCaptureUnit&lt;/b&gt;(capture_unit = HAL_TIM_CAPTURE_UNIT_2,\nhal_tim_ic_capture_config_t {\nactive_input = HAL_TIM_IC_DIRECT,\nprescaler = HAL_TIM_IC_DIV1})
+Driver --&gt; App : HAL_OK
+end
+
+group Start encoder interface in IT mode
+App -&gt; Driver : &lt;b&gt;&lt;font color=green&gt;HAL_TIM_IC_StartChannel_IT&lt;/b&gt;(HAL_TIM_CHANNEL_1)
+Driver --&gt; App : HAL_OK
+
+App -&gt; Driver : &lt;b&gt;&lt;font color=green&gt;HAL_TIM_IC_StartChannel_IT&lt;/b&gt;(HAL_TIM_CHANNEL_2)
+Driver --&gt; App : HAL_OK
+
+ Driver-&gt;Driver : Enable the channel\nEnable capture compare interrupt.
+Driver --&gt; App : HAL_OK
+IT &lt;[#red]-] : &lt;font color=red&gt;&lt;b&gt;TIMx IRQ
+IT -&gt; Driver : HAL_TIM_IRQHandler()
+Driver -&gt; Driver : Clear flag
+App -&gt; Driver : &lt;b&gt;&lt;font color=green&gt;HAL_TIM_Start&lt;/b&gt;()
+Driver-&gt;Driver : Enable TIMx counter
+Driver --&gt; App : HAL_OK
+Driver -&gt; App: HAL_TIM_InputCaptureCallback()
+
+end
+@enduml" src="../../../../../_images/plantuml-0d2ee5c8408806377a353be498cfbce44a290c2e.png"/>
+            </p>
+           </div>
+          </div>
+         </section>
+         <section id="id6">
+          <h3 id="id6">
+           Code snippet
+           <a class="headerlink" href="#id6" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                Example of code in HAL 1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                Example of code in HAL 2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* Declaration of tim handle */</span>
+<span class="n">TIM_HandleTypeDef</span><span class="w"> </span><span class="n">htim3</span><span class="p">;</span>
+
+<span class="cm">/* Ensure that all required peripherals</span>
+<span class="cm">(TIM(timer, channel), GPIO, NVIC, etc.) are configured properly</span>
+<span class="cm">before starting encoder mode.*/</span>
+<span class="p">.............</span>
+
+<span class="cm">/* Start the encoder mode in interrupt */</span>
+<span class="n">HAL_TIM_Encoder_Start_IT</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim3</span><span class="p">,</span><span class="w"> </span><span class="n">TIM_CHANNEL_ALL</span><span class="p">);</span>
+
+<span class="cm">/* User must call the Interrupt Handler</span>
+<span class="cm">  functions in TIM3 global interrupt */</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">TIM3_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="cm">/* Code to execute at each interrupt */</span>
+<span class="w">    </span><span class="n">HAL_TIM_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim3</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/* Call the callback function */</span>
+
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">HAL_TIM_IC_CaptureCallback</span><span class="p">(</span><span class="n">TIM_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">htim</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">      </span><span class="cm">/* Get the Input Capture value */</span>
+<span class="w">      </span><span class="n">uwIC2Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_TIM_ReadCapturedValue</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim3</span><span class="p">,</span><span class="w"> </span><span class="n">TIM_CHANNEL_2</span><span class="p">);</span>
+<span class="p">}</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="w"> </span><span class="cm">/* Declaration of the tim handle */</span>
+<span class="w"> </span><span class="n">hal_tim_handle_t</span><span class="w"> </span><span class="n">htim3</span><span class="p">;</span>
+
+<span class="w"> </span><span class="cm">/* Ensure that all required peripherals</span>
+<span class="cm"> (TIM(timer, channel), GPIO, NVIC, etc.) are configured properly</span>
+<span class="cm"> before starting encoder mode.*/</span>
+<span class="w">      </span><span class="p">.............</span>
+
+<span class="cm">/* Start the encoder mode in interrupt */</span>
+<span class="w"> </span><span class="n">HAL_TIM_IC_StartChannel_IT</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim3</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_TIM_CHANNEL_1</span><span class="p">);</span>
+<span class="w"> </span><span class="n">HAL_TIM_IC_StartChannel_IT</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim3</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_TIM_CHANNEL_2</span><span class="p">);</span>
+<span class="w"> </span><span class="n">HAL_TIM_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim3</span><span class="p">);</span>
+
+<span class="w"> </span><span class="cm">/* User must call the Interrupt Handler</span>
+<span class="cm">  functions in TIM2 global interrupt */</span>
+
+<span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">TIM3_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="cm">/* Code to execute at each interrupt */</span>
+<span class="w">     </span><span class="n">HAL_TIM_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim3</span><span class="p">);</span>
+<span class="w"> </span><span class="p">}</span>
+
+<span class="w"> </span><span class="cm">/* Call the callback function */</span>
+
+<span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">HAL_TIM_InputCaptureCallback</span><span class="p">(</span><span class="n">hal_tim_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">htim</span><span class="p">,</span>
+<span class="w">                          </span><span class="n">hal_tim_channel_t</span><span class="w"> </span><span class="n">channel</span><span class="p">);</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="cm">/* Get the Input Capture value */</span>
+<span class="w">     </span><span class="n">uwIC2Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_TIM_IC_ReadChannelCapturedValue</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim3</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_TIM_CHANNEL_2</span><span class="p">)</span>
+<span class="w"> </span><span class="p">}</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <hr class="docutils"/>
+         </section>
+        </section>
+        <section id="external-trigger-synchro">
+         <span id="hal-tim-external-trigger">
+         </span>
+         <h2 id="external-trigger-synchro">
+          External Trigger Synchro
+          <a class="headerlink" href="#external-trigger-synchro" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          This example shows how to synchronize TIM peripherals in cascade mode with an external trigger.
+In this example three timers are used:
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            TIM1 is slave for an external Trigger and master for TIM2.
+           </p>
+          </li>
+          <li>
+           <p>
+            TIM2 is slave for TIM1.
+           </p>
+          </li>
+         </ul>
+         <table>
+          <colgroup>
+           <col style="width: 1.0%"/>
+           <col style="width: 49.5%"/>
+           <col style="width: 49.5%"/>
+          </colgroup>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               Functionality
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL 1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL 2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Initialize and configure timers
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                After initialization and basic configuration for TIMx, configure TIMx as Master or as Slave Timer using the following functions:
+               </p>
+               <ul>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_SlaveConfigSynchro
+                   </span>
+                  </code>
+                  to configure slave mode.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIMEx_MasterConfigSynchronization
+                   </span>
+                  </code>
+                  to configure master mode.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    HAL_TIM_OC_ConfigChannel
+                   </span>
+                  </code>
+                  to configure the output channel.
+                 </p>
+                </li>
+               </ul>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                Similarly, in HAL2, after initialization and basic configuration for each timer, we need to call the following function to configure each timer in the appropriate mode.
+               </p>
+              </li>
+              <li>
+               <p>
+                <a class="reference internal" href="hal_tim_exported_functions_peripheral_control.html#hal-tim-slave-synchro">
+                 <span class="std std-ref">
+                  To configure the slave mode .
+                 </span>
+                </a>
+               </p>
+              </li>
+              <li>
+               <p>
+                <a class="reference internal" href="hal_tim_exported_functions_peripheral_control.html#hal-tim-master-mode-configuration">
+                 <span class="std std-ref">
+                  To configure the master mode.
+                 </span>
+                </a>
+               </p>
+              </li>
+              <li>
+               <p>
+                <a class="reference internal" href="hal_tim_exported_functions_peripheral_control.html#hal-tim-oc-channel-configuration">
+                 <span class="std std-ref">
+                  To configure the output channel.
+                 </span>
+                </a>
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               Start timers
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_IC_Start(&amp;htim1,
+                 </span>
+                 <span class="pre">
+                  TIM_CHANNEL_2)
+                 </span>
+                </code>
+                is used to capture the external trigger.
+               </p>
+              </li>
+              <li>
+               <p>
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_OC_Start(&amp;htim1,
+                 </span>
+                 <span class="pre">
+                  TIM_CHANNEL_1)
+                 </span>
+                </code>
+                is used as Trigger Output for TIM2.
+               </p>
+              </li>
+              <li>
+               <p>
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_OC_Start(&amp;htim2,
+                 </span>
+                 <span class="pre">
+                  TIM_CHANNEL_1)
+                 </span>
+                </code>
+                is used to generate a signal.
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_IC_StartChannel(&amp;htim1,
+                 </span>
+                 <span class="pre">
+                  HAL_TIM_CHANNEL_2)
+                 </span>
+                </code>
+                is used to capture the external trigger.
+               </p>
+              </li>
+              <li>
+               <p>
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_OC_StartChannel(&amp;htim1,
+                 </span>
+                 <span class="pre">
+                  HAL_TIM_CHANNEL_1)
+                 </span>
+                </code>
+                is used as Trigger Output for TIM2.
+               </p>
+              </li>
+              <li>
+               <p>
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_OC_StartChannel(&amp;htim2,
+                 </span>
+                 <span class="pre">
+                  HAL_TIM_CHANNEL_1)
+                 </span>
+                </code>
+                is used to generate a signal.
+               </p>
+              </li>
+              <li>
+               <p>
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_Start(&amp;htim1)
+                 </span>
+                </code>
+                is used to start TIM1.
+               </p>
+              </li>
+              <li>
+               <p>
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_TIM_Start(&amp;htim2)
+                 </span>
+                </code>
+                is used to start TIM2.
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <section id="id7">
+          <h3 id="id7">
+           Sequence diagram
+           <a class="headerlink" href="#id7" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <div class="sphinx-tabs docutils container">
+           <div aria-label="Tabbed content" class="closeable" role="tablist">
+            <button aria-controls="panel-4-4-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-4-4-0" name="4-0" role="tab" tabindex="0">
+             HAL1 Sequence diagram
+            </button>
+            <button aria-controls="panel-4-4-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-4-4-1" name="4-1" role="tab" tabindex="-1">
+             HAL2 Sequence diagram
+            </button>
+           </div>
+           <div aria-labelledby="tab-4-4-0" class="sphinx-tabs-panel" id="panel-4-4-0" name="4-0" role="tabpanel" tabindex="0">
+            <p class="plantuml">
+             <img alt="@startuml
+skinparam maxMessageSize 450
+' To add a number by line
+'autonumber
+
+title &quot;ExtTriggerSynchro in Cube 2&quot;
+
+
+' Fix order of each column
+participant &quot;User Application&quot; as App
+participant &quot;HAL TIM&quot; as Driver
+
+group Initialization
+App -[hidden]&gt;Driver
+App -&gt; Driver : Configure TIM1, TIM2 time base
+Driver -&gt; App : HAL_OK
+end
+
+group Configuration of master and salve timer
+App -&gt; Driver : Configure TIM1 as slave for external trigger  and master for TIM2.
+Driver --&gt; App : HAL_OK
+App -&gt; Driver : Configure TIM2 as slave for TIM1.
+Driver --&gt; App : HAL_OK
+
+App -&gt; App : CH1, CH2 GPIO AF config
+
+end
+
+group Start TIM1 and TIM2
+
+App -&gt; Driver : &lt;b&gt;HAL_TIM_IC_Start&lt;/b&gt;(&amp;htim&lt;b&gt;&lt;font color=red&gt;1&lt;/b&gt;, TIM_CHANNEL_2)
+App -&gt; Driver : &lt;b&gt;HAL_TIM_OC_Start&lt;/b&gt;(&amp;htim&lt;b&gt;&lt;font color=red&gt;1&lt;/b&gt;, TIM_CHANNEL_1)
+Driver --&gt; App : HAL_OK
+
+App -&gt; Driver : &lt;b&gt;HAL_TIM_OC_Start&lt;/b&gt;(&amp;htim&lt;b&gt;&lt;font color=green&gt;2&lt;/b&gt;, TIM_CHANNEL_1)
+Driver --&gt; App : HAL_OK
+end
+@enduml" src="../../../../../_images/plantuml-ebea659aaf60640f5fb1ed027917710e554b4e5b.png"/>
+            </p>
+           </div>
+           <div aria-labelledby="tab-4-4-1" class="sphinx-tabs-panel" hidden="true" id="panel-4-4-1" name="4-1" role="tabpanel" tabindex="0">
+            <p class="plantuml">
+             <img alt="@startuml
+skinparam maxMessageSize 450
+' To add a number by line
+'autonumber
+
+title &quot;ExtTriggerSynchro in Cube 2&quot;
+
+
+' Fix order of each column
+participant &quot;User Application&quot; as App
+participant &quot;HAL TIM&quot; as Driver
+
+group Initialization
+App -[hidden]&gt;Driver
+App -&gt; Driver : Configure TIM1, TIM2 time base
+Driver -&gt; App : HAL_OK
+end
+
+group Configuration of master and salve timer
+App -&gt; Driver : Configure TIM1 as slave for external trigger  and master for TIM2.
+Driver --&gt; App : HAL_OK
+App -&gt; Driver : Configure TIM2 as slave for TIM1.
+Driver --&gt; App : HAL_OK
+
+App -&gt; App : CH1, CH2 GPIO AF config
+
+end
+
+group Start TIM1 and TIM2
+
+App -&gt; Driver : &lt;b&gt;HAL_TIM_IC_StartChannel&lt;/b&gt;(&amp;htim&lt;b&gt;&lt;font color=red&gt;1&lt;/b&gt;, HAL_TIM_CHANNEL_2)
+App -&gt; Driver : &lt;b&gt;HAL_TIM_OC_StartChannel&lt;/b&gt;(&amp;htim&lt;b&gt;&lt;font color=red&gt;1&lt;/b&gt;, HAL_TIM_CHANNEL_1)
+App -&gt; Driver : &lt;b&gt;HAL_TIM_Start&lt;/b&gt;(&amp;htim&lt;b&gt;&lt;font color=red&gt;1&lt;/b&gt;)
+Driver --&gt; App : HAL_OK
+
+App -&gt; Driver : &lt;b&gt;HAL_TIM_OC_StartChannel&lt;/b&gt;(&amp;htim&lt;b&gt;&lt;font color=green&gt;2&lt;/b&gt;, HAL_TIM_CHANNEL_1)
+App -&gt; Driver : &lt;b&gt;HAL_TIM_Start&lt;/b&gt;(&amp;htim&lt;b&gt;&lt;font color=green&gt;2&lt;/b&gt;)
+Driver --&gt; App : HAL_OK
+end
+@enduml" src="../../../../../_images/plantuml-22ed7cc17fcac53de15ca0fdec57cd7fedb0366d.png"/>
+            </p>
+           </div>
+          </div>
+         </section>
+         <section id="code-snippets">
+          <h3 id="code-snippets">
+           Code Snippets
+           <a class="headerlink" href="#code-snippets" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                Example of code in HAL 1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                Example of code in HAL 2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* Declaration of tim handle */</span>
+<span class="n">TIM_HandleTypeDef</span><span class="w"> </span><span class="n">htim1</span><span class="p">,</span><span class="w"> </span><span class="n">htim2</span><span class="p">;</span>
+<span class="n">TIM_SlaveConfigTypeDef</span><span class="w"> </span><span class="n">sSlaveConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<span class="n">TIM_MasterConfigTypeDef</span><span class="w"> </span><span class="n">sMasterConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<span class="n">TIM_OC_InitTypeDef</span><span class="w"> </span><span class="n">sConfigOC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+<span class="cm">/* Ensure that all required peripherals</span>
+<span class="cm">(TIM(basic configurations),</span>
+<span class="cm"> GPIO etc.) are configured properly</span>
+<span class="cm"> before starting the timers using STM32CubeMX2 */</span>
+<span class="p">.............</span>
+
+<span class="w"> </span><span class="cm">/* Configure the slave mode for TIM1*/</span>
+<span class="w">  </span><span class="n">sSlaveConfig</span><span class="p">.</span><span class="n">SlaveMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TIM_SLAVEMODE_GATED</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sSlaveConfig</span><span class="p">.</span><span class="n">InputTrigger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TIM_TS_TI2FP2</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sSlaveConfig</span><span class="p">.</span><span class="n">TriggerPolarity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TIM_TRIGGERPOLARITY_RISING</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sSlaveConfig</span><span class="p">.</span><span class="n">TriggerFilter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">HAL_TIM_SlaveConfigSynchro</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sSlaveConfig</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* Configure the master mode for TIM1*/</span>
+<span class="w">  </span><span class="n">sMasterConfig</span><span class="p">.</span><span class="n">MasterOutputTrigger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TIM_TRGO_ENABLE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sMasterConfig</span><span class="p">.</span><span class="n">MasterOutputTrigger2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TIM_TRGO2_ENABLE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sMasterConfig</span><span class="p">.</span><span class="n">MasterSlaveMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TIM_MASTERSLAVEMODE_ENABLE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">HAL_TIMEx_MasterConfigSynchronization</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sMasterConfig</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* Configure the output channel generated by TIM1 to trigger TIM2*/</span>
+<span class="w">  </span><span class="n">sConfigOC</span><span class="p">.</span><span class="n">OCMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TIM_OCMODE_TOGGLE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sConfigOC</span><span class="p">.</span><span class="n">Pulse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sConfigOC</span><span class="p">.</span><span class="n">OCPolarity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TIM_OCPOLARITY_HIGH</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sConfigOC</span><span class="p">.</span><span class="n">OCNPolarity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TIM_OCNPOLARITY_HIGH</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sConfigOC</span><span class="p">.</span><span class="n">OCFastMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TIM_OCFAST_DISABLE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sConfigOC</span><span class="p">.</span><span class="n">OCIdleState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TIM_OCIDLESTATE_RESET</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sConfigOC</span><span class="p">.</span><span class="n">OCNIdleState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TIM_OCNIDLESTATE_RESET</span><span class="p">;</span>
+<span class="w">  </span><span class="n">HAL_TIM_OC_ConfigChannel</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sConfigOC</span><span class="p">,</span><span class="w"> </span><span class="n">TIM_CHANNEL_1</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* Configure the slave mode  for TIM2*/</span>
+<span class="w">  </span><span class="n">SlaveConfig</span><span class="p">.</span><span class="n">SlaveMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TIM_SLAVEMODE_GATED</span><span class="p">;</span>
+<span class="w">  </span><span class="n">SlaveConfig</span><span class="p">.</span><span class="n">InputTrigger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TIM_TS_ITR2</span><span class="p">;</span>
+<span class="w">  </span><span class="n">HAL_TIM_SlaveConfigSynchro</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim2</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sSlaveConfig</span><span class="p">)</span>
+
+<span class="w">  </span><span class="cm">/* Configure the master mode for TIM2*/</span>
+<span class="w">  </span><span class="n">sMasterConfig</span><span class="p">.</span><span class="n">MasterOutputTrigger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TIM_TRGO_RESET</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sMasterConfig</span><span class="p">.</span><span class="n">MasterSlaveMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TIM_MASTERSLAVEMODE_DISABLE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">HAL_TIMEx_MasterConfigSynchronization</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim2</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sMasterConfig</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* Configure the output channel generated by TIM2*/</span>
+<span class="w">  </span><span class="n">sConfigOC</span><span class="p">.</span><span class="n">OCMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TIM_OCMODE_TOGGLE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sConfigOC</span><span class="p">.</span><span class="n">Pulse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sConfigOC</span><span class="p">.</span><span class="n">OCPolarity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TIM_OCPOLARITY_HIGH</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sConfigOC</span><span class="p">.</span><span class="n">OCFastMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TIM_OCFAST_DISABLE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">HAL_TIM_OC_ConfigChannel</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim2</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sConfigOC</span><span class="p">,</span><span class="w"> </span><span class="n">TIM_CHANNEL_1</span><span class="p">);</span>
+
+
+<span class="w">  </span><span class="cm">/* Start the timers */</span>
+<span class="w">  </span><span class="n">HAL_TIM_IC_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim1</span><span class="p">,</span><span class="w"> </span><span class="n">TIM_CHANNEL_2</span><span class="p">);</span>
+<span class="w">  </span><span class="n">HAL_TIM_OC_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim1</span><span class="p">,</span><span class="w"> </span><span class="n">TIM_CHANNEL_1</span><span class="p">);</span>
+<span class="w">  </span><span class="n">HAL_TIM_OC_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim2</span><span class="p">,</span><span class="w"> </span><span class="n">TIM_CHANNEL_1</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="w"> </span><span class="cm">/* Declaration of the tim handle */</span>
+<span class="w"> </span><span class="n">hal_tim_handle_t</span><span class="w"> </span><span class="n">htim</span><span class="p">,</span><span class="w"> </span><span class="n">htim2</span><span class="p">;</span>
+<span class="w"> </span><span class="n">hal_tim_config_t</span><span class="w"> </span><span class="n">tim_config</span><span class="p">;</span>
+<span class="w"> </span><span class="n">hal_tim_oc_compare_unit_config_t</span><span class="w"> </span><span class="n">tim_oc_compare_unit_config</span><span class="p">;</span>
+<span class="w"> </span><span class="n">hal_tim_oc_channel_config_t</span><span class="w"> </span><span class="n">tim_oc_channel_config</span><span class="p">;</span>
+<span class="w"> </span><span class="n">hal_tim_slave_config_t</span><span class="w"> </span><span class="n">slave_config</span><span class="p">;</span>
+<span class="w"> </span><span class="n">hal_tim_ic_capture_unit_config_t</span><span class="w"> </span><span class="n">ic_compare_unit_config</span><span class="p">;</span>
+<span class="w"> </span><span class="n">hal_tim_ic_channel_config_t</span><span class="w"> </span><span class="n">ic_config</span><span class="p">;</span>
+
+
+<span class="w">  </span><span class="cm">/* Ensure that all required peripherals</span>
+<span class="cm">  (TIM(basic configurations),</span>
+<span class="cm">   GPIO etc.) are configured properly</span>
+<span class="cm">   before starting the timers using STM32CubeMX2 */</span>
+<span class="w">  </span><span class="p">.............</span>
+<span class="w"> </span><span class="p">.............</span>
+
+<span class="cm">/* Configure the CH2 used to capture the external trigger*/</span>
+<span class="w"> </span><span class="n">ic_config</span><span class="p">.</span><span class="n">source</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_TIM_INPUT_TIM1_TI2_GPIO</span><span class="p">;</span>
+<span class="w"> </span><span class="n">ic_config</span><span class="p">.</span><span class="n">polarity</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_TIM_IC_RISING</span><span class="p">;</span>
+<span class="w"> </span><span class="n">ic_config</span><span class="p">.</span><span class="n">filter</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_TIM_FDIV1</span><span class="p">;</span>
+<span class="w"> </span><span class="n">HAL_TIM_IC_SetConfigChannel</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim1</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_TIM_CHANNEL_2</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">ic_config</span><span class="p">);</span>
+
+<span class="w"> </span><span class="n">ic_compare_unit_config</span><span class="p">.</span><span class="n">source</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_TIM_IC_DIRECT</span><span class="p">;</span>
+<span class="w"> </span><span class="n">ic_compare_unit_config</span><span class="p">.</span><span class="n">prescaler</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_TIM_IC_DIV1</span><span class="p">;</span>
+<span class="w"> </span><span class="n">HAL_TIM_IC_SetConfigCaptureUnit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim1</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_TIM_IC_CAPTURE_UNIT_2</span><span class="p">,</span>
+<span class="w">                                 </span><span class="o">&amp;</span><span class="n">ic_compare_unit_config</span><span class="p">);</span>
+
+<span class="w"> </span><span class="cm">/* Configure the slave mode for TIM1*/</span>
+<span class="w"> </span><span class="n">slave_config</span><span class="p">.</span><span class="n">mode</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_TIM_SLAVE_GATED</span><span class="p">;</span>
+<span class="w"> </span><span class="n">slave_config</span><span class="p">.</span><span class="n">trigger</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_TIM_TRIG_TI2FP2</span><span class="p">;</span>
+<span class="w"> </span><span class="n">HAL_TIM_SetSynchroSlave</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">slave_config</span><span class="p">);</span>
+
+<span class="w"> </span><span class="cm">/* Configure Master mode */</span>
+<span class="w"> </span><span class="n">HAL_TIM_SetTriggerOutput</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim1</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_TIM_TRGO_ENABLE</span><span class="p">);</span>
+<span class="w"> </span><span class="n">HAL_TIM_EnableMasterSlaveMode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim1</span><span class="p">);</span>
+
+<span class="w"> </span><span class="cm">/* Configure the output channel generated by TIM1 to trigger TIM2*/</span>
+<span class="w"> </span><span class="n">tim_oc_channel_config</span><span class="p">.</span><span class="n">polarity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_TIM_OC_LOW</span><span class="p">;</span>
+<span class="w"> </span><span class="n">tim_oc_channel_config</span><span class="p">.</span><span class="n">idle_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_TIM_OC_IDLE_STATE_RESET</span><span class="p">;</span>
+<span class="w"> </span><span class="n">HAL_TIM_OC_SetConfigChannel</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim1</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_TIM_CHANNEL_1</span><span class="p">,</span>
+<span class="w">                             </span><span class="o">&amp;</span><span class="n">tim_oc_channel_config</span><span class="p">);</span>
+
+<span class="w"> </span><span class="n">tim_oc_compare_unit_config</span><span class="p">.</span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_TIM_OC_PWM1</span><span class="p">;</span>
+<span class="w"> </span><span class="n">tim_oc_compare_unit_config</span><span class="p">.</span><span class="n">pulse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PULSE_VALUE</span><span class="p">;</span>
+<span class="w"> </span><span class="n">HAL_TIM_OC_SetConfigCompareUnit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim1</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_TIM_OC_COMPARE_UNIT_1</span><span class="p">,</span>
+<span class="w">                                 </span><span class="o">&amp;</span><span class="n">tim_oc_compare_unit_config</span><span class="p">);</span>
+
+<span class="w"> </span><span class="cm">/* Configure the slave mode for TIM2*/</span>
+<span class="w"> </span><span class="n">slave_config</span><span class="p">.</span><span class="n">mode</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_TIM_SLAVE_GATED</span><span class="p">;</span>
+<span class="w"> </span><span class="n">slave_config</span><span class="p">.</span><span class="n">trigger</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_TIM_TRIG_ITR2</span><span class="p">;</span>
+<span class="w"> </span><span class="n">HAL_TIM_SetSynchroSlave</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim2</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">slave_config</span><span class="p">);</span>
+
+<span class="w"> </span><span class="cm">/* Configure the output channel generated by TIM2*/</span>
+<span class="w"> </span><span class="n">tim_oc_channel_config</span><span class="p">.</span><span class="n">polarity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_TIM_OC_LOW</span><span class="p">;</span>
+<span class="w"> </span><span class="n">tim_oc_channel_config</span><span class="p">.</span><span class="n">idle_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_TIM_OC_IDLE_STATE_RESET</span><span class="p">;</span>
+<span class="w"> </span><span class="n">HAL_TIM_OC_SetConfigChannel</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim2</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_TIM_CHANNEL_1</span><span class="p">,</span>
+<span class="w">                             </span><span class="o">&amp;</span><span class="n">tim_oc_channel_config</span><span class="p">);</span>
+
+<span class="w"> </span><span class="n">tim_oc_compare_unit_config</span><span class="p">.</span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_TIM_OC_PWM1</span><span class="p">;</span>
+<span class="w"> </span><span class="n">tim_oc_compare_unit_config</span><span class="p">.</span><span class="n">pulse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PULSE_VALUE</span><span class="p">;</span>
+<span class="w"> </span><span class="n">HAL_TIM_OC_SetConfigCompareUnit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim2</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_TIM_OC_COMPARE_UNIT_1</span><span class="p">,</span>
+<span class="w">                                 </span><span class="o">&amp;</span><span class="n">tim_oc_compare_unit_config</span><span class="p">);</span>
+
+<span class="w"> </span><span class="cm">/* Start the timers */</span>
+<span class="w"> </span><span class="n">HAL_TIM_IC_StartChannel</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim1</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_TIM_CHANNEL_2</span><span class="p">);</span>
+<span class="w"> </span><span class="n">HAL_TIM_OC_StartChannel</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim1</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_TIM_CHANNEL_1</span><span class="p">);</span>
+<span class="w"> </span><span class="n">HAL_TIM_OC_StartChannel</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim2</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_TIM_CHANNEL_1</span><span class="p">);</span>
+<span class="w"> </span><span class="n">HAL_TIM_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim1</span><span class="p">);</span>
+<span class="w"> </span><span class="n">HAL_TIM_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">htim2</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

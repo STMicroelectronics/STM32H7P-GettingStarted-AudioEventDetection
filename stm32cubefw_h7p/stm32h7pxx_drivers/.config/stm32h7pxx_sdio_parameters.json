@@ -1,0 +1,593 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "version": "0.0.1",
+  "componentid": "::Device:STM32CubeMX2 Config:SDIO",
+  "grammarVersion": "3.1",
+  "type": "object",
+  "functions": [
+    {
+      "path": ".config/template/helpers/sdio_helpers.js",
+      "accessor": "common"
+    }
+  ],
+  "properties": {
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "object",
+          "properties": {
+            "labels": {
+              "type": "array",
+              "title": "Label",
+              "$comment": "label associated to the instance of the peripheral, can be overridden at sample level. In this case it becomes read-only.",
+              "items": {
+                "type": "string",
+                "pattern": "^([a-zA-Z_][a-zA-Z0-9_]{1,31})?$",
+                "minLength": 0,
+                "maxLength": 32,
+                "default": ""
+              }
+            },
+            "layer": {
+              "type": "string",
+              "title": "Software Layer",
+              "oneOf": [
+                {
+                  "const": "HAL"
+                }
+              ],
+              "default": "HAL",
+              "variables": [
+                {
+                  "on": "update-value",
+                  "name": "HAL_SDIO_PROJECT_USE_HAL",
+                  "condition": "$value === 'HAL'",
+                  "semaphore": true
+                }
+              ]
+            },
+            "init_type": {
+              "type": "string",
+              "title": "resource initialization code generation",
+              "description": "generate or not the SDMMC init code, call it or not at boot",
+              "$comment": "generate the init code of your SDMMC or not (enabled/disabled), call it automatically at startup or not (called/enabled)",
+              "oneOf": [
+                {
+                  "const": "called"
+                },
+                {
+                  "const": "enabled"
+                },
+                {
+                  "const": "disabled"
+                }
+              ],
+              "default": "called"
+            },
+            "function_type": {
+              "type": "string",
+              "title": "Function used by the component",
+              "description": "This component is a standard component which can be used HW instance available on another component. The notion of function is used to distinguish the usage of each HW instance",
+              "actions": [
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ],
+              "default": "SDIO"
+            }
+          }
+        },
+        "Basic": {
+          "type": "object",
+          "title": "Main peripheral configuration",
+          "properties": {
+            "clock_config": {
+              "type": "object",
+              "description": "",
+              "title": "Clock",
+              "properties": {
+                "clk_edge": {
+                  "title": "Edge",
+                  "type": "boolean",
+                  "description": "",
+                  "default": false,
+                  "oneOf": [
+                    {
+                      "title": "Falling",
+                      "const": false
+                    },
+                    {
+                      "title": "Rising",
+                      "const": true
+                    }
+                  ]
+                },
+                "clk_power_save": {
+                  "title": "Power Save",
+                  "type": "boolean",
+                  "description": "If the box is checked, the SDIO Clock Power Save will be enabled",
+                  "default": false
+                },
+                "input_clock_source": {
+                  "type": "number",
+                  "title": "Input Clock Source in Hz",
+                  "actions": [
+                    {
+                      "type": "disable",
+                      "condition": "true"
+                    },
+                    {
+                      "type": "set",
+                      "condition": "true",
+                      "computed": {
+                        "const": "$get('clock.frequency', $resource.id)"
+                      }
+                    }
+                  ],
+                  "default": 0
+                },
+                "Clock_frequency": {
+                  "title": "Clock Frequency in Hz",
+                  "type": "number",
+                  "default": 400000
+                },
+                "expected_output_clock_frequency": {
+                  "title": "Output Clock Frequency in Hz",
+                  "description": "This parameter defines the sdmmc clock divide factor between the input clock source (sdmmc_ker_ck) and the input clock frequency (Clock_frequency)",
+                  "type": "number",
+                  "default": 0,
+                  "actions": [
+                    {
+                      "type": "disable",
+                      "condition": "true"
+                    },
+                    {
+                      "type": "set",
+                      "condition": "true",
+                      "computed": {
+                        "const": "$common.helper_sdio_compute_frequency($Basic.clock_config.input_clock_source, $Basic.clock_config.Clock_frequency)"
+                      }
+                    }
+                  ]
+                },
+                "Ratio": {
+                  "title": "Error between Target and Achievable Frequency",
+                  "type": "string",
+                  "default": "",
+                  "actions": [
+                    {
+                      "type": "disable",
+                      "condition": "true"
+                    },
+                    {
+                      "type": "set",
+                      "condition": "true",
+                      "computed": {
+                        "const": "($Basic.clock_config.Clock_frequency === $Basic.clock_config.expected_output_clock_frequency) ? '0 %' : (((($Basic.clock_config.Clock_frequency - $Basic.clock_config.expected_output_clock_frequency) / $Basic.clock_config.Clock_frequency) * 100).toFixed(2) + ' %')"
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "bus_wide": {
+              "type": "integer",
+              "title": "Bus Width",
+              "description": "",
+              "default": 0,
+              "oneOf": [
+                {
+                  "title": "1-bit",
+                  "const": 0
+                },
+                {
+                  "title": "4-bit",
+                  "const": 1
+                },
+                {
+                  "title": "8-bit",
+                  "const": 2
+                }
+              ]
+            },
+            "hw_flow_ctrl": {
+              "title": "Hardware Flow Control",
+              "type": "boolean",
+              "description": "If the box is checked, the SDIO Hardware Flow Control will be enabled",
+              "default": false
+            },
+            "transceiver": {
+              "title": "Transceiver",
+              "type": "boolean",
+              "description": "If the box is checked, the SDIO Transceiver will be enabled",
+              "default": false
+            },
+            "sdio_identify_card": {
+              "title": "Use Default SDIO Identification Card Function",
+              "type": "boolean",
+              "description": "If the box is checked, the SDIO module will be identified using the default identification card function defined in the HAL SDIO source file. Otherwise, a new API will be generated to allow the user to set their own callback function for establishing the enumeration of the SDIO module.",
+              "default": true
+            },
+            "customCallbackInfo": {
+              "title": "Note",
+              "type": "string",
+              "default": "Function mx_sdio_set_config(hal_sdio_identify_card_t sdio_identify_card) will be created and needs to be called after the mx_sdmmcx_hal_sdio_init function.",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$Basic.sdio_identify_card === false"
+                },
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ]
+            },
+            "default_timeout": {
+              "title": "Default Timeout Values",
+              "description": "When enabling the Default Timeout Value,  the system will use the default timeout values according to the SDIO card specification. This ensures compatibility and optimal performance with standard SDIO card operations.",
+              "type": "boolean",
+              "default": true
+            },
+            "timeout_config": {
+              "title": "Timeout",
+              "type": "object",
+              "actions": [
+                {
+                  "type": "disable",
+                  "condition": "$Basic.default_timeout"
+                }
+              ],
+              "properties": {
+                "data_timeout_cycle": {
+                  "title": "Data Timeout Cycle",
+                  "type": "integer",
+                  "minimum": 0,
+                  "default": 4294967295
+                }
+              }
+            }
+          }
+        },
+        "additional_view": {
+          "type": "object",
+          "title": "Additional features configuration",
+          "properties": {
+            "Use_Delay_Block": {
+              "title": "Delay Block",
+              "type": "boolean",
+              "default": false
+            },
+            "Delay_Block_Config": {
+              "title": "Configuration",
+              "type": "object",
+              "actions": [
+                {
+                  "type": "enable",
+                  "condition": "$additional_view.Use_Delay_Block"
+                }
+              ],
+              "properties": {
+                "detection_clock_phase": {
+                  "title": "Auto calculate Clock Phase",
+                  "type": "boolean",
+                  "default": true,
+                  "description": "When enabling the auto calculate clock phase, we will use a HAL function HAL_SDIO_CalculateDlybMaxClockPhase to calculate automatically the clock phase.",
+                  "actions": [
+                    {
+                      "type": "exclude",
+                      "condition": "$resource.peripheralVersionNum >= 3.0"
+                    }
+                  ]
+                },
+                "Clock_phase": {
+                  "title": "Clock Phase Value",
+                  "type": "integer",
+                  "default": 0,
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "($additional_view.Delay_Block_Config.detection_clock_phase === undefined) || ($additional_view.Delay_Block_Config.detection_clock_phase === false)"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "System": {
+          "type": "object",
+          "description": "SDIO Global Configuration Structure definition.",
+          "properties": {
+            "GPIO_Configuration": {
+              "type": "object",
+              "description": "SDIO GPIO Configuration.",
+              "properties": {
+                "gpio_std": {
+                  "type": "object",
+                  "title": "GPIO Basic configuration",
+                  "objectType": "need.pinout.signals",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_GPIO_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "CK",
+                      "constraints": {
+                        "pull": {
+                          "allow": [
+                            "UP",
+                            "NO"
+                          ]
+                        },
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    },
+                    {
+                      "selector": "CMD",
+                      "constraints": {
+                        "pull": {
+                          "allow": [
+                            "UP",
+                            "NO"
+                          ]
+                        },
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    },
+                    {
+                      "selector": "D0",
+                      "constraints": {
+                        "pull": {
+                          "allow": [
+                            "UP",
+                            "NO"
+                          ]
+                        },
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_spf1": {
+                  "type": "object",
+                  "title": "GPIO D1 to D3 configuration",
+                  "objectType": "need.pinout.signals",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_GPIO_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "actions": [
+                    {
+                      "type": "exclude",
+                      "condition": "$Basic.bus_wide == 0"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "D1",
+                      "constraints": {
+                        "pull": {
+                          "allow": [
+                            "UP",
+                            "NO"
+                          ]
+                        },
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    },
+                    {
+                      "selector": "D2",
+                      "constraints": {
+                        "pull": {
+                          "allow": [
+                            "UP",
+                            "NO"
+                          ]
+                        },
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    },
+                    {
+                      "selector": "D3",
+                      "constraints": {
+                        "pull": {
+                          "allow": [
+                            "UP",
+                            "NO"
+                          ]
+                        },
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_spf2": {
+                  "type": "object",
+                  "title": "GPIO D4 to D7 configuration",
+                  "objectType": "need.pinout.signals",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_GPIO_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Basic.bus_wide == 2"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "D4",
+                      "constraints": {
+                        "pull": {
+                          "allow": [
+                            "UP",
+                            "NO"
+                          ]
+                        },
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    },
+                    {
+                      "selector": "D5",
+                      "constraints": {
+                        "pull": {
+                          "allow": [
+                            "UP",
+                            "NO"
+                          ]
+                        },
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    },
+                    {
+                      "selector": "D6",
+                      "constraints": {
+                        "pull": {
+                          "allow": [
+                            "UP",
+                            "NO"
+                          ]
+                        },
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    },
+                    {
+                      "selector": "D7",
+                      "constraints": {
+                        "pull": {
+                          "allow": [
+                            "UP",
+                            "NO"
+                          ]
+                        },
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "nvic_settings": {
+              "type": "object",
+              "title": "NVIC Settings",
+              "properties": {
+                "EnableGlobalInterruption": {
+                  "title": "Global interruption",
+                  "type": "boolean",
+                  "description": "Enable interruption mode for the peripheral.",
+                  "default": false
+                },
+                "irq_handler_generation": {
+                  "type": "boolean",
+                  "title": "IRQ Handler generation",
+                  "default": true,
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$System.nvic_settings.EnableGlobalInterruption && $info.layer === 'HAL'"
+                    }
+                  ]
+                },
+                "nvicGlobalInterrupt": {
+                  "title": "IRQ Handler generation",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$System.nvic_settings.EnableGlobalInterruption"
+                    }
+                  ],
+                  "type": "object",
+                  "objectType": "need.interrupt.lines",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_CORTEX_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "*"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

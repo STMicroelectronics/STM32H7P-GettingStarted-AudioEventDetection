@@ -1,0 +1,4501 @@
+<!DOCTYPE html>
+<html data-content_root="../../../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, HAL1, CORTEX, STM32U5, STM32H5, STM32G0, STM32F4, STM32G4, STM32L4, STM32C0, STM32Armv8-M" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     HAL CORTEX APIs listing for migration — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <script src="../../../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <link href="../../../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../../../search.html" rel="search" title="Search"/>
+    <link href="../cordic/hal_cordic_toc.html" rel="next" title="CORDIC"/>
+    <link href="hal_cortex_exported_mpu_functions_config.html" rel="prev" title="HAL CORTEX MPU functions migration"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/drivers_documentation/hal_drivers/cortex/hal_cortex_apis_listing" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_script/migration_script_toc.html">
+            HAL1 detection
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../breaking_concepts/breaking_concepts_toc.html">
+              Breaking changes in concepts
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../hal_drivers_toc.html">
+              HAL drivers migration
+             </a>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../adc/hal_adc_toc.html">
+                ADC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../comp/hal_comp_toc.html">
+                COMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="hal_cortex_toc.html">
+                CORTEX
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cordic/hal_cordic_toc.html">
+                CORDIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../crc/hal_crc_toc.html">
+                CRC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cryp/hal_cryp_toc.html">
+                CRYP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dac/hal_dac_toc.html">
+                DAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dcache/hal_dcache_toc.html">
+                DCACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dma/hal_dma_toc.html">
+                DMA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../exti/hal_exti_toc.html">
+                EXTI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../fmac/hal_fmac_toc.html">
+                FMAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../generic/hal_generic_toc.html">
+                GENERIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxmmu/hal_gfxmmu_toc.html">
+                GFXMMU
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxtim/hal_gfxtim_toc.html">
+                GFXTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gpio/hal_gpio_toc.html">
+                GPIO
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2c/hal_i2c_toc.html">
+                I2C
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2s/hal_i2s_toc.html">
+                I2S
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../icache/hal_icache_toc.html">
+                ICACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../irda/hal_irda_toc.html">
+                IRDA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../iwdg/hal_iwdg_toc.html">
+                IWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../lptim/hal_lptim_toc.html">
+                LPTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../nor/hal_nor_toc.html">
+                NOR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../opamp/hal_opamp_toc.html">
+                OPAMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ospi/hal_ospi_toc.html">
+                OSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pka/hal_pka_toc.html">
+                PKA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pwr/hal_pwr_toc.html">
+                PWR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../qspi/hal_qspi_toc.html">
+                QSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ramcfg/hal_ramcfg_toc.html">
+                RAMCFG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rcc/hal_rcc_toc.html">
+                RCC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rng/hal_rng_toc.html">
+                RNG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rtc/hal_rtc_toc.html">
+                RTC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sdram/hal_sdram_toc.html">
+                SDRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smartcard/hal_smartcard_toc.html">
+                SMARTCARD
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smbus/hal_smbus_toc.html">
+                SMBUS
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../spi/hal_spi_toc.html">
+                SPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sram/hal_sram_toc.html">
+                SRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../tim/hal_tim_toc.html">
+                TIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../uart/hal_uart_toc.html">
+                UART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../usart/hal_usart_toc.html">
+                USART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../wwdg/hal_wwdg_toc.html">
+                WWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../xspi/hal_xspi_toc.html">
+                XSPI
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../ll_drivers/ll_drivers_toc.html">
+              LL drivers migration
+             </a>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-drivers-documentation-hal-drivers-cortex-hal-cortex-apis-listing--page-root">
+            HAL CORTEX APIs listing for migration
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-cortex-constants">
+               HAL CORTEX constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-cortex-macros">
+               HAL CORTEX macros
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-cortex-structures">
+               HAL CORTEX structures
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-cortex-functions">
+               HAL CORTEX functions
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-cortex-legacy-aliases-hal1-to-hal1">
+               HAL CORTEX legacy aliases (HAL1 to HAL1)
+              </a>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="hal-cortex-apis-listing-for-migration">
+        <span id="hal-cortex-apis-listing">
+        </span>
+        <h1 id="docs-markup-drivers-documentation-hal-drivers-cortex-hal-cortex-apis-listing--page-root">
+         HAL CORTEX APIs listing for migration
+         <a class="headerlink" href="#docs-markup-drivers-documentation-hal-drivers-cortex-hal-cortex-apis-listing--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <p>
+         This section provides a full listing of the HAL1 APIs for migration.
+It includes the various constants, enumerations, structures, functions, and macros.
+        </p>
+        <section id="hal-cortex-constants">
+         <span id="hal-cortex-constants-listing">
+         </span>
+         <h2 id="hal-cortex-constants">
+          HAL CORTEX constants
+          <a class="headerlink" href="#hal-cortex-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              ARM architecture
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              HAL1
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              HAL2
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              Refer to
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M
+             </p>
+            </td>
+            <td>
+             <p>
+              NVIC_PRIORITYGROUP_0
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_NVIC_PRIORITY_GROUP_0
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-nvic-prio-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M, Armv7-M
+             </p>
+            </td>
+            <td>
+             <p>
+              NVIC_PRIORITYGROUP_1
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_NVIC_PRIORITY_GROUP_1
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-nvic-prio-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M
+             </p>
+            </td>
+            <td>
+             <p>
+              NVIC_PRIORITYGROUP_2
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_NVIC_PRIORITY_GROUP_2
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-nvic-prio-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M, Armv7-M
+             </p>
+            </td>
+            <td>
+             <p>
+              NVIC_PRIORITYGROUP_3
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_NVIC_PRIORITY_GROUP_3
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-nvic-prio-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M
+             </p>
+            </td>
+            <td>
+             <p>
+              NVIC_PRIORITYGROUP_4
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_NVIC_PRIORITY_GROUP_4
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-nvic-prio-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              SYSTICK_CLKSOURCE_HCLK_DIV8
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_SYSTICK_CLKSOURCE_HCLK_DIV8
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-systick-clk-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              SYSTICK_CLKSOURCE_LSI
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_SYSTICK_CLKSOURCE_LSI
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-systick-clk-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              SYSTICK_CLKSOURCE_LSE
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_SYSTICK_CLKSOURCE_LSE
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-systick-clk-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              SYSTICK_CLKSOURCE_HCLK
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_SYSTICK_CLKSOURCE_HCLK
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-systick-clk-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_HFNMI_PRIVDEF_NONE
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_ACCESS_FAULT_ALL
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-acc-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_HARDFAULT_NMI
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_ACCESS_FAULT_ONLY_PRIV
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-acc-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_PRIVILEGED_DEFAULT
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_HARDFAULT_NMI_DISABLED
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-acc-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_HFNMI_PRIVDEF
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_HFNMI_PRIVDEF
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-acc-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_ENABLE
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_ENABLED
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_DISABLE
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_DISABLED
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_INSTRUCTION_ACCESS_ENABLE
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_EXECUTION_ATTR_ENABLE
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-instruction-acc-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_INSTRUCTION_ACCESS_DISABLE
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_EXECUTION_ATTR_DISABLE
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-instruction-acc-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_ACCESS_NOT_SHAREABLE
+             </p>
+            </td>
+            <td>
+             <p>
+              Removed
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-share-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_ACCESS_OUTER_SHAREABLE
+             </p>
+            </td>
+            <td>
+             <p>
+              Removed
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-share-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_ACCESS_INNER_SHAREABLE
+             </p>
+            </td>
+            <td>
+             <p>
+              Removed
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-share-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_PRIV_RW
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_ONLY_PRIV_RW
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-permission-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_ALL_RW
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_ALL_RW
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-permission-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_PRIV_RO
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_ONLY_PRIV_RO
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-permission-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_ALL_RO
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_ALL_RO
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-permission-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_NUMBER0
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_0
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_NUMBER1
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_1
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_NUMBER2
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_2
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_NUMBER3
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_3
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_NUMBER4
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_4
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_NUMBER5
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_5
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_NUMBER6
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_6
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_NUMBER7
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_7
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_ATTRIBUTES_NUMBER0
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_MEM_ATTR_0
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-att-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_ATTRIBUTES_NUMBER1
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_MEM_ATTR_1
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-att-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_ATTRIBUTES_NUMBER2
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_MEM_ATTR_2
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-att-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_ATTRIBUTES_NUMBER3
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_MEM_ATTR_3
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-att-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_ATTRIBUTES_NUMBER4
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_MEM_ATTR_4
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-att-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_ATTRIBUTES_NUMBER5
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_MEM_ATTR_5
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-att-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_ATTRIBUTES_NUMBER6
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_MEM_ATTR_6
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-att-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_ATTRIBUTES_NUMBER7
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_MEM_ATTR_7
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-att-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M(only in U5 series)
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_DEVICE_NGNRNE
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_DEVICE_MEM_NGNRNE
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-device-mem-att-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M(only in U5 series)
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_DEVICE_NGNRE
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_DEVICE_MEM_NGNRE
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-device-mem-att-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M(only in U5 series)
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_DEVICE_NGRE
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_DEVICE_MEM_NGRE
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-device-mem-att-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_DEVICE_GRE
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_DEVICE_MEM_GRE
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-device-mem-att-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_NOT_CACHEABLE
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_NORMAL_MEM_NCACHEABLE
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-normal-mem-att-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_WRITE_THROUGH
+             </p>
+            </td>
+            <td>
+             <p>
+              Combined into predefined options
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-normal-mem-att-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_WRITE_BACK
+             </p>
+            </td>
+            <td>
+             <p>
+              Combined into predefined options
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-normal-mem-att-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_TRANSIENT
+             </p>
+            </td>
+            <td>
+             <p>
+              Combined into predefined options
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-normal-mem-att-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_NON_TRANSIENT
+             </p>
+            </td>
+            <td>
+             <p>
+              Combined into predefined options
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-normal-mem-att-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_NO_ALLOCATE
+             </p>
+            </td>
+            <td>
+             <p>
+              Combined into predefined options
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-normal-mem-att-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_W_ALLOCATE
+             </p>
+            </td>
+            <td>
+             <p>
+              Combined into predefined options
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-normal-mem-att-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_R_ALLOCATE
+             </p>
+            </td>
+            <td>
+             <p>
+              Combined into predefined options
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-normal-mem-att-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_RW_ALLOCATE
+             </p>
+            </td>
+            <td>
+             <p>
+              Combined into predefined options
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-normal-mem-att-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M (only in H7 series), Armv8-M (only in H5 series)
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_NUMBER8
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_8
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M (only in H7 series), Armv8-M (only in H5 series)
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_NUMBER9
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_9
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M (only in H7 series),Armv8-M (only in H5 series)
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_NUMBER10
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_10
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M (only in H7 series),Armv8-M (only in H5 series)
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_NUMBER11
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_11
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M (only in H5 series)
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_DEVICE_nGnRnE
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_DEVICE_MEM_nGnRnE
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-device-mem-att-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M (only in H5 series)
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_DEVICE_nGnRE
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_DEVICE_MEM_nGnRE
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-device-mem-att-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M (only in H5 series)
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_DEVICE_nGRE
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_DEVICE_MEM_nGRE
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-device-mem-att-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_ACCESS_SHAREABLE
+             </p>
+            </td>
+            <td>
+             <p>
+              Combined into predefined options
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-scb-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_ACCESS_NOT_SHAREABLE
+             </p>
+            </td>
+            <td>
+             <p>
+              Combined into predefined options
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-scb-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_ACCESS_CACHEABLE
+             </p>
+            </td>
+            <td>
+             <p>
+              Combined into predefined options
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-scb-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_ACCESS_NOT_CACHEABLE
+             </p>
+            </td>
+            <td>
+             <p>
+              Combined into predefined options
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-scb-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_ACCESS_BUFFERABLE
+             </p>
+            </td>
+            <td>
+             <p>
+              Combined into predefined options
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-scb-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_ACCESS_NOT_BUFFERABLE
+             </p>
+            </td>
+            <td>
+             <p>
+              Combined into predefined options
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-scb-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_TEX_LEVEL0
+             </p>
+            </td>
+            <td>
+             <p>
+              Combined into predefined options
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-scb-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_TEX_LEVEL1
+             </p>
+            </td>
+            <td>
+             <p>
+              Combined into predefined options
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-scb-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_TEX_LEVEL2
+             </p>
+            </td>
+            <td>
+             <p>
+              Combined into predefined options
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-scb-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_256B
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_256B
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_512B
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_512B
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_1KB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_1KB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_2KB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_2KB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_4KB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_4KB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_8KB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_8KB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_16KB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_16KB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_32KB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_32KB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_64KB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_64KB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_128KB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_128KB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_256KB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_256KB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_512KB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_512KB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_1MB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_1MB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_2MB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_2MB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_4MB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_4MB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_8MB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_8MB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_16MB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_16MB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_32MB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_32MB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_64MB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_64MB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_128MB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_128MB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_256MB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_256MB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_512MB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_512MB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_1GB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_1GB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_2GB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_2GB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_4GB
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_4GB
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_NO_ACCESS
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_ALL_RW_FAULT
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-permission-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_PRIV_RW_URO
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_NPRIV_W_FAULT
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-permission-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_FULL_ACCESS
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_ALL_RW
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-permission-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_PRIV_RO_URO
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_ALL_RO
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-permission-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M (only in L4, G4 series)
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_TEX_LEVEL4
+             </p>
+            </td>
+            <td>
+             <p>
+              Combined into predefined options
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-scb-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M (only in L4, G4 series)
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_32B
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_32B
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M (only in L4, G4 series)
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_64B
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_64B
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M (only in L4, G4 series)
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_SIZE_128B
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_SIZE_128B
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-region-size-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M (only in H7 series with dual core)
+             </p>
+            </td>
+            <td>
+             <p>
+              CM4_CPUID
+             </p>
+            </td>
+            <td>
+             <p>
+              Not yet implemented
+             </p>
+            </td>
+            <td>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M (only in H7 series with dual core)
+             </p>
+            </td>
+            <td>
+             <p>
+              CM7_CPUID
+             </p>
+            </td>
+            <td>
+             <p>
+              Not yet implemented
+             </p>
+            </td>
+            <td>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M (only in H7 series)
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_NUMBER12
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_12
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M (only in H7 series)
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_NUMBER13
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_13
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M (only in H7 series)
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_NUMBER14
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_14
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M (only in H7 series)
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_REGION_NUMBER15
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_REGION_15
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_constants.html#hal-mpu-reg-num-constants">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-cortex-macros">
+         <span id="hal-cortex-macros-listing">
+         </span>
+         <h2 id="hal-cortex-macros">
+          HAL CORTEX macros
+          <a class="headerlink" href="#hal-cortex-macros" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              ARM architecture
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              HAL1
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              HAL2
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              series
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              Refer to
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              OUTER
+             </p>
+            </td>
+            <td>
+            </td>
+            <td>
+             <p>
+              u5, h5
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_macros.html#hal-cortex-macros">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              INNER_OUTER
+             </p>
+            </td>
+            <td>
+            </td>
+            <td>
+             <p>
+              u5, h5
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_macros.html#hal-cortex-macros">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-cortex-structures">
+         <span id="hal-cortex-structures-listing">
+         </span>
+         <h2 id="hal-cortex-structures">
+          HAL CORTEX structures
+          <a class="headerlink" href="#hal-cortex-structures" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              ARM architecture
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              HAL1
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              HAL2
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              Refer to
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_Region_InitTypeDef
+             </p>
+            </td>
+            <td>
+             <p>
+              hal_cortex_mpu_region_config_t
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_types.html#hal-mpu-reg-conf-type">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_Attributes_InitTypeDef
+             </p>
+            </td>
+            <td>
+             <p>
+              Replaced with Enumirations (hal_cortex_mpu_region_idx_t + hal_cortex_mpu_mem_attr_idx_t)
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_types.html#hal-mpu-reg-conf-type">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-cortex-functions">
+         <span id="hal-cortex-functions-listing">
+         </span>
+         <h2 id="hal-cortex-functions">
+          HAL CORTEX functions
+          <a class="headerlink" href="#hal-cortex-functions" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              ARM architecture
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              HAL1
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              HAL2
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              Refer to
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_NVIC_SetPriorityGrouping
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_NVIC_SetPriorityGrouping
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_nvic_functions_config.html#hal-nvic-setprioritygrouping">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_NVIC_SetPriority
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_NVIC_SetPriority
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_nvic_functions_config.html#hal-nvic-setpriority">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_NVIC_EnableIRQ
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_NVIC_EnableIRQ
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_nvic_functions_config.html#hal-nvic-enableirq">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_NVIC_DisableIRQ
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_NVIC_DisableIRQ
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_nvic_functions_config.html#hal-nvic-disableirq">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_NVIC_SystemReset
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_NVIC_SystemReset
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_nvic_functions_config.html#hal-nvic-systemreset">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_SYSTICK_Config
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_SYSTICK_SetFreq
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_systick_functions_config.html#hal-systick-config">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_NVIC_GetPriorityGrouping
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_NVIC_GetPriorityGrouping
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_nvic_functions_config.html#hal-nvic-getprioritygrouping">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_NVIC_GetPriority
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_NVIC_GetPriority
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_nvic_functions_config.html#hal-nvic-getpriority">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_NVIC_GetPendingIRQ
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_NVIC_IsPendingIRQ
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_nvic_functions_config.html#hal-nvic-getpendingirq">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_NVIC_SetPendingIRQ
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_NVIC_SetPendingIRQ
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_nvic_functions_config.html#hal-nvic-setpendingirq">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_NVIC_ClearPendingIRQ
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_NVIC_ClearPendingIRQ
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_nvic_functions_config.html#hal-nvic-clearpendingirq">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M, Armv7-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_NVIC_GetActive
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_NVIC_IsActiveIRQ
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_nvic_functions_config.html#hal-nvic-getactive">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_SYSTICK_CLKSourceConfig
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_SYSTICK_SetClkSource
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_systick_functions_config.html#hal-systick-clksourceconfig">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_SYSTICK_GetCLKSourceConfig
+             </p>
+            </td>
+            <td>
+             <p>
+              Removed
+             </p>
+            </td>
+            <td>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_SYSTICK_IRQHandler
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_SYSTICK_IRQHandler
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_systick_functions_config.html#hal-systick-irqhandler">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_SYSTICK_Callback
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_SYSTICK_Callback
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_systick_functions_config.html#hal-systick-callback">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_MPU_Enable
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_Enable
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_mpu_functions_config.html#hal-mpu-enable">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_MPU_Disable
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_Disable
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_mpu_functions_config.html#hal-mpu-disable">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_MPU_EnableRegion
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_EnableRegion
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_mpu_functions_config.html#hal-mpu-enableregion">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_MPU_DisableRegion
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_DisableRegion
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_mpu_functions_config.html#hal-mpu-disableregion">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M, Armv7-M, Armv6-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_MPU_ConfigRegion
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_SetConfigRegion
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_mpu_functions_config.html#hal-mpu-configregion">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_MPU_ConfigMemoryAttributes
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPU_SetDeviceMemAttr / HAL_CORTEX_MPU_SetCacheMemAttr
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_mpu_functions_config.html#hal-mpu-configmemoryattributes">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_MPU_Enable_NS
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPUNS_Enable
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_mpu_functions_config.html#hal-mpu-enable-ns">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_MPU_Disable_NS
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPUNS_Disable
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_mpu_functions_config.html#hal-mpu-disable-ns">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_MPU_EnableRegion_NS
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPUNS_EnableRegion
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_mpu_functions_config.html#hal-mpu-enableregion-ns">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_MPU_DisableRegion_NS
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPUNS_DisableRegion
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_mpu_functions_config.html#hal-mpu-disableregion-ns">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_MPU_ConfigRegion_NS
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPUNS_SetConfigRegion
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_mpu_functions_config.html#hal-mpu-configregion-ns">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv8-M
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_MPU_ConfigMemoryAttributes_NS
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_MPUNS_SetDeviceMemAttr / HAL_CORTEX_MPUNS_SetCacheMemAttr
+             </p>
+            </td>
+            <td>
+             <p>
+              <a class="reference internal" href="hal_cortex_exported_mpu_functions_config.html#hal-mpu-configmemoryattributes-ns">
+               <span class="std std-ref">
+                Refer to
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              Armv7-M (only in F4 series)
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_CORTEX_ClearEvent
+             </p>
+            </td>
+            <td>
+             <p>
+              Not yet implemented
+             </p>
+            </td>
+            <td>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Armv7-M (only in H7 series)
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_GetCurrentCPUID
+             </p>
+            </td>
+            <td>
+             <p>
+              Not yet implemented
+             </p>
+            </td>
+            <td>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-cortex-legacy-aliases-hal1-to-hal1">
+         <h2 id="hal-cortex-legacy-aliases-hal1-to-hal1">
+          HAL CORTEX legacy aliases (HAL1 to HAL1)
+          <a class="headerlink" href="#hal-cortex-legacy-aliases-hal1-to-hal1" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <div class="admonition note">
+          <p class="admonition-title">
+           Note
+          </p>
+          <p>
+           This table provides the list of HAL1 to HAL1 legacy aliases given by stm32_hal_legacy.h HAL1 header file.
+To migrate the aliased HAL1 APIs search for it in the above HAL1 to HAL2:
+           <a class="reference internal" href="#hal-cortex-constants-listing">
+            <span class="std std-ref">
+             HAL CORTEX constants
+            </span>
+           </a>
+           and
+           <a class="reference internal" href="#hal-cortex-functions-listing">
+            <span class="std std-ref">
+             HAL CORTEX functions
+            </span>
+           </a>
+          </p>
+         </div>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              HAL1 legacy API alias
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              HAL1 API
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              series
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              __HAL_CORTEX_SYSTICKCLK_CONFIG
+             </p>
+            </td>
+            <td>
+             <p>
+              HAL_SYSTICK_CLKSourceConfig
+             </p>
+            </td>
+            <td>
+             <p>
+              all series
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              MPU_DEVICE_nGnRnE
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_DEVICE_NGNRNE
+             </p>
+            </td>
+            <td>
+             <p>
+              U5
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              MPU_DEVICE_nGnRE
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_DEVICE_NGNRE
+             </p>
+            </td>
+            <td>
+             <p>
+              U5
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              MPU_DEVICE_nGRE
+             </p>
+            </td>
+            <td>
+             <p>
+              MPU_DEVICE_NGRE
+             </p>
+            </td>
+            <td>
+             <p>
+              U5
+             </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

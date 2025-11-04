@@ -1,0 +1,729 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "componentid": "::Device:STM32CubeMX2 Config:SBS",
+  "grammarVersion": "3.1",
+  "version": "1.0.0",
+  "type": "object",
+  "properties": {
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "object",
+          "properties": {
+            "labels": {
+              "type": "array",
+              "title": "Label",
+              "$comment": "label associated to the instance of the peripheral, can be overridden at sample level. In this case it becomes read-only.",
+              "items": {
+                "type": "string",
+                "pattern": "^([a-zA-Z_][a-zA-Z0-9_]{1,31})?$",
+                "minLength": 0,
+                "maxLength": 32,
+                "default": ""
+              }
+            },
+            "layer": {
+              "title": "Software Layer",
+              "type": "string",
+              "oneOf": [
+                {
+                  "const": "HAL"
+                },
+                {
+                  "const": "LL"
+                }
+              ],
+              "default": "HAL"
+            },
+            "init_type": {
+              "title": "resource initialization code generation",
+              "type": "string",
+              "oneOf": [
+                {
+                  "const": "called"
+                },
+                {
+                  "const": "enabled"
+                },
+                {
+                  "const": "disabled"
+                }
+              ],
+              "description": "generate or not the SBS init code, call it or not at boot",
+              "$comment": "generate the init code of your SBS or not (enabled/disabled), call it automatically at startup or not (called/enabled)",
+              "default": "called"
+            }
+          }
+        },
+        "Additional": {
+          "type": "object",
+          "properties": {
+            "Analog_IO_Switch_Supply_Config": {
+              "type": "object",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$resource.features.analog_io_switch_supply"
+                }
+              ],
+              "properties": {
+                "Analog_IO_Switch_Supply": {
+                  "type": "string",
+                  "description": "The I/O analog switch subbly value",
+                  "oneOf": [
+                    {
+                      "title": "VDDA supply",
+                      "const": "VDDA_SUPPLY"
+                    },
+                    {
+                      "title": "VDD booster supply",
+                      "const": "BOOSTER_SUPPLY"
+                    },
+                    {
+                      "title": "VDD supply",
+                      "const": "VDD_SUPPLY"
+                    },
+                    {
+                      "title": "NONE",
+                      "const": "NONE"
+                    }
+                  ],
+                  "default": "NONE"
+                }
+              }
+            },
+            "Fast_mode_Plus_driving_capability": {
+              "type": "object",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$resource.features.fast_mode_plus"
+                }
+              ],
+              "properties": {
+                "Fmp_on_PA11": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.fmp_pa11"
+                    }
+                  ],
+                  "description": "Enable the Fast-mode Plus driving capability on PA11",
+                  "default": false
+                },
+                "Fmp_on_PA12": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.fmp_pa12"
+                    }
+                  ],
+                  "description": "Enable the Fast-mode Plus driving capability on PA12",
+                  "default": false
+                },
+                "Fmp_on_PB3": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.fmp_pb3"
+                    }
+                  ],
+                  "description": "Enable the Fast-mode Plus driving capability on PB3",
+                  "default": false
+                },
+                "Fmp_on_PB4": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.fmp_pb4"
+                    }
+                  ],
+                  "description": "Enable the Fast-mode Plus driving capability on PB4",
+                  "default": false
+                },
+                "Fmp_on_PB6": {
+                  "type": "boolean",
+                  "description": "Enable the Fast-mode Plus driving capability on PB6",
+                  "default": false
+                },
+                "Fmp_on_PB7": {
+                  "type": "boolean",
+                  "description": "Enable the Fast-mode Plus driving capability on PB7",
+                  "default": false
+                },
+                "Fmp_on_PB8": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.fmp_pb8"
+                    }
+                  ],
+                  "description": "Enable the Fast-mode Plus driving capability on PB8",
+                  "default": false
+                },
+                "Fmp_on_PB9": {
+                  "type": "boolean",
+                  "description": "Enable the Fast-mode Plus driving capability on PB9",
+                  "default": false
+                }
+              }
+            },
+            "I2C_SMBUS_Selection": {
+              "type": "object",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$resource.features.smbus_i2c"
+                }
+              ],
+              "properties": {
+                "I2C1_SMBUS": {
+                  "type": "boolean",
+                  "description": "Enable I2C1 SMBUS",
+                  "default": false
+                },
+                "I2C3_SMBUS": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.smb_i2c3"
+                    }
+                  ],
+                  "description": "Enable I2C3 SMBUS",
+                  "default": false
+                },
+                "I2C4_SMBUS": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.smb_i2c4"
+                    }
+                  ],
+                  "description": "Enable I2C4 SMBUS",
+                  "default": false
+                }
+              }
+            },
+            "Timer_Break_Inputs_lockup_config": {
+              "type": "object",
+              "properties": {
+                "Lockup_output": {
+                  "type": "boolean",
+                  "description": "Enable Timer Break Inputs connection to the lockup (HardFault) output",
+                  "default": false
+                },
+                "FLASH_ECC_double_error_flag": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.flash_ecc_double_error"
+                    }
+                  ],
+                  "description": "Enable Timer Break Inputs connection to the flash ecc double error flag",
+                  "default": false
+                },
+                "PVD_interrupt": {
+                  "type": "boolean",
+                  "description": "Enable Timer Break Inputs connection to PVD interrupt",
+                  "default": false
+                },
+                "SRAM_ECC_double_error_flag": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.sram_ecc_error"
+                    }
+                  ],
+                  "description": "Enable Timer Break Inputs connection to SRAM ecc double error flag",
+                  "default": false
+                },
+                "SRAM1_ECC_double_error_flag": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.sram1_ecc_error"
+                    }
+                  ],
+                  "description": "Enable Timer Break Inputs connection to SRAM1 ecc double error flag",
+                  "default": false
+                },
+                "SRAM2_ECC_double_error_flag": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.sram2_ecc_error"
+                    }
+                  ],
+                  "description": "Enable Timer Break Inputs connection to SRAM2 ecc double error flag",
+                  "default": false
+                },
+                "SRAM3_ECC_double_error_flag": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.sram3_ecc_error"
+                    }
+                  ],
+                  "description": "Enable Timer Break Inputs connection to SRAM3 ecc double error flag",
+                  "default": false
+                },
+                "SRAM4_ECC_double_error_flag": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.sram4_ecc_error"
+                    }
+                  ],
+                  "description": "Enable Timer Break Inputs connection to SRAM4 ecc double error flag",
+                  "default": false
+                },
+                "DCACHE_ECC_double_error_flag": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.dcache_ecc_double_error"
+                    }
+                  ],
+                  "description": "Enable Timer Break Inputs connection to DCACHE ecc double error flag",
+                  "default": false
+                },
+                "DTCM_ECC_double_error_flag": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.dtcm_ecc_double_error"
+                    }
+                  ],
+                  "description": "Enable Timer Break Inputs connection to DTCM ecc double error flag",
+                  "default": false
+                },
+                "ITCM_ECC_double_error_flag": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.itcm_ecc_double_error"
+                    }
+                  ],
+                  "description": "Enable Timer Break Inputs connection to  ITCM ecc double error flag",
+                  "default": false
+                },
+                "BKPRAM_ECC_double_error_flag": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.bkpram_ecc_double_error"
+                    }
+                  ],
+                  "description": "Enable Timer Break Inputs connection to BKPRAM ecc double error flag",
+                  "default": false
+                },
+                "NVM_ECC_triple_error_flag": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.nvm_ecc_triple_error"
+                    }
+                  ],
+                  "description": "Enable Timer Break Inputs connection to NVM ecc triple error flag",
+                  "default": false
+                },
+                "AXIRAM6_FIX_ECC_double_error_flag": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.axiram6_fix_ecc_double_error"
+                    }
+                  ],
+                  "description": "Enable Timer Break Inputs connection to AXIRAM6 FIX ecc double error flag",
+                  "default": false
+                },
+                "AXIRAM6_FLEX_ECC_double_error_flag": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.axiram6_flex_ecc_double"
+                    }
+                  ],
+                  "description": "Enable Timer Break Inputs connection to AXIRAM6 FLEX ecc double error flag",
+                  "default": false
+                },
+                "AXIRAM1_ECC_double_error_flag": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.axiram1_ecc_double_error"
+                    }
+                  ],
+                  "description": "Enable Timer Break Inputs connection to AXIRAM1 ecc double error flag",
+                  "default": false
+                },
+                "AXIRAM7_ECC_double_error_flag": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.axiram7_ecc_double_error"
+                    }
+                  ],
+                  "description": "Enable Timer Break Inputs connection to AXIRAM7 ecc double error flag",
+                  "default": false
+                }
+              }
+            },
+            "Compensation_cell_config": {
+              "type": "object",
+              "properties": {
+                "VDDIO_compensation_cell": {
+                  "type": "boolean",
+                  "description": "Enable the VDD compensation cell.",
+                  "default": false
+                },
+                "VDDIO_compensation_cell_code_source": {
+                  "type": "string",
+                  "title": "VDDIO compensation cell code source.",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$this.parameters.Additional.Compensation_cell_config.VDDIO_compensation_cell"
+                    }
+                  ],
+                  "oneOf": [
+                    {
+                      "title": "DEFAULT",
+                      "const": "DEFAULT"
+                    },
+                    {
+                      "title": "CUSTOM",
+                      "const": "CUSTOM"
+                    }
+                  ],
+                  "default": "DEFAULT"
+                },
+                "VDDIO_NMOS_Compensation_value": {
+                  "type": "integer",
+                  "title": "VDDIO NMOS Compensation value.",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$this.parameters.Additional.Compensation_cell_config.VDDIO_compensation_cell && $this.parameters.Additional.Compensation_cell_config.VDDIO_compensation_cell_code_source === 'CUSTOM'"
+                    }
+                  ],
+                  "minimum": 0,
+                  "maximum": 15,
+                  "default": 8
+                },
+                "VDDIO_PMOS_Compensation_value": {
+                  "type": "integer",
+                  "title": "VDDIO PMOS Compensation value.",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$this.parameters.Additional.Compensation_cell_config.VDDIO_compensation_cell && $this.parameters.Additional.Compensation_cell_config.VDDIO_compensation_cell_code_source === 'CUSTOM'"
+                    }
+                  ],
+                  "minimum": 0,
+                  "maximum": 15,
+                  "default": 8
+                },
+                "XSPI1_compensation_cell": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.xspi1"
+                    }
+                  ],
+                  "description": "Enable the VDDXSP1 compensation cell.",
+                  "default": false
+                },
+                "XSPI1_compensation_cell_code_source": {
+                  "type": "string",
+                  "title": "XSPI1 compensation cell code source.",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$this.parameters.Additional.Compensation_cell_config.XSPI1_compensation_cell"
+                    }
+                  ],
+                  "oneOf": [
+                    {
+                      "title": "DEFAULT",
+                      "const": "DEFAULT"
+                    },
+                    {
+                      "title": "CUSTOM",
+                      "const": "CUSTOM"
+                    }
+                  ],
+                  "default": "DEFAULT"
+                },
+                "XSPI1_NMOS_Compensation_value": {
+                  "type": "integer",
+                  "title": "XSPI1 NMOS Compensation value.",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$this.parameters.Additional.Compensation_cell_config.XSPI1_compensation_cell && $this.parameters.Additional.Compensation_cell_config.XSPI1_compensation_cell_code_source === 'CUSTOM'"
+                    }
+                  ],
+                  "minimum": 0,
+                  "maximum": 15,
+                  "default": 8
+                },
+                "XSPI1_PMOS_Compensation_value": {
+                  "type": "integer",
+                  "title": "XSPI1 PMOS Compensation value.",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$this.parameters.Additional.Compensation_cell_config.XSPI1_compensation_cell && $this.parameters.Additional.Compensation_cell_config.XSPI1_compensation_cell_code_source === 'CUSTOM'"
+                    }
+                  ],
+                  "minimum": 0,
+                  "maximum": 15,
+                  "default": 8
+                },
+                "XSPI2_compensation_cell": {
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.xspi2"
+                    }
+                  ],
+                  "description": "Enable the VDDXSP2 compensation cell.",
+                  "default": false
+                },
+                "XSPI2_compensation_cell_code_source": {
+                  "type": "string",
+                  "title": "XSP2 compensation cell code source.",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$this.parameters.Additional.Compensation_cell_config.XSPI2_compensation_cell"
+                    }
+                  ],
+                  "oneOf": [
+                    {
+                      "title": "DEFAULT",
+                      "const": "DEFAULT"
+                    },
+                    {
+                      "title": "CUSTOM",
+                      "const": "CUSTOM"
+                    }
+                  ],
+                  "default": "DEFAULT"
+                },
+                "XSPI2_NMOS_Compensation_value": {
+                  "type": "integer",
+                  "title": "XSPI2 NMOS Compensation value.",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$this.parameters.Additional.Compensation_cell_config.XSPI2_compensation_cell && $this.parameters.Additional.Compensation_cell_config.XSPI2_compensation_cell_code_source === 'CUSTOM'"
+                    }
+                  ],
+                  "minimum": 0,
+                  "maximum": 15,
+                  "default": 8
+                },
+                "XSPI2_PMOS_Compensation_value": {
+                  "type": "integer",
+                  "title": "XSPI2 PMOS Compensation value.",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$this.parameters.Additional.Compensation_cell_config.XSPI2_compensation_cell && $this.parameters.Additional.Compensation_cell_config.XSPI2_compensation_cell_code_source === 'CUSTOM'"
+                    }
+                  ],
+                  "minimum": 0,
+                  "maximum": 15,
+                  "default": 8
+                }
+              }
+            },
+            "Disable_FLASH_ECCNMI": {
+              "type": "boolean",
+              "description": "Disable the ECC NMI generation",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$resource.features.flash_eccnmi"
+                }
+              ],
+              "default": false
+            },
+            "Select_EPOCH_Value": {
+              "type": "string",
+              "description": "Select EPOCH value to be sent to the SAES.",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$resource.features.epoch"
+                }
+              ],
+              "oneOf": [
+                {
+                  "title": "Non secure EPOCH",
+                  "const": "NSEC"
+                },
+                {
+                  "title": "Secure EPOCH",
+                  "const": "SEC"
+                },
+                {
+                  "title": "EPOCH forced to zero",
+                  "const": "CLEAR"
+                },
+                {
+                  "title": "NONE",
+                  "const": "NONE"
+                }
+              ],
+              "default": "NONE"
+            },
+            "Select_ETHERNET_Polarity": {
+              "type": "string",
+              "description": "Select ETHERNET polarity.",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$resource.features.ethernet"
+                }
+              ],
+              "oneOf": [
+                {
+                  "title": "Ethernet interrupt polarity HIGH",
+                  "const": "HIGH"
+                },
+                {
+                  "title": "Ethernet interrupt polarity LOW",
+                  "const": "LOW"
+                },
+                {
+                  "title": "NONE",
+                  "const": "NONE"
+                }
+              ],
+              "default": "NONE"
+            },
+            "Select_ETHERNET_Interface": {
+              "type": "string",
+              "description": "Select ETHERNET Interface.",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$resource.features.ethernet"
+                }
+              ],
+              "oneOf": [
+                {
+                  "title": "GMII or MII interface",
+                  "const": "GMII_MII"
+                },
+                {
+                  "title": "RMII interface",
+                  "const": "RMII"
+                },
+                {
+                  "title": "NONE",
+                  "const": "NONE"
+                }
+              ],
+              "default": "NONE"
+            },
+            "Enable_Channel_Pin_Remap": {
+              "type": "object",
+              "description": "Enable the channel pin remap",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$resource.features.input_pin_remap"
+                }
+              ],
+              "properties": {
+                "ADC_IN7_to_PB1": {
+                  "type": "boolean",
+                  "description": "Enable ADC IN7 to PB1",
+                  "default": false
+                },
+                "ADC_IN6_to_PB0": {
+                  "type": "boolean",
+                  "description": "Enable ADC IN6 to PB0",
+                  "default": false
+                },
+                "ADC_IN5_to_PC5": {
+                  "type": "boolean",
+                  "description": "Enable ADC IN5 to PC5",
+                  "default": false
+                },
+                "ADC_IN2_to_PC4": {
+                  "type": "boolean",
+                  "description": "Enable ADC IN2 to PC4",
+                  "default": false
+                }
+              }
+            }
+          }
+        },
+        "System": {
+          "type": "object",
+          "actions": [
+            {
+              "type": "include",
+              "condition": "$resource.features.bridge_error"
+            }
+          ],
+          "description": "SBS Global Configuration Structure definition.",
+          "properties": {
+            "BridgeErrorInterruption": {
+              "type": "boolean",
+              "description": "Enable bridge error IT",
+              "default": false
+            },
+            "nvicConfigEvent": {
+              "title": "NVIC Event configuration",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$System.BridgeErrorInterruption"
+                }
+              ],
+              "type": "object",
+              "objectType": "need.interrupt.lines",
+              "owner": "$resource.id",
+              "needs": [
+                {
+                  "selector": "*"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

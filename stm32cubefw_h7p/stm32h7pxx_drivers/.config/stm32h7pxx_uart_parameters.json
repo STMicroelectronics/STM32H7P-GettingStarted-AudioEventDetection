@@ -1,0 +1,1080 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "version": "0.0.1",
+  "componentid": "::Device:STM32CubeMX2 Config:UART",
+  "grammarVersion": "3.1",
+  "functions": [
+    {
+      "path": ".config/template/helpers/uart_helpers.js",
+      "accessor": "common"
+    }
+  ],
+  "properties": {
+
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "object",
+          "properties": {
+            "labels": {
+              "type": "array",
+              "title": "Label",
+              "items": {
+                "type": "string",
+                "pattern": "^([a-zA-Z_][a-zA-Z0-9_]{1,31})?$"
+              }
+            },
+            "layer": {
+              "type": "string",
+              "title": "Software Layer",
+              "oneOf": [
+                {
+                  "const": "HAL"
+                },
+                {
+                  "const": "LL"
+                }
+              ],
+              "default": "HAL"
+            },
+            "init_type": {
+              "type": "string",
+              "title": "resource initialization code generation",
+              "description": "generate or not the UART init code, call it or not at boot",
+              "$comment": "generate the init code of your UART or not (enabled/disabled), call it automatically at startup or not (called/enabled)",
+              "oneOf": [
+                {
+                  "const": "called"
+                },
+                {
+                  "const": "enabled"
+                },
+                {
+                  "const": "disabled"
+                }
+              ],
+              "default": "called"
+            },
+            "function_type": {
+              "type": "string",
+              "title": "Function used by the component",
+              "description": "This component is a standard component which can be used HW instance available on another component. The notion of function is used to distinguish the usage of each HW instance",
+              "actions": [
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ],
+              "default": "UART"
+            }
+          }
+        },
+
+              "main_peripheral_configuration": {
+                "title": "Main peripheral configuration",
+                "type": "object",
+                "properties": {
+                  "mode": {
+                    "type": "string",
+                    "title": "Mode",
+                    "oneOf": [
+                      {
+                        "title": "Asynchronous",
+                        "const": "async"
+                      },
+                      {
+                        "title": "Single Wire (Half-Duplex)",
+                        "const": "half_duplex_single_wire_mode"
+                      },
+                      {
+                        "title": "Multiprocessor Communication",
+                        "const": "multiprocessor_communication"
+                      },
+                      {
+                        "title": "LIN",
+                        "const": "lin",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$resource.features.lin_master==true"
+                          }
+                        ]
+                      }
+                    ],
+                    "default": "async"
+                  },
+                  "baud_rate": {
+                    "type": "integer",
+                    "title": "Baud Rate",
+                    "description": "This member configures the UART communication baud rate.\n      The baud rate register is computed using the following formula:\n          - LPUART:\n            - Baud Rate Register = ((256 * lpuart_ker_ckpres) / ((hal_uart_config_t->baud_rate)))\n              where lpuart_ker_ck_pres is the UART input clock divided by a prescaler\n          - UART:\n            - If oversampling is 16 or in LIN mode,\n              Baud Rate Register = ((uart_ker_ckpres) / ((hal_uart_config_t->baud_rate)))\n            - If oversampling is 8,\n              Baud Rate Register[15:4] = ((2 * uart_ker_ckpres) /\n              ((hal_uart_config_t->baud_rate)))[15:4]\n              Baud Rate Register[3] =  0\n              Baud Rate Register[2:0] =  (((2 * uart_ker_ckpres) /\n              ((hal_uart_config_t->baud_rate)))[3:0]) >> 1\n            where uart_ker_ck_pres is the UART input clock divided by a prescaler",
+                    "actions": [
+                      {
+                        "type": "set",
+                        "computed": {
+                          "minimum": "$common.helper_uart_get_min_baud_rate($get('clock.frequency',$resource.id), $main_peripheral_configuration.clock_prescaler, $main_peripheral_configuration.over_sampling, $resource.features.baudgen_type)",
+                          "maximum": "$common.helper_uart_get_max_baud_rate($get('clock.frequency',$resource.id), $main_peripheral_configuration.clock_prescaler, $main_peripheral_configuration.over_sampling, $resource.features.baudgen_type)"
+                        },
+                        "condition": "true"
+                      }
+                    ],
+                    "minimum": 0,
+                    "maximum": 20000000,
+                    "default": 115200
+                  },
+                  "word_length": {
+                    "type": "string",
+                    "title": "Word Length",
+                    "description": "Specifies the number of data bits transmitted or received in a frame.",
+                    "oneOf": [
+                      {
+                        "title": "7-bit (including parity)",
+                        "const": "7",
+                        "actions": [
+                          {
+                            "type": "exclude",
+                            "condition": "$main_peripheral_configuration.mode==='lin'"
+                          }
+                        ]
+                      },
+                      {
+                        "title": "8-bit (including parity)",
+                        "const": "8"
+                      },
+                      {
+                        "title": "9-bit (including parity)",
+                        "const": "9",
+                        "actions": [
+                          {
+                            "type": "exclude",
+                            "condition": "$main_peripheral_configuration.mode==='lin'"
+                          }
+                        ]
+                      }
+                    ],
+                    "default": "8"
+                  },
+                  "parity": {
+                    "type": "string",
+                    "title": "Parity",
+                    "description": "Specifies the parity mode. When parity is enabled, the computed parity is inserted at the MSB position of the transmitted data (9th bit when the word length is set to 9 data bits; 8th bit when the word length is set to 8 data bits).",
+                    "oneOf": [
+                      {
+                        "title": "None",
+                        "const": "NONE"
+                      },
+                      {
+                        "title": "Even",
+                        "const": "EVEN"
+                      },
+                      {
+                        "title": "Odd",
+                        "const": "ODD"
+                      }
+                    ],
+                    "default": "NONE"
+                  },
+                  "stop_bit": {
+                    "type": "string",
+                    "title": "Stop Bit",
+                    "description": "Specifies the number of stop bit transmitted.",
+                    "oneOf": [
+                      {
+                        "title": "0.5 stop bit",
+                        "const": "0_5"
+                      },
+                      {
+                        "title": "1 stop bit",
+                        "const": "1"
+                      },
+                      {
+                        "title": "1.5 stop bits",
+                        "const": "1_5"
+                      },
+                      {
+                        "title": "2 stop bits",
+                        "const": "2"
+                      }
+                    ],
+                    "default": "1"
+                  },
+                  "direction": {
+                    "type": "string",
+                    "title": "Data Direction",
+                    "description": "Specifies whether the Receive or Transmit mode is enabled or disabled.",
+                    "oneOf": [
+                      {
+                        "title": "Receive",
+                        "const": "RX"
+                      },
+                      {
+                        "title": "Transmit",
+                        "const": "TX"
+                      },
+                      {
+                        "title": "Transmit and Receive",
+                        "const": "TX_RX"
+                      }
+                    ],
+                    "default": "TX_RX"
+                  },
+                  "hw_flow_ctl": {
+                    "type": "string",
+                    "title": "Hardware Flow Control (RS232)",
+                    "description": "Specifies whether the hardware flow control mode is enabled or disabled.",
+                    "oneOf": [
+                      {
+                        "title": "None",
+                        "const": "NONE"
+                      },
+                      {
+                        "title": "RTS",
+                        "const": "RTS",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$main_peripheral_configuration.mode==='async' && $main_peripheral_configuration.direction!='TX'"
+                          }
+                        ]
+                      },
+                      {
+                        "title": "CTS",
+                        "const": "CTS",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$main_peripheral_configuration.mode==='async' && $main_peripheral_configuration.direction!='RX'"
+                          }
+                        ]
+                      },
+                      {
+                        "title": "RTS/CTS",
+                        "const": "RTS_CTS",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$main_peripheral_configuration.mode==='async' && $main_peripheral_configuration.direction==='TX_RX'"
+                          }
+                        ]
+                      }
+                    ],
+                    "default": "NONE"
+                  },
+                  "over_sampling": {
+                    "type": "string",
+                    "title": "Over Sampling",
+                    "description": "Specifies whether the Over sampling 8 is enabled or disabled, to achieve higher speed (up to f_PCLK/8).",
+                    "oneOf": [
+                      {
+                        "title": "16",
+                        "const": "16"
+                      },
+                      {
+                        "title": "8",
+                        "const": "8",
+                        "actions": [
+                          {
+                            "type": "exclude",
+                            "condition": "($main_peripheral_configuration.mode==='lin') || ($resource.features.baudgen_type==true)"
+                          }
+                        ]
+                      }
+                    ],
+                    "default": "16"
+                  },
+                  "one_bit_sampling": {
+                    "type": "string",
+                    "title": "One Bit Sampling",
+                    "description": "Specifies whether a single sample or three samples' majority vote is selected. Selecting the single sample method increases the receiver tolerance to clock deviations.",
+                    "oneOf": [
+                      {
+                        "title": "Disable",
+                        "const": "DISABLE"
+                      },
+                      {
+                        "title": "Enable",
+                        "const": "ENABLE",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$resource.features.baudgen_type!=true"
+                          }
+                        ]
+                      }
+                    ],
+                    "default": "DISABLE",
+                    "actions": [
+                      {
+                        "type": "disable",
+                        "condition": "$resource.features.baudgen_type==true"
+                      }
+                    ]
+                  },
+                  "clock_prescaler": {
+                    "type": "integer",
+                    "title": "Clock Prescaler",
+                    "description": "Specifies the prescaler value used to divide the UART clock source.",
+                    "oneOf": [
+                      {
+                        "title": "DIV1",
+                        "const": 1
+                      },
+                      {
+                        "title": "DIV2",
+                        "const": 2
+                      },
+                      {
+                        "title": "DIV4",
+                        "const": 4
+                      },
+                      {
+                        "title": "DIV6",
+                        "const": 6
+                      },
+                      {
+                        "title": "DIV8",
+                        "const": 8
+                      },
+                      {
+                        "title": "DIV10",
+                        "const": 10
+                      },
+                      {
+                        "title": "DIV12",
+                        "const": 12
+                      },
+                      {
+                        "title": "DIV16",
+                        "const": 16
+                      },
+                      {
+                        "title": "DIV32",
+                        "const": 32
+                      },
+                      {
+                        "title": "DIV64",
+                        "const": 64
+                      },
+                      {
+                        "title": "DIV128",
+                        "const": 128
+                      },
+                      {
+                        "title": "DIV256",
+                        "const": 256
+                      }
+                    ],
+                    "default": 1
+                  }
+                }
+              },
+              "additional_features_configuration": {
+                "title": "Additional features configuration",
+                "type": "object",
+                "properties": {
+                  "EnableRS485Mode": {
+                    "type": "boolean",
+                    "title": "RS485 driver enable",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$main_peripheral_configuration.mode=='async'"
+                      },
+                      {
+                        "type": "error",
+                        "condition": "$main_peripheral_configuration.hw_flow_ctl != 'NONE' && EnableRS485Mode == true",
+                        "message": "Hardware Flow Control (RS232) must be set to None"
+                      }
+                    ],
+                    "default": false
+                  },
+                  "polarity": {
+                    "type": "string",
+                    "title": "Driver Enable (DE) polarity",
+                    "oneOf": [
+                      {
+                        "title": "High",
+                        "const": "HIGH"
+                      },
+                      {
+                        "title": "Low",
+                        "const": "LOW"
+                      }
+                    ],
+                    "default": "HIGH",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$additional_features_configuration.EnableRS485Mode===true"
+                      }
+                    ]
+                  },
+                  "assertion_time_samples": {
+                    "type": "integer",
+                    "title": "Assertion Time (Sample Time Unit)",
+                    "description": "Assertion Time must be between 0 Sample Time Unit and 31 Sample Time Unit.",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$additional_features_configuration.EnableRS485Mode===true"
+                      }
+                    ],
+                    "minimum": 0,
+                    "maximum": 31,
+                    "default": 0
+                  },
+                  "deassertion_time_samples": {
+                    "type": "integer",
+                    "title": "Deassertion Time (Sample Time Unit)",
+                    "description": "Deassertion Time must be between 0 Sample Time Unit and 31 Sample Time Unit.",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$additional_features_configuration.EnableRS485Mode===true"
+                      }
+                    ],
+                    "minimum": 0,
+                    "maximum": 31,
+                    "default": 0
+                  },
+                  "AM_EnablePacketTrigger": {
+                    "type": "boolean",
+                    "title": "Autonomous mode",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "($resource.features.auton) && ($main_peripheral_configuration.mode==='async') && ((!$additional_features_configuration.EnableRS485Mode) || ($additional_features_configuration.EnableRS485Mode===false)) && ((!$main_peripheral_configuration.hw_flow_ctl) || ($main_peripheral_configuration.hw_flow_ctl ==='NONE'))"
+                      }
+                    ],
+                    "default": false
+                  },
+                  "trigger_polarity": {
+                    "type": "string",
+                    "title": "Trigger Polarity",
+                    "oneOf": [
+                      {
+                        "title": "Rising",
+                        "const": "RISING"
+                      },
+                      {
+                        "title": "Falling",
+                        "const": "FALLING"
+                      }
+                    ],
+                    "default": "RISING",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$additional_features_configuration.AM_EnablePacketTrigger"
+                      }
+                    ]
+                  },
+                  "packet_size_byte": {
+                    "type": "integer",
+                    "title": "Data Size",
+                    "description": "Data size (bytes)",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$additional_features_configuration.AM_EnablePacketTrigger"
+                      }
+                    ],
+                    "minimum": 0,
+                    "maximum": 65535,
+                    "default": 0
+                  },
+                  "source": {
+                    "type": "object",
+                    "title": "Trigger Source Selection",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$additional_features_configuration.AM_EnablePacketTrigger"
+                      }
+                    ],
+                    "objectType": "query",
+                    "query": {
+                      "entity": "peripheral.interconnect.input trigger",
+                      "parent": "$resource.id",
+                      "title": "{{source}} ({{id}})"
+                    }
+                  },
+                  "AM_EnableIdle": {
+                    "type": "boolean",
+                    "title": "Idle Frame",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$additional_features_configuration.AM_EnablePacketTrigger"
+                      }
+                    ],
+                    "default": false
+                  },
+                  "EnableFifoMode": {
+                    "type": "boolean",
+                    "title": "FIFO Mode",
+                    "default": false
+                  },
+                  "SetTxFifoThreshold": {
+                    "type": "string",
+                    "title": "TX FIFO Threshold",
+                    "oneOf": [
+                      {
+                        "title": "1 eighth full configuration",
+                        "const": "1_8"
+                      },
+                      {
+                        "title": "1 quart full configuration",
+                        "const": "1_4"
+                      },
+                      {
+                        "title": "half full configuration",
+                        "const": "1_2"
+                      },
+                      {
+                        "title": "3 quarts full configuration",
+                        "const": "3_4"
+                      },
+                      {
+                        "title": "7 eighth full configuration",
+                        "const": "7_8"
+                      },
+                      {
+                        "title": "empty configuration",
+                        "const": "8_8"
+                      }
+                    ],
+                    "default": "1_8",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$additional_features_configuration.EnableFifoMode"
+                      }
+                    ]
+                  },
+                  "SetRxFifoThreshold": {
+                    "type": "string",
+                    "title": "RX FIFO Threshold",
+                    "oneOf": [
+                      {
+                        "title": "1 eighth full configuration",
+                        "const": "1_8"
+                      },
+                      {
+                        "title": "1 quart full configuration",
+                        "const": "1_4"
+                      },
+                      {
+                        "title": "half full configuration",
+                        "const": "1_2"
+                      },
+                      {
+                        "title": "3 quarts full configuration",
+                        "const": "3_4"
+                      },
+                      {
+                        "title": "7 eighth full configuration",
+                        "const": "7_8"
+                      },
+                      {
+                        "title": "full configuration",
+                        "const": "8_8"
+                      }
+                    ],
+                    "default": "1_8",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$additional_features_configuration.EnableFifoMode"
+                      }
+                    ]
+                  },
+                  "SetLINModeBreakDetectLength": {
+                    "type": "string",
+                    "title": "Break Detect Length",
+                    "description": "In LIN mode, set the Break Detection Length configuration",
+                    "oneOf": [
+                      {
+                        "title": "10 Bits",
+                        "const": "10"
+                      },
+                      {
+                        "title": "11 Bits",
+                        "const": "11"
+                      }
+                    ],
+                    "default": "10",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$main_peripheral_configuration.mode==='lin'"
+                      }
+                    ]
+                  },
+                  "wakeup_method": {
+                    "title": "Wake Up Method From Mute Mode",
+                    "type": "string",
+                    "oneOf": [
+                      {
+                        "title": "Idle Line",
+                        "const": "IDLE_LINE"
+                      },
+                      {
+                        "title": "Address Mark",
+                        "const": "ADDRESS_MARK"
+                      }
+                    ],
+                    "default": "IDLE_LINE",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$main_peripheral_configuration.mode==='multiprocessor_communication'"
+                      }
+                    ]
+                  },
+                  "address_length": {
+                    "type": "string",
+                    "title": "Wake Up Address Length",
+                    "oneOf": [
+                      {
+                        "title": "4 Bits",
+                        "const": "4"
+                      },
+                      {
+                        "title": "7 Bits",
+                        "const": "7"
+                      }
+                    ],
+                    "default": "4",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "($main_peripheral_configuration.mode==='multiprocessor_communication') && ($additional_features_configuration.wakeup_method==='ADDRESS_MARK')"
+                      }
+                    ]
+                  },
+                  "address": {
+                    "type": "integer",
+                    "title": "Wake Up Address",
+                    "description": "Address of the UART node",
+                    "actions": [
+                      {
+                        "type": "set",
+                        "attributes": {
+                          "maximum": 15
+                        },
+                        "condition": "$additional_features_configuration.address_length==='4'"
+                      },
+                      {
+                        "type": "set",
+                        "attributes": {
+                          "maximum": 63
+                        },
+                        "condition": "$additional_features_configuration.address_length==='7' && $main_peripheral_configuration.word_length==='7' "
+                      },
+                      {
+                        "type": "set",
+                        "attributes": {
+                          "maximum": 127
+                        },
+                        "condition": "$additional_features_configuration.address_length==='7' && $main_peripheral_configuration.word_length==='8' "
+                      },
+                      {
+                        "type": "include",
+                        "condition": "($main_peripheral_configuration.mode==='multiprocessor_communication') && ($additional_features_configuration.wakeup_method==='ADDRESS_MARK')"
+                      }
+                    ],
+                    "minimum": 0,
+                    "maximum": 255,
+                    "default": 0
+                  },
+                  "EnableStopMode": {
+                    "type": "boolean",
+                    "title": "Wake Up From Low Power Mode (LP)",
+                    "default": false
+                  },
+                  "SetConfigAutoBaudRate": {
+                    "type": "string",
+                    "title": "Auto Baudrate Mode",
+                    "oneOf": [
+                      {
+                        "title": "Disable",
+                        "const": "DISABLE"
+                      },
+                      {
+                        "title": "On start bit",
+                        "const": "START_BIT"
+                      },
+                      {
+                        "title": "On falling edge",
+                        "const": "FALLING_EDGE"
+                      },
+                      {
+                        "title": "On 0x7F frame",
+                        "const": "0X7F_FRAME",
+                        "actions": [
+                          {
+                            "type": "exclude",
+                            "condition": "$main_peripheral_configuration.word_length=='7'"
+                          }
+                        ]
+                      },
+                      {
+                        "title": "On 0x55 frame",
+                        "const": "0X55_FRAME",
+                        "actions": [
+                          {
+                            "type": "exclude",
+                            "condition": "$main_peripheral_configuration.word_length=='7'"
+                          }
+                        ]
+                      }
+                    ],
+                    "default": "DISABLE",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$resource.features.abr_rto_sct1==true"
+                      }
+                    ]
+                  },
+                  "EnableTxPinLevelInvert": {
+                    "type": "boolean",
+                    "title": "TX Pin Active Level Inversion",
+                    "default": false
+                  },
+                  "EnableRxPinLevelInvert": {
+                    "type": "boolean",
+                    "title": "RX Pin Active Level Inversion",
+                    "default": false
+                  },
+                  "EnableDataInvert": {
+                    "type": "boolean",
+                    "title": "Data Inversion",
+                    "default": false
+                  },
+                  "EnableTxRxSwap": {
+                    "type": "boolean",
+                    "title": "Tx and Rx Pins Swapping",
+                    "default": false
+                  },
+                  "EnableReceiverTimeout": {
+                    "type": "boolean",
+                    "description": "Enable UART Receiver Timeout feature into the handler instance registers.",
+                    "default": false
+                  },
+                  "SetReceiverTimeout": {
+                    "type": "integer",
+                    "description": "Set the UART receiver timeout value passed in parameters into the handler instance registers.",
+                    "default": 0,
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "($additional_features_configuration.EnableReceiverTimeout)"
+                      }
+                    ],
+                    "minimum": 0,
+                    "maximum": 16777215
+                  },
+                  "DisableRxOverRunDetection": {
+                    "type": "boolean",
+                    "title": "Overrun Detection Disable",
+                    "actions": [
+                      {
+                        "type": "exclude",
+                        "condition": "$main_peripheral_configuration.direction=='TX'"
+                      }
+                    ],
+                    "default": false
+                  },
+                  "EnableDMAStopOnRxError": {
+                    "type": "boolean",
+                    "title": "DMA Stop on RX Error",
+                    "actions": [
+                      {
+                        "type": "exclude",
+                        "condition": "$main_peripheral_configuration.direction=='TX'"
+                      }
+                    ],
+                    "default": false
+                  },
+                  "EnableMSBFirst": {
+                    "type": "boolean",
+                    "title": "MSB First",
+                    "default": false
+                  }
+                }
+              },
+              "System": {
+                "type": "object",
+                "title": "System configuration",
+                "properties": {
+                  "GPIO_Settings": {
+                    "type": "object",
+                    "description": "GPIO settings",
+                    "properties": {
+                      "gpio_tx": {
+                        "title": "GPIOs TX configuration",
+                        "actions": [
+                          {
+                            "type": "exclude",
+                            "condition": "($main_peripheral_configuration.mode!='half_duplex_single_wire_mode' && (($main_peripheral_configuration.direction == 'RX' && (!$additional_features_configuration.EnableTxRxSwap)) || ($main_peripheral_configuration.direction == 'TX' && $additional_features_configuration.EnableTxRxSwap))) || ($main_peripheral_configuration.mode=='half_duplex_single_wire_mode' && $additional_features_configuration.EnableTxRxSwap)"
+                          }
+                        ],
+                        "type": "object",
+                        "objectType": "need.pinout.signals",
+                        "owner": "$resource.id",
+                        "needs": [
+                          {
+                            "selector": "TX",
+                            "constraints": {
+                              "mode": {
+                                "const": "ALTERNATE"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "gpio_rx": {
+                        "title": "GPIOs RX configuration",
+                        "actions": [
+                          {
+                            "type": "exclude",
+                            "condition": "($main_peripheral_configuration.mode!='half_duplex_single_wire_mode'  && (($main_peripheral_configuration.direction == 'RX' && $additional_features_configuration.EnableTxRxSwap) || ($main_peripheral_configuration.direction == 'TX' && (!$additional_features_configuration.EnableTxRxSwap)))) || ($main_peripheral_configuration.mode=='half_duplex_single_wire_mode' && (!$additional_features_configuration.EnableTxRxSwap))"
+                          }
+                        ],
+                        "type": "object",
+                        "objectType": "need.pinout.signals",
+                        "owner": "$resource.id",
+                        "needs": [
+                          {
+                            "selector": "RX",
+                            "constraints": {
+                              "mode": {
+                                "const": "ALTERNATE"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "gpio_rts": {
+                        "title": "GPIOs RTS configuration",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$main_peripheral_configuration.hw_flow_ctl === 'RTS' || $main_peripheral_configuration.hw_flow_ctl === 'RTS_CTS'"
+                          }
+                        ],
+                        "type": "object",
+                        "objectType": "need.pinout.signals",
+                        "owner": "$resource.id",
+                        "needs": [
+                          {
+                            "selector": "RTS",
+                            "constraints": {
+                              "mode": {
+                                "const": "ALTERNATE"
+                              },
+                              "output_type": {
+                                "const": "PUSHPULL"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "gpio_cts": {
+                        "title": "GPIOs CTS configuration",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$main_peripheral_configuration.hw_flow_ctl === 'CTS' || $main_peripheral_configuration.hw_flow_ctl === 'RTS_CTS'"
+                          }
+                        ],
+                        "type": "object",
+                        "objectType": "need.pinout.signals",
+                        "owner": "$resource.id",
+                        "needs": [
+                          {
+                            "selector": "CTS",
+                            "constraints": {
+                              "mode": {
+                                "const": "ALTERNATE"
+                              },
+                              "output_type": {
+                                "const": "PUSHPULL"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "gpio_de": {
+                        "title": "GPIOs DE configuration",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$additional_features_configuration.EnableRS485Mode"
+                          }
+                        ],
+                        "type": "object",
+                        "objectType": "need.pinout.signals",
+                        "owner": "$resource.id",
+                        "needs": [
+                          {
+                            "selector": "RTS",
+                            "constraints": {
+                              "mode": {
+                                "const": "ALTERNATE"
+                              },
+                              "output_type": {
+                                "const": "PUSHPULL"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "EnableInterruption": {
+                    "type": "boolean",
+                    "title": "Global interrupt",
+                    "actions": [
+                      {
+                        "type": "disable",
+                        "condition": "$System.EnableDMA_TX"
+                      },
+                      {
+                        "type": "set",
+                        "condition": "$System.EnableDMA_TX",
+                        "attributes": {
+                          "const": true
+                        }
+                      }
+                    ],
+                    "default": false
+                  },
+                  "irq_handler_generation": {
+                  "type": "boolean",
+                  "title": "IRQ Handler generation",
+                  "default": true,
+                  "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$System.EnableInterruption && $info.layer === 'HAL'"
+                      }
+                    ]
+                  },
+                  "nvicConfig": {
+                    "title": "NVIC UART global configuration",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$System.EnableInterruption"
+                      }
+                    ],
+                    "type": "object",
+                    "objectType": "need.interrupt.lines",
+                    "owner": "$resource.id",
+                    "needs": [
+                      {
+                        "selector": "*"
+                      }
+                    ]
+                  },
+                  "EnableDMA_TX": {
+                    "type": "boolean",
+                    "description": "Enable Tx DMA",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$main_peripheral_configuration.direction === 'TX' || $main_peripheral_configuration.direction === 'TX_RX'"
+                      }
+                    ],
+                    "default": false
+                  },
+                  "dmaConfigTx": {
+                    "title": "DMA Tx configuration",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$System.EnableDMA_TX"
+                      }
+                    ],
+                    "type": "object",
+                    "objectType": "need.dma.channels",
+                    "owner": "$resource.id",
+                    "needs": [
+                      {
+                        "selector": "TX",
+                        "constraints": {
+                          "direction": {
+                            "const": "MEMORY_TO_PERIPH"
+                          },
+                          "src_inc": {
+                            "default": "INCREMENTED"
+                          },
+                          "dest_inc": {
+                            "default": "FIXED"
+                          },
+                          "dest_data_width": {
+                            "default": "BYTE"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "EnableDMA_RX": {
+                    "type": "boolean",
+                    "description": "Enable Rx DMA",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$main_peripheral_configuration.direction === 'RX' || $main_peripheral_configuration.direction === 'TX_RX'"
+                      },
+                      {
+                        "type": "set",
+                        "condition": "$additional_features_configuration.EnableDMAStopOnRxError",
+                        "attributes": {
+                          "const": true
+                        }
+                      }
+                    ],
+                    "default": false
+                  },
+                  "dmaConfigRx": {
+                    "title": "DMA Rx configuration",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$System.EnableDMA_RX"
+                      }
+                    ],
+                    "type": "object",
+                    "objectType": "need.dma.channels",
+                    "owner": "$resource.id",
+                    "needs": [
+                      {
+                        "selector": "RX",
+                        "constraints": {
+                          "direction": {
+                            "const": "PERIPH_TO_MEMORY"
+                          },
+                          "src_inc": {
+                            "default": "FIXED"
+                          },
+                          "dest_inc": {
+                            "default": "INCREMENTED"
+                          },
+                          "dest_data_width": {
+                            "default": "BYTE"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+}

@@ -1,0 +1,65 @@
+{{!--
+  Partial used for LL CORDIC:
+  how to use
+  > CORDIC_LL fct='xxxx' with xxxx:
+    * init
+    * deinit
+--}}
+{{!==================== partial function: init ====================~}}
+{{#if (eq fct 'init')}}
+CORDIC_TypeDef *{{@root.fct_name}}_init(void)
+{
+{{> RCC fct='generate_peripheral_clock_activation' hw_resource= @root.current_resource ~}}
+
+{{#with Basic}}
+  {{helper_common_gen_ll_code "LL_CORDIC_SetFunction" (concat 'LL_CORDIC_FUNCTION_'function)}}
+  {{helper_common_gen_ll_code "LL_CORDIC_SetPrecision" (concat 'LL_CORDIC_PRECISION_' precision "_CYCLE")}}
+  {{helper_common_gen_ll_code "LL_CORDIC_SetScale" (concat 'LL_CORDIC_SCALING_FACTOR_' scaling_factor)}}
+  {{helper_common_gen_ll_code "LL_CORDIC_SetNbWrite" (concat 'LL_CORDIC_NBWRITE_' nb_arg)}}
+  {{helper_common_gen_ll_code "LL_CORDIC_SetNbRead" (concat 'LL_CORDIC_NBREAD_' nb_result)}}
+  {{helper_common_gen_ll_code "LL_CORDIC_SetInWidth" (concat 'LL_CORDIC_INWIDTH_' in_width "_BIT")}}
+  {{helper_common_gen_ll_code "LL_CORDIC_SetOutWidth" (concat 'LL_CORDIC_OUTWIDTH_' out_width "_BIT")}}
+{{/with}}
+{{#if System.DMA_Settings.EnableDMA_WR}}
+  LL_CORDIC_EnableDMAReq_WR({{@root.current_resource}});
+  /* Configure the DMA WR */
+{{#> DMA_LL fct='init' needs=System.DMA_Settings.dmaConfigWR.needs}}
+{{/DMA_LL}}
+{{/if}}
+{{#if System.DMA_Settings.EnableDMA_RD}}
+  LL_CORDIC_EnableDMAReq_RD({{@root.current_resource}});
+  /* Configure the DMA RD */
+{{#> DMA_LL fct='init' needs=System.DMA_Settings.dmaConfigRD.needs}}
+{{/DMA_LL}}
+{{/if}}
+{{#if System.nvicSettings.Interruption_global}}
+  LL_CORDIC_EnableIT({{@root.current_resource}});
+  /* Enable the interruption for {{@root.current_resource}} */
+{{assign 'nvic_context' (helper_cortex_nvic_concatenate_irq_context @root.nvic_context System.nvicSettings.nvicConfig.needs @root.current_resource irq_handler_generation)~}}
+{{> CORTEX fct='init' layer=@root.current_layer needs=System.nvicSettings.nvicConfig.needs}}
+{{/if}}
+  return {{@root.current_resource}};
+}
+{{!==================== partial function: deinit ====================~}}
+{{else if (eq fct 'deinit')}}
+void {{@root.fct_name}}_deinit(void)
+{
+{{#if System.nvicSettings.Interruption_global}}
+  /* Disable the interruption for CORDIC */
+  LL_CORDIC_DisableIT({{@root.current_resource}});
+{{#> CORTEX fct='deinit' layer=@root.current_layer}}
+{{/CORTEX}}
+{{/if}}
+{{#if System.DMA_Settings.EnableDMA_RD}}
+  LL_CORDIC_DisableDMAReq_RD({{@root.current_resource}});
+{{> DMA_LL fct='deinit' needs=System.DMA_Settings.dmaConfigRD.needs}}
+{{/if}}
+{{#if System.DMA_Settings.EnableDMA_WR}}
+  LL_CORDIC_DisableDMAReq_WR({{@root.current_resource}});
+{{> DMA_LL fct='deinit' needs=System.DMA_Settings.dmaConfigWR.needs}}
+{{/if}}
+{{> RCC fct='generate_peripheral_clock_deactivation' hw_resource= @root.current_resource ~}}
+}
+{{else}}
+#warning "step {{fct}} in partial CORDIC_LL not managed"
+{{/if}}

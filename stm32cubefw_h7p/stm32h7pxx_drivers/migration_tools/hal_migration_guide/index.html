@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html data-content_root="./" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="_static/stylesheets/application.css" rel="stylesheet">
+   <link href="_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="_static/javascripts/modernizr.js">
+    </script>
+    <script src="_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     Welcome to the HAL1 to HAL2 migration guide — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <script src="_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="_static/design-tabs.js?v=f930bc37">
+    </script>
+    <link href="genindex.html" rel="index" title="Index"/>
+    <link href="search.html" rel="search" title="Search"/>
+    <link href="docs/markup/getting_started/getting_started.html" rel="next" title="Getting started"/>
+    <link href="global_toc.html" rel="prev" title="HAL migration guide Table of Contents"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#index" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <input class="md-toggle md-nav__toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+           <label class="md-nav__link md-nav__link--active" for="__toc">
+            Welcome to the HAL1 to HAL2 migration guide
+           </label>
+           <a class="md-nav__link md-nav__link--active" href="#">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+           <link href="_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+           <nav class="md-nav md-nav--secondary">
+            <label class="md-nav__title" for="__toc">
+             "Contents"
+            </label>
+            <ul class="md-nav__list2" data-md-scrollfix="">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#index--page-root">
+               Welcome to the HAL1 to HAL2 migration guide
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#indices-and-tables">
+                  Indices and tables
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+            </ul>
+           </nav>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="#indices-and-tables">
+              Indices and tables
+             </a>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="docs/markup/getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="docs/markup/migration_script/migration_script_toc.html">
+            HAL1 detection
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="docs/markup/drivers_documentation/drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="docs/markup/migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#index--page-root">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#indices-and-tables">
+               Indices and tables
+              </a>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="welcome-to-the-hal1-to-hal2-migration-guide">
+        <h1 id="index--page-root">
+         Welcome to the HAL1 to HAL2 migration guide
+         <a class="headerlink" href="#index--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <p>
+         Welcome to the user guide for migrating your software application from STM32Cube HAL version 1
+to STM32Cube HAL2.
+The STM32Cube HAL (hardware abstraction layer) has undergone significant improvements in its latest version,
+enhancing performance, resources usage, and ease of use.
+However, these enhancements come with breaking changes that may affect the compatibility of your existing applications.
+        </p>
+        <p>
+         This guide is designed to assist you in navigating these changes and successfully migrating your application
+to STM32Cube HAL2.
+        </p>
+        <p>
+         We provide detailed instructions and best practices to ensure a smooth transition:
+        </p>
+        <ul class="simple">
+         <li>
+          <p>
+           <strong>
+            Getting Started
+           </strong>
+           : Introducing the HAL1 to HAL2 Migration Material and Recommended Journey.
+          </p>
+         </li>
+         <li>
+          <p>
+           <strong>
+            HAL1 automatic detection script
+           </strong>
+           : Discover the HAL1 APIs detection tool Setup and Usage.
+          </p>
+         </li>
+         <li>
+          <p>
+           <strong>
+            STM32 Drivers Migration Guides
+           </strong>
+           : Learn About HAL2 Changes vs HAL1 in Concepts and Detailed Driver-by-Driver Analysis.
+          </p>
+         </li>
+         <li>
+          <p>
+           <strong>
+            Migration example
+           </strong>
+           : A Practical Migration Journey on an Example.
+          </p>
+         </li>
+         <li>
+          <p>
+           <strong>
+            HAL migration checklist
+           </strong>
+           (
+           <a class="reference external" href="../hal_migration_checklist.html">
+            link
+           </a>
+           ): Enabling users to monitor their progress and ensure that all steps of the migration journey are completed successfully.
+          </p>
+         </li>
+        </ul>
+        <div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+         <div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-3 sd-row-cols-lg-4 docutils">
+          <div class="sd-col sd-d-flex-row sd-p-1 docutils">
+           <div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+            <img alt="" class="sd-card-img-top" src="_images/getting_started.svg">
+             <div class="sd-card-body docutils">
+              <div class="sd-card-title sd-font-weight-bold docutils">
+               Getting started
+              </div>
+              <p class="sd-card-text">
+               HAL migration Getting started.
+              </p>
+             </div>
+             <div class="sd-card-footer docutils">
+              <p class="sd-card-text">
+               Introducing the HAL1 to HAL2 Migration Material.
+Learn about the recommended HAL1 to HAL2 migration journey.
+              </p>
+             </div>
+             <a class="sd-stretched-link sd-hide-link-text reference internal" href="docs/markup/getting_started/getting_started.html#getting-started">
+              <span class="std std-ref">
+               Getting started
+              </span>
+             </a>
+            </img>
+           </div>
+          </div>
+          <div class="sd-col sd-d-flex-row sd-p-1 docutils">
+           <div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+            <img alt="" class="sd-card-img-top" src="_images/industrial-robot-factory-svgrepo-com.svg"/>
+            <div class="sd-card-body docutils">
+             <div class="sd-card-title sd-font-weight-bold docutils">
+              HAL1 automatic detection script
+             </div>
+             <p class="sd-card-text">
+              HAL1 automatic detection script principles and usage.
+             </p>
+            </div>
+            <div class="sd-card-footer docutils">
+             <p class="sd-card-text">
+              Discover the principles and usages of the HAL1 automatic detection script for seamless transition to HAL2.
+             </p>
+            </div>
+            <a class="sd-stretched-link sd-hide-link-text reference internal" href="docs/markup/migration_script/migration_script_welcome.html#migration-script-intro">
+             <span class="std std-ref">
+              HAL1 automatic detection script
+             </span>
+            </a>
+           </div>
+          </div>
+          <div class="sd-col sd-d-flex-row sd-p-1 docutils">
+           <div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+            <img alt="" class="sd-card-img-top" src="_images/150px-Package_MCU_blue.png"/>
+            <div class="sd-card-body docutils">
+             <div class="sd-card-title sd-font-weight-bold docutils">
+              STM32 drivers migration guides
+             </div>
+             <p class="sd-card-text">
+              Migration details for migrating STM32 drivers from HAL1 to HAL2.
+             </p>
+            </div>
+            <div class="sd-card-footer docutils">
+             <p class="sd-card-text">
+              Learn the breaking changes patterns and principles.
+Detailed migration guides, down to each HAL/LL driver.
+             </p>
+            </div>
+            <a class="sd-stretched-link sd-hide-link-text reference internal" href="docs/markup/drivers_documentation/drivers_toc.html#drivers-doc-intro">
+             <span class="std std-ref">
+              HAL1 to HAL2 details
+             </span>
+            </a>
+           </div>
+          </div>
+          <div class="sd-col sd-d-flex-row sd-p-1 docutils">
+           <div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+            <img alt="" class="sd-card-img-top" src="_images/tutorial-enter-svgrepo-com.svg"/>
+            <div class="sd-card-body docutils">
+             <div class="sd-card-title sd-font-weight-bold docutils">
+              Migration example
+             </div>
+             <p class="sd-card-text">
+              Migration process in practice including IDE project settings update.
+             </p>
+            </div>
+            <div class="sd-card-footer docutils">
+             <p class="sd-card-text">
+              Tutorial on migrating an application with automatic and manual steps based on the migration material.
+             </p>
+            </div>
+            <a class="sd-stretched-link sd-hide-link-text reference internal" href="docs/markup/migration_example/example_toc.html#migration-example-intro">
+             <span class="std std-ref">
+              Migration example
+             </span>
+            </a>
+           </div>
+          </div>
+         </div>
+        </div>
+        <section id="indices-and-tables">
+         <h2 id="indices-and-tables">
+          Indices and tables
+          <a class="headerlink" href="#indices-and-tables" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <ul class="simple">
+          <li>
+           <p>
+            <a class="reference internal" href="genindex.html">
+             <span class="std std-ref">
+              Index
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="_static/javascripts/navlink_break.js">
+  </script>
+  <script src="_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

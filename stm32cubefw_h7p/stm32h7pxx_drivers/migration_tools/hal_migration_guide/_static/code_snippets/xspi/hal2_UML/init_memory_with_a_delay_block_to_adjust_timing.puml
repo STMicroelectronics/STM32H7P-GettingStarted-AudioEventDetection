@@ -1,0 +1,20 @@
+@startuml Initializing memory with a delay block to adjust timing
+== Initialization ==
+"Application" -> "XSPI" : HAL_XSPI_Init()
+"XSPI" --> "Application" : HAL_OK or HAL_INVALID_PARAM
+"Application" -> "System" : XSPI HW Initialization
+note right: Initialize GPIO
+"System" --> "Application"
+== Configuration ==
+"Application" -> "XSPI" : HAL_XSPI_SetConfig()
+note right: Global configuration
+"XSPI" --> "Application" : HAL_OK or HAL_ERROR or HAL_INVALID_PAR
+"Application" -> "XSPI" : HAL_XSPI_DLYB_SetConfigDelay()
+note right: Set delay block configuration
+"XSPI" --> "Application" : HAL_OK or HAL_ERROR or HAL_INVALID_PAR
+"Application" -> "XSPI" : HAL_XSPI_DLYB_Enable();
+"XSPI" --> "Application"
+== Process polling mode ==
+note over XSPI, Application: **Continue the process operations according to the targeted scenario**
+
+@enduml

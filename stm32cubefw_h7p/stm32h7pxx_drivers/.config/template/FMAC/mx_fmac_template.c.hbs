@@ -1,0 +1,144 @@
+{{assign "strategy" (@root.EnvVarAPI.getVariableValue 'SYSTEM_PROJECT_CODEGEN_STRATEGY')~}}
+{{log "strategy" @root.strategy~}}
+{{#if (eq @root.strategy "SW")}}
+{{assign 'current_resource' 'FMAC'~}}
+{{assign 'instances' (@root.SWConfigurationAPI.getInstances 'STMicroelectronics::Device:STM32CubeMX2 Config:FMAC')~}}
+{{assign 'dma_resource' 'STM32CubeMX2 Config:FMAC'~}}
+{{else}}
+{{assign "strategy" 'HW'~}}
+{{#get_myctx~}}
+{{#with _myctx~}}
+{{log "FMAC template _myctx:" this~}}
+{{assign 'current_resource' resource~}}
+{{assign 'dma_resource' resource~}}
+{{assign 'instances' instances~}}
+{{/with~}}
+{{/get_myctx~}}
+{{/if}}
+{{log "FMAC template current_resource:" @root.current_resource~}}
+{{log "FMAC template instances:" (toJSON @root.instances)~}}
+{{> SYSTEM fct='system_check_ll_optim'}}
+/**
+  ******************************************************************************
+  * @file           : mx_{{lowercase @root.current_resource}}.c
+  * @brief          : {{@root.current_resource}} Peripheral initialization
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2024-2025 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* Includes ------------------------------------------------------------------*/
+#include "mx_{{lowercase @root.current_resource}}.h"
+{{> RCC fct='include_rcc'}}
+
+/* Private typedef -----------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+/* Private macros ------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+/* Private functions prototype------------------------------------------------*/
+/* Exported variables by reference--------------------------------------------*/
+{{assign 'hal_handle_exist' 0~}}
+{{#each @root.instances~}}
+{{#if (eq @root.strategy "SW")}}
+{{assign 'fmac_cxt' (@root.SWConfigurationAPI.getSWInstanceConfiguration this)~}}
+{{log "FMAC template fmac_cxt:" (toJSON @root.fmac_cxt)~}}
+{{~assign 'current_resource' (@root.peripheralsResourceManagerAPI.getPeripheralBoundToSoftwareInstance this)~}}
+{{assign 'current_layer' @root.fmac_cxt.info.layer~}}
+{{log "FMAC template current_resource:" @root.current_resource~}}
+{{else}}
+{{assign 'current_layer' info.layer~}}
+{{/if}}
+{{#if (eq @root.current_layer 'HAL')}}
+{{#if (eq @root.hal_handle_exist 0)}}
+static hal_fmac_handle_t h{{@root.current_resource}};
+{{assign 'hal_handle_exist' 1~}}
+{{/if}}
+{{/if}}
+{{/each}}
+{{> DMA_HAL fct='get_dma_handles' resource=@root.current_resource}}
+
+{{assign 'hal_handle_exist' 0~}}
+{{helper_common_initialize_index~}}
+{{assign 'current_index' (helper_common_get_index @root.current_resource)~}}
+{{assign 'nvic_context' 'undefined'~}}
+{{#each @root.instances}}
+{{#if (eq @root.strategy "HW")}}
+{{assign 'name' name~}}
+{{assign 'current_layer' info.layer~}}
+{{else}}
+{{assign 'fmac_cxt' (@root.SWConfigurationAPI.getSWInstanceConfiguration this)~}}
+{{~assign 'current_resource' (@root.peripheralsResourceManagerAPI.getPeripheralBoundToSoftwareInstance this)~}}
+{{assign 'name' @root.fmac_cxt.name~}}
+{{assign 'current_layer' @root.fmac_cxt.info.layer~}}
+{{/if}}
+{{assign 'lut_table'   (helper_fmac_get_lut_table)~}}
+{{helper_common_initialize_ll_code @root.optim_enable @root.lut_table @root.current_resource~}}
+/******************************************************************************/
+/* Exported functions for {{@root.current_resource}} in {{@root.current_layer}} layer (SW instance {{@root.name}}) */
+/******************************************************************************/
+
+{{assign 'fct_name' (helper_common_get_generated_function_name @root.current_resource @root.current_layer @root.current_index)~}}
+{{#if (eq @root.current_layer 'HAL')}}
+{{!
+    Generation of initialization function used in HAL
+~}}
+{{> FMAC_HAL fct='init'}}
+{{!
+    Generation of de-initialization function used in HAL
+~}}
+{{> FMAC_HAL fct='deinit'}}
+
+{{assign 'fct_name' (helper_common_get_generated_function_name @root.current_resource @root.current_layer undefined)~}}
+{{!
+    Generation of getHandle functions used in HAL
+~}}
+hal_fmac_handle_t *{{@root.fct_name}}_gethandle(void)
+{
+  return &h{{@root.current_resource}};
+}
+
+{{else}}{{! eq @root.current_layer 'LL' ~}}
+{{assign 'nvic_generate_handler' false~}}
+{{!
+    Generation of initialization function used in LL
+~}}
+{{> FMAC_LL fct='init'}}
+{{!
+    Generation of initialization function used in LL
+~}}
+{{> FMAC_LL fct='deinit'}}
+{{/if}}
+{{#if (eq @root.current_layer 'HAL')}}
+{{#if (eq @root.hal_handle_exist 0)}}
+{{assign 'hal_handle_exist' 1~}}
+{{/if}}
+{{/if}}
+{{/each}}
+{{assign 'irq_info_list' (helper_cortex_nvic_get_irqline_info_list @root.NvicAPI @root.nvic_context 'FMAC')~}}
+{{#each @root.irq_info_list}}
+{{#if generate_handler}}
+/******************************************************************************/
+/*                     {{description}}                                        */
+/******************************************************************************/
+void {{line}}_IRQHandler(void)
+{
+  HAL_{{component}}_IRQHandler(&h{{resource_hw}});
+}
+{{else}}
+/******************************************************************************/
+/*    {{description}} is managed directly in user code.                       */
+/*
+void {{line}}_IRQHandler(void)
+{
+}
+  */
+/******************************************************************************/
+{{/if}}
+{{/each}}

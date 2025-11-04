@@ -1,0 +1,112 @@
+{{assign "levelxFilter" (JSONparse '{"cgroup": "STM32CubeMX2 Config", "csub": "LevelX"}')~}}
+{{assign 'levelx_context' (@root.SWConfigurationAPI.getInstancesConfiguration @root.levelxFilter)~}}
+{{assign 'levelx_cxt' @root.levelx_context.[0].settings.parameters~}}
+{{log "LevelX Config template levelx_cxt:" (toJSON @root.levelx_cxt)~}}
+
+{{log "RTOS Config template rtos_cxt:" (toJSON @root.rtos_cxt)~}}
+
+{{assign 'used_components_levelx' (@root.SWProjectAPI.getUsedComponents 'asObject' cgroup="LevelX")~}}
+{{assign 'used_components_freertos' (@root.SWProjectAPI.getUsedComponents 'asObject' cgroup="FreeRTOS")~}}
+
+/**
+  ******************************************************************************
+  * @file    mx_levelx_app.c
+  * @author  MCD Application Team
+  * @brief   LevelX applicative file
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2025 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* Includes ------------------------------------------------------------------*/
+#include "mx_levelx_app.h"
+
+/* Private includes ----------------------------------------------------------*/
+
+/* Private typedef -----------------------------------------------------------*/
+
+/* Private define ------------------------------------------------------------*/
+
+/* Private macro -------------------------------------------------------------*/
+{{#if (helper_if_component_os_is_enabled used_components_freertos 'Core')}}
+  {{#with levelx_cxt~}}
+    {{#with Core~}}
+        {{#with Applicative~}}
+          {{#if Generate_LevelX_Init_Code}}
+TaskHandle_t    lx_app_task;
+          {{/if}}
+        {{/with}}
+    {{/with}}
+  {{/with}}
+{{/if}}
+
+/* Private variables ---------------------------------------------------------*/
+
+/* Private function prototypes -----------------------------------------------*/
+{{#if (helper_if_component_os_is_enabled used_components_freertos 'Core')}}
+  {{#with levelx_cxt~}}
+    {{#with Core~}}
+        {{#with Applicative~}}
+          {{#if Generate_LevelX_Init_Code}}
+VOID {{LevelX_App_Task_Entry_Name}}(VOID *args);
+          {{/if}}
+        {{/with}}
+    {{/with}}
+  {{/with}}
+{{/if}}
+
+/**
+  * @brief  Application LevelX Initialization.
+  * @param  None
+  * @retval 0 on success -1 otherwise
+  */
+UINT app_levelx_init(VOID)
+{
+{{#if (helper_if_component_os_is_enabled used_components_freertos 'Core')}}
+  {{#with levelx_cxt~}}
+    {{#with Core~}}
+        {{#with Applicative~}}
+          {{#if Generate_LevelX_Init_Code}}
+  UINT ret;
+
+  /* Create the {{LevelX_App_Task_Entry_Name}} */
+  ret = xTaskCreate({{LevelX_App_Task_Entry_Name}}, LevelX_App_Task_Name, LevelX_App_Stack_Size, (VOID *) NULL,
+                    LevelX_App_Task_Priority, &lx_app_task);
+  if (ret != pdPASS)
+  {
+    return -1;
+  }
+          {{/if}}
+        {{/with}}
+    {{/with}}
+  {{/with}}
+{{/if}}
+  return 0;
+}
+
+{{#if (helper_if_component_os_is_enabled used_components_freertos 'Core')}}
+  {{#with levelx_cxt~}}
+    {{#with Core~}}
+        {{#with Applicative~}}
+          {{#if Generate_LevelX_Init_Code}}
+/**
+ * @brief  {{LevelX_App_Task_Entry_Name}}.
+ * @param  args: Task arguments
+ * @retval None
+*/
+VOID {{LevelX_App_Task_Entry_Name}}(VOID *args)
+{
+
+}
+          {{/if}}
+        {{/with}}
+      {{/with}}
+  {{/with}}
+{{/if}}

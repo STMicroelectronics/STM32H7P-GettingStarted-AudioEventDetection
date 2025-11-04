@@ -1,0 +1,90 @@
+{{assign "usbxFilter" (JSONparse '{"cgroup": "STM32CubeMX2 Config", "csub": "USBX"}')~}}
+{{assign 'usbx_context' (@root.SWConfigurationAPI.getInstancesConfiguration @root.usbxFilter)~}}
+{{assign 'usbx_cxt' @root.usbx_context.[0].settings.parameters~}}
+{{assign 'USBX_Controllers_Driver' (@root.SWProjectAPI.getUsedComponents 'asObject' cgroup="USBX Controllers Driver")~}}
+{{assign 'USBX_Class_Selected' (@root.SWProjectAPI.getUsedComponents 'asObject' cgroup="STM32CubeMX2 Codegen")~}}
+/**
+  ******************************************************************************
+  * @file    mx_usbx_device.h
+  * @author  MCD Application Team
+  *
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2025 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef MX_USBX_DEVICE_H
+#define MX_USBX_DEVICE_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+{{#with @root.usbx_cxt~}}
+{{#with core_config.basic~}}
+
+/* Includes ----------------------------------------------------------*/
+#include "ux_api.h"
+#include "ux_stm32_device_descriptors_config.h"
+#include "ux_stm32_device_descriptors.h"
+{{#if (helper_USBX_Controllers_is_enabled @root.USBX_Controllers_Driver 'Device')}}
+#include "ux_dcd_stm32.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'HID_Mouse_Device_Class')}}
+#include "mx_usbx_device_hid_mouse.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'HID_Keyboard_Device_Class')}}
+#include "mx_usbx_device_hid_keyboard.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'HID_Custom_Device_Class')}}
+#include "mx_usbx_device_hid_custom.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'CDC_ACM_Device_Class')}}
+#include "mx_usbx_device_cdc_acm.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'PIMA_MTP_Device_Class')}}
+#include "mx_usbx_device_pima_mtp.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'MSC_Device_Class')}}
+#include "mx_usbx_device_msc.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'DFU_Device_Class')}}
+#include "mx_usbx_device_dfu.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'AUDIO_Device_Class')}}
+#include "mx_usbx_device_audio.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'VIDEO_Device_Class')}}
+#include "mx_usbx_device_video.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'PRINTER_Device_Class')}}
+#include "mx_usbx_device_printer.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'CCID_Device_Class')}}
+#include "mx_usbx_device_ccid.h"
+{{/if}}
+#include "mx_hal_def.h"
+#include "mx_usbx_app.h"
+/* Exported types ------------------------------------------------------------*/
+/* Exported constants --------------------------------------------------------*/
+/* Exported macro ------------------------------------------------------------*/
+/* Exported functions prototypes ---------------------------------------------*/
+UINT app_usbx_device_init(VOID);
+UINT app_usbx_device_deinit(VOID);
+/* Exported defines -----------------------------------------------------------*/
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* MX_USBX_DEVICE_H */
+{{/with}}
+{{/with}}

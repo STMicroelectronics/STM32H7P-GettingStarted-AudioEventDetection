@@ -1,0 +1,16 @@
+@startuml Memory initialization using XSPIM configuration
+== Initialization ==
+"Application" -> "XSPI" : HAL_XSPI_XSPIM_SetConfig()
+"XSPI" --> "Application" :
+"Application" -> "XSPI" : HAL_XSPI_Init()
+"XSPI" --> "Application" : HAL_OK or HAL_INVALID_PARAM
+"Application" -> "System" :XSPI HW Initialization
+"System" --> "Application"
+
+== Configuration ==
+"Application" -> "XSPI" : HAL_XSPI_SetConfig()
+"XSPI" --> "Application"
+
+== Process ==
+note over XSPI, Application: **Continue the process according to the targeted scenario**
+@enduml

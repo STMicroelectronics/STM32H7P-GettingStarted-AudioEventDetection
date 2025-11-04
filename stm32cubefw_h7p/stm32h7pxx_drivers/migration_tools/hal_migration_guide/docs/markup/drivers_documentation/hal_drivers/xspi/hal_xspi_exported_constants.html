@@ -1,0 +1,3194 @@
+<!DOCTYPE html>
+<html data-content_root="../../../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, HAL1, XSPI, STM32H5, STM32G0, STM32F4, STM32L4, STM32C0, STM32H7" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     HAL XSPI constants migration — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <script src="../../../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <link href="../../../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../../../search.html" rel="search" title="Search"/>
+    <link href="hal_xspi_exported_macros.html" rel="next" title="HAL XSPI macros migration"/>
+    <link href="hal_xspi_use_cases.html" rel="prev" title="HAL XSPI typical use cases for migration"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/drivers_documentation/hal_drivers/xspi/hal_xspi_exported_constants" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_script/migration_script_toc.html">
+            HAL1 detection
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../breaking_concepts/breaking_concepts_toc.html">
+              Breaking changes in concepts
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../hal_drivers_toc.html">
+              HAL drivers migration
+             </a>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../adc/hal_adc_toc.html">
+                ADC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../comp/hal_comp_toc.html">
+                COMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cortex/hal_cortex_toc.html">
+                CORTEX
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cordic/hal_cordic_toc.html">
+                CORDIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../crc/hal_crc_toc.html">
+                CRC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cryp/hal_cryp_toc.html">
+                CRYP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dac/hal_dac_toc.html">
+                DAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dcache/hal_dcache_toc.html">
+                DCACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dma/hal_dma_toc.html">
+                DMA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../exti/hal_exti_toc.html">
+                EXTI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../fmac/hal_fmac_toc.html">
+                FMAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../generic/hal_generic_toc.html">
+                GENERIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxmmu/hal_gfxmmu_toc.html">
+                GFXMMU
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxtim/hal_gfxtim_toc.html">
+                GFXTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gpio/hal_gpio_toc.html">
+                GPIO
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2c/hal_i2c_toc.html">
+                I2C
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2s/hal_i2s_toc.html">
+                I2S
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../icache/hal_icache_toc.html">
+                ICACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../irda/hal_irda_toc.html">
+                IRDA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../iwdg/hal_iwdg_toc.html">
+                IWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../lptim/hal_lptim_toc.html">
+                LPTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../nor/hal_nor_toc.html">
+                NOR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../opamp/hal_opamp_toc.html">
+                OPAMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ospi/hal_ospi_toc.html">
+                OSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pka/hal_pka_toc.html">
+                PKA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pwr/hal_pwr_toc.html">
+                PWR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../qspi/hal_qspi_toc.html">
+                QSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ramcfg/hal_ramcfg_toc.html">
+                RAMCFG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rcc/hal_rcc_toc.html">
+                RCC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rng/hal_rng_toc.html">
+                RNG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rtc/hal_rtc_toc.html">
+                RTC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sdram/hal_sdram_toc.html">
+                SDRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smartcard/hal_smartcard_toc.html">
+                SMARTCARD
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smbus/hal_smbus_toc.html">
+                SMBUS
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../spi/hal_spi_toc.html">
+                SPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sram/hal_sram_toc.html">
+                SRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../tim/hal_tim_toc.html">
+                TIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../uart/hal_uart_toc.html">
+                UART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../usart/hal_usart_toc.html">
+                USART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../wwdg/hal_wwdg_toc.html">
+                WWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="hal_xspi_toc.html">
+                XSPI
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../ll_drivers/ll_drivers_toc.html">
+              LL drivers migration
+             </a>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-drivers-documentation-hal-drivers-xspi-hal-xspi-exported-constants--page-root">
+            HAL XSPI constants migration
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-address-width">
+               HAL XSPI address width
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-address-mode">
+               HAL XSPI address mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-address-dtr-mode">
+               HAL XSPI address DTR mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-alternate-bytes-width">
+               HAL XSPI alternate bytes width
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-alternate-bytes-mode">
+               HAL XSPI alternate bytes mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-alternate-bytes-dtr-mode">
+               HAL XSPI alternate bytes DTR mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-automatic-stop">
+               HAL XSPI automatic stop
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-chipselect-boundary">
+               HAL XSPI chipselect boundary
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-clock-mode">
+               HAL XSPI clock mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-data-mode">
+               HAL XSPI data mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-data-dtr-mode">
+               HAL XSPI data DTR mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-delay-block-bypass">
+               HAL XSPI delay block bypass
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-delay-hold-quarter-cycle">
+               HAL XSPI delay hold quarter cycle
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-dqs-mode">
+               HAL XSPI DQS mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-hyperbus-latency-mode">
+               HAL XSPI hyperbus latency mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-free-running-clock">
+               HAL XSPI free running clock
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-instruction-width">
+               HAL XSPI instruction width
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-instruction-mode">
+               HAL XSPI instruction mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-instruction-dtr-mode">
+               HAL XSPI instruction DTR mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-hyperbus-write-zero-latency-activation">
+               HAL XSPI hyperbus write zero latency activation
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-match-mode">
+               HAL XSPI match mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-hyperbus-address-space">
+               HAL XSPI hyperbus address space
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-memory-type">
+               HAL XSPI memory type
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-operation-type">
+               HAL XSPI operation type
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-sample-shifting">
+               HAL XSPI sample shifting
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-io-select">
+               HAL XSPI IO select
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-memory-mode">
+               HAL XSPI memory mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-sioo-mode">
+               HAL XSPI SIOO mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-memory-size">
+               HAL XSPI memory size
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-timeout-activation">
+               HAL XSPI timeout activation
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-wrap-size">
+               HAL XSPI wrap size
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-flags">
+               HAL XSPI flags
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-interrupts">
+               HAL XSPI interrupts
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-error-codes">
+               HAL XSPI error codes
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-timeout-definition">
+               HAL XSPI timeout definition
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-io-port">
+               HAL XSPI IO port
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-xspi-calibration-delay-type">
+               HAL XSPI calibration delay type
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#haal-xspi-calibration-maximal-value">
+               HaaL XSPI calibration maximal value
+              </a>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="hal-xspi-constants-migration">
+        <span id="hal-xspi-exported-constants">
+        </span>
+        <h1 id="docs-markup-drivers-documentation-hal-drivers-xspi-hal-xspi-exported-constants--page-root">
+         HAL XSPI constants migration
+         <a class="headerlink" href="#docs-markup-drivers-documentation-hal-drivers-xspi-hal-xspi-exported-constants--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <p>
+         This section provides information about the HAL XSPI constants migration .
+        </p>
+        <div class="admonition note">
+         <p class="admonition-title">
+          Note
+         </p>
+         <p>
+          All constants are migrated using the following concept:
+         </p>
+         <p>
+          <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+           <span class="std std-ref">
+            Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+           </span>
+          </a>
+         </p>
+        </div>
+        <section id="hal-xspi-address-width">
+         <span id="hal-xspi-exp-const-hal-xspi-address-for-bit-sizes">
+         </span>
+         <h2 id="hal-xspi-address-width">
+          HAL XSPI address width
+          <a class="headerlink" href="#hal-xspi-address-width" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_ADDRESS_8_BITS</span>
+<span class="cp">#define HAL_XSPI_ADDRESS_16_BITS</span>
+<span class="cp">#define HAL_XSPI_ADDRESS_24_BITS</span>
+<span class="cp">#define HAL_XSPI_ADDRESS_32_BITS</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ADDR_8BIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ADDR_16BIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ADDR_24BIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ADDR_32BIT</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_addr_width_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-address-mode">
+         <span id="hal-xspi-exp-const-hal-xspi-address-for-line-modes">
+         </span>
+         <h2 id="hal-xspi-address-mode">
+          HAL XSPI address mode
+          <a class="headerlink" href="#hal-xspi-address-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_ADDRESS_NONE</span>
+<span class="cp">#define HAL_XSPI_ADDRESS_1_LINE</span>
+<span class="cp">#define HAL_XSPI_ADDRESS_2_LINES</span>
+<span class="cp">#define HAL_XSPI_ADDRESS_4_LINES</span>
+<span class="cp">#define HAL_XSPI_ADDRESS_8_LINES</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ADDR_NONE</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ADDR_1LINE</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ADDR_2LINES</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ADDR_4LINES</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ADDR_8LINES</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_addr_mode_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-address-dtr-mode">
+         <span id="hal-xspi-exp-const-hal-xspi-address-for-dtr-modes">
+         </span>
+         <h2 id="hal-xspi-address-dtr-mode">
+          HAL XSPI address DTR mode
+          <a class="headerlink" href="#hal-xspi-address-dtr-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_ADDRESS_DTR_DISABLE</span>
+<span class="cp">#define HAL_XSPI_ADDRESS_DTR_ENABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ADDR_DTR_DISABLED</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ADDR_DTR_ENABLED</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_addr_dtr_status_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-alternate-bytes-width">
+         <span id="hal-xspi-exp-const-hal-xspi-alternate-bytes-for-bit-sizes">
+         </span>
+         <h2 id="hal-xspi-alternate-bytes-width">
+          HAL XSPI alternate bytes width
+          <a class="headerlink" href="#hal-xspi-alternate-bytes-width" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_ALT_BYTES_8_BITS</span>
+<span class="cp">#define HAL_XSPI_ALT_BYTES_16_BITS</span>
+<span class="cp">#define HAL_XSPI_ALT_BYTES_24_BITS</span>
+<span class="cp">#define HAL_XSPI_ALT_BYTES_32_BITS</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ALTERNATE_BYTES_8BIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ALTERNATE_BYTES_16BIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ALTERNATE_BYTES_24BIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ALTERNATE_BYTES_32BIT</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_alternate_bytes_width_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-alternate-bytes-mode">
+         <span id="hal-xspi-exp-const-hal-xspi-alternate-bytes-for-line-modes">
+         </span>
+         <h2 id="hal-xspi-alternate-bytes-mode">
+          HAL XSPI alternate bytes mode
+          <a class="headerlink" href="#hal-xspi-alternate-bytes-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_ALT_BYTES_NONE</span>
+<span class="cp">#define HAL_XSPI_ALT_BYTES_1_LINE</span>
+<span class="cp">#define HAL_XSPI_ALT_BYTES_2_LINES</span>
+<span class="cp">#define HAL_XSPI_ALT_BYTES_4_LINES</span>
+<span class="cp">#define HAL_XSPI_ALT_BYTES_8_LINES</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ALTERNATE_BYTES_NONE</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ALTERNATE_BYTES_1LINE</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ALTERNATE_BYTES_2LINES</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ALTERNATE_BYTES_4LINES</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ALTERNATE_BYTES_8LINES</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_alternate_bytes_mode_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-alternate-bytes-dtr-mode">
+         <span id="hal-xspi-exp-const-hal-xspi-alternate-bytes-for-dtr-modes">
+         </span>
+         <h2 id="hal-xspi-alternate-bytes-dtr-mode">
+          HAL XSPI alternate bytes DTR mode
+          <a class="headerlink" href="#hal-xspi-alternate-bytes-dtr-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_ALT_BYTES_DTR_DISABLE</span>
+<span class="cp">#define HAL_XSPI_ALT_BYTES_DTR_ENABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ALTERNATE_BYTES_DTR_DISABLED</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ALTERNATE_BYTES_DTR_ENABLED</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_alternate_bytes_dtr_status_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-automatic-stop">
+         <span id="hal-xspi-exp-const-hal-xspi-automatic-stop">
+         </span>
+         <h2 id="hal-xspi-automatic-stop">
+          HAL XSPI automatic stop
+          <a class="headerlink" href="#hal-xspi-automatic-stop" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_AUTOMATIC_STOP_DISABLE</span>
+<span class="cp">#define HAL_XSPI_AUTOMATIC_STOP_ENABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_AUTOMATIC_STOP_DISABLED</span>
+<span class="w">  </span><span class="n">HAL_XSPI_AUTOMATIC_STOP_ENABLED</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_automatic_stop_status_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-chipselect-boundary">
+         <span id="hal-xspi-exp-const-hal-xspi-boundary-offset">
+         </span>
+         <h2 id="hal-xspi-chipselect-boundary">
+          HAL XSPI chipselect boundary
+          <a class="headerlink" href="#hal-xspi-chipselect-boundary" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_BONDARYOF_NONE</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_16B</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_32B</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_64B</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_128B</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_256B</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_512B</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_1KB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_2KB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_4KB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_8KB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_16KB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_32KB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_64KB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_128KB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_256KB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_512KB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_1MB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_2MB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_4MB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_8MB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_16MB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_32MB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_64MB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_128MB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_256MB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_512MB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_1GB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_2GB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_4GB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_8GB</span>
+<span class="cp">#define HAL_XSPI_BONDARYOF_16GB</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_NONE</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_16BIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_32BIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_64BIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_128BIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_256BIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_512BIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_1KBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_2KBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_4KBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_8KBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_16KBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_32KBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_64KBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_128KBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_256KBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_512KBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_1MBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_2MBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_4MBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_8MBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_16MBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_32MBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_64MBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_128MBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_256MBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_512MBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_1GBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_2GBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_4GBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_8GBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CS_BOUNDARY_16GBIT</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_cs_boundary_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-clock-mode">
+         <span id="hal-xspi-exp-const-hal-xspi-clock-modes">
+         </span>
+         <h2 id="hal-xspi-clock-mode">
+          HAL XSPI clock mode
+          <a class="headerlink" href="#hal-xspi-clock-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_CLOCK_MODE_0</span>
+<span class="cp">#define HAL_XSPI_CLOCK_MODE_3</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CLOCK_LOW</span>
+<span class="w">  </span><span class="n">HAL_XSPI_CLOCK_HIGH</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_clock_polarity_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-data-mode">
+         <span id="hal-xspi-exp-const-hal-xspi-for-line-modes">
+         </span>
+         <h2 id="hal-xspi-data-mode">
+          HAL XSPI data mode
+          <a class="headerlink" href="#hal-xspi-data-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_DATA_NONE</span>
+<span class="cp">#define HAL_XSPI_DATA_1_LINE</span>
+<span class="cp">#define HAL_XSPI_DATA_2_LINES</span>
+<span class="cp">#define HAL_XSPI_DATA_4_LINES</span>
+<span class="cp">#define HAL_XSPI_DATA_8_LINES</span>
+<span class="cp">#define HAL_XSPI_DATA_16_LINES</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_REGULAR_DATA_NONE</span>
+<span class="w">  </span><span class="n">HAL_XSPI_REGULAR_DATA_1LINE</span>
+<span class="w">  </span><span class="n">HAL_XSPI_REGULAR_DATA_2LINES</span>
+<span class="w">  </span><span class="n">HAL_XSPI_REGULAR_DATA_4LINES</span>
+<span class="w">  </span><span class="n">HAL_XSPI_REGULAR_DATA_8LINES</span>
+<span class="w">  </span><span class="n">HAL_XSPI_REGULAR_DATA_16LINES</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_regular_data_mode_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-data-dtr-mode">
+         <span id="hal-xspi-exp-const-hal-xspi-for-dtr-modes">
+         </span>
+         <h2 id="hal-xspi-data-dtr-mode">
+          HAL XSPI data DTR mode
+          <a class="headerlink" href="#hal-xspi-data-dtr-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_DATA_DTR_DISABLE</span>
+<span class="cp">#define HAL_XSPI_DATA_DTR_ENABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_DATA_DTR_DISABLED</span>
+<span class="w">  </span><span class="n">HAL_XSPI_DATA_DTR_ENABLED</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_data_dtr_status_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-delay-block-bypass">
+         <span id="hal-xspi-exp-const-hal-xspi-delay-block">
+         </span>
+         <h2 id="hal-xspi-delay-block-bypass">
+          HAL XSPI delay block bypass
+          <a class="headerlink" href="#hal-xspi-delay-block-bypass" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_DELAY_BLOCK_ON</span>
+<span class="cp">#define HAL_XSPI_DELAY_BLOCK_BYPASS</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_DLYB_ON</span>
+<span class="w">  </span><span class="n">HAL_XSPI_DLYB_BYPASS</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_dlyb_state_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-delay-hold-quarter-cycle">
+         <span id="hal-xspi-exp-const-hal-xspi-dhqc">
+         </span>
+         <h2 id="hal-xspi-delay-hold-quarter-cycle">
+          HAL XSPI delay hold quarter cycle
+          <a class="headerlink" href="#hal-xspi-delay-hold-quarter-cycle" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_DHQC_DISABLE</span>
+<span class="cp">#define HAL_XSPI_DHQC_ENABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_DELAY_HOLD_NONE</span>
+<span class="w">  </span><span class="n">HAL_XSPI_DELAY_HOLD_QUARTCYCLE</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_delay_hold_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-dqs-mode">
+         <span id="hal-xspi-exp-const-hal-xspi-dqs">
+         </span>
+         <h2 id="hal-xspi-dqs-mode">
+          HAL XSPI DQS mode
+          <a class="headerlink" href="#hal-xspi-dqs-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="w"> </span><span class="cp">#define HAL_XSPI_DQS_DISABLE</span>
+<span class="w"> </span><span class="cp">#define HAL_XSPI_DQS_ENABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_DQS_DISABLED</span>
+<span class="w">  </span><span class="n">HAL_XSPI_DQS_ENABLED</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_dqs_status_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-hyperbus-latency-mode">
+         <span id="hal-xspi-exp-const-hal-xspi-latency">
+         </span>
+         <h2 id="hal-xspi-hyperbus-latency-mode">
+          HAL XSPI hyperbus latency mode
+          <a class="headerlink" href="#hal-xspi-hyperbus-latency-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_VARIABLE_LATENCY</span>
+<span class="cp">#define HAL_XSPI_FIXED_LATENCY</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_LATENCY_VARIABLE</span>
+<span class="w">  </span><span class="n">HAL_XSPI_LATENCY_FIXED</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_latency_mode_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-free-running-clock">
+         <span id="hal-xspi-exp-const-hal-xspi-freerun-clock">
+         </span>
+         <h2 id="hal-xspi-free-running-clock">
+          HAL XSPI free running clock
+          <a class="headerlink" href="#hal-xspi-free-running-clock" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_FREERUNCLK_DISABLE</span>
+<span class="cp">#define HAL_XSPI_FREERUNCLK_ENABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_FREE_RUNNING_CLK_DISABLED</span>
+<span class="w">  </span><span class="n">HAL_XSPI_FREE_RUNNING_CLK_ENABLED</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_free_running_clk_status_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-instruction-width">
+         <span id="hal-xspi-exp-const-hal-xspi-instructions-for-bits">
+         </span>
+         <h2 id="hal-xspi-instruction-width">
+          HAL XSPI instruction width
+          <a class="headerlink" href="#hal-xspi-instruction-width" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_INSTRUCTION_8_BITS</span>
+<span class="cp">#define HAL_XSPI_INSTRUCTION_16_BITS</span>
+<span class="cp">#define HAL_XSPI_INSTRUCTION_24_BITS</span>
+<span class="cp">#define HAL_XSPI_INSTRUCTION_32_BITS</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_INSTRUCTION_8BIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_INSTRUCTION_16BIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_INSTRUCTION_24BIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_INSTRUCTION_32BIT</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_instruction_width_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-instruction-mode">
+         <span id="hal-xspi-exp-const-hal-xspi-instructions-for-lines">
+         </span>
+         <h2 id="hal-xspi-instruction-mode">
+          HAL XSPI instruction mode
+          <a class="headerlink" href="#hal-xspi-instruction-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_INSTRUCTION_NONE</span>
+<span class="cp">#define HAL_XSPI_INSTRUCTION_1_LINE</span>
+<span class="cp">#define HAL_XSPI_INSTRUCTION_2_LINES</span>
+<span class="cp">#define HAL_XSPI_INSTRUCTION_4_LINES</span>
+<span class="cp">#define HAL_XSPI_INSTRUCTION_8_LINES</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_INSTRUCTION_NONE</span>
+<span class="w">  </span><span class="n">HAL_XSPI_INSTRUCTION_1LINE</span>
+<span class="w">  </span><span class="n">HAL_XSPI_INSTRUCTION_2LINES</span>
+<span class="w">  </span><span class="n">HAL_XSPI_INSTRUCTION_4LINES</span>
+<span class="w">  </span><span class="n">HAL_XSPI_INSTRUCTION_8LINES</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_instruction_mode_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-instruction-dtr-mode">
+         <span id="hal-xspi-exp-const-hal-xspi-instructions-for-dtr-modes">
+         </span>
+         <h2 id="hal-xspi-instruction-dtr-mode">
+          HAL XSPI instruction DTR mode
+          <a class="headerlink" href="#hal-xspi-instruction-dtr-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_INSTRUCTION_DTR_DISABLE</span>
+<span class="cp">#define HAL_XSPI_INSTRUCTION_DTR_ENABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_INSTRUCTION_DTR_DISABLED</span>
+<span class="w">  </span><span class="n">HAL_XSPI_INSTRUCTION_DTR_ENABLED</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_instruction_dtr_status_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-hyperbus-write-zero-latency-activation">
+         <span id="hal-xspi-exp-const-hal-xspi-latency-on-write">
+         </span>
+         <h2 id="hal-xspi-hyperbus-write-zero-latency-activation">
+          HAL XSPI hyperbus write zero latency activation
+          <a class="headerlink" href="#hal-xspi-hyperbus-write-zero-latency-activation" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_LATENCY_ON_WRITE</span>
+<span class="cp">#define HAL_XSPI_NO_LATENCY_ON_WRITE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_WRITE_ZERO_LATENCY_ENABLED</span>
+<span class="w">  </span><span class="n">HAL_XSPI_WRITE_ZERO_LATENCY_DISABLED</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_write_zero_latency_status_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-match-mode">
+         <span id="hal-xspi-exp-const-hal-xspi-match-modes">
+         </span>
+         <h2 id="hal-xspi-match-mode">
+          HAL XSPI match mode
+          <a class="headerlink" href="#hal-xspi-match-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_MATCH_MODE_AND</span>
+<span class="cp">#define HAL_XSPI_MATCH_MODE_OR</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MATCH_MODE_AND</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MATCH_MODE_OR</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_match_mode_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-hyperbus-address-space">
+         <span id="hal-xspi-exp-const-hal-xspi-memory-address-space">
+         </span>
+         <h2 id="hal-xspi-hyperbus-address-space">
+          HAL XSPI hyperbus address space
+          <a class="headerlink" href="#hal-xspi-hyperbus-address-space" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_MEMORY_ADDRESS_SPACE</span>
+<span class="cp">#define HAL_XSPI_REGISTER_ADDRESS_SPACE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ADDR_MEMORY</span>
+<span class="w">  </span><span class="n">HAL_XSPI_ADDR_REGISTER</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_addr_space_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-memory-type">
+         <span id="hal-xspi-exp-const-hal-xspi-memory-types">
+         </span>
+         <h2 id="hal-xspi-memory-type">
+          HAL XSPI memory type
+          <a class="headerlink" href="#hal-xspi-memory-type" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_MEMTYPE_MICRON</span>
+<span class="cp">#define HAL_XSPI_MEMTYPE_MACRONIX</span>
+<span class="cp">#define HAL_XSPI_MEMTYPE_APMEM</span>
+<span class="cp">#define HAL_XSPI_MEMTYPE_MACRONIX_RAM</span>
+<span class="cp">#define HAL_XSPI_MEMTYPE_HYPERBUS</span>
+<span class="cp">#define HAL_XSPI_MEMTYPE_APMEM_16BITS</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_TYPE_MICRON</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_TYPE_MACRONIX</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_TYPE_APMEM</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_TYPE_MACRONIX_RAM</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_TYPE_HYPERBUS</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_TYPE_APMEM_16BIT</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_memory_type_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-operation-type">
+         <span id="hal-xspi-exp-const-hal-xspi-operation-types">
+         </span>
+         <h2 id="hal-xspi-operation-type">
+          HAL XSPI operation type
+          <a class="headerlink" href="#hal-xspi-operation-type" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_OPTYPE_COMMON_CFG</span>
+<span class="cp">#define HAL_XSPI_OPTYPE_READ_CFG</span>
+<span class="cp">#define HAL_XSPI_OPTYPE_WRAP_CFG</span>
+<span class="cp">#define HAL_XSPI_OPTYPE_WRITE_CFG</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_OPERATION_COMMON_CFG</span>
+<span class="w">  </span><span class="n">HAL_XSPI_OPERATION_READ_CFG</span>
+<span class="w">  </span><span class="n">HAL_XSPI_OPERATION_WRITE_CFG</span>
+<span class="w">  </span><span class="n">HAL_XSPI_OPERATION_WRAP_CFG</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_operation_type_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-sample-shifting">
+         <span id="hal-xspi-exp-const-hal-xspi-sample-shift">
+         </span>
+         <h2 id="hal-xspi-sample-shifting">
+          HAL XSPI sample shifting
+          <a class="headerlink" href="#hal-xspi-sample-shifting" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_SAMPLE_SHIFT_HALFCYCLE</span>
+<span class="cp">#define HAL_XSPI_SAMPLE_SHIFT_NONE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_SAMPLE_SHIFT_HALFCYCLE</span>
+<span class="w">  </span><span class="n">HAL_XSPI_SAMPLE_SHIFT_NONE</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_sample_shift_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-io-select">
+         <span id="hal-xspi-exp-const-hal-xspi-select-io">
+         </span>
+         <h2 id="hal-xspi-io-select">
+          HAL XSPI IO select
+          <a class="headerlink" href="#hal-xspi-io-select" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_SELECT_IO_3_0</span>
+<span class="cp">#define HAL_XSPI_SELECT_IO_7_4</span>
+<span class="cp">#define HAL_XSPI_SELECT_IO_11_8</span>
+<span class="cp">#define HAL_XSPI_SELECT_IO_15_12</span>
+<span class="cp">#define HAL_XSPI_SELECT_IO_7_0</span>
+<span class="cp">#define HAL_XSPI_SELECT_IO_15_8</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_IO_3_0</span>
+<span class="w">  </span><span class="n">HAL_XSPI_IO_7_4</span>
+<span class="w">  </span><span class="n">HAL_XSPI_IO_11_8</span>
+<span class="w">  </span><span class="n">HAL_XSPI_IO_15_12</span>
+<span class="w">  </span><span class="n">HAL_XSPI_IO_7_0</span>
+<span class="w">  </span><span class="n">HAL_XSPI_IO_15_8</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_io_select_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-memory-mode">
+         <span id="hal-xspi-exp-const-hal-xspi-memory">
+         </span>
+         <h2 id="hal-xspi-memory-mode">
+          HAL XSPI memory mode
+          <a class="headerlink" href="#hal-xspi-memory-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_SINGLE_MEM</span>
+<span class="cp">#define HAL_XSPI_DUAL_MEM</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SINGLE</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_DUAL</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_memory_mode_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-sioo-mode">
+         <span id="hal-xspi-exp-const-hal-xspi-sioo-instruction">
+         </span>
+         <h2 id="hal-xspi-sioo-mode">
+          HAL XSPI SIOO mode
+          <a class="headerlink" href="#hal-xspi-sioo-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_SIOO_INST_EVERY_CMD</span>
+<span class="cp">#define HAL_XSPI_SIOO_INST_ONLY_FIRST_CMD</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_SIOO_DISABLED</span>
+<span class="w">  </span><span class="n">HAL_XSPI_SIOO_ENABLED</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_sioo_status_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-memory-size">
+         <span id="hal-xspi-exp-const-hal-xspi-size-options">
+         </span>
+         <h2 id="hal-xspi-memory-size">
+          HAL XSPI memory size
+          <a class="headerlink" href="#hal-xspi-memory-size" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_SIZE_16B</span>
+<span class="cp">#define HAL_XSPI_SIZE_32B</span>
+<span class="cp">#define HAL_XSPI_SIZE_64B</span>
+<span class="cp">#define HAL_XSPI_SIZE_128B</span>
+<span class="cp">#define HAL_XSPI_SIZE_256B</span>
+<span class="cp">#define HAL_XSPI_SIZE_512B</span>
+<span class="cp">#define HAL_XSPI_SIZE_1KB</span>
+<span class="cp">#define HAL_XSPI_SIZE_2KB</span>
+<span class="cp">#define HAL_XSPI_SIZE_4KB</span>
+<span class="cp">#define HAL_XSPI_SIZE_8KB</span>
+<span class="cp">#define HAL_XSPI_SIZE_16KB</span>
+<span class="cp">#define HAL_XSPI_SIZE_32KB</span>
+<span class="cp">#define HAL_XSPI_SIZE_64KB</span>
+<span class="cp">#define HAL_XSPI_SIZE_128KB</span>
+<span class="cp">#define HAL_XSPI_SIZE_256KB</span>
+<span class="cp">#define HAL_XSPI_SIZE_512KB</span>
+<span class="cp">#define HAL_XSPI_SIZE_1MB</span>
+<span class="cp">#define HAL_XSPI_SIZE_2MB</span>
+<span class="cp">#define HAL_XSPI_SIZE_4MB</span>
+<span class="cp">#define HAL_XSPI_SIZE_8MB</span>
+<span class="cp">#define HAL_XSPI_SIZE_16MB</span>
+<span class="cp">#define HAL_XSPI_SIZE_32MB</span>
+<span class="cp">#define HAL_XSPI_SIZE_64MB</span>
+<span class="cp">#define HAL_XSPI_SIZE_128MB</span>
+<span class="cp">#define HAL_XSPI_SIZE_256MB</span>
+<span class="cp">#define HAL_XSPI_SIZE_512MB</span>
+<span class="cp">#define HAL_XSPI_SIZE_1GB</span>
+<span class="cp">#define HAL_XSPI_SIZE_2GB</span>
+<span class="cp">#define HAL_XSPI_SIZE_4GB</span>
+<span class="cp">#define HAL_XSPI_SIZE_8GB</span>
+<span class="cp">#define HAL_XSPI_SIZE_16GB</span>
+<span class="cp">#define HAL_XSPI_SIZE_32GB</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_16BIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_32BIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_64BIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_128BIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_256BIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_512BIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_1KBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_2KBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_4KBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_8KBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_16KBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_32KBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_64KBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_128KBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_256KBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_512KBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_1MBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_2MBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_4MBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_8MBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_16MBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_32MBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_64MBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_128MBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_256MBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_512MBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_1GBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_2GBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_4GBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_8GBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_16GBIT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_MEMORY_SIZE_32GBIT</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_memory_size_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-timeout-activation">
+         <span id="hal-xspi-exp-const-hal-xspi-timeout-counter">
+         </span>
+         <h2 id="hal-xspi-timeout-activation">
+          HAL XSPI timeout activation
+          <a class="headerlink" href="#hal-xspi-timeout-activation" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_TIMEOUT_COUNTER_DISABLE</span>
+<span class="cp">#define HAL_XSPI_TIMEOUT_COUNTER_ENABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_TIMEOUT_DISABLE</span>
+<span class="w">  </span><span class="n">HAL_XSPI_TIMEOUT_ENABLE</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_timeout_activation_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-wrap-size">
+         <span id="hal-xspi-exp-const-hal-xspi-wrap-modes">
+         </span>
+         <h2 id="hal-xspi-wrap-size">
+          HAL XSPI wrap size
+          <a class="headerlink" href="#hal-xspi-wrap-size" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_WRAP_NOT_SUPPORTED</span>
+<span class="cp">#define HAL_XSPI_WRAP_16_BYTES</span>
+<span class="cp">#define HAL_XSPI_WRAP_32_BYTES</span>
+<span class="cp">#define HAL_XSPI_WRAP_64_BYTES</span>
+<span class="cp">#define HAL_XSPI_WRAP_128_BYTES</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_WRAP_NOT_SUPPORTED</span>
+<span class="w">  </span><span class="n">HAL_XSPI_WRAP_16BYTE</span>
+<span class="w">  </span><span class="n">HAL_XSPI_WRAP_32BYTE</span>
+<span class="w">  </span><span class="n">HAL_XSPI_WRAP_64BYTE</span>
+<span class="w">  </span><span class="n">HAL_XSPI_WRAP_128BYTE</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_wrap_size_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-flags">
+         <span id="hal-xspi-exp-const-hal-xspi-flags">
+         </span>
+         <h2 id="hal-xspi-flags">
+          HAL XSPI flags
+          <a class="headerlink" href="#hal-xspi-flags" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define HAL_XSPI_FLAG_BUSY</span>
+<span class="cp">#define HAL_XSPI_FLAG_TO</span>
+<span class="cp">#define HAL_XSPI_FLAG_SM</span>
+<span class="cp">#define HAL_XSPI_FLAG_FT</span>
+<span class="cp">#define HAL_XSPI_FLAG_TC</span>
+<span class="cp">#define HAL_XSPI_FLAG_TE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define HAL_XSPI_FLAG_BUSY</span>
+<span class="cp">#define HAL_XSPI_FLAG_TO</span>
+<span class="cp">#define HAL_XSPI_FLAG_SM</span>
+<span class="cp">#define HAL_XSPI_FLAG_FT</span>
+<span class="cp">#define HAL_XSPI_FLAG_TC</span>
+<span class="cp">#define HAL_XSPI_FLAG_TE</span>
+<span class="cp">#define HAL_XSPI_FLAG_ALL</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-interrupts">
+         <span id="hal-xspi-exp-const-hal-xspi-interrupts">
+         </span>
+         <h2 id="hal-xspi-interrupts">
+          HAL XSPI interrupts
+          <a class="headerlink" href="#hal-xspi-interrupts" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define HAL_XSPI_IT_TO</span>
+<span class="cp">#define HAL_XSPI_IT_SM</span>
+<span class="cp">#define HAL_XSPI_IT_FT</span>
+<span class="cp">#define HAL_XSPI_IT_TC</span>
+<span class="cp">#define HAL_XSPI_IT_TE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define HAL_XSPI_IT_TO</span>
+<span class="cp">#define HAL_XSPI_IT_SM</span>
+<span class="cp">#define HAL_XSPI_IT_FT</span>
+<span class="cp">#define HAL_XSPI_IT_TC</span>
+<span class="cp">#define HAL_XSPI_IT_TE</span>
+<span class="cp">#define HAL_XSPI_IT_ALL</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-error-codes">
+         <span id="hal-xspi-exp-const-hal-xspi-error-codes">
+         </span>
+         <h2 id="hal-xspi-error-codes">
+          HAL XSPI error codes
+          <a class="headerlink" href="#hal-xspi-error-codes" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define HAL_XSPI_ERROR_NONE</span>
+<span class="cp">#define HAL_XSPI_ERROR_TIMEOUT</span>
+<span class="cp">#define HAL_XSPI_ERROR_TRANSFER</span>
+<span class="cp">#define HAL_XSPI_ERROR_DMA</span>
+
+<span class="cp">#define HAL_XSPI_ERROR_INVALID_PARAM</span>
+<span class="cp">#define HAL_XSPI_ERROR_INVALID_SEQUENCE</span>
+<span class="cp">#define HAL_XSPI_ERROR_INVALID_CALLBACK</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define HAL_XSPI_ERROR_NONE</span>
+<span class="cp">#define HAL_XSPI_ERROR_TIMEOUT</span>
+<span class="cp">#define HAL_XSPI_ERROR_TRANSFER</span>
+<span class="cp">#define HAL_XSPI_ERROR_DMA</span>
+
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">These</span><span class="w"> </span><span class="n">kinds</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">logical</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">reported</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">direct</span><span class="w"> </span><span class="n">function</span><span class="w"> </span><span class="k">return</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related concept :
+          </strong>
+          <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_F.html#breaking-concepts-concept-f3">
+           <span class="std std-ref">
+            Revise and optimize HAL error management.
+           </span>
+          </a>
+         </p>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-timeout-definition">
+         <span id="hal-xspi-exp-const-hal-xspi-timeout-default-value">
+         </span>
+         <h2 id="hal-xspi-timeout-definition">
+          HAL XSPI timeout definition
+          <a class="headerlink" href="#hal-xspi-timeout-definition" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define HAL_XSPI_TIMEOUT_DEFAULT_VALUE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">Moved</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="p">.</span><span class="n">c</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">private</span><span class="w"> </span><span class="n">constant</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">intended</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">user</span><span class="p">.</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-io-port">
+         <span id="hal-xspi-exp-const-hal-xspim-ioport">
+         </span>
+         <h2 id="hal-xspi-io-port">
+          HAL XSPI IO port
+          <a class="headerlink" href="#hal-xspi-io-port" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          There are only two available ports,
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            HAL_XSPIM_IOPORT_3
+           </span>
+          </code>
+          to
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            HAL_XSPIM_IOPORT_8
+           </span>
+          </code>
+          are not physically present. They were removed in HAL2.
+         </p>
+         <p>
+          For more details refer to :
+          <a class="reference internal" href="hal_xspi_exported_types.html#hal-xspi-exported-types-xspim-cfgtypedef">
+           <span class="std std-ref">
+            HAL XSPI IO manager configuration
+           </span>
+          </a>
+         </p>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPIM_IOPORT_NONE</span>
+<span class="cp">#define HAL_XSPIM_IOPORT_1_LOW</span>
+<span class="cp">#define HAL_XSPIM_IOPORT_1_HIGH</span>
+<span class="cp">#define HAL_XSPIM_IOPORT_2_LOW</span>
+<span class="cp">#define HAL_XSPIM_IOPORT_2_HIGH</span>
+
+
+
+<span class="cp">#define HAL_XSPIM_IOPORT_3_LOW</span>
+<span class="cp">#define HAL_XSPIM_IOPORT_3_HIGH</span>
+<span class="cp">#define HAL_XSPIM_IOPORT_4_LOW</span>
+<span class="cp">#define HAL_XSPIM_IOPORT_4_HIGH</span>
+<span class="cp">#define HAL_XSPIM_IOPORT_5_LOW</span>
+<span class="cp">#define HAL_XSPIM_IOPORT_5_HIGH</span>
+<span class="cp">#define HAL_XSPIM_IOPORT_6_LOW</span>
+<span class="cp">#define HAL_XSPIM_IOPORT_6_HIGH</span>
+<span class="cp">#define HAL_XSPIM_IOPORT_7_LOW</span>
+<span class="cp">#define HAL_XSPIM_IOPORT_7_HIGH</span>
+<span class="cp">#define HAL_XSPIM_IOPORT_8_LOW</span>
+<span class="cp">#define HAL_XSPIM_IOPORT_8_HIGH</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_XSPIM_IO_NONE</span>
+<span class="w">  </span><span class="n">HAL_XSPI_XSPIM_XSPI1_IO_LOW</span>
+<span class="w">  </span><span class="n">HAL_XSPI_XSPIM_XSPI1_IO_HIGH</span>
+<span class="w">  </span><span class="n">HAL_XSPI_XSPIM_XSPI2_IO_LOW</span>
+<span class="w">  </span><span class="n">HAL_XSPI_XSPIM_XSPI2_IO_HIGH</span>
+<span class="w">  </span><span class="n">HAL_XSPI_XSPIM_XSPI1_XSPI2_IO_LOW</span>
+<span class="w">  </span><span class="n">HAL_XSPI_XSPIM_XSPI1_XSPI2_IO_HIGH</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_xspim_io_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-xspi-calibration-delay-type">
+         <span id="hal-xspi-exp-const-hal-xspi-calibration-types">
+         </span>
+         <h2 id="hal-xspi-calibration-delay-type">
+          HAL XSPI calibration delay type
+          <a class="headerlink" href="#hal-xspi-calibration-delay-type" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="w"> </span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_CAL_FULL_CYCLE_DELAY</span>
+<span class="cp">#define HAL_XSPI_CAL_FEEDBACK_CLK_DELAY</span>
+<span class="cp">#define HAL_XSPI_CAL_DATA_OUTPUT_DELAY</span>
+<span class="cp">#define HAL_XSPI_CAL_DQS_INPUT_DELAY</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_HSIC_DELAY_CAL_FULL_CYCLE</span>
+<span class="w">  </span><span class="n">HAL_XSPI_HSIC_DELAY_CAL_FEEDBACK_CLK</span>
+<span class="w">  </span><span class="n">HAL_XSPI_HSIC_DELAY_CAL_DATA_OUTPUT</span>
+<span class="w">  </span><span class="n">HAL_XSPI_HSIC_DELAY_CAL_DQS_INPUT</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_hsic_delay_cal_type_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="haal-xspi-calibration-maximal-value">
+         <span id="hal-xspi-exp-const-hal-xspi-max-calibration">
+         </span>
+         <h2 id="haal-xspi-calibration-maximal-value">
+          HaaL XSPI calibration maximal value
+          <a class="headerlink" href="#haal-xspi-calibration-maximal-value" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_XSPI_MAXCAL_NOT_REACHED</span>
+<span class="cp">#define HAL_XSPI_MAXCAL_REACHED</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_XSPI_HSIC_MAX_CAL_NOT_REACHED</span>
+<span class="w">  </span><span class="n">HAL_XSPI_HSIC_MAX_CAL_REACHED</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_xspi_hsic_max_cal_mode_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

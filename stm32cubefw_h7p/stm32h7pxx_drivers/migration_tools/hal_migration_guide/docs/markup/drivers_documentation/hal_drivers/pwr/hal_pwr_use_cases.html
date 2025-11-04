@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html data-content_root="../../../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, HAL1, PWR, STM32H5, STM32G0, STM32F4, STM32L4, STM32C0, STM32H7" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     HAL PWR typical use cases for migration — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/tabs.css?v=a5c4661c" rel="stylesheet" type="text/css"/>
+    <script src="../../../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <script src="../../../../../_static/tabs.js?v=3030b3cb">
+    </script>
+    <link href="../../../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../../../search.html" rel="search" title="Search"/>
+    <link href="hal_pwr_exported_constants.html" rel="next" title="HAL PWR constants migration"/>
+    <link href="hal_pwr_concepts_list.html" rel="prev" title="HAL PWR migration: List of applicable concepts"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/drivers_documentation/hal_drivers/pwr/hal_pwr_use_cases" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_script/migration_script_toc.html">
+            HAL1 detection
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../breaking_concepts/breaking_concepts_toc.html">
+              Breaking changes in concepts
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../hal_drivers_toc.html">
+              HAL drivers migration
+             </a>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../adc/hal_adc_toc.html">
+                ADC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../comp/hal_comp_toc.html">
+                COMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cortex/hal_cortex_toc.html">
+                CORTEX
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cordic/hal_cordic_toc.html">
+                CORDIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../crc/hal_crc_toc.html">
+                CRC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cryp/hal_cryp_toc.html">
+                CRYP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dac/hal_dac_toc.html">
+                DAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dcache/hal_dcache_toc.html">
+                DCACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dma/hal_dma_toc.html">
+                DMA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../exti/hal_exti_toc.html">
+                EXTI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../fmac/hal_fmac_toc.html">
+                FMAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../generic/hal_generic_toc.html">
+                GENERIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxmmu/hal_gfxmmu_toc.html">
+                GFXMMU
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxtim/hal_gfxtim_toc.html">
+                GFXTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gpio/hal_gpio_toc.html">
+                GPIO
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2c/hal_i2c_toc.html">
+                I2C
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2s/hal_i2s_toc.html">
+                I2S
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../icache/hal_icache_toc.html">
+                ICACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../irda/hal_irda_toc.html">
+                IRDA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../iwdg/hal_iwdg_toc.html">
+                IWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../lptim/hal_lptim_toc.html">
+                LPTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../nor/hal_nor_toc.html">
+                NOR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../opamp/hal_opamp_toc.html">
+                OPAMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ospi/hal_ospi_toc.html">
+                OSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pka/hal_pka_toc.html">
+                PKA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="hal_pwr_toc.html">
+                PWR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../qspi/hal_qspi_toc.html">
+                QSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ramcfg/hal_ramcfg_toc.html">
+                RAMCFG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rcc/hal_rcc_toc.html">
+                RCC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rng/hal_rng_toc.html">
+                RNG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rtc/hal_rtc_toc.html">
+                RTC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sdram/hal_sdram_toc.html">
+                SDRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smartcard/hal_smartcard_toc.html">
+                SMARTCARD
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smbus/hal_smbus_toc.html">
+                SMBUS
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../spi/hal_spi_toc.html">
+                SPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sram/hal_sram_toc.html">
+                SRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../tim/hal_tim_toc.html">
+                TIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../uart/hal_uart_toc.html">
+                UART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../usart/hal_usart_toc.html">
+                USART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../wwdg/hal_wwdg_toc.html">
+                WWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../xspi/hal_xspi_toc.html">
+                XSPI
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../ll_drivers/ll_drivers_toc.html">
+              LL drivers migration
+             </a>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-drivers-documentation-hal-drivers-pwr-hal-pwr-use-cases--page-root">
+            HAL PWR typical use cases for migration
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enter-stop-mode-with-rtc-wakeup">
+               HAL PWR Enter Stop Mode with RTC Wakeup
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enter-stop-mode-with-external-wakeup">
+               HAL PWR Enter Stop Mode with External Wakeup
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#power-voltage-detector-pvd-with-exti-wakeup">
+               Power Voltage Detector (PVD) with EXTI wakeup
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pwr-enter-standby-mode-with-external-wakeup">
+               HAL PWR Enter Standby Mode with External Wakeup
+              </a>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="hal-pwr-typical-use-cases-for-migration">
+        <span id="hal-pwr-use-cases">
+        </span>
+        <h1 id="docs-markup-drivers-documentation-hal-drivers-pwr-hal-pwr-use-cases--page-root">
+         HAL PWR typical use cases for migration
+         <a class="headerlink" href="#docs-markup-drivers-documentation-hal-drivers-pwr-hal-pwr-use-cases--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <section id="hal-pwr-enter-stop-mode-with-rtc-wakeup">
+         <span id="id1">
+         </span>
+         <h2 id="hal-pwr-enter-stop-mode-with-rtc-wakeup">
+          HAL PWR Enter Stop Mode with RTC Wakeup
+          <a class="headerlink" href="#hal-pwr-enter-stop-mode-with-rtc-wakeup" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <div class="sphinx-tabs docutils container">
+          <div aria-label="Tabbed content" class="closeable" role="tablist">
+           <button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">
+            HAL1 sequence diagram
+           </button>
+           <button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">
+            HAL2 sequence diagram
+           </button>
+          </div>
+          <div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0">
+           <p class="plantuml">
+            <img alt='@startuml
+
+title Enter Stop Mode with RTC Wakeup
+
+
+participant "Application Code" as App
+participant "HAL Library" as HAL
+participant "PWR Peripheral" as PWR
+participant "RTC Peripheral" as RTC
+
+
+App -&gt; HAL: HAL_Init()
+App -&gt; HAL: SystemClock_Config()
+App -&gt; HAL: __HAL_RCC_PWR_CLK_ENABLE()
+
+App -&gt; HAL: HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1)
+HAL -&gt; PWR: Configure Voltage Scaling
+
+App -&gt; HAL: HAL_RTC_Init(&amp;hrtc)
+HAL -&gt; RTC: Initialize RTC
+
+App -&gt; HAL: HAL_RTCEx_SetWakeUpTimer_IT(&amp;hrtc, timeout, clock)
+HAL -&gt; RTC: Configure Wakeup Timer
+
+alt Enter stop0 mode
+    App -&gt; HAL: HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI)
+else Enter stop2 mode
+    App -&gt; HAL:HAL_PWREx_EnterSTOP2Mode(PWR_STOPENTRY_WFI)
+end
+
+HAL -&gt; PWR: Enter Stop Mode
+note right of PWR
+CPU and peripherals stopped.
+RAM and registers retained.
+end note
+
+PWR -&gt; HAL: Wait for Wakeup Event
+RTC -&gt; HAL: Wakeup Event Triggered
+
+HAL -&gt; PWR: Exit Stop Mode
+note right of PWR
+Resume user code execution.
+end note
+App -&gt; HAL: SystemClock_Config()
+HAL -&gt; PWR: Reconfigure System Clock
+
+
+
+@enduml' src="../../../../../_images/plantuml-29f734abdd02b5288532bb8e3d1bbe4cb291a189.png">
+            </img>
+           </p>
+          </div>
+          <div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0">
+           <p class="plantuml">
+            <img alt='@startuml
+
+title Enter Stop Mode with RTC Wakeup
+
+
+participant "Application Code" as App
+participant "HAL Library" as HAL
+participant "PWR Peripheral" as PWR
+participant "RTC Peripheral" as RTC
+
+
+App -&gt; HAL: HAL_Init()
+App -&gt; HAL: SystemClock_Config()
+App -&gt; HAL: HAL_RCC_PWR_EnableClock()
+
+App -&gt; HAL: HAL_PWR_SetMainRegulatorVoltageScalingRange(HAL_PWR_VOLT_SCALE_1)
+HAL -&gt; PWR: Configure Voltage Scaling
+
+App -&gt; HAL: HAL_RTC_DisableWriteProtection()
+App -&gt; HAL: HAL_RTC_EnterInitMode()
+HAL -&gt; RTC: Initialize RTC
+
+App -&gt; HAL: HAL_RTC_WAKEUP_SetConfig(&amp;config_wakeup)
+App -&gt; HAL: HAL_RTC_WAKEUP_SetPeriod(&amp;period_reload, &amp;period_autoclear)
+App -&gt; HAL: HAL_RTC_WAKEUP_Start(HAL_RTC_WAKEUP_IT_ENABLE)
+HAL -&gt; RTC: Configure Wakeup Timer
+
+alt Enter stop0 mode
+    App -&gt; HAL: HAL_PWR_EnterSTOPMode(HAL_PWR_LOW_PWR_MODE_WFI, HAL_PWR_STOP0_MODE)
+else Enter stop2 mode
+    App -&gt; HAL:HAL_PWR_EnterSTOPMode(HAL_PWR_LOW_PWR_MODE_WFI, HAL_PWR_STOP2_MODE)
+end
+
+HAL -&gt; PWR: Enter Stop Mode
+note right of PWR
+CPU and peripherals stopped.
+RAM and registers retained.
+end note
+
+PWR -&gt; HAL: Wait for Wakeup Event
+RTC -&gt; HAL: Wakeup Event Triggered
+
+HAL -&gt; PWR: Exit Stop Mode
+note right of PWR
+Resume user code execution.
+end note
+App -&gt; HAL: SystemClock_Config()
+HAL -&gt; PWR: Reconfigure System Clock
+
+
+
+@enduml' src="../../../../../_images/plantuml-a2e95cde317b24cd3443fa186d79dcae630931a6.png"/>
+           </p>
+          </div>
+         </div>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              Usage
+             </p>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="c1">// RTC handle</span>
+<span class="n">RTC_HandleTypeDef</span><span class="w"> </span><span class="n">hrtc</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">SystemClock_Config</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Reinitialize the system clock after waking up</span>
+<span class="w">    </span><span class="c1">// (Implementation depends on your specific clock configuration)</span>
+<span class="w">    </span><span class="c1">// Example: Re-enable HSE or HSI and configure PLL</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// HAL initialization</span>
+<span class="w">    </span><span class="n">HAL_Init</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Configure the system clock</span>
+<span class="w">    </span><span class="n">SystemClock_Config</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Initialize RTC</span>
+<span class="w">    </span><span class="n">hrtc</span><span class="p">.</span><span class="n">Instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RTC</span><span class="p">;</span>
+<span class="w">    </span><span class="n">HAL_RTC_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hrtc</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Enable PWR clock</span>
+<span class="w">    </span><span class="n">__HAL_RCC_PWR_CLK_ENABLE</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Configure Voltage Scaling (Scale 1 for low-power modes)</span>
+<span class="w">    </span><span class="n">HAL_PWREx_ControlVoltageScaling</span><span class="p">(</span><span class="n">PWR_REGULATOR_VOLTAGE_SCALE1</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Configure the RTC as a wakeup source</span>
+<span class="w">    </span><span class="n">HAL_RTCEx_SetWakeUpTimer_IT</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hrtc</span><span class="p">,</span><span class="w"> </span><span class="mh">0xFFFF</span><span class="p">,</span><span class="w"> </span><span class="n">RTC_WAKEUPCLOCK_RTCCLK_DIV16</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Enter Stop Mode (Stop 0 with low-power regulator)</span>
+<span class="w">    </span><span class="n">HAL_PWR_EnterSTOPMode</span><span class="p">(</span><span class="n">PWR_LOWPOWERREGULATOR_ON</span><span class="p">,</span><span class="w"> </span><span class="n">PWR_STOPENTRY_WFI</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// System resumes here after wakeup</span>
+<span class="w">    </span><span class="n">SystemClock_Config</span><span class="p">();</span><span class="w"> </span><span class="c1">// Reconfigure the system clock</span>
+
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Main loop</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_rtc_wakeup_config_t</span><span class="w"> </span><span class="n">config_wakeup</span><span class="p">;</span>
+<span class="n">hal_rtc_time_t</span><span class="w"> </span><span class="n">period_reload</span><span class="p">;</span>
+<span class="n">hal_rtc_time_t</span><span class="w"> </span><span class="n">period_autoclear</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">SystemClock_Config</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Reinitialize the system clock after waking up</span>
+<span class="w">    </span><span class="c1">// (Implementation depends on your specific clock configuration)</span>
+<span class="w">    </span><span class="c1">// Example: Re-enable HSE or HSI and configure PLL</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// HAL initialization</span>
+<span class="w">    </span><span class="n">HAL_Init</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Configure the system clock</span>
+<span class="w">    </span><span class="n">SystemClock_Config</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Initialize RTC</span>
+<span class="w">    </span><span class="n">HAL_RTC_DisableWriteProtection</span><span class="p">()</span>
+<span class="w">    </span><span class="n">HAL_RTC_EnterInitMode</span><span class="p">()</span>
+
+<span class="w">    </span><span class="c1">// Enable PWR clock</span>
+<span class="w">    </span><span class="n">HAL_RCC_PWR_EnableClock</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Configure Voltage Scaling (Scale 1 for low-power modes)</span>
+<span class="w">    </span><span class="n">HAL_PWR_SetMainRegulatorVoltageScalingRange</span><span class="p">(</span><span class="n">HAL_PWR_VOLT_SCALE_1</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Configure the RTC as a wakeup source</span>
+<span class="w">    </span><span class="n">config_wakeup</span><span class="p">.</span><span class="n">clock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_RTC_WAKEUP_TIMER_CLOCK_RTCCLK_DIV16</span><span class="p">;</span>
+<span class="w">    </span><span class="n">period_reload</span><span class="p">.</span><span class="n">sec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1U</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">HAL_RTC_WAKEUP_SetConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config_wakeup</span><span class="p">);</span>
+<span class="w">    </span><span class="n">HAL_RTC_WAKEUP_SetPeriod</span><span class="p">(</span><span class="o">&amp;</span><span class="n">period_reload</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">period_autoclear</span><span class="p">);</span>
+<span class="w">    </span><span class="n">HAL_RTC_WAKEUP_Start</span><span class="p">(</span><span class="n">HAL_RTC_WAKEUP_IT_ENABLE</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Enter Stop Mode (Stop 0 with low-power regulator)</span>
+<span class="w">    </span><span class="n">HAL_PWR_EnterSTOPMode</span><span class="p">(</span><span class="n">HAL_PWR_LOW_PWR_MODE_WFI</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_PWR_STOP0_MODE</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// System resumes here after wakeup</span>
+<span class="w">    </span><span class="n">SystemClock_Config</span><span class="p">();</span><span class="w"> </span><span class="c1">// Reconfigure the system clock</span>
+
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Main loop</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-pwr-enter-stop-mode-with-external-wakeup">
+         <span id="hal-pwr-enter-stop-mode-with-gpio-wakeup">
+         </span>
+         <h2 id="hal-pwr-enter-stop-mode-with-external-wakeup">
+          HAL PWR Enter Stop Mode with External Wakeup
+          <a class="headerlink" href="#hal-pwr-enter-stop-mode-with-external-wakeup" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <div class="sphinx-tabs docutils container">
+          <div aria-label="Tabbed content" class="closeable" role="tablist">
+           <button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">
+            HAL1 sequence diagram
+           </button>
+           <button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">
+            HAL2 sequence diagram
+           </button>
+          </div>
+          <div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0">
+           <p class="plantuml">
+            <img alt='@startuml
+title Enter Stop Mode with External Wakeup
+
+
+participant "Application Code" as App
+participant "HAL Library" as HAL
+participant "PWR Peripheral" as PWR
+participant "GPIO Peripheral" as GPIO
+participant "EXTI (Interrupt)" as EXTI
+
+User -&gt; App: Start Application
+App -&gt; HAL: HAL_Init()
+App -&gt; HAL: SystemClock_Config()
+App -&gt; HAL: __HAL_RCC_PWR_CLK_ENABLE()
+
+App -&gt; HAL: HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1)
+HAL -&gt; PWR: Configure Voltage Scaling
+
+App -&gt; HAL: __HAL_RCC_GPIOA_CLK_ENABLE()
+App -&gt; HAL: HAL_GPIO_Init(WAKEUP_PORT, &amp;GPIO_InitStruct);
+HAL -&gt; GPIO: Configure GPIO Pin (e.g., PA0)
+HAL -&gt; EXTI: Enable EXTI Line for GPIO Pin
+
+App -&gt; HAL: HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI)
+HAL -&gt; PWR: Enter Stop Mode
+note right of PWR
+CPU and peripherals stopped.
+RAM and registers retained.
+end note
+
+PWR -&gt; HAL: Wait for External Interrupt
+User -&gt; GPIO: Trigger External Interrupt (e.g., Button Press)
+GPIO -&gt; EXTI: Generate Interrupt Signal
+EXTI -&gt; HAL: EXTI Interrupt Handler (EXTI0_IRQHandler)
+
+HAL -&gt; App: HAL_GPIO_EXTI_Callback()
+App -&gt; HAL: Handle Wakeup Event
+
+HAL -&gt; PWR: Exit Stop Mode
+App -&gt; HAL: SystemClock_Config()
+HAL -&gt; PWR: Reconfigure System Clock
+
+App -&gt; User: Resume Normal Operation
+
+@enduml' src="../../../../../_images/plantuml-ef188092f73f9795bd6f6d51e57c5a1995fddde9.png"/>
+           </p>
+          </div>
+          <div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0">
+           <p class="plantuml">
+            <img alt='@startuml
+title Enter Stop Mode with External Wakeup
+
+
+participant "Application Code" as App
+participant "HAL Library" as HAL
+participant "PWR Peripheral" as PWR
+participant "GPIO Peripheral" as GPIO
+participant "EXTI (Interrupt)" as EXTI
+
+User -&gt; App: Start Application
+App -&gt; HAL: HAL_Init()
+App -&gt; HAL: SystemClock_Config()
+App -&gt; HAL: HAL_RCC_PWR_EnableClock();
+
+App -&gt; HAL: HAL_PWR_SetMainRegulatorVoltageScalingRange(HAL_PWR_VOLT_SCALE_1);
+HAL -&gt; PWR: Configure Voltage Scaling
+
+App -&gt; HAL: HAL_GPIO_Init()
+HAL -&gt; GPIO: Configure GPIO Pin (e.g., PA0)
+App -&gt; HAL:HAL_EXTI_Init()
+App -&gt; HAL:HAL_EXTI_SetConfig()
+App -&gt; HAL:HAL_EXTI_Enable()
+HAL -&gt; EXTI: Enable EXTI Line for GPIO Pin
+
+App -&gt; HAL: HAL_PWR_EnterSTOPMode(HAL_PWR_LOW_PWR_MODE_WFI, HAL_PWR_STOP2_MODE);
+HAL -&gt; PWR: Enter Stop Mode
+note right of PWR
+CPU and peripherals stopped.
+RAM and registers retained.
+end note
+
+PWR -&gt; HAL: Wait for External Interrupt
+User -&gt; GPIO: Trigger External Interrupt (e.g., Button Press)
+GPIO -&gt; EXTI: Generate Interrupt Signal
+EXTI -&gt; HAL: EXTI Interrupt Handler (EXTI0_IRQHandler)
+
+HAL -&gt; App: HAL_EXTI_TriggerCallback()
+App -&gt; HAL: Handle Wakeup Event
+
+HAL -&gt; PWR: Exit Stop Mode
+App -&gt; HAL: SystemClock_Config()
+HAL -&gt; PWR: Reconfigure System Clock
+
+App -&gt; User: Resume Normal Operation
+
+@enduml' src="../../../../../_images/plantuml-6a6c1963b97b471e09736e2013d48bbb32eccab5.png"/>
+           </p>
+          </div>
+         </div>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              Usage
+             </p>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="c1">// Define the GPIO pin for external wakeup (e.g., PA0)</span>
+<span class="cp">#define WAKEUP_PIN GPIO_PIN_0</span>
+<span class="cp">#define WAKEUP_PORT GPIOA</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">SystemClock_Config</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Initialize the HAL Library</span>
+<span class="w">    </span><span class="n">HAL_Init</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Configure the system clock</span>
+<span class="w">    </span><span class="n">SystemClock_Config</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Enable the PWR clock</span>
+<span class="w">    </span><span class="n">__HAL_RCC_PWR_CLK_ENABLE</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Configure Voltage Scaling (Scale 1 for low-power modes)</span>
+<span class="w">    </span><span class="n">HAL_PWREx_ControlVoltageScaling</span><span class="p">(</span><span class="n">PWR_REGULATOR_VOLTAGE_SCALE1</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Initialize the GPIO pin for external wakeup</span>
+<span class="w">    </span><span class="n">GPIO_InitTypeDef</span><span class="w"> </span><span class="n">GPIO_InitStruct</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+<span class="w">    </span><span class="c1">// Enable the GPIO clock for the wakeup pin</span>
+<span class="w">    </span><span class="n">__HAL_RCC_GPIOA_CLK_ENABLE</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Configure the GPIO pin as an external interrupt</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WAKEUP_PIN</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_MODE_IT_FALLING</span><span class="p">;</span><span class="w"> </span><span class="c1">// Trigger on falling edge</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Pull</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_NOPULL</span><span class="p">;</span><span class="w">          </span><span class="c1">// No pull-up or pull-down</span>
+<span class="w">    </span><span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">WAKEUP_PORT</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">GPIO_InitStruct</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Enable and set the EXTI interrupt priority</span>
+<span class="w">    </span><span class="n">HAL_NVIC_SetPriority</span><span class="p">(</span><span class="n">EXTI0_IRQn</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">HAL_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">EXTI0_IRQn</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Enter Stop Mode</span>
+<span class="w">    </span><span class="n">HAL_PWR_EnterSTOPMode</span><span class="p">(</span><span class="n">PWR_LOWPOWERREGULATOR_ON</span><span class="p">,</span><span class="w"> </span><span class="n">PWR_STOPENTRY_WFI</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// System resumes here after wakeup</span>
+<span class="w">    </span><span class="n">SystemClock_Config</span><span class="p">();</span><span class="w"> </span><span class="c1">// Reconfigure the system clock</span>
+
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Main loop</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// EXTI interrupt handler for the wakeup pin</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">EXTI0_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Handle the interrupt</span>
+<span class="w">    </span><span class="n">HAL_GPIO_EXTI_IRQHandler</span><span class="p">(</span><span class="n">WAKEUP_PIN</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Callback function for EXTI interrupt</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">HAL_GPIO_EXTI_Callback</span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">GPIO_Pin</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">      </span><span class="c1">// Wakeup event occurred</span>
+<span class="w">      </span><span class="c1">// Add any additional logic here if needed</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">SystemClock_Config</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Reinitialize the system clock after waking up</span>
+<span class="w">    </span><span class="c1">// (Implementation depends on your specific clock configuration)</span>
+<span class="w">    </span><span class="c1">// Example: Re-enable HSE or HSI and configure PLL</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="c1">// Define the GPIO pin for external wakeup (e.g., PA0)</span>
+<span class="cp">#define WAKEUP_PIN HAL_GPIO_PIN_0</span>
+<span class="cp">#define WAKEUP_PORT GPIOA</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">SystemClock_Config</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Initialize the HAL Library</span>
+<span class="w">    </span><span class="n">HAL_Init</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Configure the system clock</span>
+<span class="w">    </span><span class="n">SystemClock_Config</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Enable the PWR clock</span>
+<span class="w">    </span><span class="n">HAL_RCC_PWR_EnableClock</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Configure Voltage Scaling (Scale 1 for low-power modes)</span>
+<span class="w">    </span><span class="n">HAL_PWR_SetMainRegulatorVoltageScalingRange</span><span class="p">(</span><span class="n">HAL_PWR_VOLT_SCALE_1</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Initialize the GPIO pin for external wakeup</span>
+<span class="w">    </span><span class="n">hal_gpio_config_t</span><span class="w"> </span><span class="n">GPIO_ConfigStructure</span><span class="p">;</span>
+<span class="w">    </span><span class="n">hal_exti_handle_t</span><span class="w"> </span><span class="n">hexti</span><span class="p">;</span>
+<span class="w">    </span><span class="n">hal_exti_config_t</span><span class="w"> </span><span class="n">EXTI_ConfigStructure</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">GPIO_ConfigStructure</span><span class="p">.</span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_MODE_INPUT</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_ConfigStructure</span><span class="p">.</span><span class="n">pull</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_PULL_NO</span><span class="p">;</span>
+
+
+<span class="w">    </span><span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">WAKEUP_PORT</span><span class="p">,</span><span class="w"> </span><span class="n">WAKEUP_PIN</span><span class="p">,</span>
+<span class="w">                             </span><span class="o">&amp;</span><span class="n">GPIO_ConfigStructure</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">HAL_EXTI_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hexti</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_EXTI_LINE_0</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">EXTI_ConfigStructure</span><span class="p">.</span><span class="n">trigger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_EXTI_TRIGGER_FALLING</span><span class="p">;</span>
+<span class="w">    </span><span class="n">EXTI_ConfigStructure</span><span class="p">.</span><span class="n">gpio_port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_EXTI_GPIOA</span><span class="p">;</span>
+<span class="w">    </span><span class="n">HAL_EXTI_SetConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hexti</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">EXTI_ConfigStructure</span><span class="p">);</span>
+<span class="w">    </span><span class="n">HAL_EXTI_Enable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hexti</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_EXTI_MODE_INTERRUPT</span><span class="p">)</span>
+
+
+<span class="w">    </span><span class="n">HAL_NVIC_SetPriority</span><span class="p">(</span><span class="n">EXTI0_IRQn</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">HAL_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">EXTI0_IRQn</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Enter Stop Mode</span>
+<span class="w">    </span><span class="n">HAL_PWR_EnterSTOPMode</span><span class="p">(</span><span class="n">HAL_PWR_LOW_PWR_MODE_WFI</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_PWR_STOP0_MODE</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// System resumes here after wakeup</span>
+<span class="w">    </span><span class="n">SystemClock_Config</span><span class="p">();</span><span class="w"> </span><span class="c1">// Reconfigure the system clock</span>
+
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Main loop</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// EXTI interrupt handler for the wakeup pin</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">EXTI0_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Handle the interrupt</span>
+<span class="w">    </span><span class="n">HAL_EXTI_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hexti</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Callback function for EXTI interrupt</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">HAL_EXTI_TriggerCallback</span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">GPIO_Pin</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">      </span><span class="c1">// Wakeup event occurred</span>
+<span class="w">      </span><span class="c1">// Add any additional logic here if needed</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">SystemClock_Config</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Reinitialize the system clock after waking up</span>
+<span class="w">    </span><span class="c1">// (Implementation depends on your specific clock configuration)</span>
+<span class="w">    </span><span class="c1">// Example: Re-enable HSE or HSI and configure PLL</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="power-voltage-detector-pvd-with-exti-wakeup">
+         <span id="hal-pwr-pvd-with-exti-wakeup">
+         </span>
+         <h2 id="power-voltage-detector-pvd-with-exti-wakeup">
+          Power Voltage Detector (PVD) with EXTI wakeup
+          <a class="headerlink" href="#power-voltage-detector-pvd-with-exti-wakeup" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <div class="sphinx-tabs docutils container">
+          <div aria-label="Tabbed content" class="closeable" role="tablist">
+           <button aria-controls="panel-2-2-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-2-2-0" name="2-0" role="tab" tabindex="0">
+            HAL1 sequence diagram
+           </button>
+           <button aria-controls="panel-2-2-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-2-2-1" name="2-1" role="tab" tabindex="-1">
+            HAL2 sequence diagram
+           </button>
+          </div>
+          <div aria-labelledby="tab-2-2-0" class="sphinx-tabs-panel" id="panel-2-2-0" name="2-0" role="tabpanel" tabindex="0">
+           <p class="plantuml">
+            <img alt='@startuml
+
+title PVD with EXTI Wakeup
+
+
+participant "Main Application" as Main
+participant "HAL Library" as HAL
+participant "PVD Peripheral" as PVD
+participant "EXTI Line" as EXTI
+participant "NVIC" as NVIC
+
+== Initialization ==
+
+Main -&gt; HAL: HAL_Init()
+Main -&gt; HAL: SystemClock_Config()
+Main -&gt; HAL: __HAL_RCC_PWR_CLK_ENABLE();
+Main -&gt; HAL: HAL_PWR_ConfigPVD(&amp;sConfigPVD);
+Main -&gt; HAL: HAL_PWR_EnablePVD();
+
+
+note right of HAL
+- Configure PVD threshold
+- Enable PVD interrupt
+- Route PVD to EXTI
+end note
+
+HAL -&gt; PVD: Configure PVD Level (e.g., 2.5V)
+HAL -&gt; NVIC: Enable PVD Interrupt
+
+== Enter Sleep Mode ==
+Main -&gt; HAL: HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+HAL -&gt; Main: Enter WFI (Wait for Interrupt)
+
+== Voltage Threshold Crossed ==
+Main -&gt; PVD: Voltage crosses threshold
+PVD -&gt; EXTI: Trigger EXTI Line
+EXTI -&gt; NVIC: Generate Interrupt
+NVIC -&gt; HAL: Call PVD_AVD_IRQHandler()
+
+== Interrupt Handling ==
+HAL -&gt; HAL: HAL_PWR_PVD_IRQHandler()
+HAL -&gt; Main: HAL_PWR_PVDCallback()
+
+note right of Main
+- Check PVD flag (PWR_FLAG_PVDO)
+- Take action (e.g., toggle LED)
+end note
+
+Main -&gt; HAL: Handle Voltage Event
+
+== System Resumes ==
+Main -&gt; HAL: Resume normal operation
+
+@enduml' src="../../../../../_images/plantuml-8a3e6c435e476272e62a7201fce514a8385b1705.png"/>
+           </p>
+          </div>
+          <div aria-labelledby="tab-2-2-1" class="sphinx-tabs-panel" hidden="true" id="panel-2-2-1" name="2-1" role="tabpanel" tabindex="0">
+           <p class="plantuml">
+            <img alt='@startuml
+
+title PVD with EXTI Wakeup
+
+
+participant "Main Application" as Main
+participant "HAL Library" as HAL
+participant "PVD Peripheral" as PVD
+participant "EXTI Line" as EXTI
+participant "NVIC" as NVIC
+
+== Initialization ==
+
+Main -&gt; HAL: HAL_Init()
+Main -&gt; HAL: SystemClock_Config()
+Main -&gt; HAL: HAL_RCC_PWR_EnableClock();
+Main -&gt; HAL: HAL_PWR_SetProgrammableVoltageDetectorLevel(HAL_PWR_PVD_LEVEL_3);
+Main -&gt; HAL: HAL_EXTI_SetConfig(&amp;hexti, &amp;EXTI_ConfigStructure);
+Main -&gt; HAL: HAL_EXTI_Enable(&amp;hexti, HAL_EXTI_MODE_INTERRUPT);
+Main -&gt; HAL: HAL_PWR_EnableProgrammableVoltageDetector();
+
+
+note right of HAL
+- Configure PVD threshold
+- Enable PVD interrupt
+- Route PVD to EXTI
+end note
+
+HAL -&gt; PVD: Configure PVD Level (e.g., 2.5V)
+HAL -&gt; NVIC: Enable PVD Interrupt
+
+== Enter Sleep Mode ==
+Main -&gt; HAL: HAL_PWR_EnterSLEEPMode(HAL_PWR_LOW_PWR_MODE_WFI);
+HAL -&gt; Main: Enter WFI (Wait for Interrupt)
+
+== Voltage Threshold Crossed ==
+Main -&gt; PVD: Voltage crosses threshold
+PVD -&gt; EXTI: Trigger EXTI Line
+EXTI -&gt; NVIC: Generate Interrupt
+NVIC -&gt; HAL: Call EXTI0_IRQHandler()
+
+== Interrupt Handling ==
+HAL -&gt; HAL: HAL_EXTI_IRQHandler()
+HAL -&gt; Main: HAL_EXTI_TriggerCallback()
+
+note right of Main
+- Check PVD flag (PWR_FLAG_PVDO)
+- Take action (e.g., toggle LED)
+end note
+
+Main -&gt; HAL: Handle Voltage Event
+
+== System Resumes ==
+Main -&gt; HAL: Resume normal operation
+
+@enduml' src="../../../../../_images/plantuml-c58a656ba36e2764d37f55cb5e7cf3abc59755aa.png"/>
+           </p>
+          </div>
+         </div>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              Usage
+             </p>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">"stm32u5xx_hal.h"</span>
+
+<span class="c1">// Function Prototypes</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">SystemClock_Config</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="c1">// Main Function</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Initialize the HAL Library</span>
+<span class="w">    </span><span class="n">HAL_Init</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Configure the System Clock</span>
+<span class="w">    </span><span class="n">SystemClock_Config</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Configure the Power Voltage Detector (PVD)</span>
+<span class="w">    </span><span class="n">PWR_PVDTypeDef</span><span class="w"> </span><span class="n">sConfigPVD</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Enable the PWR Clock</span>
+<span class="w">    </span><span class="n">HAL_RCC_PWR_EnableClock</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Configure the PVD Level and Mode</span>
+<span class="w">    </span><span class="n">sConfigPVD</span><span class="p">.</span><span class="n">PVDLevel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PWR_PVDLEVEL_3</span><span class="p">;</span><span class="w"> </span><span class="c1">// Set threshold (e.g., 2.5V)</span>
+<span class="w">    </span><span class="n">sConfigPVD</span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PWR_PVD_MODE_IT_RISING_FALLING</span><span class="p">;</span><span class="w"> </span><span class="c1">// Interrupt on both rising and falling edges</span>
+
+<span class="w">    </span><span class="c1">// Initialize the PVD</span>
+<span class="w">    </span><span class="n">HAL_PWR_ConfigPVD</span><span class="p">(</span><span class="o">&amp;</span><span class="n">sConfigPVD</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Enable the PVD Interrupt</span>
+<span class="w">    </span><span class="n">HAL_PWR_EnablePVD</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Configure the EXTI Line for PVD</span>
+<span class="w">    </span><span class="n">HAL_NVIC_SetPriority</span><span class="p">(</span><span class="n">PVD_AVD_IRQn</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">// Set priority</span>
+<span class="w">    </span><span class="n">HAL_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">PVD_AVD_IRQn</span><span class="p">);</span><span class="w">         </span><span class="c1">// Enable the interrupt</span>
+
+<span class="w">    </span><span class="c1">// Enter Sleep Mode and wait for PVD interrupt</span>
+<span class="w">    </span><span class="n">HAL_PWR_EnterSLEEPMode</span><span class="p">(</span><span class="n">PWR_MAINREGULATOR_ON</span><span class="p">,</span><span class="w"> </span><span class="n">PWR_SLEEPENTRY_WFI</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Main loop (should not reach here unless woken up)</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Add your application code here</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// PVD Interrupt Handler</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">HAL_PWR_PVDCallback</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// This callback is triggered when the PVD detects a voltage threshold crossing</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">__HAL_PWR_GET_FLAG</span><span class="p">(</span><span class="n">PWR_FLAG_PVDO</span><span class="p">))</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Voltage is below the threshold</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Voltage is above the threshold</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// System Clock Configuration (Example for STM32U5)</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">SystemClock_Config</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+
+<span class="p">}</span>
+
+<span class="c1">// PVD IRQ Handler</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">PVD_AVD_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">HAL_PWR_PVD_IRQHandler</span><span class="p">();</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">"stm32u5xx_hal.h"</span>
+
+<span class="c1">// Function Prototypes</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">SystemClock_Config</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="c1">// Main Function</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Initialize the HAL Library</span>
+<span class="w">    </span><span class="n">HAL_Init</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Configure the System Clock</span>
+<span class="w">    </span><span class="n">SystemClock_Config</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Enable the PWR Clock</span>
+<span class="w">    </span><span class="n">HAL_RCC_PWR_EnableClock</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Configure the PVD Level and Mode</span>
+<span class="w">    </span><span class="n">HAL_PWR_SetProgrammableVoltageDetectorLevel</span><span class="p">(</span><span class="n">HAL_PWR_PVD_LEVEL_3</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Initialize the PVD</span>
+<span class="w">    </span><span class="n">EXTI_ConfigStructure</span><span class="p">.</span><span class="n">trigger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_EXTI_TRIGGER_RISING_FALLING</span><span class="p">;</span>
+<span class="w">    </span><span class="n">EXTI_ConfigStructure</span><span class="p">.</span><span class="n">gpio_port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_EXTI_GPIOA</span><span class="p">;</span>
+<span class="w">    </span><span class="n">HAL_EXTI_SetConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hexti</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">EXTI_ConfigStructure</span><span class="p">);</span>
+<span class="w">    </span><span class="n">HAL_EXTI_Enable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hexti</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_EXTI_MODE_INTERRUPT</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Enable the PVD Interrupt</span>
+<span class="w">    </span><span class="n">HAL_PWR_EnableProgrammableVoltageDetector</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Configure the EXTI Line for PVD</span>
+<span class="w">    </span><span class="n">HAL_NVIC_SetPriority</span><span class="p">(</span><span class="n">PVD_AVD_IRQn</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">// Set priority</span>
+<span class="w">    </span><span class="n">HAL_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">PVD_AVD_IRQn</span><span class="p">);</span><span class="w">         </span><span class="c1">// Enable the interrupt</span>
+
+<span class="w">    </span><span class="c1">// Enter Sleep Mode and wait for PVD interrupt</span>
+<span class="w">    </span><span class="n">HAL_PWR_EnterSLEEPMode</span><span class="p">(</span><span class="n">HAL_PWR_LOW_PWR_MODE_WFI</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Main loop (should not reach here unless woken up)</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Add your application code here</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// PVD Interrupt Handler</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">HAL_EXTI_TriggerCallback</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// This callback is triggered when the PVD detects a voltage threshold crossing</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">LL_PWR_IsActiveFlag_PVDO</span><span class="p">(</span><span class="n">LL_PWR_FLAG_PVDO</span><span class="p">))</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Voltage is below the threshold</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Voltage is above the threshold</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// System Clock Configuration (Example for STM32U5)</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">SystemClock_Config</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">EXTI0_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">HAL_EXTI_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hexti</span><span class="p">);</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-pwr-enter-standby-mode-with-external-wakeup">
+         <span id="hal-pwr-enter-standby-mode-with-gpio-wakeup">
+         </span>
+         <h2 id="hal-pwr-enter-standby-mode-with-external-wakeup">
+          HAL PWR Enter Standby Mode with External Wakeup
+          <a class="headerlink" href="#hal-pwr-enter-standby-mode-with-external-wakeup" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <div class="sphinx-tabs docutils container">
+          <div aria-label="Tabbed content" class="closeable" role="tablist">
+           <button aria-controls="panel-3-3-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-3-3-0" name="3-0" role="tab" tabindex="0">
+            HAL1 sequence diagram
+           </button>
+           <button aria-controls="panel-3-3-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-3-3-1" name="3-1" role="tab" tabindex="-1">
+            HAL2 sequence diagram
+           </button>
+          </div>
+          <div aria-labelledby="tab-3-3-0" class="sphinx-tabs-panel" id="panel-3-3-0" name="3-0" role="tabpanel" tabindex="0">
+           <p class="plantuml">
+            <img alt='@startuml
+
+title GPIO EXTI Wakeup with Standby Mode
+
+participant "Main Application" as Main
+participant "HAL Library" as HAL
+participant "GPIO Peripheral" as GPIO
+participant "EXTI Line" as EXTI
+participant "NVIC" as NVIC
+participant "PWR Peripheral" as PWR
+
+== Initialization ==
+
+Main -&gt; HAL: HAL_Init()
+Main -&gt; HAL: SystemClock_Config()
+Main -&gt; GPIO: __HAL_RCC_GPIOA_CLK_ENABLE()
+Main -&gt; GPIO: HAL_GPIO_Init(GPIOA, &amp;GPIO_InitStruct)
+
+note right of GPIO
+- Configure PA0 as input
+- Set EXTI interrupt on rising edge
+- No pull-up or pull-down
+end note
+
+Main -&gt; NVIC: HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0)
+Main -&gt; NVIC: HAL_NVIC_EnableIRQ(EXTI0_IRQn)
+
+Main -&gt; PWR: __HAL_RCC_PWR_CLK_ENABLE()
+Main -&gt; PWR: __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU)
+Main -&gt; PWR: HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1_HIGH)
+
+== Enter Standby Mode ==
+Main -&gt; PWR: HAL_PWR_EnterSTANDBYMode()
+PWR -&gt; Main: System enters Standby Mode
+
+note right of Main
+- Perform wakeup logic (e.g., toggle LED)
+- Handle GPIO interrupt
+end note
+
+== System Reset ==
+Main -&gt; HAL: Resume from reset after waking up from standby mode
+
+note right of Main
+- Reinitialize system clock
+- Reconfigure GPIOs
+- Reinitialize peripherals (e.g., UART, I2C, etc.)
+- Restore application state
+- Resume tasks or processes
+end note
+
+@enduml' src="../../../../../_images/plantuml-ef38dc5666361781ed1a3c6f3362fec6dde06de7.png"/>
+           </p>
+          </div>
+          <div aria-labelledby="tab-3-3-1" class="sphinx-tabs-panel" hidden="true" id="panel-3-3-1" name="3-1" role="tabpanel" tabindex="0">
+           <p class="plantuml">
+            <img alt='@startuml
+title Enter Stop Mode with External Wakeup
+
+
+participant "Application Code" as App
+participant "HAL Library" as HAL
+participant "PWR Peripheral" as PWR
+participant "GPIO Peripheral" as GPIO
+participant "EXTI (Interrupt)" as EXTI
+
+User -&gt; App: Start Application
+App -&gt; HAL: HAL_Init()
+App -&gt; HAL: SystemClock_Config()
+App -&gt; HAL: HAL_RCC_GPIOA_CLK_ENABLE();
+
+App -&gt; HAL: HAL_EXTI_SetConfig();
+App -&gt; HAL: HAL_EXTI_Enable();
+HAL -&gt; EXTI : Configure and enable exti line
+
+App -&gt; HAL: HAL_PWR_EnterStandbyMode();
+HAL -&gt; PWR: Enter standby Mode
+note right of PWR
+CPU and peripherals stopped.
+RAM and registers retained.
+end note
+
+PWR -&gt; HAL: Wait for External Interrupt
+User -&gt; GPIO: Trigger External Interrupt (e.g., Button Press)
+
+HAL -&gt; PWR: Exit Stop Mode
+App -&gt; HAL: SystemClock_Config()
+HAL -&gt; PWR: Reconfigure System Clock
+
+App -&gt; User: Resume from reset after waking up from standby mode
+
+note right of Main
+- Reinitialize system clock
+- Reconfigure GPIOs
+- Reinitialize peripherals (e.g., UART, I2C, etc.)
+- Restore application state
+- Resume tasks or processes
+end note
+
+@enduml' src="../../../../../_images/plantuml-72f73a713ee06de9c540d2e896b56de0d148657c.png"/>
+           </p>
+          </div>
+         </div>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              Usage
+             </p>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="c1">// Function prototypes</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">SystemClock_Config</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// HAL initialization</span>
+<span class="w">    </span><span class="n">HAL_Init</span><span class="p">();</span>
+<span class="w">    </span><span class="n">SystemClock_Config</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Initialize GPIO for EXTI</span>
+<span class="w">    </span><span class="n">GPIO_InitTypeDef</span><span class="w"> </span><span class="n">GPIO_InitStruct</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+<span class="w">    </span><span class="c1">// Enable GPIOA clock</span>
+<span class="w">    </span><span class="n">__HAL_RCC_GPIOA_CLK_ENABLE</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Configure PA0 as input with EXTI interrupt</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_PIN_0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_MODE_IT_RISING</span><span class="p">;</span><span class="w"> </span><span class="c1">// Trigger on rising edge</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Pull</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_NOPULL</span><span class="p">;</span><span class="w">        </span><span class="c1">// No pull-up or pull-down</span>
+<span class="w">    </span><span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">GPIOA</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">GPIO_InitStruct</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Enable and set EXTI line 0 interrupt priority</span>
+<span class="w">    </span><span class="n">HAL_NVIC_SetPriority</span><span class="p">(</span><span class="n">EXTI0_IRQn</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">HAL_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">EXTI0_IRQn</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Enter standby mode</span>
+<span class="w">    </span><span class="c1">// Enable Power Control clock</span>
+<span class="w">    </span><span class="n">__HAL_RCC_PWR_CLK_ENABLE</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Clear the Wakeup flag</span>
+<span class="w">    </span><span class="n">__HAL_PWR_CLEAR_FLAG</span><span class="p">(</span><span class="n">PWR_FLAG_WU</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Enable EXTI wakeup source</span>
+<span class="w">    </span><span class="n">HAL_PWR_EnableWakeUpPin</span><span class="p">(</span><span class="n">PWR_WAKEUP_PIN1_HIGH</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Enter Standby mode</span>
+<span class="w">    </span><span class="n">HAL_PWR_EnterSTANDBYMode</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Code should never reach here after entering standby mode</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// System Clock Configuration (example for STM32U5)</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">SystemClock_Config</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Reinitialize the system clock after waking up</span>
+<span class="w">    </span><span class="c1">// (Implementation depends on your specific clock configuration)</span>
+<span class="w">    </span><span class="c1">// Example: Re-enable HSE or HSI and configure PLL</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="c1">// Function prototypes</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">SystemClock_Config</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// HAL initialization</span>
+<span class="w">    </span><span class="n">HAL_Init</span><span class="p">();</span>
+<span class="w">    </span><span class="n">SystemClock_Config</span><span class="p">();</span>
+
+
+<span class="w">    </span><span class="c1">// Enable GPIOA clock</span>
+<span class="w">    </span><span class="n">HAL_RCC_GPIOA_CLK_ENABLE</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">EXTI_ConfigStructure</span><span class="p">.</span><span class="n">trigger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_EXTI_TRIGGER_RISING_FALLING</span><span class="p">;</span>
+<span class="w">    </span><span class="n">EXTI_ConfigStructure</span><span class="p">.</span><span class="n">gpio_port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_EXTI_GPIOA</span><span class="p">;</span>
+<span class="w">    </span><span class="n">HAL_EXTI_SetConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hexti</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">EXTI_ConfigStructure</span><span class="p">);</span>
+<span class="w">    </span><span class="n">HAL_EXTI_Enable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hexti</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_EXTI_MODE_INTERRUPT</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Enable and set EXTI line 0 interrupt priority</span>
+<span class="w">    </span><span class="n">HAL_NVIC_SetPriority</span><span class="p">(</span><span class="n">EXTI0_IRQn</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">HAL_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">EXTI0_IRQn</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Enter standby mode</span>
+<span class="w">    </span><span class="c1">// Enable Power Control clock</span>
+<span class="w">    </span><span class="n">HAL_RCC_PWR_EnableClock</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Clear the Wakeup flag</span>
+<span class="w">    </span><span class="n">LL_PWR_ClearFlag_WU1</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Enable EXTI wakeup source</span>
+<span class="w">    </span><span class="n">HAL_PWR_LP_SetConfigWakeupPin</span><span class="p">(</span><span class="n">HAL_PWR_WAKEUP_PIN_1</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_PWR_WAKEUP_PIN_POLARITY_HIGH</span><span class="p">)</span>
+
+<span class="w">    </span><span class="c1">// Enter Standby mode</span>
+<span class="w">    </span><span class="n">HAL_PWR_EnterSTANDBYMode</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Code should never reach here after entering standby mode</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// System Clock Configuration (example for STM32U5)</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">SystemClock_Config</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Reinitialize the system clock after waking up</span>
+<span class="w">    </span><span class="c1">// (Implementation depends on your specific clock configuration)</span>
+<span class="w">    </span><span class="c1">// Example: Re-enable HSE or HSI and configure PLL</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

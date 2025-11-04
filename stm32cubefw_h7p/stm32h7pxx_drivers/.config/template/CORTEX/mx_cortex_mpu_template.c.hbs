@@ -1,0 +1,150 @@
+{{assign 'instances' (@root.SWConfigurationAPI.getInstances 'STMicroelectronics::Device:STM32CubeMX2 Config:CORTEX MPU')}}
+{{log "CORTEX template cortex_mpu_cxt:" @root.cortex_mpu_cxt}}
+{{assign 'current_resource' 'cortex_mpu'}}
+{{log "CORTEX template current_resource:" @root.current_resource}}
+/**
+  ******************************************************************************
+  * @file           : mx_cortex_mpu.c
+  * @brief          : STM32 CORTEX MPU body
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) {{year}} STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* Includes ------------------------------------------------------------------*/
+#include "mx_cortex_mpu.h"
+
+/* Private typedef -----------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+/* Private macro -------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+/* Private functions prototype------------------------------------------------*/
+/* Exported variables by reference--------------------------------------------*/
+{{assign 'hal_handle_exist' false}}
+{{assign 'current_index' 0}}
+{{#each @root.instances}}
+  {{~assign 'cortex_mpu_cxt' (@root.SWConfigurationAPI.getSwInstanceConfiguration this)}}
+  {{~assign 'current_layer' @root.cortex_mpu_cxt.info.layer}}
+  {{~assign 'configs' @root.cortex_mpu_cxt}}
+/******************************************************************************/
+/* Exported functions for CORTEX in {{@root.current_layer}} layer */
+/******************************************************************************/
+  {{~#with @root.configs}}
+    {{~assign 'fct_name' (helper_common_get_generated_function_name @root.current_resource @root.current_layer @root.current_index)}}
+    {{~assign 'current_index' (add @root.current_index 1)}}
+    {{~#if (eq @root.current_layer 'HAL')}}
+{{!
+    Generation of initialization function used in HAL
+}}
+
+system_status_t {{@root.fct_name}}_init(void)
+{
+  /* Disables the MPU */
+  HAL_CORTEX_MPU_Disable();
+      {{~#with Basic}}
+        {{~#if MPUEnabled}}
+          {{~assign 'found_region' false}}
+          {{~#each Regions}}
+            {{~#if use_region}}
+              {{~#unless @root.found_region}}
+                {{~assign 'found_region' true}}
+
+  /*
+     Initializes and configures the MPU Region
+  */
+  hal_cortex_mpu_region_config_t p_region_config = {0};
+              {{~/unless}}
+              {{~assign 'disable_subregion' (helper_cortex_mpu_get_disable_subregion Subregions 'HAL')}}
+
+
+  p_region_config.base_addr = 0x{{#if (eq BaseAddress 0)}}00000000{{else}}{{uppercase (dec2hex BaseAddress)}}{{/if}};
+  p_region_config.size = {{Size}};
+  p_region_config.access_attr = HAL_CORTEX_MPU_REGION_{{AccessPermission}};
+  p_region_config.mem_attr = HAL_CORTEX_MPU_{{Attributes.MemoryType}}_MEM_{{Attributes.Shareability}}{{Attributes.WritePolicy}}{{Attributes.AllocationPolicy}};
+  p_region_config.exec_attr = HAL_CORTEX_MPU_EXECUTION_ATTR_{{InstructionAccess}};
+              {{~#if @root.disable_subregion}}
+  p_region_config.sub_region = {{@root.disable_subregion}};
+              {{~else}}
+  p_region_config.sub_region = HAL_CORTEX_MPU_SUB_REGION_ENABLE_ALL;
+              {{~/if}}
+  HAL_CORTEX_MPU_SetConfigRegion(HAL_CORTEX_MPU_{{_foreignKey}}, &p_region_config);
+
+  HAL_CORTEX_MPU_EnableRegion(HAL_CORTEX_MPU_{{_foreignKey}});
+            {{~/if}}
+          {{~/each}}
+
+
+  /* Enables the MPU */
+  HAL_CORTEX_MPU_Enable(HAL_CORTEX_MPU_HARDFAULT_NMI_{{DuringHardfault}}, HAL_CORTEX_MPU_ACCESS_FAULT_{{DefaultMapEnabled}});
+        {{~/if}}
+      {{~/with}}
+
+
+  return SYSTEM_OK;
+}
+
+void {{@root.fct_name}}_deinit(void)
+{
+  /* to be implemented later */
+}
+    {{~else}}
+{{!
+    Generation of initialization function used in CMSIS
+}}
+
+system_status_t {{@root.fct_name}}_init(void)
+{
+  /* Disables the MPU */
+  ARM_MPU_Disable();
+      {{~#with Basic}}
+        {{~#if MPUEnabled}}
+          {{~assign 'found_region' false}}
+          {{~#each Regions}}
+            {{~#if use_region}}
+              {{~#unless @root.found_region}}
+                {{~assign 'found_region' true}}
+
+  /*
+     Initializes and configures the MPU Region
+  */
+              {{~/unless}}
+              {{~assign 'disable_subregion' (helper_cortex_mpu_get_disable_subregion Subregions 'LL')}}
+
+
+  ARM_MPU_SetRegionEx({{helper_cortex_mpu_get_arm_cmsis_value _foreignKey}}, 0x{{#if (eq BaseAddress 0)}}00000000{{else}}{{uppercase (dec2hex BaseAddress)}}{{/if}},
+                      ({{helper_cortex_mpu_get_arm_cmsis_value Size}} << MPU_RASR_SIZE_Pos)
+                      | ({{helper_cortex_mpu_get_arm_cmsis_value (concat 'HAL_CORTEX_MPU_' (concat Attributes.MemoryType (concat '_MEM_' (concat Attributes.Shareability (concat Attributes.WritePolicy Attributes.AllocationPolicy)))))}} &  (MPU_RASR_TEX_Msk | MPU_RASR_B_Msk | MPU_RASR_S_Msk | MPU_RASR_C_Msk))
+                      | ({{helper_cortex_mpu_get_arm_cmsis_value (concat 'HAL_CORTEX_MPU_REGION_' AccessPermission)}} << MPU_RASR_AP_Pos)
+                      | ({{helper_cortex_mpu_get_arm_cmsis_value (concat 'HAL_CORTEX_MPU_EXECUTION_ATTR_' InstructionAccess)}} << MPU_RASR_XN_Pos)
+                      | (0x{{#if (eq BaseAddress 0)}}00{{else}}{{uppercase (dec2hex @root.disable_subregion)}}{{/if}} << MPU_RASR_SRD_Pos));
+
+
+  STM32_WRITE_REG(MPU->RNR, {{helper_cortex_mpu_get_arm_cmsis_value _foreignKey}});
+  STM32_SET_BIT(MPU->RASR, MPU_RASR_ENABLE_Msk);
+            {{~/if}}
+          {{~/each}}
+
+
+  /* Enables the MPU */
+  ARM_MPU_Enable({{helper_cortex_mpu_get_arm_cmsis_value (concat 'HAL_CORTEX_MPU_HARDFAULT_NMI_' DuringHardfault)}} | {{helper_cortex_mpu_get_arm_cmsis_value (concat 'HAL_CORTEX_MPU_ACCESS_FAULT_' DefaultMapEnabled)}});
+        {{~/if}}
+      {{~/with}}
+
+
+  return SYSTEM_OK;
+}
+
+void {{@root.fct_name}}_deinit(void)
+{
+  /* to be implemented later */
+}
+    {{~/if}}
+  {{~/with}}
+{{/each}}

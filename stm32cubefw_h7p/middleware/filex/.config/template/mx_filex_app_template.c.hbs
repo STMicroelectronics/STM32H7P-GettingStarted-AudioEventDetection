@@ -1,0 +1,112 @@
+{{assign "filexFilter" (JSONparse '{"cgroup": "STM32CubeMX2 Config", "csub": "FileX"}')~}}
+{{assign 'filex_context' (@root.SWConfigurationAPI.getInstancesConfiguration @root.filexFilter)~}}
+{{assign 'filex_cxt' @root.filex_context.[0].settings.parameters~}}
+{{assign 'used_components_filex' (@root.SWProjectAPI.getUsedComponents 'asObject' cgroup="FileX")~}}
+{{assign 'used_components_freertos' (@root.SWProjectAPI.getUsedComponents 'asObject' cgroup="FreeRTOS")~}}
+{{assign 'used_components_hal' (@root.SWProjectAPI.getUsedComponents 'asObject' cgroup="STM32 HAL")~}}
+/**
+  ******************************************************************************
+  * @file    mx_filex_app.c
+  * @author  MCD Application Team
+  * @brief   FileX applicative file
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2025 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* Includes ------------------------------------------------------------------*/
+#include "mx_filex_app.h"
+
+/* Private includes ----------------------------------------------------------*/
+
+/* Private typedef -----------------------------------------------------------*/
+
+/* Private define ------------------------------------------------------------*/
+
+/* Private macro -------------------------------------------------------------*/
+
+/* Private variables ---------------------------------------------------------*/
+{{#if (helper_if_component_os_is_enabled @root.used_components_freertos 'Core')}}
+{{#with @root.filex_cxt~}}
+{{#with core_config~}}
+{{#with Applicative~}}
+{{#if FILEX_GENERATE_INIT_CODE}}
+TaskHandle_t main_task;
+{{/if}}
+{{/with}}
+{{/with}}
+{{/with}}
+{{/if}}
+/* Private function prototypes -----------------------------------------------*/
+{{#if (helper_if_component_os_is_enabled @root.used_components_freertos 'Core')}}
+{{#with @root.filex_cxt~}}
+{{#with core_config~}}
+{{#with Applicative~}}
+{{#if FILEX_GENERATE_INIT_CODE}}
+VOID {{FILEX_APP_TASK_ENTRY}}(VOID *args);
+{{/if}}
+{{/with}}
+{{/with}}
+{{/with}}
+{{/if}}
+/**
+  * @brief  Application FileX Initialization.
+  * @param  None
+  * @retval UINT: FX_SUCCESS on success, error code otherwise
+  */
+UINT app_filex_init(VOID)
+{
+  UINT ret = FX_SUCCESS;
+{{#if (helper_if_component_os_is_enabled @root.used_components_freertos 'Core')}}
+{{#with @root.filex_cxt~}}
+{{#with core_config~}}
+{{#with Applicative~}}
+{{#if FILEX_GENERATE_INIT_CODE}}
+  /* Create the {{FILEX_APP_TASK_NAME}} */
+  ret = xTaskCreate({{FILEX_APP_TASK_ENTRY}}, "{{FILEX_APP_TASK_NAME}}", {{FILEX_APPLICATION_TASK_STACK_SIZE}}, (VOID *) NULL,
+                    {{FILEX_APPLICATION_TASK_PRIORITY}}, &main_task);
+  if (ret != pdPASS)
+  {
+    return FX_PTR_ERROR;
+  }
+{{/if}}
+{{/with}}
+{{/with}}
+{{/with}}
+{{/if}}
+
+  /* Initializes FileX.*/
+  fx_system_initialize();
+
+  return ret;
+}
+
+{{#if (helper_if_component_os_is_enabled @root.used_components_freertos 'Core')}}
+{{#with @root.filex_cxt~}}
+{{#with core_config~}}
+{{#with Applicative~}}
+{{#if FILEX_GENERATE_INIT_CODE}}
+VOID {{FILEX_APP_TASK_ENTRY}}(VOID *args)
+{ 
+}
+{{/if}}
+{{/with}}
+{{/with}}
+{{/with}}
+{{/if}}
+
+{{#unless (helper_if_component_os_is_enabled @root.used_components_freertos 'Core')}}
+UINT app_filex_process(VOID)
+{
+  UINT status = FX_SUCCESS;
+
+  return status;
+}
+{{/unless}}

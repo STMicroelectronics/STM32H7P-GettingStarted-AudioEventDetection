@@ -1,0 +1,2722 @@
+<!DOCTYPE html>
+<html data-content_root="../../../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, HAL1, GFXTIM, STM32H5, STM32G0, STM32F4, STM32L4, STM32C0, STM32H7" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     HAL GFXTIM constants migration — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <script src="../../../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <link href="../../../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../../../search.html" rel="search" title="Search"/>
+    <link href="hal_gfxtim_exported_macros.html" rel="next" title="HAL GFXTIM macros migration"/>
+    <link href="hal_gfxtim_use_cases.html" rel="prev" title="HAL GFXTIM Typical use cases for migration"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/drivers_documentation/hal_drivers/gfxtim/hal_gfxtim_exported_constants" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_script/migration_script_toc.html">
+            HAL1 detection
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../breaking_concepts/breaking_concepts_toc.html">
+              Breaking changes in concepts
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../hal_drivers_toc.html">
+              HAL drivers migration
+             </a>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../adc/hal_adc_toc.html">
+                ADC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../comp/hal_comp_toc.html">
+                COMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cortex/hal_cortex_toc.html">
+                CORTEX
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cordic/hal_cordic_toc.html">
+                CORDIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../crc/hal_crc_toc.html">
+                CRC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cryp/hal_cryp_toc.html">
+                CRYP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dac/hal_dac_toc.html">
+                DAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dcache/hal_dcache_toc.html">
+                DCACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dma/hal_dma_toc.html">
+                DMA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../exti/hal_exti_toc.html">
+                EXTI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../fmac/hal_fmac_toc.html">
+                FMAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../generic/hal_generic_toc.html">
+                GENERIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxmmu/hal_gfxmmu_toc.html">
+                GFXMMU
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="hal_gfxtim_toc.html">
+                GFXTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gpio/hal_gpio_toc.html">
+                GPIO
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2c/hal_i2c_toc.html">
+                I2C
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2s/hal_i2s_toc.html">
+                I2S
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../icache/hal_icache_toc.html">
+                ICACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../irda/hal_irda_toc.html">
+                IRDA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../iwdg/hal_iwdg_toc.html">
+                IWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../lptim/hal_lptim_toc.html">
+                LPTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../nor/hal_nor_toc.html">
+                NOR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../opamp/hal_opamp_toc.html">
+                OPAMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ospi/hal_ospi_toc.html">
+                OSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pka/hal_pka_toc.html">
+                PKA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pwr/hal_pwr_toc.html">
+                PWR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../qspi/hal_qspi_toc.html">
+                QSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ramcfg/hal_ramcfg_toc.html">
+                RAMCFG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rcc/hal_rcc_toc.html">
+                RCC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rng/hal_rng_toc.html">
+                RNG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rtc/hal_rtc_toc.html">
+                RTC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sdram/hal_sdram_toc.html">
+                SDRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smartcard/hal_smartcard_toc.html">
+                SMARTCARD
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smbus/hal_smbus_toc.html">
+                SMBUS
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../spi/hal_spi_toc.html">
+                SPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sram/hal_sram_toc.html">
+                SRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../tim/hal_tim_toc.html">
+                TIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../uart/hal_uart_toc.html">
+                UART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../usart/hal_usart_toc.html">
+                USART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../wwdg/hal_wwdg_toc.html">
+                WWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../xspi/hal_xspi_toc.html">
+                XSPI
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../ll_drivers/ll_drivers_toc.html">
+              LL drivers migration
+             </a>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-drivers-documentation-hal-drivers-gfxtim-hal-gfxtim-exported-constants--page-root">
+            HAL GFXTIM constants migration
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-absolute-time-identifiers-constants">
+               HAL GFXTIM absolute time identifiers constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-absolute-line-comparators-constants">
+               HAL GFXTIM absolute line comparators constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-error-codes-constants">
+               HAL GFXTIM error codes constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-event-generator-indices-constants">
+               HAL GFXTIM event generator indices constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-frame-clock-counter-sources-constants">
+               HAL GFXTIM frame clock counter sources constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-frame-clock-counter-hardware-reload-sources-constants">
+               HAL GFXTIM frame clock counter hardware reload sources constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-status-flags-constants">
+               HAL GFXTIM status flags constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-frame-clock-calibration-enable-disable-constants">
+               HAL GFXTIM frame clock calibration enable/disable constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-counter-clock-generator-identifier-constants">
+               HAL GFXTIM counter clock generator identifier constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-frame-clock-sources-constants">
+               HAL GFXTIM frame clock sources constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-frame-events-constants">
+               HAL GFXTIM frame events constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-interrupt-enable-disable-constants">
+               HAL GFXTIM interrupt enable/disable constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-line-clock-counter-clock-sources-constants">
+               HAL GFXTIM line clock counter clock sources constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-line-clock-counter-hardware-reload-sources-constants">
+               HAL GFXTIM line clock counter hardware reload sources constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-line-clock-calibration-enable-disable-constants">
+               HAL GFXTIM line clock calibration enable/disable constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-line-clock-source-and-counter-constants">
+               HAL GFXTIM line clock source and counter constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-line-event-identifiers-constants">
+               HAL GFXTIM line event identifiers constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-operating-modes-constants">
+               HAL GFXTIM operating modes constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-relative-timer-indices-constants">
+               HAL GFXTIM relative timer indices constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-synchronization-sources-constants">
+               HAL GFXTIM synchronization sources constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-tearing-effect-rising-falling-edge-detection-constants">
+               HAL GFXTIM tearing effect rising/falling edge detection constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-tearing-effect-source-constants">
+               HAL GFXTIM tearing effect source constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-watchdog-clock-sources-constants">
+               HAL GFXTIM watchdog clock sources constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-gfxtim-watchdog-hardware-reload-options-constants">
+               HAL GFXTIM watchdog hardware reload options constants
+              </a>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="hal-gfxtim-constants-migration">
+        <span id="hal-gfxtim-exported-constants">
+        </span>
+        <h1 id="docs-markup-drivers-documentation-hal-drivers-gfxtim-hal-gfxtim-exported-constants--page-root">
+         HAL GFXTIM constants migration
+         <a class="headerlink" href="#docs-markup-drivers-documentation-hal-drivers-gfxtim-hal-gfxtim-exported-constants--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <p>
+         This section provides information about the HAL GFXTIM constants migration.
+        </p>
+        <section id="hal-gfxtim-absolute-time-identifiers-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-absolute-time-identifiers">
+         </span>
+         <h2 id="hal-gfxtim-absolute-time-identifiers-constants">
+          HAL GFXTIM absolute time identifiers constants
+          <a class="headerlink" href="#hal-gfxtim-absolute-time-identifiers-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define GFXTIM_ABSOLUTE_LINE_TIME</span>
+<span class="cp">#define GFXTIM_ABSOLUTE_FRAME_TIME</span>
+<span class="cp">#define GFXTIM_ABSOLUTE_GLOBAL_TIME</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_ABSTIM_LINE_COUNTER</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_ABSTIM_FRAME_COUNTER</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_ABSTIM_LINE_FRAME_COUNTER</span><span class="p">,</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_gfxtim_abstim_counter_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related concepts :
+          </strong>
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </li>
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p18">
+             <span class="std std-ref">
+              Add HAL_PPP Prefix to All HAL Peripheral APIs (Defines, Macros, Types, and Functions).
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-absolute-line-comparators-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-absolute-line-comparator-identifiers">
+         </span>
+         <h2 id="hal-gfxtim-absolute-line-comparators-constants">
+          HAL GFXTIM absolute line comparators constants
+          <a class="headerlink" href="#hal-gfxtim-absolute-line-comparators-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="w"> </span><span class="cp">#define GFXTIM_ABSOLUTE_LINE_COMPARE1</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_ABSOLUTE_LINE_COMPARE2</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_ABSTIM_LINE_COMP_1</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_ABSTIM_LINE_COMP_2</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_gfxtim_abstim_line_comp_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related concepts :
+          </strong>
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </li>
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p18">
+             <span class="std std-ref">
+              Add HAL_PPP Prefix to All HAL Peripheral APIs (Defines, Macros, Types, and Functions).
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-error-codes-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-error-codes">
+         </span>
+         <h2 id="hal-gfxtim-error-codes-constants">
+          HAL GFXTIM error codes constants
+          <a class="headerlink" href="#hal-gfxtim-error-codes-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define GFXTIM_ERROR_INVALID_CALLBACK</span>
+<span class="cp">#define GFXTIM_ERROR_NONE</span>
+<span class="cp">#define GFXTIM_ERROR_STATE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="nl">Removed</span><span class="w"> </span><span class="p">:</span>
+<span class="n">These</span><span class="w"> </span><span class="n">kinds</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">logical</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">reported</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">direct</span><span class="w"> </span><span class="n">function</span><span class="w"> </span><span class="k">return</span><span class="p">.</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related concepts :
+          </strong>
+          <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_F.html#breaking-concepts-concept-f3">
+           <span class="std std-ref">
+            Revise and optimize HAL error management.
+           </span>
+          </a>
+         </p>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-event-generator-indices-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-event-generator-indices">
+         </span>
+         <h2 id="hal-gfxtim-event-generator-indices-constants">
+          HAL GFXTIM event generator indices constants
+          <a class="headerlink" href="#hal-gfxtim-event-generator-indices-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="w"> </span><span class="cp">#define GFXTIM_EVENT_GENERATOR_1</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_EVENT_GENERATOR_2</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_EVENT_GENERATOR_3</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_EVENT_GENERATOR_4</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">   </span><span class="n">HAL_GFXTIM_EVENTGEN_EVENT_1</span>
+<span class="w">   </span><span class="n">HAL_GFXTIM_EVENTGEN_EVENT_2</span>
+<span class="w">   </span><span class="n">HAL_GFXTIM_EVENTGEN_EVENT_3</span>
+<span class="w">   </span><span class="n">HAL_GFXTIM_EVENTGEN_EVENT_4</span>
+<span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="n">hal_gfxtim_eventgen_event_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related concepts :
+          </strong>
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </li>
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p18">
+             <span class="std std-ref">
+              Add HAL_PPP Prefix to All HAL Peripheral APIs (Defines, Macros, Types, and Functions).
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-frame-clock-counter-sources-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-fcc-clock-source-options">
+         </span>
+         <h2 id="hal-gfxtim-frame-clock-counter-sources-constants">
+          HAL GFXTIM frame clock counter sources constants
+          <a class="headerlink" href="#hal-gfxtim-frame-clock-counter-sources-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="w"> </span><span class="cp">#define GFXTIM_FCC_CLK_SRC_DISABLE</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FCC_CLK_SRC_LCC_UNDERFLOW</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FCC_CLK_SRC_HSYNC_RISING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FCC_CLK_SRC_HSYNC_FALLING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FCC_CLK_SRC_VSYNC_RISING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FCC_CLK_SRC_VSYNC_FALLING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FCC_CLK_SRC_TE_RISING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FCC_CLK_SRC_TE_FALLING</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_DISABLE</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_LINE_UNDERFLOW</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_HSYNC_RISING</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_HSYNC_FALLING</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_VSYNC_RISING</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_VSYNC_FALLING</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_TE_RISING</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_TE_FALLING</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_gfxtim_clkgen_frame_count_src_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related concepts :
+          </strong>
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </li>
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p18">
+             <span class="std std-ref">
+              Add HAL_PPP Prefix to All HAL Peripheral APIs (Defines, Macros, Types, and Functions).
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-frame-clock-counter-hardware-reload-sources-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-fcc-hardware-reload-source-options">
+         </span>
+         <h2 id="hal-gfxtim-frame-clock-counter-hardware-reload-sources-constants">
+          HAL GFXTIM frame clock counter hardware reload sources constants
+          <a class="headerlink" href="#hal-gfxtim-frame-clock-counter-hardware-reload-sources-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="w"> </span><span class="cp">#define GFXTIM_FCC_HW_RELOAD_SRC_NONE</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FCC_HW_RELOAD_SRC_LCC_UNDERFLOW</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FCC_HW_RELOAD_SRC_HSYNC_RISING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FCC_HW_RELOAD_SRC_HSYNC_FALLING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FCC_HW_RELOAD_SRC_VSYNC_RISING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FCC_HW_RELOAD_SRC_VSYNC_FALLING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FCC_HW_RELOAD_SRC_TE_RISING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FCC_HW_RELOAD_SRC_TE_FALLING</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_NO_RELOAD</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_LINE_UNDERFLOW_RELOAD</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_HSYNC_RISING_RELOAD</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_HSYNC_FALLING_RELOAD</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_VSYNC_RISING_RELOAD</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_VSYNC_FALLING_RELOAD</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_TE_RISING_RELOAD</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_TE_FALLING_RELOAD</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_gfxtim_clkgen_frame_count_reload_src_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related concepts :
+          </strong>
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </li>
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p18">
+             <span class="std std-ref">
+              Add HAL_PPP Prefix to All HAL Peripheral APIs (Defines, Macros, Types, and Functions).
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-status-flags-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-status-flags">
+         </span>
+         <h2 id="hal-gfxtim-status-flags-constants">
+          HAL GFXTIM status flags constants
+          <a class="headerlink" href="#hal-gfxtim-status-flags-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define GFXTIM_FLAG_AFCC1</span>
+<span class="cp">#define GFXTIM_FLAG_AFCO</span>
+<span class="cp">#define GFXTIM_FLAG_ALCC1</span>
+<span class="cp">#define GFXTIM_FLAG_ALCC2</span>
+<span class="cp">#define GFXTIM_FLAG_ALCO</span>
+<span class="cp">#define GFXTIM_FLAG_EV1</span>
+<span class="cp">#define GFXTIM_FLAG_EV2</span>
+<span class="cp">#define GFXTIM_FLAG_EV3</span>
+<span class="cp">#define GFXTIM_FLAG_EV4</span>
+<span class="cp">#define GFXTIM_FLAG_RFC1R</span>
+<span class="cp">#define GFXTIM_FLAG_RFC2R</span>
+<span class="cp">#define GFXTIM_FLAG_TE</span>
+<span class="cp">#define GFXTIM_FLAG_WDGA</span>
+<span class="cp">#define GFXTIM_FLAG_WDGP</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define LL_GFXTIM_FLAG_AFCC1</span>
+<span class="cp">#define LL_GFXTIM_FLAG_AFCO</span>
+<span class="cp">#define LL_GFXTIM_FLAG_ALCC1</span>
+<span class="cp">#define LL_GFXTIM_FLAG_ALCC2</span>
+<span class="cp">#define LL_GFXTIM_FLAG_ALCO</span>
+<span class="cp">#define LL_GFXTIM_FLAG_EV1</span>
+<span class="cp">#define LL_GFXTIM_FLAG_EV2</span>
+<span class="cp">#define LL_GFXTIM_FLAG_EV3</span>
+<span class="cp">#define LL_GFXTIM_FLAG_EV4</span>
+<span class="cp">#define LL_GFXTIM_FLAG_RFC1R</span>
+<span class="cp">#define LL_GFXTIM_FLAG_RFC2R</span>
+<span class="cp">#define LL_GFXTIM_FLAG_TE</span>
+<span class="cp">#define LL_GFXTIM_FLAG_WDGA</span>
+<span class="cp">#define LL_GFXTIM_FLAG_WDGP</span>
+<span class="cp">#define LL_GFXTIM_FLAG_ALL</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related  concept
+          </strong>
+          :
+          <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_E.html#breaking-concepts-concept-e2">
+           <span class="std std-ref">
+            HAL defines and enum(those used for HW registers) are redirected to the equivalent LL ones.
+           </span>
+          </a>
+         </p>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-frame-clock-calibration-enable-disable-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-frame-clock-calibration-enable-disable">
+         </span>
+         <h2 id="hal-gfxtim-frame-clock-calibration-enable-disable-constants">
+          HAL GFXTIM frame clock calibration enable/disable constants
+          <a class="headerlink" href="#hal-gfxtim-frame-clock-calibration-enable-disable-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              In HAL1, the GFXTIM frame clock calibration is a member
+of the GFXTIM_ClockGeneratorConfigTypeDef structure.
+             </p>
+            </td>
+            <td>
+             <p>
+              In HAL2, the GFXTIM frame clock calibration is managed
+by unitary functions in the HAL layer.
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define GFXTIM_FRAME_CLK_CALIB_DISABLE</span>
+<span class="cp">#define GFXTIM_FRAME_CLK_CALIB_ENABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_GFXTIM_CLKGEN_DisableFrameClkCalibOutput</span><span class="p">(</span><span class="n">hal_gfxtim_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hgfxtim</span><span class="p">);</span>
+<span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_GFXTIM_CLKGEN_EnableFrameClkCalibOutput</span><span class="p">(</span><span class="n">hal_gfxtim_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hgfxtim</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-counter-clock-generator-identifier-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-counter-clock-genertor-identifier">
+         </span>
+         <h2 id="hal-gfxtim-counter-clock-generator-identifier-constants">
+          HAL GFXTIM counter clock generator identifier constants
+          <a class="headerlink" href="#hal-gfxtim-counter-clock-generator-identifier-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="w"> </span><span class="cp">#define GFXTIM_LINE_CLK_COUNTER</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FRAME_CLK_COUNTER</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_LINE_CLK_COUNTER</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_FRAME_CLK_COUNTER</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_FRAME_LINE_CLK_COUNTER</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_gfxtim_clkgen_counter_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related concepts :
+          </strong>
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </li>
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p18">
+             <span class="std std-ref">
+              Add HAL_PPP Prefix to All HAL Peripheral APIs (Defines, Macros, Types, and Functions).
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-frame-clock-sources-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-frame-clock-source-options">
+         </span>
+         <h2 id="hal-gfxtim-frame-clock-sources-constants">
+          HAL GFXTIM frame clock sources constants
+          <a class="headerlink" href="#hal-gfxtim-frame-clock-sources-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="w"> </span><span class="cp">#define GFXTIM_FRAME_CLK_SRC_LCC_UNDERFLOW</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FRAME_CLK_SRC_FCC_UNDERFLOW</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FRAME_CLK_SRC_HSYNC_RISING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FRAME_CLK_SRC_HSYNC_FALLING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FRAME_CLK_SRC_VSYNC_RISING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FRAME_CLK_SRC_VSYNC_FALLING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FRAME_CLK_SRC_TE_RISING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FRAME_CLK_SRC_TE_FALLING</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">   </span><span class="n">HAL_GFXTIM_CLKGEN_FRAME_LCNT_UNDERFLOW</span>
+<span class="w">   </span><span class="n">HAL_GFXTIM_CLKGEN_FRAME_FCNT_UNDERFLOW</span>
+<span class="w">   </span><span class="n">HAL_GFXTIM_CLKGEN_FRAME_HSYNC_RISING</span>
+<span class="w">   </span><span class="n">HAL_GFXTIM_CLKGEN_FRAME_HSYNC_FALLING</span>
+<span class="w">   </span><span class="n">HAL_GFXTIM_CLKGEN_FRAME_VSYNC_RISING</span>
+<span class="w">   </span><span class="n">HAL_GFXTIM_CLKGEN_FRAME_VSYNC_FALLING</span>
+<span class="w">   </span><span class="n">HAL_GFXTIM_CLKGEN_FRAME_TE_RISING</span>
+<span class="w">   </span><span class="n">HAL_GFXTIM_CLKGEN_FRAME_TE_FALLING</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_gfxtim_clkgen_frame_clk_src_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related concepts :
+          </strong>
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </li>
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p18">
+             <span class="std std-ref">
+              Add HAL_PPP Prefix to All HAL Peripheral APIs (Defines, Macros, Types, and Functions).
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-frame-events-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-frame-event-identifiers">
+         </span>
+         <h2 id="hal-gfxtim-frame-events-constants">
+          HAL GFXTIM frame events constants
+          <a class="headerlink" href="#hal-gfxtim-frame-events-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="w"> </span><span class="cp">#define GFXTIM_FRAME_EVENT_NONE</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FRAME_EVENT_AFC_OVERFLOW</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FRAME_EVENT_AFC_COMPARE</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FRAME_EVENT_RFC1_RELOAD</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_FRAME_EVENT_RFC2_RELOAD</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_EVENTGEN_FRAME_NONE</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_EVENTGEN_ABS_FCNT_OVERFLOW</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_EVENTGEN_ABS_FCNT_COMP</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_EVENTGEN_REL_FCNT_1_RELOAD</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_EVENTGEN_REL_FCNT_2_RELOAD</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_gfxtim_eventgen_frame_src_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related concepts :
+          </strong>
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </li>
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p18">
+             <span class="std std-ref">
+              Add HAL_PPP Prefix to All HAL Peripheral APIs (Defines, Macros, Types, and Functions).
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-interrupt-enable-disable-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-interrupt-enable-disable">
+         </span>
+         <h2 id="hal-gfxtim-interrupt-enable-disable-constants">
+          HAL GFXTIM interrupt enable/disable constants
+          <a class="headerlink" href="#hal-gfxtim-interrupt-enable-disable-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              In HAL1, the interrupt is a member of the configuration structure for each functional block
+(absolute timer, relative timer, tearing effect detection, event generator and watchdog counter).
+             </p>
+            </td>
+            <td>
+             <p>
+              In HAL2, the interrupt is managed directly through the start APIs of each functional block.
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define GFXTIM_IT_DISABLE</span>
+
+<span class="cp">#define GFXTIM_IT_ENABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define HAL_GFXTIM_NONE_IT</span>
+
+<span class="cp">#define HAL_GFXTIM_ABSTIM_LINE_COMP1_IT</span>
+<span class="cp">#define HAL_GFXTIM_ABSTIM_LINE_COMP2_IT</span>
+<span class="cp">#define HAL_GFXTIM_ABSTIM_LINE_COUNT_OVERFLOW_IT</span>
+<span class="cp">#define HAL_GFXTIM_ABSTIM_LINE_ALL_IT</span>
+<span class="cp">#define HAL_GFXTIM_ABSTIM_FRAME_COMP_IT</span>
+<span class="cp">#define HAL_GFXTIM_ABSTIM_FRAME_COUNT_OVERFLOW_IT</span>
+<span class="cp">#define HAL_GFXTIM_ABSTIM_FRAME_ALL_IT</span>
+<span class="cp">#define HAL_GFXTIM_RELTIM_COUNT_IT</span>
+<span class="cp">#define HAL_GFXTIM_TEARING_EFFECT_IT</span>
+<span class="cp">#define HAL_GFXTIM_EVENTGEN_EVENT_IT</span>
+<span class="cp">#define HAL_GFXTIM_WDG_PREALARM_IT</span>
+<span class="cp">#define HAL_GFXTIM_WDG_ALARM_IT</span>
+<span class="cp">#define HAL_GFXTIM_WDG_ALL_IT</span>
+</pre>
+              </div>
+             </div>
+             <p>
+              For more details, see
+              <a class="reference internal" href="hal_gfxtim_exported_types.html#hal-gfxtim-exported-types-gfxtim-inittypedef">
+               <span class="std std-ref">
+                HAL GFXTIM init structure type definition
+               </span>
+              </a>
+              ,
+              <a class="reference internal" href="hal_gfxtim_exported_types.html#hal-gfxtim-exported-types-gfxtim-absolutetimerconfigtypedef">
+               <span class="std std-ref">
+                HAL GFXTIM absolute timer config structure type definition
+               </span>
+              </a>
+              ,
+              <a class="reference internal" href="hal_gfxtim_exported_types.html#hal-gfxtim-exported-types-gfxtim-relativetimerconfigtypedef">
+               <span class="std std-ref">
+                HAL GFXTIM relative timer config structure type definition
+               </span>
+              </a>
+              ,
+              <a class="reference internal" href="hal_gfxtim_exported_types.html#hal-gfxtim-exported-types-gfxtim-eventgeneratorconfigtypedef">
+               <span class="std std-ref">
+                HAL GFXTIM event generator config structure type definition
+               </span>
+              </a>
+              ,
+              <a class="reference internal" href="hal_gfxtim_exported_types.html#hal-gfxtim-exported-types-gfxtim-watchdogconfigtypedef">
+               <span class="std std-ref">
+                HAL GFXTIM watchdog config structure type definition
+               </span>
+              </a>
+              .
+             </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-line-clock-counter-clock-sources-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-lcc-clock-source-options">
+         </span>
+         <h2 id="hal-gfxtim-line-clock-counter-clock-sources-constants">
+          HAL GFXTIM line clock counter clock sources constants
+          <a class="headerlink" href="#hal-gfxtim-line-clock-counter-clock-sources-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="w"> </span><span class="cp">#define GFXTIM_LCC_CLK_SRC_DISABLE</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_LCC_CLK_SRC_SYSCLOCK</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_LINE_COUNT_NONE</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_LINE_COUNT_GFXTIMHCLK</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_gfxtim_clkgen_line_count_src_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related concepts :
+          </strong>
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </li>
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p18">
+             <span class="std std-ref">
+              Add HAL_PPP Prefix to All HAL Peripheral APIs (Defines, Macros, Types, and Functions).
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-line-clock-counter-hardware-reload-sources-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-lcc-hardware-reload-source-options">
+         </span>
+         <h2 id="hal-gfxtim-line-clock-counter-hardware-reload-sources-constants">
+          HAL GFXTIM line clock counter hardware reload sources constants
+          <a class="headerlink" href="#hal-gfxtim-line-clock-counter-hardware-reload-sources-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="w"> </span><span class="cp">#define GFXTIM_LCC_HW_RELOAD_SRC_NONE</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_LCC_HW_RELOAD_SRC_FCC_UNDERFLOW</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_LCC_HW_RELOAD_SRC_HSYNC_RISING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_LCC_HW_RELOAD_SRC_HSYNC_FALLING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_LCC_HW_RELOAD_SRC_VSYNC_RISING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_LCC_HW_RELOAD_SRC_VSYNC_FALLING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_LCC_HW_RELOAD_SRC_TE_RISING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_LCC_HW_RELOAD_SRC_TE_FALLING</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_LCNT_NO_RELOAD</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_LCNT_FRAME_UNDERFLOW_RELOAD</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_LCNT_HSYNC_RISING_RELOAD</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_LCNT_HSYNC_FALLING_RELOAD</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_LCNT_VSYNC_RISING_RELOAD</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_LCNT_VSYNC_FALLING_RELOAD</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_LCNT_TE_RISING_RELOAD</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_LCNT_TE_FALLING_RELOAD</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_gfxtim_clkgen_line_count_reload_src_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related concepts :
+          </strong>
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </li>
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p18">
+             <span class="std std-ref">
+              Add HAL_PPP Prefix to All HAL Peripheral APIs (Defines, Macros, Types, and Functions).
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-line-clock-calibration-enable-disable-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-line-clock-calibration-enable-disable">
+         </span>
+         <h2 id="hal-gfxtim-line-clock-calibration-enable-disable-constants">
+          HAL GFXTIM line clock calibration enable/disable constants
+          <a class="headerlink" href="#hal-gfxtim-line-clock-calibration-enable-disable-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              In HAL1, the GFXTIM line clock calibration is a member of the GFXTIM_ClockGeneratorConfigTypeDef structure.
+             </p>
+            </td>
+            <td>
+             <p>
+              In HAL2, the GFXTIM line clock calibration is managed
+by unitary functions in the HAL layer.
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define GFXTIM_LINE_CLK_CALIB_DISABLE</span>
+<span class="cp">#define GFXTIM_LINE_CLK_CALIB_ENABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_GFXTIM_CLKGEN_DisableLineClkCalibOutput</span><span class="p">(</span><span class="n">hal_gfxtim_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hgfxtim</span><span class="p">);</span>
+<span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_GFXTIM_CLKGEN_EnableLineClkCalibOutput</span><span class="p">(</span><span class="n">hal_gfxtim_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hgfxtim</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-line-clock-source-and-counter-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-line-clock-source-and-counter-options">
+         </span>
+         <h2 id="hal-gfxtim-line-clock-source-and-counter-constants">
+          HAL GFXTIM line clock source and counter constants
+          <a class="headerlink" href="#hal-gfxtim-line-clock-source-and-counter-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="w"> </span><span class="cp">#define GFXTIM_LINE_CLK_SRC_LCC_UNDERFLOW</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_LINE_CLK_SRC_FCC_UNDERFLOW</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_LINE_CLK_SRC_HSYNC_RISING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_LINE_CLK_SRC_HSYNC_FALLING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_LINE_CLK_SRC_VSYNC_RISING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_LINE_CLK_SRC_VSYNC_FALLING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_LINE_CLK_SRC_TE_RISING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_LINE_CLK_SRC_TE_FALLING</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_LINE_LCNT_UNDERFLOW</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_LINE_FCNT_UNDERFLOW</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_LINE_HSYNC_RISING</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_LINE_HSYNC_FALLING</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_LINE_VSYNC_RISING</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_LINE_VSYNC_FALLING</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_LINE_TE_RISING</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_CLKGEN_LINE_TE_FALLING</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_gfxtim_clkgen_line_clk_src_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related concepts :
+          </strong>
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </li>
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p18">
+             <span class="std std-ref">
+              Add HAL_PPP Prefix to All HAL Peripheral APIs (Defines, Macros, Types, and Functions).
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-line-event-identifiers-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-line-event-identifiers">
+         </span>
+         <h2 id="hal-gfxtim-line-event-identifiers-constants">
+          HAL GFXTIM line event identifiers constants
+          <a class="headerlink" href="#hal-gfxtim-line-event-identifiers-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="w"> </span><span class="cp">#define GFXTIM_LINE_EVENT_NONE</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_LINE_EVENT_ALC_OVERFLOW</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_LINE_EVENT_TE</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_LINE_EVENT_ALC1_COMPARE</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_LINE_EVENT_ALC2_COMPARE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_EVENTGEN_LINE_NONE</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_EVENTGEN_ABS_LCNT_OVERFLOW</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_EVENTGEN_TEARING_EFFECT</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_EVENTGEN_ABS_LCNT_1_COMP</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_EVENTGEN_ABS_LCNT_2_COMP</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_gfxtim_eventgen_line_src_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related concepts :
+          </strong>
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </li>
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p18">
+             <span class="std std-ref">
+              Add HAL_PPP Prefix to All HAL Peripheral APIs (Defines, Macros, Types, and Functions).
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-operating-modes-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-operating-modes">
+         </span>
+         <h2 id="hal-gfxtim-operating-modes-constants">
+          HAL GFXTIM operating modes constants
+          <a class="headerlink" href="#hal-gfxtim-operating-modes-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              In HAL1 counter mode is a member of GFXTIM_RelativeTimerConfigTypeDef structure
+             </p>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define GFXTIM_MODE_CONTINUOUS</span>
+
+
+
+
+<span class="cp">#define GFXTIM_MODE_ONE_SHOT</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <p>
+              Removed:
+             </p>
+             <p>
+              In HAL2, relative counter mode is managed directly by HAL relative timer start API according to the appropriate mode
+(continuous or one shot)
+             </p>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_GFXTIM_RELTIM_StartContinuous</span><span class="p">(</span><span class="n">hal_gfxtim_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                               </span><span class="n">hal_gfxtim_reltim_counter_t</span><span class="w"> </span><span class="n">counter</span><span class="p">,</span>
+<span class="w">                                               </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">autoreload_val</span><span class="p">,</span>
+<span class="w">                                               </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">interrupt</span><span class="p">);</span>
+
+<span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_GFXTIM_RELTIM_StartOneShot</span><span class="p">(</span><span class="n">hal_gfxtim_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                            </span><span class="n">hal_gfxtim_reltim_counter_t</span><span class="w"> </span><span class="n">counter</span><span class="p">,</span>
+<span class="w">                                            </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">autoreload_val</span><span class="p">,</span>
+<span class="w">                                            </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">interrupt</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+             <p>
+              For more details, refer to
+              <a class="reference internal" href="hal_gfxtim_exported_types.html#hal-gfxtim-exported-types-gfxtim-relativetimerconfigtypedef">
+               <span class="std std-ref">
+                HAL GFXTIM relative timer config structure type definition
+               </span>
+              </a>
+             </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-relative-timer-indices-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-relative-timer-indices">
+         </span>
+         <h2 id="hal-gfxtim-relative-timer-indices-constants">
+          HAL GFXTIM relative timer indices constants
+          <a class="headerlink" href="#hal-gfxtim-relative-timer-indices-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="w"> </span><span class="cp">#define GFXTIM_RELATIVE_TIMER1</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_RELATIVE_TIMER2</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_RELTIM_COUNTER_1</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_RELTIM_COUNTER_2</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_gfxtim_reltim_counter_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related concepts :
+          </strong>
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </li>
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p18">
+             <span class="std std-ref">
+              Add HAL_PPP Prefix to All HAL Peripheral APIs (Defines, Macros, Types, and Functions).
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-synchronization-sources-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-sync-source-for-hsync-and-vsync-signals">
+         </span>
+         <h2 id="hal-gfxtim-synchronization-sources-constants">
+          HAL GFXTIM synchronization sources constants
+          <a class="headerlink" href="#hal-gfxtim-synchronization-sources-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              In HAL1, the synchronization source is member of GFXTIM_InitTypeDef.
+It provides all possible interconnections sources.
+             </p>
+            </td>
+            <td>
+             <p>
+              In HAL2,
+              <cite>
+               hal_gfxtim_sync_src_t
+              </cite>
+              provides only the connected synchronization source.
+It is available in some stm32 devices.
+For example, in U5 this enumeration is not available because the LTDC is
+the only connected synchronization source.
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="w"> </span><span class="cp">#define GFXTIM_SYNC_SRC_HSYNC_VSYNC_0</span>
+
+<span class="w"> </span><span class="cp">#define GFXTIM_SYNC_SRC_HSYNC_VSYNC_1</span>
+
+<span class="w"> </span><span class="cp">#define GFXTIM_SYNC_SRC_HSYNC_VSYNC_2</span>
+
+<span class="w"> </span><span class="cp">#define GFXTIM_SYNC_SRC_HSYNC_VSYNC_3</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_SYNC_SRC_LTDC</span>
+
+<span class="w">  </span><span class="n">HAL_GFXTIM_SYNC_SRC_DCMIPP_P0</span>
+
+
+
+
+<span class="p">}</span><span class="w"> </span><span class="n">hal_gfxtim_sync_src_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-tearing-effect-rising-falling-edge-detection-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-te-rising-falling-edge-detection">
+         </span>
+         <h2 id="hal-gfxtim-tearing-effect-rising-falling-edge-detection-constants">
+          HAL GFXTIM tearing effect rising/falling edge detection constants
+          <a class="headerlink" href="#hal-gfxtim-tearing-effect-rising-falling-edge-detection-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="w"> </span><span class="cp">#define GFXTIM_TE_RISING_EDGE</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_TE_FALLING_EDGE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="w"> </span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">HAL_GFXTIM_TEARING_EFFECT_RISING_EDGE</span>
+<span class="w">   </span><span class="n">HAL_GFXTIM_TEARING_EFFECT_FALLING_EDGE</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_gfxtim_tearing_effect_polarity_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related concepts :
+          </strong>
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </li>
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p18">
+             <span class="std std-ref">
+              Add HAL_PPP Prefix to All HAL Peripheral APIs (Defines, Macros, Types, and Functions).
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-tearing-effect-source-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-te-source-options">
+         </span>
+         <h2 id="hal-gfxtim-tearing-effect-source-constants">
+          HAL GFXTIM tearing effect source constants
+          <a class="headerlink" href="#hal-gfxtim-tearing-effect-source-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="w"> </span><span class="cp">#define GFXTIM_TE_SRC_GPIO</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_TE_SRC_HSYNC</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_TE_SRC_VSYNC</span>
+
+
+<span class="w"> </span><span class="cp">#define GFXTIM_TE_SRC_ITE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_TEARING_EFFECT_GPIO</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_TEARING_EFFECT_HSYNC</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_TEARING_EFFECT_VSYNC</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_gfxtim_tearing_effect_src_t</span><span class="p">;</span>
+
+<span class="nl">Removed</span><span class="p">:</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">internal</span><span class="w"> </span><span class="n">tearing</span><span class="w"> </span><span class="n">effect</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">reserved</span><span class="w"> </span><span class="n">bit</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">implemented</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">HAL2</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related concepts :
+          </strong>
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </li>
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p18">
+             <span class="std std-ref">
+              Add HAL_PPP Prefix to All HAL Peripheral APIs (Defines, Macros, Types, and Functions).
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-watchdog-clock-sources-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-watchdog-clock-source-options">
+         </span>
+         <h2 id="hal-gfxtim-watchdog-clock-sources-constants">
+          HAL GFXTIM watchdog clock sources constants
+          <a class="headerlink" href="#hal-gfxtim-watchdog-clock-sources-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="w"> </span><span class="cp">#define GFXTIM_WATCHDOG_CLK_SRC_LINE_CLK</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_WATCHDOG_CLK_SRC_FRAME_CLK</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_WATCHDOG_CLK_SRC_HSYNC_RISING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_WATCHDOG_CLK_SRC_HSYNC_FALLING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_WATCHDOG_CLK_SRC_VSYNC_RISING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_WATCHDOG_CLK_SRC_VSYNC_FALLING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_WATCHDOG_CLK_SRC_TE_RISING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_WATCHDOG_CLK_SRC_TE_FALLING</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_WATCHDOG_CLK_SRC_EVENT_1</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_WATCHDOG_CLK_SRC_EVENT_2</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_WATCHDOG_CLK_SRC_EVENT_3</span>
+<span class="w"> </span><span class="cp">#define GFXTIM_WATCHDOG_CLK_SRC_EVENT_4</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_WDG_CLK_LINE_CLK</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_WDG_CLK_FRAME_CLK</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_WDG_CLK_HSYNC_RISING</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_WDG_CLK_HSYNC_FALLING</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_WDG_CLK_VSYNC_RISING</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_WDG_CLK_VSYNC_FALLING</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_WDG_CLK_TE_RISING</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_WDG_CLK_TE_FALLING</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_WDG_CLK_EVENT_1</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_WDG_CLK_EVENT_2</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_WDG_CLK_EVENT_3</span>
+<span class="w">  </span><span class="n">HAL_GFXTIM_WDG_CLK_EVENT_4</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_gfxtim_wdg_clk_src_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related concepts :
+          </strong>
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </li>
+          <li>
+           <p>
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p18">
+             <span class="std std-ref">
+              Add HAL_PPP Prefix to All HAL Peripheral APIs (Defines, Macros, Types, and Functions).
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-gfxtim-watchdog-hardware-reload-options-constants">
+         <span id="hal-gfxtim-exp-const-gfxtim-watchdog-hardware-reload-options">
+         </span>
+         <h2 id="hal-gfxtim-watchdog-hardware-reload-options-constants">
+          HAL GFXTIM watchdog hardware reload options constants
+          <a class="headerlink" href="#hal-gfxtim-watchdog-hardware-reload-options-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              In HAL1, the watchdog hardware reload is member of
+GFXTIM_WatchdogConfigTypeDef.
+It provides all possible watchdog external triggers interconnections
+             </p>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define GFXTIM_WATCHDOG_HW_RELOAD_DISABLE</span>
+<span class="cp">#define GFXTIM_WATCHDOG_HW_RELOAD_FALLING_EDGE</span>
+<span class="cp">#define GFXTIM_WATCHDOG_HW_RELOAD_RISING_EDGE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="nl">Removed</span><span class="p">:</span>
+</pre>
+              </div>
+             </div>
+             <p>
+              In HAL2, these constants are no more available because all
+reserved bit field are not implemented.
+             </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html data-content_root="../../../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, HAL1, RTC, STM32H5, STM32G0, STM32F4, STM32L4, STM32C0, STM32H7" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     HAL RTC initialization and configuration functions migration — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <script src="../../../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <link href="../../../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../../../search.html" rel="search" title="Search"/>
+    <link href="hal_rtc_exported_functions_peripheral_time_and_date.html" rel="next" title="HAL RTC time and date functions migration"/>
+    <link href="hal_rtc_exported_types.html" rel="prev" title="HAL RTC types migration"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/drivers_documentation/hal_drivers/rtc/hal_rtc_exported_functions_init_config" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_script/migration_script_toc.html">
+            HAL1 detection
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../breaking_concepts/breaking_concepts_toc.html">
+              Breaking changes in concepts
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../hal_drivers_toc.html">
+              HAL drivers migration
+             </a>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../adc/hal_adc_toc.html">
+                ADC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../comp/hal_comp_toc.html">
+                COMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cortex/hal_cortex_toc.html">
+                CORTEX
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cordic/hal_cordic_toc.html">
+                CORDIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../crc/hal_crc_toc.html">
+                CRC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cryp/hal_cryp_toc.html">
+                CRYP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dac/hal_dac_toc.html">
+                DAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dcache/hal_dcache_toc.html">
+                DCACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dma/hal_dma_toc.html">
+                DMA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../exti/hal_exti_toc.html">
+                EXTI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../fmac/hal_fmac_toc.html">
+                FMAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../generic/hal_generic_toc.html">
+                GENERIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxmmu/hal_gfxmmu_toc.html">
+                GFXMMU
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxtim/hal_gfxtim_toc.html">
+                GFXTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gpio/hal_gpio_toc.html">
+                GPIO
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2c/hal_i2c_toc.html">
+                I2C
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2s/hal_i2s_toc.html">
+                I2S
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../icache/hal_icache_toc.html">
+                ICACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../irda/hal_irda_toc.html">
+                IRDA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../iwdg/hal_iwdg_toc.html">
+                IWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../lptim/hal_lptim_toc.html">
+                LPTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../nor/hal_nor_toc.html">
+                NOR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../opamp/hal_opamp_toc.html">
+                OPAMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ospi/hal_ospi_toc.html">
+                OSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pka/hal_pka_toc.html">
+                PKA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pwr/hal_pwr_toc.html">
+                PWR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../qspi/hal_qspi_toc.html">
+                QSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ramcfg/hal_ramcfg_toc.html">
+                RAMCFG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rcc/hal_rcc_toc.html">
+                RCC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rng/hal_rng_toc.html">
+                RNG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="hal_rtc_toc.html">
+                RTC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sdram/hal_sdram_toc.html">
+                SDRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smartcard/hal_smartcard_toc.html">
+                SMARTCARD
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smbus/hal_smbus_toc.html">
+                SMBUS
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../spi/hal_spi_toc.html">
+                SPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sram/hal_sram_toc.html">
+                SRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../tim/hal_tim_toc.html">
+                TIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../uart/hal_uart_toc.html">
+                UART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../usart/hal_usart_toc.html">
+                USART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../wwdg/hal_wwdg_toc.html">
+                WWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../xspi/hal_xspi_toc.html">
+                XSPI
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../ll_drivers/ll_drivers_toc.html">
+              LL drivers migration
+             </a>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-drivers-documentation-hal-drivers-rtc-hal-rtc-exported-functions-init-config--page-root">
+            HAL RTC initialization and configuration functions migration
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#configuration-of-the-software-layer-and-resource-initialisation">
+               Configuration of the software layer and resource initialisation
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#main-configuration">
+               Main configuration
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#additional-features-configuration">
+               Additional features configuration
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#output-configuration">
+               Output configuration
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#system-interruption-configuration">
+               System interruption configuration
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#generated-rtc-init-and-de-init-sequences">
+               Generated RTC init and de-init sequences
+              </a>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="hal-rtc-initialization-and-configuration-functions-migration">
+        <span id="hal-rtc-exported-functions-init-config">
+        </span>
+        <h1 id="docs-markup-drivers-documentation-hal-drivers-rtc-hal-rtc-exported-functions-init-config--page-root">
+         HAL RTC initialization and configuration functions migration
+         <a class="headerlink" href="#docs-markup-drivers-documentation-hal-drivers-rtc-hal-rtc-exported-functions-init-config--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <p>
+         The goal of this page is to show how to migrate the Init sequence using STM32CubeMX2:
+        </p>
+        <ul class="simple">
+         <li>
+          <p>
+           Open STM32CubeMX2 RTC configuration panel
+          </p>
+         </li>
+         <li>
+          <p>
+           Configure the SW layer HAL/LL
+          </p>
+         </li>
+         <li>
+          <p>
+           Configure RTC main peripheral
+          </p>
+         </li>
+         <li>
+          <p>
+           Configure RTC additional features
+          </p>
+         </li>
+         <li>
+          <p>
+           Generate the code
+          </p>
+         </li>
+        </ul>
+        <div class="admonition note">
+         <p class="admonition-title">
+          Note
+         </p>
+         <p>
+          RTC initialization key changes
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            RTC handle is removed.
+           </p>
+          </li>
+          <li>
+           <p>
+            Init and Deinit functions are removed, you can follow the sequence below to get the same result in HAL2.
+            <a class="reference internal" href="#hal-rtc-init-setconfig-deinit-functions">
+             <span class="std std-ref">
+              Generated RTC init and de-init sequences
+             </span>
+            </a>
+           </p>
+          </li>
+          <li>
+           <p>
+            Unitairy functions are provided to configure the RTC in HAL2.
+           </p>
+          </li>
+          <li>
+           <p>
+            In HAL2 you need to call
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              HAL_RTC_DisableWriteProtection()
+             </span>
+            </code>
+            &amp;
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              HAL_RTC_EnterInitMode()
+             </span>
+            </code>
+            before starting the configuration and end it with
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              HAL_RTC_EnableWriteProtection()
+             </span>
+            </code>
+            &amp;
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              HAL_RTC_ExitInitMode()
+             </span>
+            </code>
+            as highlighted in the
+            <a class="reference internal" href="hal_rtc_use_cases.html#hal-rtc-use-cases">
+             <span class="std std-ref">
+              HAL RTC Typical use cases for migration
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+        </div>
+        <section id="configuration-of-the-software-layer-and-resource-initialisation">
+         <h2 id="configuration-of-the-software-layer-and-resource-initialisation">
+          Configuration of the software layer and resource initialisation
+          <a class="headerlink" href="#configuration-of-the-software-layer-and-resource-initialisation" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          Create a new project with the STM32CubeMX2, then start the initialisation and configuration.
+         </p>
+         <p>
+          Select RTC instance and the HAL layer.
+         </p>
+         <a class="reference internal image-reference" href="../../../../../_images/instance1.png">
+          <img alt="Example Image" class="align-center" src="../../../../../_images/instance1.png" style="width: 700px;">
+          </img>
+         </a>
+         <a class="reference internal image-reference" href="../../../../../_images/hal.png">
+          <img alt="Example Image" class="align-center" src="../../../../../_images/hal.png" style="width: 700px;"/>
+         </a>
+        </section>
+        <section id="main-configuration">
+         <h2 id="main-configuration">
+          Main configuration
+          <a class="headerlink" href="#main-configuration" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          The main peripheral start with the default config and you can adjust it to your need.
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            Default configuration :
+           </p>
+          </li>
+         </ul>
+         <a class="reference internal image-reference" href="../../../../../_images/main.png">
+          <img alt="Example Image" class="align-center" src="../../../../../_images/main.png" style="width: 700px;"/>
+         </a>
+        </section>
+        <section id="additional-features-configuration">
+         <h2 id="additional-features-configuration">
+          Additional features configuration
+          <a class="headerlink" href="#additional-features-configuration" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <ul class="simple">
+          <li>
+           <p>
+            Alarm A :
+           </p>
+          </li>
+         </ul>
+         <a class="reference internal image-reference" href="../../../../../_images/additional_features1.png">
+          <img alt="Example Image" class="align-center" src="../../../../../_images/additional_features1.png" style="width: 700px;"/>
+         </a>
+         <a class="reference internal image-reference" href="../../../../../_images/additional_features2.png">
+          <img alt="Example Image" class="align-center" src="../../../../../_images/additional_features2.png" style="width: 700px;"/>
+         </a>
+        </section>
+        <section id="output-configuration">
+         <h2 id="output-configuration">
+          Output configuration
+          <a class="headerlink" href="#output-configuration" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <a class="reference internal image-reference" href="../../../../../_images/output.png">
+          <img alt="Example Image" class="align-center" src="../../../../../_images/output.png" style="width: 700px;"/>
+         </a>
+        </section>
+        <section id="system-interruption-configuration">
+         <h2 id="system-interruption-configuration">
+          System interruption configuration
+          <a class="headerlink" href="#system-interruption-configuration" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          You can enable the interruption in the system section
+         </p>
+         <a class="reference internal image-reference" href="../../../../../_images/system.png">
+          <img alt="Example Image" class="align-center" src="../../../../../_images/system.png" style="width: 700px;"/>
+         </a>
+        </section>
+        <section id="generated-rtc-init-and-de-init-sequences">
+         <span id="hal-rtc-init-setconfig-deinit-functions">
+         </span>
+         <h2 id="generated-rtc-init-and-de-init-sequences">
+          Generated RTC init and de-init sequences
+          <a class="headerlink" href="#generated-rtc-init-and-de-init-sequences" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          The RTC initialisation and de-initialisation sequences are generated in the
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            mx_rtc_hal_init
+           </span>
+          </code>
+          function in
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            mx_rtc.c
+           </span>
+          </code>
+          file under
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            $PROJ_DIR$/generated/STM32Cube_CodeGen
+           </span>
+          </code>
+          .
+         </p>
+         <div class="admonition note">
+          <p class="admonition-title">
+           Note
+          </p>
+          <p>
+           <strong>
+            Related  concept
+           </strong>
+           :
+          </p>
+          <ul class="simple">
+           <li>
+            <p>
+             <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_A.html#breaking-concepts-concept-a5">
+              <span class="std std-ref">
+               Remove MspInit and MspDeInit callbacks
+              </span>
+             </a>
+            </p>
+           </li>
+           <li>
+            <p>
+             <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_A.html#breaking-concepts-concept-a1">
+              <span class="std std-ref">
+               Split legacy HAL_PPP_Init into Init (build handle object) and config (apply configuration)
+              </span>
+             </a>
+            </p>
+           </li>
+          </ul>
+         </div>
+         <table id="id1">
+          <caption>
+           <span class="caption-text">
+            STM32CubeMX2 Generated with default values
+           </span>
+           <a class="headerlink" href="#id1" title="Link to this table">
+            ¶
+           </a>
+          </caption>
+          <colgroup>
+           <col style="width: 33.3%"/>
+           <col style="width: 33.3%"/>
+           <col style="width: 33.3%"/>
+          </colgroup>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               Topic
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1 code snippet
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2 code snippet
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               RTC Init, config and Msp sequences
+              </strong>
+             </p>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">MX_RTC_Init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+
+<span class="w">  </span><span class="n">RTC_PrivilegeStateTypeDef</span><span class="w"> </span><span class="n">privilegeState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<span class="w">  </span><span class="n">RTC_TimeTypeDef</span><span class="w"> </span><span class="n">sTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<span class="w">  </span><span class="n">RTC_DateTypeDef</span><span class="w"> </span><span class="n">sDate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<span class="w">  </span><span class="n">RTC_AlarmTypeDef</span><span class="w"> </span><span class="n">sAlarm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+<span class="w">  </span><span class="cm">/** Initialize RTC Only */</span>
+<span class="w">  </span><span class="n">hrtc</span><span class="p">.</span><span class="n">Instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RTC</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hrtc</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">HourFormat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RTC_HOURFORMAT_24</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hrtc</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">AsynchPrediv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">127</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hrtc</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">SynchPrediv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">255</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hrtc</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">OutPut</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RTC_OUTPUT_DISABLE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hrtc</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">OutPutRemap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RTC_OUTPUT_REMAP_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hrtc</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">OutPutPolarity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RTC_OUTPUT_POLARITY_HIGH</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hrtc</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">OutPutType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RTC_OUTPUT_TYPE_OPENDRAIN</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hrtc</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">OutPutPullUp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RTC_OUTPUT_PULLUP_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hrtc</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">BinMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RTC_BINARY_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_RTC_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hrtc</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="n">privilegeState</span><span class="p">.</span><span class="n">rtcPrivilegeFull</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RTC_PRIVILEGE_FULL_NO</span><span class="p">;</span>
+<span class="w">  </span><span class="n">privilegeState</span><span class="p">.</span><span class="n">backupRegisterPrivZone</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RTC_PRIVILEGE_BKUP_ZONE_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">privilegeState</span><span class="p">.</span><span class="n">backupRegisterStartZone2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RTC_BKP_DR0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">privilegeState</span><span class="p">.</span><span class="n">backupRegisterStartZone3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RTC_BKP_DR0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_RTCEx_PrivilegeModeSet</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hrtc</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">privilegeState</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+
+
+
+
+
+
+<span class="w">  </span><span class="cm">/** Initialize RTC and set the Time and Date */</span>
+<span class="w">  </span><span class="n">sTime</span><span class="p">.</span><span class="n">Hours</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sTime</span><span class="p">.</span><span class="n">Minutes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sTime</span><span class="p">.</span><span class="n">Seconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sTime</span><span class="p">.</span><span class="n">DayLightSaving</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RTC_DAYLIGHTSAVING_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sTime</span><span class="p">.</span><span class="n">StoreOperation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RTC_STOREOPERATION_RESET</span><span class="p">;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_RTC_SetTime</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hrtc</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sTime</span><span class="p">,</span><span class="w"> </span><span class="n">RTC_FORMAT_BCD</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="n">sDate</span><span class="p">.</span><span class="n">WeekDay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RTC_WEEKDAY_MONDAY</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sDate</span><span class="p">.</span><span class="n">Month</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RTC_MONTH_JANUARY</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sDate</span><span class="p">.</span><span class="n">Date</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sDate</span><span class="p">.</span><span class="n">Year</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x0</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_RTC_SetDate</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hrtc</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sDate</span><span class="p">,</span><span class="w"> </span><span class="n">RTC_FORMAT_BCD</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+
+
+<span class="w">  </span><span class="cm">/** Enable the Alarm A */</span>
+<span class="w">  </span><span class="n">sAlarm</span><span class="p">.</span><span class="n">AlarmTime</span><span class="p">.</span><span class="n">Hours</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sAlarm</span><span class="p">.</span><span class="n">AlarmTime</span><span class="p">.</span><span class="n">Minutes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x23</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sAlarm</span><span class="p">.</span><span class="n">AlarmTime</span><span class="p">.</span><span class="n">Seconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x30</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sAlarm</span><span class="p">.</span><span class="n">AlarmTime</span><span class="p">.</span><span class="n">SubSeconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sAlarm</span><span class="p">.</span><span class="n">AlarmMask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RTC_ALARMMASK_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sAlarm</span><span class="p">.</span><span class="n">AlarmSubSecondMask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RTC_ALARMSUBSECONDMASK_ALL</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sAlarm</span><span class="p">.</span><span class="n">AlarmDateWeekDaySel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RTC_ALARMDATEWEEKDAYSEL_DATE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sAlarm</span><span class="p">.</span><span class="n">AlarmDateWeekDay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">sAlarm</span><span class="p">.</span><span class="n">Alarm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RTC_ALARM_A</span><span class="p">;</span>
+
+
+
+
+
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_RTC_SetAlarm_IT</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hrtc</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sAlarm</span><span class="p">,</span><span class="w"> </span><span class="n">RTC_FORMAT_BCD</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="p">}</span>
+
+
+
+
+
+
+
+
+
+
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">HAL_RTC_MspInit</span><span class="p">(</span><span class="n">RTC_HandleTypeDef</span><span class="o">*</span><span class="w"> </span><span class="n">hrtc</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">RCC_PeriphCLKInitTypeDef</span><span class="w"> </span><span class="n">PeriphClkInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">hrtc</span><span class="o">-&gt;</span><span class="n">Instance</span><span class="o">==</span><span class="n">RTC</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+
+<span class="w">  </span><span class="cm">/** Initializes the peripherals clock */</span>
+<span class="w">    </span><span class="n">PeriphClkInit</span><span class="p">.</span><span class="n">PeriphClockSelection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RCC_PERIPHCLK_RTC</span><span class="p">;</span>
+<span class="w">    </span><span class="n">PeriphClkInit</span><span class="p">.</span><span class="n">RTCClockSelection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RCC_RTCCLKSOURCE_LSI</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_RCCEx_PeriphCLKConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">PeriphClkInit</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cm">/* Peripheral clock enable */</span>
+<span class="w">    </span><span class="n">__HAL_RCC_RTC_ENABLE</span><span class="p">();</span>
+<span class="w">    </span><span class="n">__HAL_RCC_RTCAPB_CLK_ENABLE</span><span class="p">();</span>
+<span class="w">    </span><span class="n">__HAL_RCC_RTCAPB_CLKAM_ENABLE</span><span class="p">();</span>
+<span class="w">    </span><span class="cm">/* RTC interrupt Init */</span>
+<span class="w">    </span><span class="n">HAL_NVIC_SetPriority</span><span class="p">(</span><span class="n">RTC_IRQn</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">HAL_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">RTC_IRQn</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">system_status_t</span><span class="w"> </span><span class="nf">mx_rtc_hal_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">hal_rtc_config_t</span><span class="w"> </span><span class="n">rtc_config</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hal_rtc_calendar_config_t</span><span class="w"> </span><span class="n">calendar_config</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hal_rtc_time_t</span><span class="w"> </span><span class="n">calendar_time</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hal_rtc_date_t</span><span class="w"> </span><span class="n">calendar_date</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hal_rtc_alarm_t</span><span class="w"> </span><span class="n">alarm_a</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hal_rtc_alarm_config_t</span><span class="w"> </span><span class="n">alarm_a_config</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hal_rtc_alarm_date_time_t</span><span class="w"> </span><span class="n">alarm_a_date_time</span><span class="p">;</span>
+
+<span class="w">  </span><span class="cm">/* Clock configuration */</span>
+<span class="w">  </span><span class="n">HAL_RCC_ResetBackupDomain</span><span class="p">();</span>
+<span class="w">  </span><span class="n">HAL_PWR_DisableRTCDomainWriteProtection</span><span class="p">();</span>
+<span class="w">  </span><span class="n">HAL_RCC_RTC_EnableKernelClock</span><span class="p">();</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_RTC_DisableWriteProtection</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">SYSTEM_PERIPHERAL_ERROR</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_RTC_EnterInitMode</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">SYSTEM_PERIPHERAL_ERROR</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="n">rtc_config</span><span class="p">.</span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_RTC_MODE_BCD</span><span class="p">;</span>
+<span class="w">  </span><span class="n">rtc_config</span><span class="p">.</span><span class="n">asynch_prediv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">127</span><span class="p">;</span>
+<span class="w">  </span><span class="n">rtc_config</span><span class="p">.</span><span class="n">synch_prediv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">255</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_RTC_SetConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">rtc_config</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">SYSTEM_PERIPHERAL_ERROR</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="n">calendar_config</span><span class="p">.</span><span class="n">hour_format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_RTC_CALENDAR_HOUR_FORMAT_24</span><span class="p">;</span>
+<span class="w">  </span><span class="n">calendar_config</span><span class="p">.</span><span class="n">bypass_shadow_register</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_RTC_CALENDAR_SHADOW_REG_KEEP</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_RTC_CALENDAR_SetConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">calendar_config</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">SYSTEM_PERIPHERAL_ERROR</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="n">calendar_date</span><span class="p">.</span><span class="n">wday</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_RTC_WEEKDAY_MONDAY</span><span class="p">;</span>
+<span class="w">  </span><span class="n">calendar_date</span><span class="p">.</span><span class="n">mon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_RTC_MONTH_JANUARY</span><span class="p">;</span>
+<span class="w">  </span><span class="n">calendar_date</span><span class="p">.</span><span class="n">mday</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">calendar_date</span><span class="p">.</span><span class="n">year</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">calendar_time</span><span class="p">.</span><span class="n">am_pm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_RTC_TIME_FORMAT_AM_24H</span><span class="p">;</span>
+<span class="w">  </span><span class="n">calendar_time</span><span class="p">.</span><span class="n">hour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">calendar_time</span><span class="p">.</span><span class="n">min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">calendar_time</span><span class="p">.</span><span class="n">sec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_RTC_CALENDAR_SetDateTime</span><span class="p">(</span><span class="o">&amp;</span><span class="n">calendar_date</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">calendar_time</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">SYSTEM_PERIPHERAL_ERROR</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="n">alarm_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_RTC_ALARM_A</span><span class="p">;</span>
+<span class="w">  </span><span class="n">alarm_a_config</span><span class="p">.</span><span class="n">auto_clear</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_ALARM_AUTO_CLEAR_ENABLE</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_RTC_ALARM_SetConfig</span><span class="p">(</span><span class="n">alarm_a</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">alarm_a_config</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">SYSTEM_PERIPHERAL_ERROR</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="n">alarm_a_date_time</span><span class="p">.</span><span class="n">mday_wday_selection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_RTC_ALARM_DAY_TYPE_SEL_MONTHDAY</span><span class="p">;</span>
+<span class="w">  </span><span class="n">alarm_a_date_time</span><span class="p">.</span><span class="n">wday_mday</span><span class="p">.</span><span class="n">mday</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">alarm_a_date_time</span><span class="p">.</span><span class="n">time</span><span class="p">.</span><span class="n">hour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">alarm_a_date_time</span><span class="p">.</span><span class="n">time</span><span class="p">.</span><span class="n">min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">23</span><span class="p">;</span>
+<span class="w">  </span><span class="n">alarm_a_date_time</span><span class="p">.</span><span class="n">time</span><span class="p">.</span><span class="n">sec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">30</span><span class="p">;</span>
+<span class="w">  </span><span class="n">alarm_a_date_time</span><span class="p">.</span><span class="n">time</span><span class="p">.</span><span class="n">subsec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">alarm_a_date_time</span><span class="p">.</span><span class="n">mask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_RTC_ALARM_MASK_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">alarm_a_date_time</span><span class="p">.</span><span class="n">subsec_mask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_RTC_ALARM_SetDateTime</span><span class="p">(</span><span class="n">alarm_a</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">alarm_a_date_time</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">SYSTEM_PERIPHERAL_ERROR</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_RTC_ExitInitMode</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">SYSTEM_PERIPHERAL_ERROR</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_RTC_EnableWriteProtection</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">SYSTEM_PERIPHERAL_ERROR</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="n">HAL_PWR_EnableRTCDomainWriteProtection</span><span class="p">();</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="w">  </span><span class="cm">/* Enable the interruption for RTC */</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SetPriority</span><span class="p">(</span><span class="n">RTC_IRQn</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_0</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_0</span><span class="p">);</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">RTC_IRQn</span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">SYSTEM_OK</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               RTC Deinit sequence
+              </strong>
+             </p>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">HAL_RTC_MspDeInit</span><span class="p">(</span><span class="n">RTC_HandleTypeDef</span><span class="o">*</span><span class="w"> </span><span class="n">hrtc</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">hrtc</span><span class="o">-&gt;</span><span class="n">Instance</span><span class="o">==</span><span class="n">RTC</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="cm">/* Peripheral clock disable */</span>
+<span class="w">    </span><span class="n">__HAL_RCC_RTC_DISABLE</span><span class="p">();</span>
+<span class="w">    </span><span class="n">__HAL_RCC_RTCAPB_CLK_DISABLE</span><span class="p">();</span>
+<span class="w">    </span><span class="n">__HAL_RCC_RTCAPB_CLKAM_DISABLE</span><span class="p">();</span>
+
+<span class="w">    </span><span class="cm">/* RTC interrupt DeInit */</span>
+<span class="w">    </span><span class="n">HAL_NVIC_DisableIRQ</span><span class="p">(</span><span class="n">RTC_IRQn</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">mx_rtc_hal_deinit</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+
+
+
+
+
+
+
+<span class="w">  </span><span class="cm">/* Disable the interruption for RTC */</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_DisableIRQ</span><span class="p">(</span><span class="n">RTC_IRQn</span><span class="p">);</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               RTC IRQ handler sequence
+              </strong>
+             </p>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">RTC_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_RTC_AlarmIRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hrtc</span><span class="p">);</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">RTC_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_RTC_IRQHandler</span><span class="p">();</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

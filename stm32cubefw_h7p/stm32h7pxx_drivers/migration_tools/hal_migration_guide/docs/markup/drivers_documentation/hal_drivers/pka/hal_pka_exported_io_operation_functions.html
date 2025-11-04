@@ -1,0 +1,3816 @@
+<!DOCTYPE html>
+<html data-content_root="../../../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, HAL1, PKA, STM32H5, STM32G0, STM32F4, STM32L4, STM32C0, STM32H7" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     HAL PKA io operation functions migration — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <script src="../../../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <link href="../../../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../../../search.html" rel="search" title="Search"/>
+    <link href="hal_pka_exported_functions_IRQ_Handler_and_Callbacks.html" rel="next" title="HAL PKA IRQ handler and callbacks functions migration"/>
+    <link href="hal_pka_exported_functions_init_config.html" rel="prev" title="HAL PKA initialization and configuration functions migration"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/drivers_documentation/hal_drivers/pka/hal_pka_exported_io_operation_functions" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_script/migration_script_toc.html">
+            HAL1 detection
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../breaking_concepts/breaking_concepts_toc.html">
+              Breaking changes in concepts
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../hal_drivers_toc.html">
+              HAL drivers migration
+             </a>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../adc/hal_adc_toc.html">
+                ADC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../comp/hal_comp_toc.html">
+                COMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cortex/hal_cortex_toc.html">
+                CORTEX
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cordic/hal_cordic_toc.html">
+                CORDIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../crc/hal_crc_toc.html">
+                CRC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cryp/hal_cryp_toc.html">
+                CRYP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dac/hal_dac_toc.html">
+                DAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dcache/hal_dcache_toc.html">
+                DCACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dma/hal_dma_toc.html">
+                DMA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../exti/hal_exti_toc.html">
+                EXTI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../fmac/hal_fmac_toc.html">
+                FMAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../generic/hal_generic_toc.html">
+                GENERIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxmmu/hal_gfxmmu_toc.html">
+                GFXMMU
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxtim/hal_gfxtim_toc.html">
+                GFXTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gpio/hal_gpio_toc.html">
+                GPIO
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2c/hal_i2c_toc.html">
+                I2C
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2s/hal_i2s_toc.html">
+                I2S
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../icache/hal_icache_toc.html">
+                ICACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../irda/hal_irda_toc.html">
+                IRDA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../iwdg/hal_iwdg_toc.html">
+                IWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../lptim/hal_lptim_toc.html">
+                LPTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../nor/hal_nor_toc.html">
+                NOR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../opamp/hal_opamp_toc.html">
+                OPAMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ospi/hal_ospi_toc.html">
+                OSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="hal_pka_toc.html">
+                PKA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pwr/hal_pwr_toc.html">
+                PWR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../qspi/hal_qspi_toc.html">
+                QSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ramcfg/hal_ramcfg_toc.html">
+                RAMCFG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rcc/hal_rcc_toc.html">
+                RCC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rng/hal_rng_toc.html">
+                RNG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rtc/hal_rtc_toc.html">
+                RTC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sdram/hal_sdram_toc.html">
+                SDRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smartcard/hal_smartcard_toc.html">
+                SMARTCARD
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smbus/hal_smbus_toc.html">
+                SMBUS
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../spi/hal_spi_toc.html">
+                SPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sram/hal_sram_toc.html">
+                SRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../tim/hal_tim_toc.html">
+                TIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../uart/hal_uart_toc.html">
+                UART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../usart/hal_usart_toc.html">
+                USART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../wwdg/hal_wwdg_toc.html">
+                WWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../xspi/hal_xspi_toc.html">
+                XSPI
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../ll_drivers/ll_drivers_toc.html">
+              LL drivers migration
+             </a>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-drivers-documentation-hal-drivers-pka-hal-pka-exported-io-operation-functions--page-root">
+            HAL PKA io operation functions migration
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-abort">
+               HAL PKA abort
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-addition-in-polling-mode">
+               HAL PKA addition in polling mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-addition-in-interrupt-mode">
+               HAL PKA addition in interrupt mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-get-result-of-arithmetic-operations">
+               HAL PKA get result of arithmetic operations
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-comparison-in-polling-mode">
+               HAL PKA comparison in polling mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-comparison-in-interrupt-mode">
+               HAL PKA comparison in interrupt mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-ecc-complete-addition-in-polling-mode">
+               HAL PKA ECC complete addition in polling mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-get-result-of-ecc-complete-addition">
+               HAL PKA get result of ECC complete addition
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-ecc-complete-addition-with-interrupt">
+               HAL PKA ECC complete addition with interrupt
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-ecc-double-base-ladder-in-polling-mode">
+               HAL PKA ECC double base ladder in polling mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-get-result-of-ecc-double-base-ladder">
+               HAL PKA get result of ECC double base ladder
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-ecc-double-base-ladder-with-interrupt">
+               HAL PKA ECC double base ladder with interrupt
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-ecc-multiplication">
+               HAL PKA ECC multiplication
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-ecc-multiplication-in-interrupt-mode">
+               HAL PKA ECC multiplication in interrupt mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-get-result-of-ecc-multiplication">
+               HAL PKA get result of ECC multiplication
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-ecc-projective-to-affine-with-interrupt">
+               HAL PKA ECC projective to affine with interrupt
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-get-result-of-ecc-projective-to-affine">
+               HAL PKA get result of ECC projective to affine
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-ecdsa-signature-generation">
+               HAL PKA ECDSA signature generation
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-get-ecdsa-signature-result">
+               HAL PKA get ECDSA signature result
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-ecdsa-signature-in-interrupt-mode">
+               HAL PKA ECDSA signature in interrupt mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-ecdsa-signature-verification">
+               HAL PKA ECDSA signature verification
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-ecdsa-verification-with-interrupt">
+               HAL PKA ECDSA verification with interrupt
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-ecdsa-signature-valid">
+               HAL PKA ECDSA signature valid
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-modular-addition-in-polling-mode">
+               HAL PKA modular addition in polling mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-modular-addition-with-interrupt">
+               HAL PKA modular addition with interrupt
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-modular-exponentiation-in-polling-mode">
+               HAL PKA modular exponentiation in polling mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-fast-mode-modular-exponentiation-in-polling-mode">
+               HAL PKA fast mode modular exponentiation in polling mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-fast-mode-modular-exponentiation-with-interrupt">
+               HAL PKA fast mode modular exponentiation with interrupt
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-protected-modular-exponentiation-mode-in-polling-mode">
+               HAL PKA protected modular exponentiation mode in polling mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-protected-modular-exponentiation-mode-with-interrupt">
+               HAL PKA protected modular exponentiation mode with interrupt
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-get-result-of-modular-exponentiation">
+               HAL PKA get result of modular exponentiation
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-modular-exponentiation-with-interrupt">
+               HAL PKA modular exponentiation with interrupt
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-modular-inversion-in-polling-mode">
+               HAL PKA modular inversion in polling mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-modular-inversion-with-interrupt">
+               HAL PKA modular inversion with interrupt
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-modular-reduction-in-polling-mode">
+               HAL PKA modular reduction in polling mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-modular-reduction-with-interrupt">
+               HAL PKA modular reduction with interrupt
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-modular-subtraction-in-polling-mode">
+               HAL PKA modular subtraction in polling mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-modular-subtraction-with-interrupt">
+               HAL PKA modular subtraction with interrupt
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-montgomery-multiplication-in-polling-mode">
+               HAL PKA Montgomery multiplication in polling mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-montgomery-multiplication-with-interrupt">
+               HAL PKA Montgomery multiplication with interrupt
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-computes-montgomery-parameters-in-polling-mode">
+               HAL PKA computes Montgomery parameters in polling mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-get-montgomery-parameter-result">
+               HAL PKA get Montgomery parameter result
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-computes-montgomery-parameters-with-interrupt">
+               HAL PKA computes Montgomery parameters with interrupt
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-multiplication-in-polling-mode">
+               HAL PKA multiplication in polling mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-multiplication-with-interrupt">
+               HAL PKA multiplication with interrupt
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-point-check-in-polling-mode">
+               HAL PKA point check in polling mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-point-check-with-interrupt">
+               HAL PKA point check with interrupt
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-point-check-on-curve">
+               HAL PKA point check on curve
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-ram-reset">
+               HAL PKA RAM reset
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-rsa-crt-exponentiation-in-polling">
+               HAL PKA RSA CRT exponentiation in polling
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-get-rsa-crt-exponentiation-result">
+               HAL PKA get RSA CRT exponentiation result
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-rsa-crt-exponentiation-with-interrupt">
+               HAL PKA RSA CRT exponentiation with interrupt
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-subtraction-in-polling">
+               HAL PKA subtraction in polling
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-subtraction-with-interrupt">
+               HAL PKA subtraction with interrupt
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-ecc-fast-mode-multiplication-in-polling-mode">
+               HAL PKA ECC fast mode multiplication in polling mode
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-pka-ecc-fast-mode-multiplication-in-interrupt-mode">
+               HAL PKA ECC fast mode multiplication in interrupt mode
+              </a>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="hal-pka-io-operation-functions-migration">
+        <span id="hal-pka-exported-io-operation-functions">
+        </span>
+        <h1 id="docs-markup-drivers-documentation-hal-drivers-pka-hal-pka-exported-io-operation-functions--page-root">
+         HAL PKA io operation functions migration
+         <a class="headerlink" href="#docs-markup-drivers-documentation-hal-drivers-pka-hal-pka-exported-io-operation-functions--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <p>
+         This section provides information about the HAL PKA function migration.
+        </p>
+        <section id="hal-pka-abort">
+         <span id="hal-pka-exported-function-hal-pka-abort">
+         </span>
+         <h2 id="hal-pka-abort">
+          HAL PKA abort
+          <a class="headerlink" href="#hal-pka-abort" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_Abort</span><span class="p">()</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_Abort</span><span class="p">()</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+         <div class="admonition note">
+          <p class="admonition-title">
+           Note
+          </p>
+          <p>
+           The execution of an operation is split into two main functions:
+          </p>
+          <ul class="simple">
+           <li>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_PKA_SetConfig$Operation$
+              </span>
+             </code>
+             to configure the mode and input parameters of the given operation.
+            </p>
+           </li>
+           <li>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_PKA_Compute
+              </span>
+             </code>
+             /
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_PKA_Compute_IT
+              </span>
+             </code>
+             to start the computation in polling or interrupt modes whatever the operation is.
+            </p>
+           </li>
+          </ul>
+         </div>
+        </section>
+        <section id="hal-pka-addition-in-polling-mode">
+         <span id="hal-pka-exported-function-hal-pka-add">
+         </span>
+         <h2 id="hal-pka-addition-in-polling-mode">
+          HAL PKA addition in polling mode
+          <a class="headerlink" href="#hal-pka-addition-in-polling-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_Add</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_AddInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigAdd</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_add_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-addition-in-interrupt-mode">
+         <span id="hal-pka-exported-function-hal-pka-add-it">
+         </span>
+         <h2 id="hal-pka-addition-in-interrupt-mode">
+          HAL PKA addition in interrupt mode
+          <a class="headerlink" href="#hal-pka-addition-in-interrupt-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_Add_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_AddInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigAdd</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_add_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-get-result-of-arithmetic-operations">
+         <span id="hal-pka-exported-function-hal-pka-arithmetic-getresult">
+         </span>
+         <h2 id="hal-pka-get-result-of-arithmetic-operations">
+          HAL PKA get result of arithmetic operations
+          <a class="headerlink" href="#hal-pka-get-result-of-arithmetic-operations" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <ul class="simple">
+          <li>
+           <p>
+            In HAL2, the
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              HAL_PKA_Arithmetic_GetResult
+             </span>
+            </code>
+            has been split into multiple specialized functions to retrieve the result of a specific arithmetic operation.
+           </p>
+          </li>
+         </ul>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_Arithmetic_GetResult</span><span class="p">()</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_GetResultAdd</span><span class="p">()</span>
+<span class="n">HAL_PKA_GetResultSub</span><span class="p">()</span>
+<span class="n">HAL_PKA_GetResultCmp</span><span class="p">()</span>
+<span class="n">HAL_PKA_GetResultMul</span><span class="p">()</span>
+<span class="n">HAL_PKA_GetResultModAdd</span><span class="p">()</span>
+<span class="n">HAL_PKA_GetResultModSub</span><span class="p">()</span>
+<span class="n">HAL_PKA_GetResultModInv</span><span class="p">()</span>
+<span class="n">HAL_PKA_GetResultModRed</span><span class="p">()</span>
+<span class="n">HAL_PKA_GetResultMontgomeryMul</span><span class="p">()</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-comparison-in-polling-mode">
+         <span id="hal-pka-exported-function-hal-pka-cmp">
+         </span>
+         <h2 id="hal-pka-comparison-in-polling-mode">
+          HAL PKA comparison in polling mode
+          <a class="headerlink" href="#hal-pka-comparison-in-polling-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_Cmp</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_CmpInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigCmp</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_cmp_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-comparison-in-interrupt-mode">
+         <span id="hal-pka-exported-function-hal-pka-cmp-it">
+         </span>
+         <h2 id="hal-pka-comparison-in-interrupt-mode">
+          HAL PKA comparison in interrupt mode
+          <a class="headerlink" href="#hal-pka-comparison-in-interrupt-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_Cmp_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_CmpInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigCmp</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_cmp_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-ecc-complete-addition-in-polling-mode">
+         <span id="hal-pka-exported-function-hal-pka-ecccompleteaddition">
+         </span>
+         <h2 id="hal-pka-ecc-complete-addition-in-polling-mode">
+          HAL PKA ECC complete addition in polling mode
+          <a class="headerlink" href="#hal-pka-ecc-complete-addition-in-polling-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECCCompleteAddition</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ECCCompleteAdditionInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span>
+<span class="w">                            </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="w"> </span><span class="n">HAL_PKA_ECC_SetConfigCompleteAdd</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span>
+<span class="w">                                  </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_ecc_complete_add_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-get-result-of-ecc-complete-addition">
+         <span id="hal-pka-exported-function-hal-pka-ecccompleteaddition-getresult">
+         </span>
+         <h2 id="hal-pka-get-result-of-ecc-complete-addition">
+          HAL PKA get result of ECC complete addition
+          <a class="headerlink" href="#hal-pka-get-result-of-ecc-complete-addition" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">HAL_PKA_ECCCompleteAddition_GetResult</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span>
+<span class="w">                                           </span><span class="n">PKA_ECCCompleteAdditionOutTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">out</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">HAL_PKA_ECC_GetResultCompleteAdd</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span>
+<span class="w">                                          </span><span class="n">hal_pka_ecc_complete_add_result_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_result</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-ecc-complete-addition-with-interrupt">
+         <span id="hal-pka-exported-function-hal-pka-ecccompleteaddition-it">
+         </span>
+         <h2 id="hal-pka-ecc-complete-addition-with-interrupt">
+          HAL PKA ECC complete addition with interrupt
+          <a class="headerlink" href="#hal-pka-ecc-complete-addition-with-interrupt" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECCCompleteAddition_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ECCCompleteAdditionInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECC_SetConfigCompleteAdd</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span>
+<span class="w">                                 </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_ecc_complete_add_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-ecc-double-base-ladder-in-polling-mode">
+         <span id="hal-pka-exported-function-hal-pka-eccdoublebaseladder">
+         </span>
+         <h2 id="hal-pka-ecc-double-base-ladder-in-polling-mode">
+          HAL PKA ECC double base ladder in polling mode
+          <a class="headerlink" href="#hal-pka-ecc-double-base-ladder-in-polling-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECCDoubleBaseLadder</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ECCDoubleBaseLadderInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span>
+<span class="w">                            </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECC_SetConfigDoubleBaseLadder</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span>
+<span class="w">                                      </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_ecc_double_base_ladder_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-get-result-of-ecc-double-base-ladder">
+         <span id="hal-pka-exported-function-hal-pka-eccdoublebaseladder-getresult">
+         </span>
+         <h2 id="hal-pka-get-result-of-ecc-double-base-ladder">
+          HAL PKA get result of ECC double base ladder
+          <a class="headerlink" href="#hal-pka-get-result-of-ecc-double-base-ladder" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">HAL_PKA_ECCDoubleBaseLadder_GetResult</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span>
+<span class="w">                                           </span><span class="n">PKA_ECCDoubleBaseLadderOutTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">out</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">HAL_PKA_ECC_GetResultDoubleBaseLadder</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span>
+<span class="w">                                               </span><span class="n">hal_pka_ecc_double_base_ladder_result_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_result</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-ecc-double-base-ladder-with-interrupt">
+         <span id="hal-pka-exported-function-hal-pka-eccdoublebaseladder-it">
+         </span>
+         <h2 id="hal-pka-ecc-double-base-ladder-with-interrupt">
+          HAL PKA ECC double base ladder with interrupt
+          <a class="headerlink" href="#hal-pka-ecc-double-base-ladder-with-interrupt" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECCDoubleBaseLadder_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ECCDoubleBaseLadderInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECC_SetConfigDoubleBaseLadder</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span>
+<span class="w">                                      </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_ecc_double_base_ladder_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-ecc-multiplication">
+         <span id="hal-pka-exported-function-hal-pka-eccmul">
+         </span>
+         <h2 id="hal-pka-ecc-multiplication">
+          HAL PKA ECC multiplication
+          <a class="headerlink" href="#hal-pka-ecc-multiplication" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECCMul</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ECCMulInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+<span class="cm">/* or */</span>
+<span class="n">HAL_PKA_ECCMulEx</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ECCMulExInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECC_SetConfigMul</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_ecc_mul_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-ecc-multiplication-in-interrupt-mode">
+         <span id="hal-pka-exported-function-hal-pka-eccmulex-it">
+         </span>
+         <h2 id="hal-pka-ecc-multiplication-in-interrupt-mode">
+          HAL PKA ECC multiplication in interrupt mode
+          <a class="headerlink" href="#hal-pka-ecc-multiplication-in-interrupt-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECCMul_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ECCMulInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+<span class="cm">/* or */</span>
+<span class="n">HAL_PKA_ECCMulEx_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ECCMulExInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECC_SetConfigMul</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_ecc_mul_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-get-result-of-ecc-multiplication">
+         <span id="hal-pka-exported-function-hal-pka-eccmul-getresult">
+         </span>
+         <h2 id="hal-pka-get-result-of-ecc-multiplication">
+          HAL PKA get result of ECC multiplication
+          <a class="headerlink" href="#hal-pka-get-result-of-ecc-multiplication" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">HAL_PKA_ECCMul_GetResult</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ECCMulOutTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">out</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">HAL_PKA_ECC_GetResultMul</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">hal_pka_ecc_mul_result_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_result</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-ecc-projective-to-affine-with-interrupt">
+         <span id="hal-pka-exported-function-hal-pka-eccprojective2affine">
+         </span>
+         <h2 id="hal-pka-ecc-projective-to-affine-with-interrupt">
+          HAL PKA ECC projective to affine with interrupt
+          <a class="headerlink" href="#hal-pka-ecc-projective-to-affine-with-interrupt" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECCProjective2Affine_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span>
+<span class="w">                                </span><span class="n">PKA_ECCProjective2AffineInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECC_SetConfigProjectiveToAffine</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span>
+<span class="w">                                        </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_ecc_projective_to_affine_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-get-result-of-ecc-projective-to-affine">
+         <span id="hal-pka-exported-function-hal-pka-eccprojective2affine-getresult">
+         </span>
+         <h2 id="hal-pka-get-result-of-ecc-projective-to-affine">
+          HAL PKA get result of ECC projective to affine
+          <a class="headerlink" href="#hal-pka-get-result-of-ecc-projective-to-affine" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">HAL_PKA_ECCProjective2Affine_GetResult</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span>
+<span class="w">                                            </span><span class="n">PKA_ECCProjective2AffineOutTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">out</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">HAL_PKA_ECC_GetResultProjectiveToAffine</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span>
+<span class="w">                                                 </span><span class="n">hal_pka_ecc_projective_to_affine_result_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_result</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-ecdsa-signature-generation">
+         <span id="hal-pka-exported-function-hal-pka-ecdsasign">
+         </span>
+         <h2 id="hal-pka-ecdsa-signature-generation">
+          HAL PKA ECDSA signature generation
+          <a class="headerlink" href="#hal-pka-ecdsa-signature-generation" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECDSASign</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ECDSASignInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECDSA_SetConfigSignature</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_ecdsa_signature_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-get-ecdsa-signature-result">
+         <span id="hal-pka-exported-function-hal-pka-ecdsasign-getresult">
+         </span>
+         <h2 id="hal-pka-get-ecdsa-signature-result">
+          HAL PKA get ECDSA signature result
+          <a class="headerlink" href="#hal-pka-get-ecdsa-signature-result" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">HAL_PKA_ECDSASign_GetResult</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ECDSASignOutTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">out</span><span class="p">,</span>
+<span class="w">                                 </span><span class="n">PKA_ECDSASignOutExtParamTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">outExt</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">HAL_PKA_ECDSA_GetResultSignature</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span>
+<span class="w">                                          </span><span class="n">hal_pka_ecdsa_signature_result_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_result</span><span class="p">,</span>
+<span class="w">                                          </span><span class="n">hal_pka_ecdsa_signature_result_ext_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_result_ext</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-ecdsa-signature-in-interrupt-mode">
+         <span id="hal-pka-exported-function-hal-pka-ecdsasign-it">
+         </span>
+         <h2 id="hal-pka-ecdsa-signature-in-interrupt-mode">
+          HAL PKA ECDSA signature in interrupt mode
+          <a class="headerlink" href="#hal-pka-ecdsa-signature-in-interrupt-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECDSASign_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ECDSASignInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECDSA_SetConfigSignature</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_ecdsa_signature_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-ecdsa-signature-verification">
+         <span id="hal-pka-exported-function-hal-pka-ecdsaverif">
+         </span>
+         <h2 id="hal-pka-ecdsa-signature-verification">
+          HAL PKA ECDSA signature verification
+          <a class="headerlink" href="#hal-pka-ecdsa-signature-verification" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECDSAVerif</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ECDSAVerifInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECDSA_SetConfigVerifSignature</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span>
+<span class="w">                                      </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_ecdsa_verif_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-ecdsa-verification-with-interrupt">
+         <span id="hal-pka-exported-function-hal-pka-ecdsaverif-it">
+         </span>
+         <h2 id="hal-pka-ecdsa-verification-with-interrupt">
+          HAL PKA ECDSA verification with interrupt
+          <a class="headerlink" href="#hal-pka-ecdsa-verification-with-interrupt" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECDSAVerif_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ECDSAVerifInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECDSA_SetConfigSignature</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_ecdsa_signature_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-ecdsa-signature-valid">
+         <span id="hal-pka-exported-function-hal-pka-ecdsaverif-isvalidsignature">
+         </span>
+         <h2 id="hal-pka-ecdsa-signature-valid">
+          HAL PKA ECDSA signature valid
+          <a class="headerlink" href="#hal-pka-ecdsa-signature-valid" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECDSAVerif_IsValidSignature</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECDSA_IsValidVerifSignature</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-modular-addition-in-polling-mode">
+         <span id="hal-pka-exported-function-hal-pka-modadd">
+         </span>
+         <h2 id="hal-pka-modular-addition-in-polling-mode">
+          HAL PKA modular addition in polling mode
+          <a class="headerlink" href="#hal-pka-modular-addition-in-polling-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ModAdd</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ModAddInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigModAdd</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_mod_add_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-modular-addition-with-interrupt">
+         <span id="hal-pka-exported-function-hal-pka-modadd-it">
+         </span>
+         <h2 id="hal-pka-modular-addition-with-interrupt">
+          HAL PKA modular addition with interrupt
+          <a class="headerlink" href="#hal-pka-modular-addition-with-interrupt" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ModAdd_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ModAddInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigModAdd</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_mod_add_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-modular-exponentiation-in-polling-mode">
+         <span id="hal-pka-exported-function-hal-pka-modexp">
+         </span>
+         <h2 id="hal-pka-modular-exponentiation-in-polling-mode">
+          HAL PKA modular exponentiation in polling mode
+          <a class="headerlink" href="#hal-pka-modular-exponentiation-in-polling-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ModExp</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ModExpInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigModExp</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_mod_exp_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related use cases:
+          </strong>
+          <a class="reference internal" href="hal_pka_use_cases.html#pka-plling-mode">
+           <span class="std std-ref">
+            PKA in polling mode
+           </span>
+          </a>
+         </p>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-fast-mode-modular-exponentiation-in-polling-mode">
+         <span id="hal-pka-exported-function-hal-pka-modexpfastmode">
+         </span>
+         <h2 id="hal-pka-fast-mode-modular-exponentiation-in-polling-mode">
+          HAL PKA fast mode modular exponentiation in polling mode
+          <a class="headerlink" href="#hal-pka-fast-mode-modular-exponentiation-in-polling-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ModExpFastMode</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ModExpFastModeInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigModExpFast</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_mod_exp_fast_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-fast-mode-modular-exponentiation-with-interrupt">
+         <span id="hal-pka-exported-function-hal-pka-modexpfastmode-it">
+         </span>
+         <h2 id="hal-pka-fast-mode-modular-exponentiation-with-interrupt">
+          HAL PKA fast mode modular exponentiation with interrupt
+          <a class="headerlink" href="#hal-pka-fast-mode-modular-exponentiation-with-interrupt" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ModExpFastMode_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ModExpFastModeInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigModExpFast</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_mod_exp_fast_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-protected-modular-exponentiation-mode-in-polling-mode">
+         <span id="hal-pka-exported-function-hal-pka-modexpprotectmode">
+         </span>
+         <h2 id="hal-pka-protected-modular-exponentiation-mode-in-polling-mode">
+          HAL PKA protected modular exponentiation mode in polling mode
+          <a class="headerlink" href="#hal-pka-protected-modular-exponentiation-mode-in-polling-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ModExpProtectMode</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ModExpProtectModeInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span>
+<span class="w">                          </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigModExpProtect</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_mod_exp_protect_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-protected-modular-exponentiation-mode-with-interrupt">
+         <span id="hal-pka-exported-function-hal-pka-modexpprotectmode-it">
+         </span>
+         <h2 id="hal-pka-protected-modular-exponentiation-mode-with-interrupt">
+          HAL PKA protected modular exponentiation mode with interrupt
+          <a class="headerlink" href="#hal-pka-protected-modular-exponentiation-mode-with-interrupt" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ModExpProtectMode_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ModExpProtectModeInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigModExpProtect</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_mod_exp_protect_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-get-result-of-modular-exponentiation">
+         <span id="hal-pka-exported-function-hal-pka-modexp-getresult">
+         </span>
+         <h2 id="hal-pka-get-result-of-modular-exponentiation">
+          HAL PKA get result of modular exponentiation
+          <a class="headerlink" href="#hal-pka-get-result-of-modular-exponentiation" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">HAL_PKA_ModExp_GetResult</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">pRes</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">HAL_PKA_GetResultModExp</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_result</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-modular-exponentiation-with-interrupt">
+         <span id="hal-pka-exported-function-hal-pka-modexp-it">
+         </span>
+         <h2 id="hal-pka-modular-exponentiation-with-interrupt">
+          HAL PKA modular exponentiation with interrupt
+          <a class="headerlink" href="#hal-pka-modular-exponentiation-with-interrupt" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ModExp_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ModExpInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigModExp</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_mod_exp_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related use cases:
+          </strong>
+          <a class="reference internal" href="hal_pka_use_cases.html#pka-interrupt-mode">
+           <span class="std std-ref">
+            PKA in interrupt mode
+           </span>
+          </a>
+         </p>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-modular-inversion-in-polling-mode">
+         <span id="hal-pka-exported-function-hal-pka-modinv">
+         </span>
+         <h2 id="hal-pka-modular-inversion-in-polling-mode">
+          HAL PKA modular inversion in polling mode
+          <a class="headerlink" href="#hal-pka-modular-inversion-in-polling-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ModInv</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ModInvInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigModInv</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_mod_inv_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-modular-inversion-with-interrupt">
+         <span id="hal-pka-exported-function-hal-pka-modinv-it">
+         </span>
+         <h2 id="hal-pka-modular-inversion-with-interrupt">
+          HAL PKA modular inversion with interrupt
+          <a class="headerlink" href="#hal-pka-modular-inversion-with-interrupt" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ModInv_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ModInvInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigModInv</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_mod_inv_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-modular-reduction-in-polling-mode">
+         <span id="hal-pka-exported-function-hal-pka-modred">
+         </span>
+         <h2 id="hal-pka-modular-reduction-in-polling-mode">
+          HAL PKA modular reduction in polling mode
+          <a class="headerlink" href="#hal-pka-modular-reduction-in-polling-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ModRed</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ModRedInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigModRed</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_mod_red_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-modular-reduction-with-interrupt">
+         <span id="hal-pka-exported-function-hal-pka-modred-it">
+         </span>
+         <h2 id="hal-pka-modular-reduction-with-interrupt">
+          HAL PKA modular reduction with interrupt
+          <a class="headerlink" href="#hal-pka-modular-reduction-with-interrupt" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ModRed_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ModRedInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigModRed</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_mod_red_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-modular-subtraction-in-polling-mode">
+         <span id="hal-pka-exported-function-hal-pka-modsub">
+         </span>
+         <h2 id="hal-pka-modular-subtraction-in-polling-mode">
+          HAL PKA modular subtraction in polling mode
+          <a class="headerlink" href="#hal-pka-modular-subtraction-in-polling-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ModSub</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ModSubInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigModSub</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_mod_sub_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-modular-subtraction-with-interrupt">
+         <span id="hal-pka-exported-function-hal-pka-modsub-it">
+         </span>
+         <h2 id="hal-pka-modular-subtraction-with-interrupt">
+          HAL PKA modular subtraction with interrupt
+          <a class="headerlink" href="#hal-pka-modular-subtraction-with-interrupt" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ModSub_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ModSubInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigModSub</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_mod_sub_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-montgomery-multiplication-in-polling-mode">
+         <span id="hal-pka-exported-function-hal-pka-montgomerymul">
+         </span>
+         <h2 id="hal-pka-montgomery-multiplication-in-polling-mode">
+          HAL PKA Montgomery multiplication in polling mode
+          <a class="headerlink" href="#hal-pka-montgomery-multiplication-in-polling-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_MontgomeryMul</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_MontgomeryMulInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigMontgomeryMul</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_montgomery_mul_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-montgomery-multiplication-with-interrupt">
+         <span id="hal-pka-exported-function-hal-pka-montgomerymul-it">
+         </span>
+         <h2 id="hal-pka-montgomery-multiplication-with-interrupt">
+          HAL PKA Montgomery multiplication with interrupt
+          <a class="headerlink" href="#hal-pka-montgomery-multiplication-with-interrupt" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_MontgomeryMul_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_MontgomeryMulInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigMontgomeryMul</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_montgomery_mul_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-computes-montgomery-parameters-in-polling-mode">
+         <span id="hal-pka-exported-function-hal-pka-montgomeryparam">
+         </span>
+         <h2 id="hal-pka-computes-montgomery-parameters-in-polling-mode">
+          HAL PKA computes Montgomery parameters in polling mode
+          <a class="headerlink" href="#hal-pka-computes-montgomery-parameters-in-polling-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_MontgomeryParam</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_MontgomeryParamInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigMontgomery</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_montgomery_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-get-montgomery-parameter-result">
+         <span id="hal-pka-exported-function-hal-pka-montgomeryparam-getresult">
+         </span>
+         <h2 id="hal-pka-get-montgomery-parameter-result">
+          HAL PKA get Montgomery parameter result
+          <a class="headerlink" href="#hal-pka-get-montgomery-parameter-result" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">HAL_PKA_MontgomeryParam_GetResult</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="n">pRes</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">HAL_PKA_GetResultMontgomery</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_result</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-computes-montgomery-parameters-with-interrupt">
+         <span id="hal-pka-exported-function-hal-pka-montgomeryparam-it">
+         </span>
+         <h2 id="hal-pka-computes-montgomery-parameters-with-interrupt">
+          HAL PKA computes Montgomery parameters with interrupt
+          <a class="headerlink" href="#hal-pka-computes-montgomery-parameters-with-interrupt" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_MontgomeryParam_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_MontgomeryParamInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigMontgomery</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_montgomery_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-multiplication-in-polling-mode">
+         <span id="hal-pka-exported-function-hal-pka-mul">
+         </span>
+         <h2 id="hal-pka-multiplication-in-polling-mode">
+          HAL PKA multiplication in polling mode
+          <a class="headerlink" href="#hal-pka-multiplication-in-polling-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_Mul</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_MulInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigMul</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_mul_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-multiplication-with-interrupt">
+         <span id="hal-pka-exported-function-hal-pka-mul-it">
+         </span>
+         <h2 id="hal-pka-multiplication-with-interrupt">
+          HAL PKA multiplication with interrupt
+          <a class="headerlink" href="#hal-pka-multiplication-with-interrupt" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_Mul_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_MulInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigMul</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_mul_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-point-check-in-polling-mode">
+         <span id="hal-pka-exported-function-hal-pka-pointcheck">
+         </span>
+         <h2 id="hal-pka-point-check-in-polling-mode">
+          HAL PKA point check in polling mode
+          <a class="headerlink" href="#hal-pka-point-check-in-polling-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_PointCheck</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_PointCheckInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECC_SetConfigPointCheck</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_point_check_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-point-check-with-interrupt">
+         <span id="hal-pka-exported-function-hal-pka-pointcheck-it">
+         </span>
+         <h2 id="hal-pka-point-check-with-interrupt">
+          HAL PKA point check with interrupt
+          <a class="headerlink" href="#hal-pka-point-check-with-interrupt" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_PointCheck_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_PointCheckInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECC_SetConfigPointCheck</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_point_check_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-point-check-on-curve">
+         <span id="hal-pka-exported-function-hal-pka-pointcheck-isoncurve">
+         </span>
+         <h2 id="hal-pka-point-check-on-curve">
+          HAL PKA point check on curve
+          <a class="headerlink" href="#hal-pka-point-check-on-curve" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">HAL_PKA_PointCheck_IsOnCurve</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_pka_ecc_point_status_t</span><span class="w"> </span><span class="nf">HAL_PKA_ECC_IsPointCheckOnCurve</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-ram-reset">
+         <span id="hal-pka-exported-function-hal-pka-ramreset">
+         </span>
+         <h2 id="hal-pka-ram-reset">
+          HAL PKA RAM reset
+          <a class="headerlink" href="#hal-pka-ram-reset" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">HAL_PKA_RAMReset</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_PKA_RAMMassErase</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-rsa-crt-exponentiation-in-polling">
+         <span id="hal-pka-exported-function-hal-pka-rsacrtexp">
+         </span>
+         <h2 id="hal-pka-rsa-crt-exponentiation-in-polling">
+          HAL PKA RSA CRT exponentiation in polling
+          <a class="headerlink" href="#hal-pka-rsa-crt-exponentiation-in-polling" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_RSACRTExp</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_RSACRTExpInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_RSA_SetConfigCRTExp</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_rsa_crt_exp_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-get-rsa-crt-exponentiation-result">
+         <span id="hal-pka-exported-function-hal-pka-rsacrtexp-getresult">
+         </span>
+         <h2 id="hal-pka-get-rsa-crt-exponentiation-result">
+          HAL PKA get RSA CRT exponentiation result
+          <a class="headerlink" href="#hal-pka-get-rsa-crt-exponentiation-result" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">HAL_PKA_RSACRTExp_GetResult</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">pRes</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">HAL_PKA_RSA_GetResultCRTExp</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_result</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-rsa-crt-exponentiation-with-interrupt">
+         <span id="hal-pka-exported-function-hal-pka-rsacrtexp-it">
+         </span>
+         <h2 id="hal-pka-rsa-crt-exponentiation-with-interrupt">
+          HAL PKA RSA CRT exponentiation with interrupt
+          <a class="headerlink" href="#hal-pka-rsa-crt-exponentiation-with-interrupt" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_RSACRTExp_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_RSACRTExpInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_RSA_SetConfigCRTExp</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_rsa_crt_exp_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-subtraction-in-polling">
+         <span id="hal-pka-exported-function-hal-pka-sub">
+         </span>
+         <h2 id="hal-pka-subtraction-in-polling">
+          HAL PKA subtraction in polling
+          <a class="headerlink" href="#hal-pka-subtraction-in-polling" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_Sub</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_SubInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigSub</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_sub_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-subtraction-with-interrupt">
+         <span id="hal-pka-exported-function-hal-pka-sub-it">
+         </span>
+         <h2 id="hal-pka-subtraction-with-interrupt">
+          HAL PKA subtraction with interrupt
+          <a class="headerlink" href="#hal-pka-subtraction-with-interrupt" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_Sub_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_SubInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigSub</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_sub_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-ecc-fast-mode-multiplication-in-polling-mode">
+         <span id="hal-pka-exported-function-hal-pka-mul-fast">
+         </span>
+         <h2 id="hal-pka-ecc-fast-mode-multiplication-in-polling-mode">
+          HAL PKA ECC fast mode multiplication in polling mode
+          <a class="headerlink" href="#hal-pka-ecc-fast-mode-multiplication-in-polling-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECCMulFastMode</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ECCMulFastModeInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Timeout</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigMulFast</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_mul_fast_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-pka-ecc-fast-mode-multiplication-in-interrupt-mode">
+         <span id="hal-pka-exported-function-hal-pka-mul-fast-it">
+         </span>
+         <h2 id="hal-pka-ecc-fast-mode-multiplication-in-interrupt-mode">
+          HAL PKA ECC fast mode multiplication in interrupt mode
+          <a class="headerlink" href="#hal-pka-ecc-fast-mode-multiplication-in-interrupt-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_ECCMulFastMode_IT</span><span class="p">(</span><span class="n">PKA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="n">PKA_ECCMulFastModeInTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_PKA_SetConfigMulFast</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_pka_mul_fast_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+<span class="n">HAL_PKA_Compute_IT</span><span class="p">(</span><span class="n">hal_pka_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hpka</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

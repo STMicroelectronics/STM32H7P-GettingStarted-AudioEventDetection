@@ -1,0 +1,328 @@
+{{!
+ * @file Partial used to generate code for RTC:
+ * @author GPM Application Team
+ * @license
+ * Copyright (c) 2025 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ *
+ * how to use
+ * > RTC fct='xxxx' with xxxx:
+ *   * init
+ *   * deinit
+~}}
+{{#if (eq fct 'init')}}
+
+  {{~assign 'found_rtcOut2'  'false'}}
+  {{~assign 'found_rtcRefIn' 'false'}}
+system_status_t {{@root.fct_name}}_init(void)
+{
+  {{#> PWR_LL fct='generate_write_protection_disable'}}
+  {{/PWR_LL}}
+
+  /* Clock configuration */
+  {{#> RCC fct='generate_backup_domain_reset' hw_resource=@root.current_resource sw_resource='RTC'~}}
+  {{/RCC}}
+  {{#> RCC fct='generate_kernel_clock' hw_resource=@root.current_resource sw_resource='RTC'~}}
+  {{/RCC}}
+  {{#> RCC fct='generate_peripheral_clock_activation' hw_resource=@root.current_resource sw_resource='RTC'~}}
+  {{/RCC}}
+
+  /* Enter Init Mode */
+  LL_RTC_DisableWriteProtection();
+  LL_RTC_EnableInitMode();
+
+  {{#with basic}}
+  /* Configure RTC prescalers and mode */
+  uint32_t asynchronous_prescaler = {{asynchronousPredividerValue}};
+  uint32_t synchronous_prescaler = {{synchronousPredividerValue}};
+
+  LL_RTC_SetPrescalers(asynchronous_prescaler, synchronous_prescaler);
+  LL_RTC_SetConfigBinaryMode(LL_RTC_BINARY_{{#if (eq mode 'BCD')}}NONE{{else if (eq mode 'BINARY')}}ONLY{{else}}MIX{{/if}}, LL_RTC_BINARY_MIX_BCDU_{{#if (eq bcdSecondsIncrement '8BITS')}}0{{else if (eq bcdSecondsIncrement '9BITS')}}1{{else if (eq bcdSecondsIncrement '10BITS')}}2{{else if (eq bcdSecondsIncrement '11BITS')}}3{{else if (eq bcdSecondsIncrement '12BITS')}}4{{else if (eq bcdSecondsIncrement '13BITS')}}5{{else if (eq bcdSecondsIncrement '14BITS')}}6{{else}}7{{/if}});
+
+    {{#if lowPower}}
+  /* Enable the RTC ultra low power */
+  LL_RTC_CAL_LowPower_Enable();
+
+    {{/if}}
+  {{/with}}
+  {{#if additionalFeatures.enableCalendar}}
+    {{#if (not (eq basic.mode 'BINARY'))}}
+      {{#with additionalFeatures.calendar}}
+  /* Configure Calendar */
+  uint32_t calendar_date = {{calendarDate.date}};
+  uint32_t calendar_hours = {{calendarTime.hours}};
+  uint32_t calendar_minutes = {{calendarTime.minutes}};
+  uint32_t calendar_seconds = {{calendarTime.seconds}};
+
+  LL_RTC_SetHourFormatAndShadowRegBypass(LL_RTC_HOUR_FORMAT_{{#if (eq hourFormat '24')}}24HOUR{{else}}AMPM{{/if}}, LL_RTC_SHADOW_REG_{{shadowRegister}});
+  LL_RTC_DATE_Config(LL_RTC_WEEKDAY_{{calendarDate.weekDay}}, calendar_date, LL_RTC_MONTH_{{calendarDate.month}}, {{calendarDate.year}});
+  LL_RTC_TIME_Config(LL_RTC_TIME_FORMAT_{{calendarTime.amPm}}, calendar_hours, calendar_minutes, calendar_seconds);
+
+        {{#if (not (eq basic.mode 'MIX'))}}
+          {{#if referenceClockDetection}}
+  /* Enable the reference clock detection */
+  LL_RTC_EnableRefClock();
+
+          {{/if}}
+        {{/if}}
+      {{/with}}
+    {{/if}}
+  {{/if}}
+  {{#if additionalFeatures.enableAlarmA}}
+  /* Configure Alarm A */
+    {{#if (eq basic.mode 'BINARY')}}
+      {{#with additionalFeatures.alarma}}
+  uint32_t alarm_a_subseconds = {{freeRunning32BitsValue}};
+  uint32_t alarm_a_mask_subseconds = {{freeRunning32BitsMask}};
+
+  LL_RTC_ALM_SetBinarySubSecond(LL_RTC_ALARM_A, alarm_a_subseconds);
+  LL_RTC_ALM_SetSubSecondMask(LL_RTC_ALARM_A, alarm_a_mask_subseconds);
+      {{/with}}
+
+    {{else}}
+      {{#with additionalFeatures.alarma}}
+        {{#if (eq alarmDateWeekDaySel 'MONTHDAY')}}
+  uint32_t alarm_a_date = {{alarmDate}};
+        {{/if}}
+  uint32_t alarm_a_hours = {{hours}};
+  uint32_t alarm_a_minutes = {{minutes}};
+  uint32_t alarm_a_seconds = {{seconds}};
+  uint32_t alarm_a_subseconds = {{subSeconds}};
+  uint32_t alarm_a_mask_subseconds = {{maskSubSeconds}};
+  uint32_t alarm_a_mask;
+        {{#if (and (eq maskDateWeekDay true)(eq maskHours true)(eq maskMinutes true)(eq maskSeconds true))}}
+  alarm_a_mask = LL_RTC_ALMA_MASK_ALL;
+       {{else}}
+  alarm_a_mask = LL_RTC_ALMA_MASK_NONE;
+          {{#if maskDateWeekDay}}
+  alarm_a_mask |= LL_RTC_ALMA_MASK_DATEWEEKDAY;
+          {{/if}}
+          {{#if maskHours}}
+  alarm_a_mask |= LL_RTC_ALMA_MASK_HOURS;
+        {{/if}}
+        {{#if maskMinutes}}
+  alarm_a_mask |= LL_RTC_ALMA_MASK_MINUTES;
+          {{/if}}
+          {{#if maskSeconds}}
+  alarm_a_mask |= LL_RTC_ALMA_MASK_SECONDS;
+          {{/if}}
+        {{/if}}
+
+  LL_RTC_ALM_SetConfigDateTime(LL_RTC_ALARM_A, alarm_a_mask, LL_RTC_ALMA_DATEWEEKDAYSEL_{{#if (eq alarmDateWeekDaySel 'MONTHDAY')}}DATE{{else}}WEEKDAY{{/if}}, {{#if (eq alarmDateWeekDaySel 'MONTHDAY')}}alarm_a_date{{else}}LL_RTC_WEEKDAY_{{alarmWeekDay}}{{/if}}, LL_RTC_ALMA_TIME_FORMAT_{{amPm}}, alarm_a_hours, alarm_a_minutes, alarm_a_seconds);
+  LL_RTC_ALM_SetConfigSubSecond(LL_RTC_ALARM_A, alarm_a_mask_subseconds, alarm_a_subseconds);
+      {{/with}}
+
+    {{/if}}
+  {{/if}}
+  /* Exit Init Mode */
+  LL_RTC_DisableInitMode();
+
+  {{#if additionalFeatures.enableAlarmB}}
+  /* Configure Alarm B */
+    {{#if (eq basic.mode 'BINARY')}}
+      {{#with additionalFeatures.alarmb}}
+  uint32_t alarm_b_subseconds = {{freeRunning32BitsValue}};
+  uint32_t alarm_b_mask_subseconds = {{freeRunning32BitsMask}};
+
+  LL_RTC_ALM_SetBinarySubSecond(LL_RTC_ALARM_B, alarm_b_subseconds);
+  LL_RTC_ALM_SetSubSecondMask(LL_RTC_ALARM_B, alarm_b_mask_subseconds);
+      {{/with}}
+
+    {{else}}
+      {{#with additionalFeatures.alarmb}}
+        {{#if (eq alarmDateWeekDaySel 'MONTHDAY')}}
+  uint32_t alarm_b_date = {{alarmDate}};
+        {{/if}}
+  uint32_t alarm_b_hours = {{hours}};
+  uint32_t alarm_b_minutes = {{minutes}};
+  uint32_t alarm_b_seconds = {{seconds}};
+  uint32_t alarm_b_subseconds = {{subSeconds}};
+  uint32_t alarm_b_mask_subseconds = {{maskSubSeconds}};
+  uint32_t alarm_b_mask;
+        {{#if (and (eq maskDateWeekDay true)(eq maskHours true)(eq maskMinutes true)(eq maskSeconds true))}}
+  alarm_b_mask = LL_RTC_ALMA_MASK_ALL;
+        {{else}}
+  alarm_b_mask = LL_RTC_ALMA_MASK_NONE;
+          {{#if maskDateWeekDay}}
+  alarm_b_mask |= LL_RTC_ALMA_MASK_DATEWEEKDAY;
+          {{/if}}
+          {{#if maskHours}}
+  alarm_b_mask |= LL_RTC_ALMA_MASK_HOURS;
+        {{/if}}
+        {{#if maskMinutes}}
+  alarm_b_mask |= LL_RTC_ALMA_MASK_MINUTES;
+          {{/if}}
+          {{#if maskSeconds}}
+  alarm_b_mask |= LL_RTC_ALMA_MASK_SECONDS;
+          {{/if}}
+        {{/if}}
+
+  LL_RTC_ALM_SetConfigDateTime(LL_RTC_ALARM_B, alarm_b_mask, LL_RTC_ALMA_DATEWEEKDAYSEL_{{#if (eq alarmDateWeekDaySel 'MONTHDAY')}}DATE{{else}}WEEKDAY{{/if}}, {{#if (eq alarmDateWeekDaySel 'MONTHDAY')}}alarm_b_date{{else}}LL_RTC_WEEKDAY_{{alarmWeekDay}}{{/if}}, LL_RTC_ALMA_TIME_FORMAT_{{amPm}}, alarm_b_hours, alarm_b_minutes, alarm_b_seconds);
+  LL_RTC_ALM_SetConfigSubSecond(LL_RTC_ALARM_B, alarm_b_mask_subseconds, alarm_b_subseconds);
+      {{/with}}
+
+    {{/if}}
+  {{/if}}
+  {{#with additionalFeatures}}
+    {{#if enableWakeUp}}
+      {{#with wakeUp}}
+  /* Configure Wake-Up */
+  uint32_t wakeup_reload_time = {{wakeUpCounter}};
+  uint32_t wakeup_clear_time = {{clearFlagCounter}};
+
+  LL_RTC_WAKEUP_SetClock(LL_RTC_WAKEUPCLOCK_{{#if (eq wakeUpDivider 'RTCCLK_DIV16')}}DIV_16{{else if (eq wakeUpDivider 'RTCCLK_DIV8')}}DIV_8{{else if (eq wakeUpDivider 'RTCCLK_DIV4')}}DIV_4{{else if (eq wakeUpDivider 'RTCCLK_DIV2')}}DIV_2{{else if (eq wakeUpDivider 'SECONDS')}}CKSPRE{{else}}CKSPRE_WUT{{/if}});
+  LL_RTC_WAKEUP_Config(wakeup_reload_time, wakeup_clear_time);
+      {{/with}}
+
+    {{/if}}
+    {{#if enableTimestamp}}
+      {{#with timestamp}}
+  /* Configure Timestamp */
+  LL_RTC_TS_SetActiveEdge(LL_RTC_TIMESTAMP_EDGE_{{timestampPinEdge}});
+        {{#if pinSource}}
+  LL_RTC_TS_Enable();
+        {{/if}}
+        {{#if tamperSourceVoid}}
+  LL_RTC_TS_EnableOnTamper();
+        {{/if}}
+        {{#if (or (eq tamperSource 'TAMP1')(eq tamperSource 'TAMP2')(eq tamperSource 'TAMP3')(eq tamperSource 'TAMP4')(eq tamperSource 'TAMP5')(eq tamperSource 'TAMP6')(eq tamperSource 'TAMP7')(eq tamperSource 'TAMP8'))}}
+  LL_RTC_TS_EnableOnTamper(LL_RTC_TIMESTAMP_{{tamperSource}});
+        {{/if}}
+        {{#if internalTamperSource}}
+  LL_RTC_TS_EnableOnITamper();
+        {{/if}}
+        {{#if internalTimestamp}}
+  LL_RTC_TS_EnableInternalEvent();
+        {{/if}}
+      {{/with}}
+
+    {{/if}}
+    {{#if enableCalibration}}
+  /* Configure Calibration */
+  uint32_t calibration_minus_pulses_value = {{calibration.minus}};
+      {{#with calibration}}
+
+  LL_RTC_CAL_SetSmoothCalibration(LL_RTC_CALIB_PERIOD_{{calibrationPeriod}}, LL_RTC_CALIB_INSERTPULSE_{{#if pulse}}SET{{else}}NONE{{/if}}, calibration_minus_pulses_value);
+      {{/with}}
+
+    {{/if}}
+    {{#with outputs}}
+      {{#if (or (eq calibrationFrequency 'SYNCHRONOUS')(eq calibrationFrequency 'ASYNCHRONOUS_DIV64'))}}
+  /* Set Calibration output frequency */
+  LL_RTC_CAL_SetOutputFreq(LL_RTC_CALIB_OUTPUT_{{#if (eq calibrationFrequency 'DISABLE')}}NONE{{else if (eq calibrationFrequency 'SYNCHRONOUS')}}1HZ{{else}}512HZ{{/if}});
+
+      {{/if}}
+      {{#with output1}}
+        {{#if (and (not (eq signal 'NONE'))(not (eq signal 'OUT1_CALIB')))}}
+  /* Configure Output 1 */
+  LL_RTC_ConfigTampalarm(LL_RTC_OUTPUTPOLARITY_PIN_{{polarity}}, LL_RTC_ALARM_OUTPUTTYPE_{{type}}, LL_RTC_ALARM_OUTPUT_PULLUP_{{#if pullUp}}ON{{else}}NONE{{/if}});
+
+        {{/if}}
+      {{/with}}
+      {{#with output2}}
+        {{#if (and (not (eq signal 'NONE'))(not (eq signal 'OUT2_CALIB')))}}
+  /* Configure Output 2 */
+  LL_RTC_ConfigTampalarm(LL_RTC_OUTPUTPOLARITY_PIN_{{polarity}}, LL_RTC_ALARM_OUTPUTTYPE_{{type}}, LL_RTC_ALARM_OUTPUT_PULLUP_{{#if pullUp}}ON{{else}}NONE{{/if}});
+
+        {{/if}}
+      {{/with}}
+      {{#if (or (not (eq output1.signal 'NONE'))(not (eq output2.signal 'NONE')))}}
+  /* Enable output */
+  uint32_t output = 0;
+        {{#if (or (eq output1.signal 'OUT1_ALARMA')(eq output2.signal 'OUT2_ALARMA'))}}
+  output |= LL_RTC_ALARMOUT_ALARM_A;
+        {{/if}}
+        {{#if (or (eq output1.signal 'OUT1_ALARMB')(eq output2.signal 'OUT2_ALARMB'))}}
+  output |= LL_RTC_ALARMOUT_ALARM_B;
+        {{/if}}
+        {{#if (or (eq output1.signal 'OUT1_WAKEUP')(eq output2.signal 'OUT2_WAKEUP'))}}
+  output |= LL_RTC_ALARMOUT_WAKEUP;
+        {{/if}}
+        {{#if (or (eq output1.signal 'OUT1_TAMP')(eq output2.signal 'OUT2_TAMP'))}}
+  output |= LL_RTC_OUTPUT_TAMPER_ENABLE;
+        {{/if}}
+        {{#if (or (eq output1.signal 'OUT1_ALARMA_TAMP')(eq output2.signal 'OUT2_ALARMA_TAMP'))}}
+  output |= LL_RTC_ALARMOUT_ALARM_A | LL_RTC_OUTPUT_TAMPER_ENABLE;
+        {{/if}}
+        {{#if (or (eq output1.signal 'OUT1_ALARMB_TAMP')(eq output2.signal 'OUT2_ALARMB_TAMP'))}}
+  output |= LL_RTC_ALARMOUT_ALARM_B | LL_RTC_OUTPUT_TAMPER_ENABLE;
+        {{/if}}
+        {{#if (or (eq output1.signal 'OUT1_WAKEUP_TAMP')(eq output2.signal 'OUT2_WAKEUP_TAMP'))}}
+  output |= LL_RTC_ALARMOUT_WAKEUP | LL_RTC_OUTPUT_TAMPER_ENABLE;
+        {{/if}}
+        {{#if (or (eq output1.signal 'OUT1_CALIB')(eq output2.signal 'OUT2_CALIB'))}}
+  output |= LL_RTC_CALIB_OUTPUT_ENABLE;
+        {{/if}}
+        {{#if (not (eq output2.signal 'NONE'))}}
+  output |= LL_RTC_ALARM_OUTPUT_REMAP_POS1;
+        {{/if}}
+
+  LL_RTC_EnableOutput(output);
+
+      {{/if}}
+    {{/with}}
+  {{/with}}
+  LL_RTC_EnableWriteProtection();
+
+  {{#> PWR_LL fct='generate_write_protection_enable'}}
+  {{/PWR_LL}}
+
+  {{#with system}}
+    {{#with gpioSettings}}
+      {{~assign 'rtc_gpio_needs' 'undefined'~}}
+      {{#if rtcOut2.needs}}
+        {{~assign 'found_rtcOut2' 'true'~}}
+        {{~assign 'rtc_gpio_needs' (helper_common_concatenate_needs rtcOut2.needs @root.rtc_gpio_needs)~}}
+      {{/if}}
+      {{#if rtcRefIn.needs}}
+        {{~assign 'found_rtcRefIn' 'true'~}}
+        {{~assign 'rtc_gpio_needs' (helper_common_concatenate_needs rtcRefIn.needs @root.rtc_gpio_needs)~}}
+      {{/if}}
+      {{#if (or (eq @root.found_rtcOut2 'true')(eq @root.found_rtcRefIn 'true'))}}
+        {{#> GPIO_LL fct='init' needs=@root.rtc_gpio_needs resource='RTC'~}}
+        {{/GPIO_LL}}
+      {{/if}}
+    {{/with}}
+    {{#with nvicSettings}}
+      {{#if enableInterruption}}
+  /* Enable the interruption for RTC */
+        {{~assign 'nvic_context' 'undefined'}}
+        {{~assign 'nvic_context' (helper_cortex_nvic_concatenate_irq_context  @root.nvic_context nvicConfig.needs @root.current_resource irqHandlerGeneration)}}
+        {{#> CORTEX fct='init' layer=@root.current_layer needs=nvicConfig.needs}}
+        {{/CORTEX}}
+      {{/if}}
+    {{/with}}
+  {{/with}}
+
+  return SYSTEM_OK;
+}
+{{else if (eq fct 'deinit')}}
+
+void {{@root.fct_name}}_deinit(void)
+{
+  {{#with system}}
+    {{#with nvicSettings}}
+      {{#if enableInterruption}}
+  /* Disable the interruption for RTC */
+        {{#> CORTEX fct='deinit' layer=@root.current_layer}}
+        {{/CORTEX}}
+
+      {{/if}}
+    {{/with}}
+    {{#with gpioSettings}}
+      {{#if (or (eq @root.found_rtcOut2 'true')(eq @root.found_rtcRefIn 'true'))}}
+        {{#> GPIO_LL fct='deinit' needs=@root.rtc_gpio_needs resource='RTC'~}}
+        {{/GPIO_LL}}
+      {{/if}}
+    {{/with}}
+  {{/with}}
+}
+
+{{else}}
+#warning "Function {{fct}} not present in partial RTC_LL_partial.hbs"
+{{/if}}

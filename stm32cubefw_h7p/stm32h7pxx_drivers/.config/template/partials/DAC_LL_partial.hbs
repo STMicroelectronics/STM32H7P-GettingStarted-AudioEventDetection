@@ -1,0 +1,133 @@
+{{!--
+  Partial used for HAL DAC:
+  how to use
+  > DAC_LL fct='xxxx' with xxxx:
+    * init
+    * deinit
+--}}
+{{#if (eq fct 'init')}}
+  /****************************************************************************/
+  /* Initialization of DAC instance                                           */
+  /****************************************************************************/
+
+  {{helper_common_gen_ll_code 'LL_DAC_SetHighFrequencyMode' (concat 'LL_DAC_HIGH_FREQ_MODE_' high_frequency_mode.high_freq_mode)}}
+{{~#each channels~}}
+{{~assign 'current_channel' (add @index 1)}}
+{{~helper_common_gen_ll_code_add_subinst (concat 'LL_DAC_CHANNEL_' @root.current_channel)~}}
+{{~#if use_channel~}}
+{{~#with basic~}}
+{{~#if (eq @index 0)}}{{assign 'channel1_initialized' true}}
+  /****************************************************************************/
+  /* Configuration of DAC channel                                             */
+  /****************************************************************************/
+{{else}}{{~#if @root.channel1_initialized}}
+{{else}}
+  /****************************************************************************/
+  /* Configuration of DAC channel                                             */
+  /****************************************************************************/
+{{/if~}}{{!(eq channel1_initialized)}}
+{{~/if~}}{{!(eq @index 0)}}
+  /* ========== Channel {{@root.current_channel}} ========== */
+{{#if trigger_enable}}
+  {{helper_common_gen_ll_code_subinst 'LL_DAC_EnableTrigger'}}
+  {{helper_common_gen_ll_code_subinst 'LL_DAC_SetTriggerSource' (concat 'LL_DAC_TRIGGER_' (helper_dac_rename_trigger trigger.source))}}
+{{else}}
+  {{helper_common_gen_ll_code_subinst 'LL_DAC_DisableTrigger'}}
+{{/if}}{{!trigger_enable}}
+{{~#if output_buffer}}
+{{~assign 'buffer_mode'  'ENABLE'~}}
+{{else}}
+{{~assign 'buffer_mode'  'DISABLE'~}}
+{{/if}}{{! output_buffer}}
+{{~#if ../additional_features.sample_and_hold.enable}}
+{{~assign 'output_mode'  'SAMPLE_AND_HOLD'~}}
+{{else}}
+{{~assign 'output_mode'  'NORMAL'~}}
+{{/if}}
+  {{helper_common_gen_ll_code_subinst 'LL_DAC_ConfigOutput' (concat 'LL_DAC_OUTPUT_MODE_' @root.output_mode) (concat 'LL_DAC_OUTPUT_BUFFER_' @root.buffer_mode) (concat 'LL_DAC_OUTPUT_CONNECT_' output_connection)}}
+  {{helper_common_gen_ll_code_subinst 'LL_DAC_SetSignedFormat' (concat 'LL_DAC_SIGN_FORMAT_' data_sign_format)}}
+{{~/with~}}
+{{~else}}{{~/if~}}{{!use_channel}}
+{{~/each~}}{{!channels}}
+{{#each channels}}
+{{~#if use_channel}}
+{{#if (or (or (eq (eq additional_features.wave.type "DISABLED") false) additional_features.sample_and_hold.enable) additional_features.dma.double_data_mode)}}
+{{~#if (eq @index 0)}}{{assign 'channel1_add_feat_initialized' true}}
+  /****************************************************************************/
+  /* Configuration of DAC channel additional features (optional)              */
+  /****************************************************************************/
+{{else}}{{~#if @root.channel1_add_feat_initialized}}{{else}}
+  /****************************************************************************/
+  /* Configuration of DAC channel additional features (optional)              */
+  /****************************************************************************/
+{{/if~}}{{!(eq channel1_add_feat_initialized)}}
+{{~/if~}}{{!(eq @index 0)}}
+  /* ========== Channel {{@root.current_channel}} ========== */
+{{/if}}
+{{~#with additional_features}}
+{{~#with wave}}
+{{#if (eq type 'DISABLED')}}
+  {{helper_common_gen_ll_code_subinst 'LL_DAC_SetWaveAutoGeneration' 'LL_DAC_WAVE_AUTO_GENERATION_NONE'}}
+{{else}}
+  /* Set wave type */
+  {{helper_common_gen_ll_code_subinst 'LL_DAC_SetWaveAutoGeneration' (concat 'LL_DAC_WAVE_AUTO_GENERATION_' type)}}
+{{#if (eq type 'SAWTOOTH')}}
+  {{#with sawtooth_config}}
+  /* Sawtooth wave generation configuration */
+  {{helper_common_gen_ll_code_subinst 'LL_DAC_SetWaveSawtoothStepTriggerSource' (concat 'LL_DAC_INC_TRIGGER_' step_trigger)}}
+  {{helper_common_gen_ll_code_subinst 'LL_DAC_SetWaveSawtoothResetTriggerSource' (concat 'LL_DAC_TRIGGER_' reset_trigger)}}
+  {{helper_common_gen_ll_code_subinst 'LL_DAC_SetWaveSawtoothDirection' (concat 'LL_DAC_SAWTOOTH_DIRECTION_' direction)}}
+  {{helper_common_gen_ll_code_subinst 'LL_DAC_SetWaveSawtoothStepData' step}}
+  {{helper_common_gen_ll_code_subinst 'LL_DAC_SetWaveSawtoothResetData' reset}}
+  {{/with}}
+{{else}}{{#if (eq type 'TRIANGLE')}}
+  /* Triangle wave generation configuration */
+  {{helper_common_gen_ll_code_subinst 'LL_DAC_SetWaveTriangleAmplitude' (concat 'LL_DAC_TRIANGLE_AMPLITUDE_' triangle_amplitude)}}
+{{else}}{{#if (eq type 'NOISE')}}
+  /* Noise (LFSR) wave generation configuration */
+  {{helper_common_gen_ll_code_subinst 'LL_DAC_SetWaveNoiseLFSR' (concat 'LL_DAC_NOISE_LFSR_UNMASK_' (helper_dac_rename_ll_noise noise_amplitude))}}
+{{else}}{{~/if~}}{{!NOISE}}
+{{~/if~}}{{!TRIANGLE}}
+{{~/if~}}{{!SAWTOOTH}}
+{{~/if~}}{{!DISABLED}}
+{{~/with~}}{{!wave}}
+{{~#with sample_and_hold}}
+{{#if enable}}
+
+  /* Sample and Hold configuration */
+  /* Note: Sample and hold mode activated with function "LL_DAC_ConfigOutput()" above */
+  {{helper_common_gen_ll_code_subinst 'LL_DAC_SetSampleAndHoldSampleTime' (concat sample_cycles 'U')}}
+  {{helper_common_gen_ll_code_subinst 'LL_DAC_SetSampleAndHoldHoldTime'  (concat hold_cycles 'U')}}
+  {{helper_common_gen_ll_code_subinst 'LL_DAC_SetSampleAndHoldRefreshTime' (concat refresh_cycles 'U')}}
+{{/if~}}{{!enable}}
+{{~/with~}}{{!sample_and_hold}}
+{{~#with dma}}
+
+{{#if enable}}
+  {{helper_common_gen_ll_code_subinst 'LL_DAC_EnableDMAReq'}}
+
+{{/if}}
+{{#if udr}}
+
+  /* Enable DMA underrun interrupt */
+  {{helper_common_gen_ll_code 'LL_DAC_EnableIT_DMAUDR' (concat 'LL_DAC_IT_DMAUDRIE' @root.current_channel)}}
+{{/if}}
+{{#if double_data_mode}}
+
+  /* Enable DMA double data mode */
+  {{helper_common_gen_ll_code_subinst 'LL_DAC_EnableDMADoubleDataMode'}}
+{{/if~}}{{!double_data_mode}}
+{{~/with~}}{{!dma}}
+{{~/with~}}{{!additional_features}}
+{{~/if~}}{{!use_channel}}
+{{~/each~}}{{!channels}}
+{{~#with additional_features}}
+{{#if AM_Enable}}
+
+  /* Enable Autonomous Mode */
+  {{helper_common_gen_ll_code 'LL_DAC_EnableAutonomousMode'}}
+{{/if~}}
+{{/with~}}{{!additional_features~}}
+{{else}}
+#warning "step {{fct}} in partial DAC_HAL not managed"
+{{/if}}

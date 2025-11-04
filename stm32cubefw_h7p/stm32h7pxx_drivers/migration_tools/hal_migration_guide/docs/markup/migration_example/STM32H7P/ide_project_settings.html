@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html data-content_root="../../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, migration example" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     Configure IDE Project Settings — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <script src="../../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <link href="../../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../../search.html" rel="search" title="Search"/>
+    <link href="execute_the_automatic_detection_script.html" rel="next" title="Execute the automatic detection script"/>
+    <link href="cubemx2_settings.html" rel="prev" title="STM32CubeMX2"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/migration_example/STM32H7P/ide_project_settings" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../migration_script/migration_script_toc.html">
+            HAL1 detection
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../drivers_documentation/drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../example_toc.html">
+            Migration example
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="migration_example_h7p_toc.html">
+              STM32H7P
+             </a>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="migration_example_introduction.html">
+                Migration example introduction
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="cubemx2_settings.html">
+                STM32CubeMX2
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <input class="md-toggle md-nav__toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+               <label class="md-nav__link md-nav__link--active" for="__toc">
+                Configure IDE Project Settings
+               </label>
+               <a class="md-nav__link md-nav__link--active" href="#">
+                Configure IDE Project Settings
+               </a>
+               <link href="../../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+               <nav class="md-nav md-nav--secondary">
+                <label class="md-nav__title" for="__toc">
+                 "Contents"
+                </label>
+                <ul class="md-nav__list2" data-md-scrollfix="">
+                 <li class="md-nav__item">
+                  <a class="md-nav__link" href="#docs-markup-migration-example-stm32h7p-ide-project-settings--page-root">
+                   Configure IDE Project Settings
+                  </a>
+                  <nav class="md-nav">
+                   <ul class="md-nav__list2">
+                    <li class="md-nav__item">
+                     <a class="md-nav__link" href="#replace-hal1-drivers-by-hal2">
+                      1. Replace HAL1 drivers by HAL2
+                     </a>
+                    </li>
+                    <li class="md-nav__item">
+                     <a class="md-nav__link" href="#update-device-selection-in-the-ide-project">
+                      2. Update device selection in the IDE project
+                     </a>
+                    </li>
+                    <li class="md-nav__item">
+                     <a class="md-nav__link" href="#update-linker-startup-and-configuration-files">
+                      3. Update Linker, startup and configuration files
+                     </a>
+                     <nav class="md-nav">
+                      <ul class="md-nav__list2">
+                       <li class="md-nav__item">
+                        <a class="md-nav__link" href="#replace-central-include-hal-file">
+                         Replace central include HAL file
+                        </a>
+                       </li>
+                      </ul>
+                     </nav>
+                    </li>
+                    <li class="md-nav__item">
+                     <a class="md-nav__link" href="#update-drivers-inclusion-path-in-the-ide-project">
+                      4. Update drivers inclusion path in the IDE project
+                     </a>
+                    </li>
+                    <li class="md-nav__item">
+                     <a class="md-nav__link" href="#update-drivers-source-files-selection-in-the-ide-project">
+                      5. Update drivers source files selection in the IDE project
+                     </a>
+                    </li>
+                    <li class="md-nav__item">
+                     <a class="md-nav__link" href="#update-pre-processor-defines-for-drivers-in-the-ide-project">
+                      6. Update Pre-Processor Defines for drivers  in the IDE project
+                     </a>
+                    </li>
+                   </ul>
+                  </nav>
+                 </li>
+                </ul>
+               </nav>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="execute_the_automatic_detection_script.html">
+                Execute the automatic detection script
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="resolve_hal1_detected_refs.html">
+                Resolve HAL1 detected references
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="alternative_option_using_stubbing.html">
+                Alternative option using Stubbing
+               </a>
+              </li>
+             </ul>
+            </li>
+           </ul>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-migration-example-stm32h7p-ide-project-settings--page-root">
+            Configure IDE Project Settings
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#replace-hal1-drivers-by-hal2">
+               1. Replace HAL1 drivers by HAL2
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#update-device-selection-in-the-ide-project">
+               2. Update device selection in the IDE project
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#update-linker-startup-and-configuration-files">
+               3. Update Linker, startup and configuration files
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#replace-central-include-hal-file">
+                  Replace central include HAL file
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#update-drivers-inclusion-path-in-the-ide-project">
+               4. Update drivers inclusion path in the IDE project
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#update-drivers-source-files-selection-in-the-ide-project">
+               5. Update drivers source files selection in the IDE project
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#update-pre-processor-defines-for-drivers-in-the-ide-project">
+               6. Update Pre-Processor Defines for drivers  in the IDE project
+              </a>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="configure-ide-project-settings">
+        <span id="ide-project-settings-h7p">
+        </span>
+        <h1 id="docs-markup-migration-example-stm32h7p-ide-project-settings--page-root">
+         Configure IDE Project Settings
+         <a class="headerlink" href="#docs-markup-migration-example-stm32h7p-ide-project-settings--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <p>
+         This section provides guidance on configuring the IDE project settings to enhance the development workflow and ensure alignment with project requirements.
+        </p>
+        <section id="replace-hal1-drivers-by-hal2">
+         <h2 id="replace-hal1-drivers-by-hal2">
+          1. Replace HAL1 drivers by HAL2
+          <a class="headerlink" href="#replace-hal1-drivers-by-hal2" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          Within duplicated project, replace the HAL1 drivers by HAL2 drivers.
+         </p>
+         <p>
+          HAL2 drivers Paths :
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            LL drivers’ path: “STM32Cube_SW_Package_H7P_2.0.0 \ stm32h7pxx_drivers \  ll”
+           </p>
+          </li>
+          <li>
+           <p>
+            HAL drivers’ path: “STM32Cube_SW_Package_H7P_2.0.0 \ stm32h7pxx_drivers \ hal”
+           </p>
+          </li>
+          <li>
+           <p>
+            DFP drivers path: “STM32Cube_SW_Package_H7P_2.0.0 \ stm32h7pxx_dfp”
+           </p>
+          </li>
+         </ul>
+        </section>
+        <section id="update-device-selection-in-the-ide-project">
+         <h2 id="update-device-selection-in-the-ide-project">
+          2. Update device selection in the IDE project
+          <a class="headerlink" href="#update-device-selection-in-the-ide-project" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          Select the appropriate device from the IDE’s database to ensure correct configuration in your project.
+         </p>
+         <p>
+          For a detailed demonstration on updating the device selection in the IDE project.
+         </p>
+         <a class="reference internal image-reference" href="../../../../_images/select_device.png">
+          <img alt="Example Image" class="align-center" src="../../../../_images/select_device.png" style="width: 500px;">
+          </img>
+         </a>
+        </section>
+        <section id="update-linker-startup-and-configuration-files">
+         <h2 id="update-linker-startup-and-configuration-files">
+          3. Update Linker, startup and configuration files
+          <a class="headerlink" href="#update-linker-startup-and-configuration-files" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <ul class="simple">
+          <li>
+           <p>
+            Update
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              stm32h563xx_flash.icf
+             </span>
+            </code>
+            ,
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              startup_stm32h563zitx.s
+             </span>
+            </code>
+            ,
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              system_stm32h5xx.c
+             </span>
+            </code>
+            and
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              stm32h5xx_hal_conf.h
+             </span>
+            </code>
+           </p>
+          </li>
+         </ul>
+         <table id="id1">
+          <caption>
+           <span class="caption-text">
+            Linker and Startup files path in the IDE project
+           </span>
+           <a class="headerlink" href="#id1" title="Link to this table">
+            ¶
+           </a>
+          </caption>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               Module name
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               Initial HAL1 project
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               Target HAL2 project
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Linker file
+              </strong>
+             </p>
+            </td>
+            <td>
+             <a class="reference internal image-reference" href="../../../../_images/linker_file_cube1.png">
+              <img alt="Example Image" class="align-center" src="../../../../_images/linker_file_cube1.png" style="width: 400px;"/>
+             </a>
+            </td>
+            <td>
+             <a class="reference internal image-reference" href="../../../../_images/linker_file_h7p.png">
+              <img alt="Example Image" class="align-center" src="../../../../_images/linker_file_h7p.png" style="width: 400px;"/>
+             </a>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               STARTUP
+              </strong>
+             </p>
+            </td>
+            <td>
+             <a class="reference internal image-reference" href="../../../../_images/startup_file_h5.png">
+              <img alt="Example Image" class="align-center" src="../../../../_images/startup_file_h5.png" style="width: 300px;"/>
+             </a>
+            </td>
+            <td>
+             <a class="reference internal image-reference" href="../../../../_images/startup_file_h7p.png">
+              <img alt="Example Image" class="align-center" src="../../../../_images/startup_file_h7p.png" style="width: 300px;"/>
+             </a>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               System
+              </strong>
+             </p>
+            </td>
+            <td>
+             <a class="reference internal image-reference" href="../../../../_images/cmsis_h5.png">
+              <img alt="Example Image" class="align-center" src="../../../../_images/cmsis_h5.png" style="width: 300px;"/>
+             </a>
+            </td>
+            <td>
+             <a class="reference internal image-reference" href="../../../../_images/cmsis_h7p.png">
+              <img alt="Example Image" class="align-center" src="../../../../_images/cmsis_h7p.png" style="width: 300px;"/>
+             </a>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               CMSIS Core
+              </strong>
+             </p>
+            </td>
+            <td>
+             <p>
+              $PROJ_DIR$/../../../../../../Drivers/CMSIS/Include
+             </p>
+             <a class="reference internal image-reference" href="../../../../_images/cmsis_include_h5.png">
+              <img alt="Example Image" class="align-center" src="../../../../_images/cmsis_include_h5.png" style="width: 300px;"/>
+             </a>
+            </td>
+            <td>
+             <p>
+              $PROJ_DIR$/../../../../../cmsis/CMSIS/Core/Include:
+              <em>
+               It contains the collection
+of software components provided by ARM
+              </em>
+             </p>
+             <a class="reference internal image-reference" href="../../../../_images/cmsis_include_h7p.png">
+              <img alt="Example Image" class="align-center" src="../../../../_images/cmsis_include_h7p.png" style="width: 200px;"/>
+             </a>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               HAL conf.h
+              </strong>
+             </p>
+            </td>
+            <td>
+             <a class="reference internal image-reference" href="../../../../_images/conf_h5.png">
+              <img alt="Example Image" class="align-center" src="../../../../_images/conf_h5.png" style="width: 250px;"/>
+             </a>
+            </td>
+            <td>
+             <a class="reference internal image-reference" href="../../../../_images/conf_h7p.png">
+              <img alt="Example Image" class="align-center" src="../../../../_images/conf_h7p.png" style="width: 250px;"/>
+             </a>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <ul class="simple">
+          <li>
+           <p>
+            Exclude BSP folder from the project
+           </p>
+          </li>
+         </ul>
+         <a class="reference internal image-reference" href="../../../../_images/exclude_bsp_part.png">
+          <img alt="Example Image" class="align-center" src="../../../../_images/exclude_bsp_part.png" style="width: 700px;"/>
+         </a>
+         <p>
+          For more details, refer to
+          <a class="reference internal" href="cubemx2_settings.html#linker-startup-files-and-drivers-h7p">
+           <span class="std std-ref">
+            Generated Linker, startup, system, hal conf, external env files and drivers
+           </span>
+          </a>
+         </p>
+         <section id="replace-central-include-hal-file">
+          <h3 id="replace-central-include-hal-file">
+           Replace central include HAL file
+           <a class="headerlink" href="#replace-central-include-hal-file" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <div class="admonition note">
+           <p class="admonition-title">
+            Note
+           </p>
+           <ul class="simple">
+            <li>
+             <p>
+              Replace #include
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                stm32h5xx_hal.h
+               </span>
+              </code>
+              with #include
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                stm32_hal.h
+               </span>
+              </code>
+              as specified in
+              <a class="reference internal" href="../../drivers_documentation/breaking_concepts/breaking_concepts_concept_L.html#breaking-concepts-concept-l1">
+               <span class="std std-ref">
+                Add a central include HAL file: stm32_hal.h.
+               </span>
+              </a>
+             </p>
+            </li>
+            <li>
+             <p>
+              Remove #include
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                stm32h5xx_nucleo.h
+               </span>
+              </code>
+              from main.h
+             </p>
+            </li>
+           </ul>
+          </div>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                Initial HAL1 project
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                Target HAL2 project
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <a class="reference internal image-reference" href="../../../../_images/main_h_h5.png">
+               <img alt="Example Image" class="align-center" src="../../../../_images/main_h_h5.png" style="width: 350px;"/>
+              </a>
+             </td>
+             <td>
+              <a class="reference internal image-reference" href="../../../../_images/main_h_h7p.png">
+               <img alt="Example Image" class="align-center" src="../../../../_images/main_h_h7p.png" style="width: 300px;"/>
+              </a>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+        </section>
+        <section id="update-drivers-inclusion-path-in-the-ide-project">
+         <h2 id="update-drivers-inclusion-path-in-the-ide-project">
+          4. Update drivers inclusion path in the IDE project
+          <a class="headerlink" href="#update-drivers-inclusion-path-in-the-ide-project" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          Update the necessary driver includes in your project directory.
+         </p>
+         <table id="id2">
+          <caption>
+           <span class="caption-text">
+            Drivers inclusion path in the IDE project
+           </span>
+           <a class="headerlink" href="#id2" title="Link to this table">
+            ¶
+           </a>
+          </caption>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               Initial HAL1 project
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               Target HAL2 project
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-default notranslate">
+              <div class="highlight">
+               <pre><span></span>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc
+
+
+$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc/Legacy
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-default notranslate">
+              <div class="highlight">
+               <pre><span></span>$PROJ_DIR$/../../../../../stm32h7pxx_drivers/hal
+$PROJ_DIR$/../../../../../stm32h7pxx_drivers/ll
+
+Removed from HAL2
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="update-drivers-source-files-selection-in-the-ide-project">
+         <h2 id="update-drivers-source-files-selection-in-the-ide-project">
+          5. Update drivers source files selection in the IDE project
+          <a class="headerlink" href="#update-drivers-source-files-selection-in-the-ide-project" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          Update the necessary driver source files in the IDE project with the ones generated by STM32CubeMX2.
+         </p>
+         <table id="id3">
+          <caption>
+           <span class="caption-text">
+            Update drivers source files
+           </span>
+           <a class="headerlink" href="#id3" title="Link to this table">
+            ¶
+           </a>
+          </caption>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               Initial HAL1 project
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               Target HAL2 project
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <a class="reference internal image-reference" href="../../../../_images/drivers_h5.png">
+              <img alt="Example Image" class="align-center" src="../../../../_images/drivers_h5.png" style="width: 350px;"/>
+             </a>
+            </td>
+            <td>
+             <a class="reference internal image-reference" href="../../../../_images/update_drivers.png">
+              <img alt="Example Image" class="align-center" src="../../../../_images/update_drivers.png" style="width: 350px;"/>
+             </a>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p id="cube1-vs-cube2-hal-files">
+          Replace the stm32h5xx files with stm32h7pxx files and ensure both header (.h) and source (.c) files are updated.
+         </p>
+         <table id="id4">
+          <caption>
+           <span class="caption-text">
+            HAL1 versus HAL2 LL and HAL Files
+           </span>
+           <a class="headerlink" href="#id4" title="Link to this table">
+            ¶
+           </a>
+          </caption>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               Module
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               Initial project
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               Migrated project
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               GENERIC
+              </strong>
+             </p>
+            </td>
+            <td>
+             <p>
+              stm32h5xx_hal_def.h
+             </p>
+             <p>
+              stm32h5xx_hal_conf.h
+             </p>
+             <p>
+              stm32h5xx_hal.h
+             </p>
+             <p>
+              stm32h5xx_hal.c
+             </p>
+            </td>
+            <td>
+             <p>
+              stm32h7pxx_hal_def.h
+             </p>
+             <p>
+              stm32h7pxx_hal_conf.h
+             </p>
+             <p>
+              stm32h7pxx_hal.h
+             </p>
+             <p>
+              stm32h7pxx_hal.c
+             </p>
+             <p>
+              <strong>
+               stm32_assert.h
+              </strong>
+             </p>
+             <p>
+              <strong>
+               stm32_hal.h
+              </strong>
+             </p>
+             <p>
+              <strong>
+               stm32h7pxx_hal_dbgmcu.c
+              </strong>
+             </p>
+             <p>
+              <strong>
+               stm32h7pxx_hal_dbgmcu.h
+              </strong>
+             </p>
+             <p>
+              <strong>
+               stm32h7pxx_hal_sbs.c
+              </strong>
+             </p>
+             <p>
+              <strong>
+               stm32h7pxx_hal_sbs.h
+              </strong>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               CORTEX
+              </strong>
+             </p>
+            </td>
+            <td>
+             <p>
+              stm32h5xx_hal_cortex.h
+             </p>
+             <p>
+              stm32h5xx_hal_cortex.c
+             </p>
+             <p>
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                stm32xh5_ll_cortex.c
+               </span>
+              </code>
+             </p>
+            </td>
+            <td>
+             <p>
+              stm32h7pxx_hal_cortex.h
+             </p>
+             <p>
+              stm32h7pxx_hal_cortex.c
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               GPIO
+              </strong>
+             </p>
+            </td>
+            <td>
+             <p>
+              stm32h5xx_hal_gpio.h
+             </p>
+             <p>
+              stm32h5xx_hal_gpio.c
+             </p>
+             <p>
+              stm32h5xx_ll_gpio.h
+             </p>
+             <p>
+              stm32h5xx_ll_lpgpio.h
+             </p>
+             <p>
+              stm32h5xx_hal_gpio_ex.h
+             </p>
+             <p>
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                stm32h5xx_ll_gpio.c
+               </span>
+              </code>
+             </p>
+             <p>
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                stm32h5xx_ll_lpgpio.c
+               </span>
+              </code>
+             </p>
+            </td>
+            <td>
+             <p>
+              stm32h7pxx_hal_gpio.h
+             </p>
+             <p>
+              stm32h7pxx_hal_gpio.c
+             </p>
+             <p>
+              stm32h7pxx_ll_gpio.h
+             </p>
+             <p>
+              stm32h7pxx_ll_lpgpio.h
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               RCC
+              </strong>
+             </p>
+            </td>
+            <td>
+             <p>
+              stm32h5xx_hal_rcc.h
+             </p>
+             <p>
+              stm32h5xx_hal_rcc.c
+             </p>
+             <p>
+              stm32h5xx_ll_rcc.h
+             </p>
+             <p>
+              stm32h5xx_hal_rcc_ex.h
+             </p>
+             <p>
+              stm32h5xx_hal_rcc_ex.c
+             </p>
+             <p>
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                stm32h5xx_ll_rcc.c
+               </span>
+              </code>
+             </p>
+            </td>
+            <td>
+             <p>
+              stm32h7pxx_hal_rcc.h
+             </p>
+             <p>
+              stm32h7pxx_hal_rcc.c
+             </p>
+             <p>
+              stm32h7pxx_ll_rcc.h
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               DMA
+              </strong>
+             </p>
+            </td>
+            <td>
+             <p>
+              stm32h5xx_hal_dma.h
+             </p>
+             <p>
+              stm32h5xx_hal_dma.c
+             </p>
+             <p>
+              stm32h5xx_ll_dma.h
+             </p>
+             <p>
+              stm32h5xx_hal_dma_ex.c
+             </p>
+             <p>
+              stm32h5xx_hal_dma_ex.h
+             </p>
+             <p>
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                stm32h5xx_ll_dma.c
+               </span>
+              </code>
+             </p>
+            </td>
+            <td>
+             <p>
+              stm32h7pxx_hal_dma.h
+             </p>
+             <p>
+              stm32h7pxx_hal_dma.c
+             </p>
+             <p>
+              stm32h7pxx_ll_dma.h
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               ICACHE
+              </strong>
+             </p>
+            </td>
+            <td>
+             <p>
+              stm32h5xx_hal_icache.h
+             </p>
+             <p>
+              stm32h5xx_hal_icache.c
+             </p>
+             <p>
+              stm32h5xx_ll_icache.h
+             </p>
+             <p>
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                stm32h5xx_ll_icache.c
+               </span>
+              </code>
+             </p>
+            </td>
+            <td>
+             <p>
+              stm32h7pxx_hal_icache.h
+             </p>
+             <p>
+              stm32h7pxx_hal_icache.c
+             </p>
+             <p>
+              stm32h7pxx_ll_icache.h
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               ADC
+              </strong>
+             </p>
+            </td>
+            <td>
+             <p>
+              stm32h5xx_hal_adc.h
+             </p>
+             <p>
+              stm32h5xx_hal_adc.c
+             </p>
+             <p>
+              stm32h5xx_ll_adc.h
+             </p>
+             <p>
+              stm32h5xx_hal_adc_ex.h
+             </p>
+             <p>
+              stm32h5xx_hal_adc_ex.c
+             </p>
+             <p>
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                stm32h5xx_ll_adc.c
+               </span>
+              </code>
+             </p>
+            </td>
+            <td>
+             <p>
+              stm32h7pxx_hal_adc.h
+             </p>
+             <p>
+              stm32h7pxx_hal_adc.c
+             </p>
+             <p>
+              stm32h7pxx_ll_adc.h
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              <strong>
+               FLASH
+              </strong>
+             </p>
+            </td>
+            <td>
+             <p>
+              stm32h5xxx_hal_flash.h
+             </p>
+             <p>
+              stm32h5xxx_hal_flash.c
+             </p>
+             <p>
+              stm32h5xxx_hal_flash_ex.h
+             </p>
+             <p>
+              stm32h5xxx_hal_flash_ex.c
+             </p>
+            </td>
+            <td>
+             <p>
+              stm32h7pxx_hal_flash.h
+             </p>
+             <p>
+              stm32h7pxx_hal_flash.c
+             </p>
+             <p>
+              stm32h7pxx_ll_flash.c
+             </p>
+             <p>
+              <strong>
+               stm32h7pxx_hal_flash_itf.c
+              </strong>
+             </p>
+             <p>
+              <strong>
+               stm32h7pxx_hal_flash_itf.h
+              </strong>
+             </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          For more details, refer to
+          <a class="reference internal" href="cubemx2_settings.html#linker-startup-files-and-drivers-h7p">
+           <span class="std std-ref">
+            Generated Linker, startup, system, hal conf, external env files and drivers
+           </span>
+          </a>
+         </p>
+         <div class="admonition important">
+          <p class="admonition-title">
+           Important
+          </p>
+          <ul class="simple">
+           <li>
+            <p>
+             The items highlighted in
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               Inline
+              </span>
+              <span class="pre">
+               code
+              </span>
+             </code>
+             have been removed from HAL2 and all extended HAL files are merged inside the corresponding HAL files.
+            </p>
+           </li>
+           <li>
+            <p>
+             The items marked in
+             <strong>
+              Bold
+             </strong>
+             have been added to HAL2.
+            </p>
+           </li>
+          </ul>
+         </div>
+        </section>
+        <section id="update-pre-processor-defines-for-drivers-in-the-ide-project">
+         <h2 id="update-pre-processor-defines-for-drivers-in-the-ide-project">
+          6. Update Pre-Processor Defines for drivers  in the IDE project
+          <a class="headerlink" href="#update-pre-processor-defines-for-drivers-in-the-ide-project" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          Update pre-processor defines and keep
+          <strong>
+           STM32H7P64xx
+          </strong>
+          as pre-processor defines in generated project.
+         </p>
+         <a class="reference internal image-reference" href="../../../../_images/update_pre_processor_def.png">
+          <img alt="Example Image" class="align-center" src="../../../../_images/update_pre_processor_def.png" style="width: 500px;"/>
+         </a>
+         <p>
+          Next step:
+          <a class="reference internal" href="execute_the_automatic_detection_script.html#execute-the-automatic-detection-script-h7p">
+           <span class="std std-ref">
+            Execute the automatic detection script
+           </span>
+          </a>
+         </p>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

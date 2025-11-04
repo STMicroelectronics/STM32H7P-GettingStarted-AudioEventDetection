@@ -1,0 +1,2152 @@
+<!DOCTYPE html>
+<html data-content_root="../../../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, HAL1, GFXTIM, STM32H5, STM32G0, STM32F4, STM32L4, STM32C0, STM32H7" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     HAL GFXTIM Typical use cases for migration — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <script src="../../../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <link href="../../../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../../../search.html" rel="search" title="Search"/>
+    <link href="hal_gfxtim_exported_constants.html" rel="next" title="HAL GFXTIM constants migration"/>
+    <link href="hal_gfxtim_concepts_list.html" rel="prev" title="HAL GFXTIM migration: List of applicable concepts"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/drivers_documentation/hal_drivers/gfxtim/hal_gfxtim_use_cases" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_script/migration_script_toc.html">
+            HAL1 detection
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../breaking_concepts/breaking_concepts_toc.html">
+              Breaking changes in concepts
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../hal_drivers_toc.html">
+              HAL drivers migration
+             </a>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../adc/hal_adc_toc.html">
+                ADC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../comp/hal_comp_toc.html">
+                COMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cortex/hal_cortex_toc.html">
+                CORTEX
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cordic/hal_cordic_toc.html">
+                CORDIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../crc/hal_crc_toc.html">
+                CRC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cryp/hal_cryp_toc.html">
+                CRYP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dac/hal_dac_toc.html">
+                DAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dcache/hal_dcache_toc.html">
+                DCACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dma/hal_dma_toc.html">
+                DMA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../exti/hal_exti_toc.html">
+                EXTI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../fmac/hal_fmac_toc.html">
+                FMAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../generic/hal_generic_toc.html">
+                GENERIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxmmu/hal_gfxmmu_toc.html">
+                GFXMMU
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="hal_gfxtim_toc.html">
+                GFXTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gpio/hal_gpio_toc.html">
+                GPIO
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2c/hal_i2c_toc.html">
+                I2C
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2s/hal_i2s_toc.html">
+                I2S
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../icache/hal_icache_toc.html">
+                ICACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../irda/hal_irda_toc.html">
+                IRDA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../iwdg/hal_iwdg_toc.html">
+                IWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../lptim/hal_lptim_toc.html">
+                LPTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../nor/hal_nor_toc.html">
+                NOR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../opamp/hal_opamp_toc.html">
+                OPAMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ospi/hal_ospi_toc.html">
+                OSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pka/hal_pka_toc.html">
+                PKA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pwr/hal_pwr_toc.html">
+                PWR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../qspi/hal_qspi_toc.html">
+                QSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ramcfg/hal_ramcfg_toc.html">
+                RAMCFG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rcc/hal_rcc_toc.html">
+                RCC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rng/hal_rng_toc.html">
+                RNG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rtc/hal_rtc_toc.html">
+                RTC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sdram/hal_sdram_toc.html">
+                SDRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smartcard/hal_smartcard_toc.html">
+                SMARTCARD
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smbus/hal_smbus_toc.html">
+                SMBUS
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../spi/hal_spi_toc.html">
+                SPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sram/hal_sram_toc.html">
+                SRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../tim/hal_tim_toc.html">
+                TIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../uart/hal_uart_toc.html">
+                UART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../usart/hal_usart_toc.html">
+                USART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../wwdg/hal_wwdg_toc.html">
+                WWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../xspi/hal_xspi_toc.html">
+                XSPI
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../ll_drivers/ll_drivers_toc.html">
+              LL drivers migration
+             </a>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-drivers-documentation-hal-drivers-gfxtim-hal-gfxtim-use-cases--page-root">
+            HAL GFXTIM Typical use cases for migration
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#starting-the-gfxtim-with-absolute-frame-line-timer">
+               Starting the GFXTIM with absolute frame line timer
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#related-examples-in-hal2">
+                  Related examples in HAL2
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#starting-the-gfxtim-with-absolute-frame-timer">
+               Starting the GFXTIM with absolute frame timer
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#id1">
+                  Related examples in HAL2
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#starting-the-gfxtim-with-relative-timer">
+               Starting the GFXTIM with relative timer
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#id2">
+                  Related examples in HAL2
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#starting-the-gfxtim-with-event-generator">
+               Starting the GFXTIM with event generator
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#starting-the-gfxtim-with-watchdog-timer">
+               Starting the GFXTIM with watchdog timer
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#id3">
+                  Related examples in HAL2
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="hal-gfxtim-typical-use-cases-for-migration">
+        <span id="hal-gfxtim-use-cases">
+        </span>
+        <h1 id="docs-markup-drivers-documentation-hal-drivers-gfxtim-hal-gfxtim-use-cases--page-root">
+         HAL GFXTIM Typical use cases for migration
+         <a class="headerlink" href="#docs-markup-drivers-documentation-hal-drivers-gfxtim-hal-gfxtim-use-cases--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <p>
+         This section provides information about the HAL GFXTIM Typical use cases for migration.
+        </p>
+        <div class="admonition note">
+         <p class="admonition-title">
+          Note
+         </p>
+         <p>
+          The major changes per functional blocks provided in HAL2 are:
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            <strong>
+             Clock generator
+            </strong>
+            : the clock generator configuration has been split into line configuration and frame configuration.
+           </p>
+          </li>
+          <li>
+           <p>
+            <strong>
+             Absolute timer
+            </strong>
+            : the absolute timer configuration has been removed and has been managed by unitary functions. The set of line/frame counter APIs is optional and can be configured if needed to start the counter from a different default value instead of zero.
+           </p>
+          </li>
+          <li>
+           <p>
+            <strong>
+             Relative timer
+            </strong>
+            : the relative counter configuration has been merged with start relative timer API according to the relative mode (continuous or oneshot).
+           </p>
+          </li>
+         </ul>
+        </div>
+        <section id="starting-the-gfxtim-with-absolute-frame-line-timer">
+         <span id="hal-gfxtim-starting-absolute-line-timer-use-case">
+         </span>
+         <h2 id="starting-the-gfxtim-with-absolute-frame-line-timer">
+          Starting the GFXTIM with absolute frame line timer
+          <a class="headerlink" href="#starting-the-gfxtim-with-absolute-frame-line-timer" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p class="plantuml">
+              <img alt='@startuml
+
+   participant "User Application" as user
+   participant "GFXTIM Driver" as GFXTIM
+   participant "NVIC" as nvic
+
+   == GFXTIM Initialization ==
+   user-&gt;GFXTIM : HAL_GFXTIM_Init()
+   == GFXTIM Line Frame Clock Generator ==
+   user-&gt;GFXTIM : HAL_GFXTIM_ClockGenerator_Config()
+   note right : Configure line clock with:\n - clock source, \n - counter source, \n - reload source,\n - reload value
+
+   == GFXTIM Absolute Line ==
+   user-&gt;GFXTIM : HAL_GFXTIM_AbsoluteTimer_Config()
+   note right : Configure the absolute line counter with:\n - counter value, \n - compare value
+
+   user-&gt;GFXTIM : HAL_GFXTIM_AbsoluteTimer_Start()
+
+   group  If interrupt is enabled
+   nvic-&gt;GFXTIM : HAL_GFXTIM_IRQHandler()
+   user&lt;--GFXTIM: HAL_GFXTIM_AbsoluteTimer_ALCC1Callback() \n HAL_GFXTIM_AbsoluteTimer_ALCOFCallback()
+   note right : Absolute line counter compare 1 event \n Absolute line counter overflow event
+   end
+
+   group Optional
+   user-&gt;GFXTIM : HAL_GFXTIM_ABSTIM_Stop()
+   end
+   user-&gt;GFXTIM : HAL_GFXTIM_DeInit()
+   @enduml' src="../../../../../_images/plantuml-f28bcaeb39755774bc06da38b6fa1b0fafbaee4d.png">
+              </img>
+             </p>
+            </td>
+            <td>
+             <p class="plantuml">
+              <img alt='@startuml
+
+participant "User Application" as user
+participant "GFXTIM Driver" as GFXTIM
+participant "NVIC" as nvic
+
+== GFXTIM Initialization ==
+user-&gt;GFXTIM : HAL_GFXTIM_Init()
+== GFXTIM Line Frame Clock Generator ==
+user-&gt;GFXTIM : HAL_GFXTIM_CLKGEN_SetConfigLineFrameClock()
+note right : Configure line and frame clock with:\n  - clock source, \n - counter source, \n - reload source,\n - reload value
+
+== GFXTIM Absolute Line ==
+user-&gt;GFXTIM : HAL_GFXTIM_ABSTIM_SetLineCounter()
+note right : Optional : Configure the absolute line counter value
+user-&gt;GFXTIM : HAL_GFXTIM_ABSTIM_SetLineCompareValue()
+note right : Configure the absolute line compare value
+user-&gt;GFXTIM : HAL_GFXTIM_ABSTIM_Start()
+group If interrupt is enabled
+nvic-&gt;GFXTIM : HAL_GFXTIM_IRQHandler()
+user&lt;--GFXTIM: HAL_GFXTIM_ABSTIM_LCmpCallback() \n HAL_GFXTIM_ABSTIM_LCntOverFlowCallback()
+note right : Absolute line counter compare 1 event \n Absolute line counter overflow event
+end
+group Optional
+user-&gt;GFXTIM : HAL_GFXTIM_ABSTIM_Pause()
+user-&gt;GFXTIM : HAL_GFXTIM_ABSTIM_Resume()
+user-&gt;GFXTIM : HAL_GFXTIM_ABSTIM_Stop()
+end
+user-&gt;GFXTIM : HAL_GFXTIM_DeInit()
+@enduml' src="../../../../../_images/plantuml-08583c731a4f2dc0e6efc3deb44fab057cc722c7.png"/>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">GFXTIM_HandleTypeDef</span><span class="w"> </span><span class="n">hgfxtim</span><span class="p">;</span>
+
+<span class="n">hgfxtim</span><span class="p">.</span><span class="n">Instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM</span><span class="p">;</span>
+<span class="n">hgfxtim</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">SynchroSrc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_SYNC_SRC_HSYNC_VSYNC_0</span><span class="p">;</span>
+<span class="cm">/* GFXTIM initialization */</span>
+<span class="n">HAL_GFXTIM_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+
+<span class="cm">/* optional: if interrupt is enabled */</span>
+<span class="cm">/* Registering the user callback function */</span>
+<span class="n">HAL_GFXTIM_RegisterCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                       </span><span class="n">HAL_GFXTIM_ALC_COMPARE1_CB_ID</span><span class="p">,</span>
+<span class="w">                       </span><span class="n">USER_GFXTIM_ABSTIM_LineCmp1Callback</span><span class="p">);</span>
+<span class="n">HAL_GFXTIM_RegisterCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                </span><span class="n">HAL_GFXTIM_ALC_OVERFLOW_CB_ID</span><span class="p">,</span>
+<span class="w">                </span><span class="n">USER_GFXTIM_ABSTIM_LineCntOverFlowCallback</span><span class="p">);</span>
+
+<span class="cm">/* Configure the GFXTIM clock generator */</span>
+<span class="n">GFXTIM_ClockGeneratorConfigTypeDef</span><span class="w"> </span><span class="n">ClockGenConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="p">.</span><span class="n">LCCHwReloadSrc</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_LCC_HW_RELOAD_SRC_NONE</span><span class="p">;</span>
+<span class="p">.</span><span class="n">LCCReloadValue</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">159999</span><span class="p">;</span>
+<span class="p">.</span><span class="n">LCCClockSrc</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_LCC_CLK_SRC_SYSCLOCK</span><span class="p">;</span>
+<span class="p">.</span><span class="n">LineClockSrc</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_LINE_CLK_SRC_LCC_UNDERFLOW</span><span class="p">;</span>
+
+
+<span class="p">.</span><span class="n">FCCHwReloadSrc</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_FCC_HW_RELOAD_SRC_NONE</span><span class="p">;</span>
+<span class="p">.</span><span class="n">FCCReloadValue</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">.</span><span class="n">FCCClockSrc</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_FCC_CLK_SRC_DISABLE</span><span class="p">;</span>
+<span class="p">.</span><span class="n">FrameClockSrc</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_FRAME_CLK_SRC_FCC_UNDERFLOW</span><span class="p">;</span>
+<span class="p">.</span><span class="n">LineClockCalib</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_LINE_CLK_CALIB_DISABLE</span><span class="p">;</span>
+<span class="p">.</span><span class="n">FrameClockCalib</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_FRAME_CLK_CALIB_DISABLE</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="n">HAL_GFXTIM_ClockGenerator_Config</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                 </span><span class="o">&amp;</span><span class="n">pClockGeneratorConfig</span><span class="p">);</span>
+
+<span class="cm">/* Absolute line timer configuration */</span>
+<span class="n">GFXTIM_AbsoluteTimerConfigTypeDef</span><span class="w"> </span><span class="n">pAbsoluteTimerConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="p">.</span><span class="n">LineCounterValue</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="p">.</span><span class="n">LineCompare1Value</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="mi">1500</span><span class="p">;</span>
+
+
+<span class="p">.</span><span class="n">LineCompare2Value</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="mi">3000</span><span class="p">;</span>
+
+
+<span class="p">.</span><span class="n">FrameCounterValue</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">.</span><span class="n">FrameCompare1Value</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">.</span><span class="n">FrameOverflowInterrupt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DISABLE</span><span class="p">;</span>
+<span class="p">.</span><span class="n">FrameCompare1Interrupt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DISABLE</span><span class="p">;</span>
+<span class="cm">/* optional: if interrupt is enabled */</span>
+<span class="p">.</span><span class="n">LineOverflowInterrupt</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">ENABLE</span><span class="p">;</span>
+<span class="p">.</span><span class="n">LineCompare1Interrupt</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">ENABLE</span><span class="p">;</span>
+<span class="p">.</span><span class="n">LineCompare2Interrupt</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">ENABLE</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="n">HAL_GFXTIM_AbsoluteTimer_Config</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w"> </span><span class="o">&amp;</span><span class="n">pAbsoluteTimerConfig</span><span class="p">);</span>
+
+<span class="cm">/* Start the absolute line counter */</span>
+<span class="n">HAL_GFXTIM_AbsoluteTimer_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+
+
+<span class="cm">/* optional: if interrupt is enabled */</span>
+
+
+
+<span class="cm">/* IRQHandler function */</span>
+<span class="n">HAL_GFXTIM_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+<span class="cm">/* Callback function */</span>
+<span class="n">USER_GFXTIM_AbsoluteTimer_ALCC1Callback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+
+<span class="n">USER_GFXTIM_AbsoluteTimer_ALCC2Callback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+
+<span class="n">USER_GFXTIM_AbsoluteTimer_ALCOFCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+
+
+
+
+
+
+
+
+<span class="cm">/* Disable the absolute line counter */</span>
+<span class="n">HAL_GFXTIM_AbsoluteTimer_Stop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+
+<span class="cm">/* GFXTIM Deinitialization */</span>
+<span class="n">HAL_GFXTIM_DeInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_gfxtim_handle_t</span><span class="w"> </span><span class="n">hgfxtim</span><span class="p">;</span>
+
+
+
+<span class="cm">/* GFXTIM initialization */</span>
+<span class="n">HAL_GFXTIM_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_GFXTIM</span><span class="p">);</span>
+
+<span class="cm">/* optional: if interrupt is enabled */</span>
+<span class="cm">/* Registering the user callback function */</span>
+<span class="n">HAL_GFXTIM_ABSTIM_RegisterLCmpCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                        </span><span class="n">USER_GFXTIM_ABSTIM_LineCmpCallback</span><span class="p">);</span>
+
+<span class="n">HAL_GFXTIM_ABSTIM_RegisterLCntOverFlowCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                 </span><span class="n">USER_GFXTIM_ABSTIM_LineCntOverFlowCallback</span><span class="p">);</span>
+
+
+<span class="cm">/* Configure the GFXTIM clock generator */</span>
+<span class="n">hal_gfxtim_clkgen_line_config_t</span><span class="w"> </span><span class="n">p_line_config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="p">.</span><span class="n">reload_src</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_LCNT_NO_RELOAD</span><span class="p">;</span>
+<span class="p">.</span><span class="n">reload_val</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">159999</span><span class="p">;</span>
+<span class="p">.</span><span class="n">counter_src</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_LINE_COUNT_GFXTIMHCLK</span><span class="p">;</span>
+<span class="p">.</span><span class="n">clock_src</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_LINE_LCNT_UNDERFLOW</span><span class="p">;</span>
+<span class="w"> </span><span class="p">};</span>
+<span class="n">hal_gfxtim_clkgen_frame_config_t</span><span class="w"> </span><span class="n">p_frame_config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="p">.</span><span class="n">reload_src</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_NO_RELOAD</span><span class="p">;</span>
+<span class="p">.</span><span class="n">reload_val</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mh">0xFU</span><span class="p">;</span>
+<span class="p">.</span><span class="n">counter_src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_DISABLE</span><span class="p">;</span>
+<span class="p">.</span><span class="n">clock_src</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_FRAME_FCNT_UNDERFLOW</span><span class="p">;</span>
+<span class="p">};</span>
+
+
+<span class="n">HAL_GFXTIM_CLKGEN_SetConfigLineFrameClock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                          </span><span class="o">&amp;</span><span class="n">p_frame_config</span><span class="p">,</span>
+<span class="w">                                          </span><span class="o">&amp;</span><span class="n">p_line_config</span><span class="p">);</span>
+
+<span class="cm">/* Optional :Set the absolute line counter  */</span>
+<span class="n">HAL_GFXTIM_ABSTIM_SetLineCounter</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span><span class="w"> </span><span class="mi">0U</span><span class="p">);</span>
+<span class="cm">/* Set the absolute line compare 1 value */</span>
+<span class="n">HAL_GFXTIM_ABSTIM_SetLineCompareValue</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                      </span><span class="n">HAL_GFXTIM_ABSTIM_LINE_COMP_1</span><span class="p">,</span>
+<span class="w">                                      </span><span class="mi">1500U</span><span class="p">);</span>
+<span class="cm">/* Set the absolute line compare 2 value */</span>
+<span class="n">HAL_GFXTIM_ABSTIM_SetLineCompareValue</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                      </span><span class="n">HAL_GFXTIM_ABSTIM_LINE_COMP_2</span><span class="p">,</span>
+<span class="w">                                      </span><span class="mi">3000U</span><span class="p">);</span>
+
+
+
+
+
+
+
+
+
+
+
+<span class="cm">/* Start the absolute line counter when interrupt is disabled */</span>
+<span class="n">HAL_GFXTIM_ABSTIM_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                        </span><span class="n">HAL_GFXTIM_ABSTIM_LINE_COUNTER</span><span class="p">,</span>
+<span class="w">                        </span><span class="n">HAL_GFXTIM_NONE_IT</span><span class="p">);</span>
+<span class="cm">/* optional: if interrupt is enabled */</span>
+<span class="n">HAL_GFXTIM_ABSTIM_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                        </span><span class="n">HAL_GFXTIM_ABSTIM_LINE_COUNTER</span><span class="p">,</span>
+<span class="w">                        </span><span class="n">HAL_GFXTIM_ABSTIM_LINE_ALL_IT</span><span class="p">);</span>
+<span class="cm">/* IRQHandler function */</span>
+<span class="n">HAL_GFXTIM_ABSTIM_LineIRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+<span class="cm">/* Callback function */</span>
+<span class="n">USER_GFXTIM_ABSTIM_LCmpCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                             </span><span class="n">HAL_GFXTIM_ABSTIM_LINE_COMP_1</span><span class="p">);</span>
+<span class="n">USER_GFXTIM_ABSTIM_LCmpCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                             </span><span class="n">HAL_GFXTIM_ABSTIM_LINE_COMP_2</span><span class="p">);</span>
+<span class="n">USER_GFXTIM_ABSTIM_LCntOverFlowCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+<span class="cm">/* optional */</span>
+<span class="cm">/* Pause the absolute line counter */</span>
+<span class="n">HAL_GFXTIM_ABSTIM_Pause</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                        </span><span class="n">HAL_GFXTIM_ABSTIM_LINE_COUNTER</span><span class="p">);</span>
+<span class="cm">/* Check that the absolute line counter is paused */</span>
+<span class="n">HAL_GFXTIM_ABSTIM_Resume</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                         </span><span class="n">HAL_GFXTIM_ABSTIM_LINE_COUNTER</span><span class="p">);</span>
+
+<span class="cm">/* Disable the absolute line counter */</span>
+<span class="n">HAL_GFXTIM_ABSTIM_Stop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                       </span><span class="n">HAL_GFXTIM_ABSTIM_LINE_COUNTER</span><span class="p">);</span>
+<span class="cm">/* GFXTIM Deinitialization */</span>
+<span class="n">HAL_GFXTIM_DeInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <section id="related-examples-in-hal2">
+          <h3 id="related-examples-in-hal2">
+           Related examples in HAL2
+           <a class="headerlink" href="#related-examples-in-hal2" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               Example Name
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               Description
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               example_hal_gfxtim_absolute_line_it
+              </p>
+             </td>
+             <td>
+              <p>
+               This example is used to generate an interrupt for specific absolute line.
+              </p>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <hr class="docutils"/>
+         </section>
+        </section>
+        <section id="starting-the-gfxtim-with-absolute-frame-timer">
+         <span id="hal-gfxtim-starting-absolute-frame-timer-use-case">
+         </span>
+         <h2 id="starting-the-gfxtim-with-absolute-frame-timer">
+          Starting the GFXTIM with absolute frame timer
+          <a class="headerlink" href="#starting-the-gfxtim-with-absolute-frame-timer" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p class="plantuml">
+              <img alt='@startuml
+
+   participant "User Application" as user
+   participant "GFXTIM Driver" as GFXTIM
+   participant "NVIC" as nvic
+
+   == GFXTIM Initilaization ==
+   user-&gt;GFXTIM : HAL_GFXTIM_Init()
+   == GFXTIM Frame Clock Generator ==
+   user-&gt;GFXTIM : HAL_GFXTIM_ClockGenerator_Config()
+   note right : Configure the frame clock with:\n - clock source, \n - counter source, \n - reload source,\n - reload value
+
+   == GFXTIM Absolute Frame ==
+   user-&gt;GFXTIM : HAL_GFXTIM_AbsoluteTimer_Config()
+   note right : Configure the absolute frame counter with:\n - counter value, \n - compare value
+
+   user-&gt;GFXTIM : HAL_GFXTIM_AbsoluteTimer_Start()
+   group If interrupt is enabled
+   nvic-&gt;GFXTIM : HAL_GFXTIM_IRQHandler()
+   user&lt;--GFXTIM: HAL_GFXTIM_AbsoluteTimer_AFCC1Callback() \n HAL_GFXTIM_AbsoluteTimer_AFCOFCallback()
+   note right : Absolute frame counter compare event \n Absolute frame counter overflow event
+   end
+
+   group Optional
+   user-&gt;GFXTIM : HAL_GFXTIM_ABSTIM_Stop()
+   end
+   user-&gt;GFXTIM : HAL_GFXTIM_DeInit()
+   @enduml' src="../../../../../_images/plantuml-d207a70adca37bda62226c61597c134464760c4c.png"/>
+             </p>
+            </td>
+            <td>
+             <p class="plantuml">
+              <img alt='@startuml
+
+participant "User Application" as user
+participant "GFXTIM Driver" as GFXTIM
+participant "NVIC" as nvic
+
+== GFXTIM Initialization ==
+user-&gt;GFXTIM : HAL_GFXTIM_Init()
+== GFXTIM Frame Clock Generator ==
+user-&gt;GFXTIM : HAL_GFXTIM_CLKGEN_SetConfigFrameClock()
+note right : Configure the frame clock with:\n - clock source, \n - counter source, \n - reload source,\n - reload value
+
+== GFXTIM Absolute Frame  ==
+user-&gt;GFXTIM : HAL_GFXTIM_ABSTIM_SetFrameCounter()
+note right : Optional : Configure the absolute frame counter value
+user-&gt;GFXTIM : HAL_GFXTIM_ABSTIM_SetFrameCompareValue()
+note right : Configure the absolute frame compare value
+user-&gt;GFXTIM : HAL_GFXTIM_ABSTIM_Start()
+group If interrupt is enabled
+nvic-&gt;GFXTIM : HAL_GFXTIM_IRQHandler()
+user&lt;--GFXTIM: HAL_GFXTIM_ABSTIM_FCmpCallback() \n HAL_GFXTIM_ABSTIM_FCntOverFlowCallback()
+note right : Absolute frame counter compare event \n Absolute frame counter overflow event
+end
+
+group Optional
+user-&gt;GFXTIM : HAL_GFXTIM_ABSTIM_Pause()
+user-&gt;GFXTIM : HAL_GFXTIM_ABSTIM_Resume()
+user-&gt;GFXTIM : HAL_GFXTIM_ABSTIM_Stop()
+end
+user-&gt;GFXTIM : HAL_GFXTIM_DeInit()
+@enduml' src="../../../../../_images/plantuml-55be06d3d4571681aa02284be995887d2705c220.png"/>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="w"> </span><span class="n">GFXTIM_HandleTypeDef</span><span class="w"> </span><span class="n">hgfxtim</span><span class="p">;</span>
+
+<span class="w"> </span><span class="n">hgfxtim</span><span class="p">.</span><span class="n">Instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM</span><span class="p">;</span>
+<span class="w"> </span><span class="n">hgfxtim</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">SynchroSrc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_SYNC_SRC_HSYNC_VSYNC_0</span><span class="p">;</span>
+<span class="w"> </span><span class="cm">/* GFXTIM initialization */</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+
+<span class="w"> </span><span class="cm">/* optional: if interrupt is enabled */</span>
+<span class="w"> </span><span class="cm">/* Registering the user callback function */</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_RegisterCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                          </span><span class="n">HAL_GFXTIM_AFC_COMPARE1_CB_ID</span><span class="p">,</span>
+<span class="w">                          </span><span class="n">USER_GFXTIM_ABSTIM_FrmCmpCallback</span><span class="p">);</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_RegisterCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                  </span><span class="n">HAL_GFXTIM_AFC_OVERFLOW_CB_ID</span><span class="p">,</span>
+<span class="w">                  </span><span class="n">USER_GFXTIM_ABSTIM_FrmCntOverFlowCallback</span><span class="p">);</span>
+<span class="cm">/* Configure the GFXTIM clock generator */</span>
+<span class="w"> </span><span class="n">GFXTIM_ClockGeneratorConfigTypeDef</span><span class="w"> </span><span class="n">pClockGenConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="p">.</span><span class="n">LineClockSrc</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_LINE_CLK_SRC_FCC_UNDERFLOW</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">FCCHwReloadSrc</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_FCC_HW_RELOAD_SRC_NONE</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">FCCReloadValue</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">FCCClockSrc</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_FCC_CLK_SRC_HSYNC_RISING</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">FrameClockSrc</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_FRAME_CLK_SRC_FCC_UNDERFLOW</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">LineClockCalib</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_LINE_CLK_CALIB_DISABLE</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">FrameClockCalib</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_FRAME_CLK_CALIB_DISABLE</span><span class="p">;</span>
+<span class="w"> </span><span class="p">};</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_ClockGenerator_Config</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                  </span><span class="o">&amp;</span><span class="n">pClockGenConfig</span><span class="p">);</span>
+
+<span class="w"> </span><span class="cm">/* Configure the GFXTIM clock generator */</span>
+<span class="w"> </span><span class="n">GFXTIM_AbsoluteTimerConfigTypeDef</span><span class="w"> </span><span class="n">pAbsoluteTimerConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="p">.</span><span class="n">FrameCompare1Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0xFFFFA</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">LineCompare1Value</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">LineCompare2Value</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">FrameCounterValue</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mh">0xFFFF0</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">LineCounterValue</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">   </span><span class="cm">/* optional: if interrupt is enabled */</span>
+<span class="w"> </span><span class="p">.</span><span class="n">FrameOverflowInterrupt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ENABLE</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">FrameCompare1Interrupt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ENABLE</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">LineOverflowInterrupt</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">DISABLE</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">LineCompare1Interrupt</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">DISABLE</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">LineCompare2Interrupt</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">DISABLE</span><span class="p">;</span>
+<span class="w"> </span><span class="p">};</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_AbsoluteTimer_Config</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                 </span><span class="o">&amp;</span><span class="n">pAbsoluteTimerConfig</span><span class="p">);</span>
+<span class="w"> </span><span class="cm">/* Start the absolute line counter */</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_AbsoluteTimer_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+
+<span class="w"> </span><span class="cm">/* optional: if interrupt is enabled */</span>
+
+
+
+
+
+<span class="w"> </span><span class="cm">/* IRQHandler function */</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+<span class="w"> </span><span class="cm">/* Callback function */</span>
+<span class="w"> </span><span class="n">USER_GFXTIM_AbsoluteTimer_AFCC1Callback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+<span class="w"> </span><span class="n">USER_GFXTIM_AbsoluteTimer_ALFOFCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+
+
+
+
+
+
+
+
+<span class="w"> </span><span class="cm">/* Disable the absolute frame counter */</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_AbsoluteTimer_Stop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">)</span>
+
+<span class="w"> </span><span class="cm">/* GFXTIM Deinitialization */</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_DeInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_gfxtim_handle_t</span><span class="w"> </span><span class="n">hgfxtim</span><span class="p">;</span>
+
+
+
+<span class="cm">/* GFXTIM initialization */</span>
+<span class="n">HAL_GFXTIM_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_GFXTIM</span><span class="p">);</span>
+
+<span class="cm">/* optional: if interrupt is enabled */</span>
+<span class="cm">/* Registering the user callback function */</span>
+<span class="n">HAL_GFXTIM_ABSTIM_RegisterFCmpCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                      </span><span class="n">USER_GFXTIM_ABSTIM_FrameCmpCallback</span><span class="p">)</span><span class="o">:</span>
+
+<span class="n">HAL_GFXTIM_ABSTIM_RegisterFCntOverFlowCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">               </span><span class="n">USER_GFXTIM_ABSTIM_FrameCntOverFlowCallback</span><span class="p">);</span>
+
+<span class="cm">/* Configure the GFXTIM clock generator */</span>
+<span class="n">hal_gfxtim_clkgen_frame_config_t</span><span class="w"> </span><span class="n">p_frame_config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+
+<span class="p">.</span><span class="n">reload_src</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_NO_RELOAD</span><span class="p">;</span>
+<span class="p">.</span><span class="n">reload_val</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">.</span><span class="n">counter_src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_HSYNC_RISING</span><span class="p">;</span>
+<span class="p">.</span><span class="n">clock_src</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_FRAME_FCNT_UNDERFLOW</span><span class="p">;</span>
+<span class="p">};</span>
+
+
+<span class="n">HAL_GFXTIM_CLKGEN_SetConfigFrameClock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                      </span><span class="o">&amp;</span><span class="n">p_frame_config</span><span class="p">);</span>
+
+
+<span class="cm">/* Set the absolute frame compare value */</span>
+<span class="n">HAL_GFXTIM_ABSTIM_SetFrameCompareValue</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span><span class="w"> </span><span class="mh">0xFFFFA</span><span class="p">);</span>
+
+<span class="cm">/* Set the absolute frame counter */</span>
+<span class="n">HAL_GFXTIM_ABSTIM_SetFrameCounter</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span><span class="w"> </span><span class="mh">0xFFFF0</span><span class="p">);</span>
+
+
+
+
+
+
+
+
+
+
+
+<span class="cm">/* Start the absolute frame counter (interrupt disabled)*/</span>
+<span class="n">HAL_GFXTIM_ABSTIM_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                        </span><span class="n">HAL_GFXTIM_ABSTIM_FRAME_COUNTER</span><span class="p">,</span>
+<span class="w">                        </span><span class="n">HAL_GFXTIM_NONE_IT</span><span class="p">);</span>
+<span class="cm">/* optional: if interrupt is enabled */</span>
+<span class="cm">/* Start the absolute frame counter in interrupt mode*/</span>
+<span class="n">HAL_GFXTIM_ABSTIM_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                        </span><span class="n">HAL_GFXTIM_ABSTIM_FRAME_COUNTER</span><span class="p">,</span>
+<span class="w">                        </span><span class="n">HAL_GFXTIM_ABSTIM_LINE_ALL_IT</span><span class="p">);</span>
+<span class="cm">/* IRQHandler function */</span>
+<span class="n">HAL_GFXTIM_ABSTIM_FrameIRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+<span class="cm">/* Callback function */</span>
+<span class="n">USER_GFXTIM_ABSTIM_FCmpCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">)</span><span class="o">:</span>
+<span class="n">USER_GFXTIM_ABSTIM_FCntOverFlowCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+<span class="cm">/* optional */</span>
+<span class="cm">/* Pause the absolute frame counter */</span>
+<span class="n">HAL_GFXTIM_ABSTIM_Pause</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                        </span><span class="n">HAL_GFXTIM_ABSTIM_FRAME_COUNTER</span><span class="p">);</span>
+<span class="cm">/* Check that the absolute frame counter is paused */</span>
+<span class="n">HAL_GFXTIM_ABSTIM_Resume</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                         </span><span class="n">HAL_GFXTIM_ABSTIM_FRAME_COUNTER</span><span class="p">);</span>
+
+<span class="cm">/* Disable the absolute frame counter */</span>
+<span class="n">HAL_GFXTIM_ABSTIM_Stop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                       </span><span class="n">HAL_GFXTIM_ABSTIM_FRAME_COUNTER</span><span class="p">);</span>
+<span class="cm">/* GFXTIM Deinitialization */</span>
+<span class="n">HAL_GFXTIM_DeInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <section id="id1">
+          <h3 id="id1">
+           Related examples in HAL2
+           <a class="headerlink" href="#id1" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               Example Name
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               Description
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               example_hal_gfxtim_absolute_frame_it
+              </p>
+             </td>
+             <td>
+              <p>
+               This example is used to generate an interrupt for specific absolute frame.
+              </p>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <hr class="docutils"/>
+         </section>
+        </section>
+        <section id="starting-the-gfxtim-with-relative-timer">
+         <span id="hal-gfxtim-starting-relative-timer-use-case">
+         </span>
+         <h2 id="starting-the-gfxtim-with-relative-timer">
+          Starting the GFXTIM with relative timer
+          <a class="headerlink" href="#starting-the-gfxtim-with-relative-timer" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p class="plantuml">
+              <img alt='@startuml
+
+   participant "User Application" as user
+   participant "GFXTIM Driver" as GFXTIM
+   participant "NVIC" as nvic
+
+   == GFXTIM Initialization ==
+   user-&gt;GFXTIM : HAL_GFXTIM_Init()
+
+   == GFXTIM Frame Clock Generator ==
+   user-&gt;GFXTIM : HAL_GFXTIM_ClockGenerator_Config()
+   note right : Configure frame clock generator
+   == GFXTIM Relative frame ==
+   user-&gt;GFXTIM : HAL_GFXTIM_RelativeTimer_Config()
+   note right : Configure relative counter with: \n - mode : continuous or oneshot, \n - reload value
+
+   user-&gt;GFXTIM : HAL_GFXTIM_RelativeTimer_Start()
+   group If interrupt is enabled
+   nvic-&gt;GFXTIM : HAL_GFXTIM_IRQHandler()
+   user&lt;--GFXTIM: HAL_GFXTIM_RelativeTimer_RFC1RCallback()
+   note right : Relative frame counter 1 reload event
+   end
+
+   group Optional
+   user-&gt;GFXTIM : HAL_GFXTIM_RelativeTimer_SetReload()
+   user-&gt;GFXTIM : HAL_GFXTIM_RelativeTimer_ForceReload()
+   user-&gt;GFXTIM : HAL_GFXTIM_RelativeTimer_Stop()
+   end
+   user-&gt;GFXTIM : HAL_GFXTIM_DeInit()
+   @enduml' src="../../../../../_images/plantuml-30e3af6f60fe156e2cef51bf860c5c45bf95f0b4.png"/>
+             </p>
+            </td>
+            <td>
+             <p class="plantuml">
+              <img alt='@startuml
+
+participant "User Application" as user
+participant "GFXTIM Driver" as GFXTIM
+participant "NVIC" as nvic
+
+== GFXTIM Initialization ==
+user-&gt;GFXTIM : HAL_GFXTIM_Init()
+== GFXTIM Frame Clock Generator ==
+user-&gt;GFXTIM : HAL_GFXTIM_CLKGEN_SetConfigFrameClock()
+note right : Configure frame clock generator
+== GFXTIM Relative Frame ==
+alt relative counter is in continuous mode
+user-&gt;GFXTIM : HAL_GFXTIM_RELTIM_StartContinuous()
+note right : Start relative counter in continuous mode with\n the dedicated reload value
+
+else if relative counter  is in oneshot mode
+
+user-&gt;GFXTIM : HAL_GFXTIM_RELTIM_StartOneShot()
+note right : Start relative counter in oneshot mode with \n the dedicated reload value.\n When interrupt is disabled call \n HAL_GFXTIM_RELTIM_PollForOneShot()
+
+end
+group If interrupt is enabled
+nvic-&gt;GFXTIM : HAL_GFXTIM_IRQHandler()
+user&lt;--GFXTIM: HAL_GFXTIM_RELTIM_FCntReloadCallback()
+note right : Relative frame counter 1 reload event
+end
+
+group Optional
+user-&gt;GFXTIM : HAL_GFXTIM_RELTIM_SetReload()
+user-&gt;GFXTIM : HAL_GFXTIM_RELTIM_ForceReload()
+user-&gt;GFXTIM : HAL_GFXTIM_RELTIM_StopContinuous()
+note right : Stop relative counter \nif it has been started in continuous mode
+end
+
+user-&gt;GFXTIM : HAL_GFXTIM_DeInit()
+@enduml' src="../../../../../_images/plantuml-d27fb9125b0adc198d0a0a3908c5f7cfe75d7dc9.png"/>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">GFXTIM_HandleTypeDef</span><span class="w"> </span><span class="n">hgfxtim</span><span class="p">;</span>
+
+<span class="n">hgfxtim</span><span class="p">.</span><span class="n">Instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM</span><span class="p">;</span>
+<span class="n">hgfxtim</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">SynchroSrc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_SYNC_SRC_HSYNC_VSYNC_0</span><span class="p">;</span>
+<span class="cm">/* GFXTIM initialization */</span>
+<span class="n">HAL_GFXTIM_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+<span class="cm">/* optional: if interrupt is enabled */</span>
+<span class="cm">/* Registering the user callback function */</span>
+<span class="n">HAL_GFXTIM_RegisterCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                   </span><span class="n">HAL_GFXTIM_RFC1_RELOAD_CB_ID</span><span class="p">,</span>
+<span class="w">                   </span><span class="n">USER_GFXTIM_RELTIM_FrmCntReloadCallback</span><span class="p">);</span>
+<span class="cm">/* Clock generator configuration */</span>
+<span class="n">GFXTIM_ClockGeneratorConfigTypeDef</span><span class="w"> </span><span class="n">pClockGenConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="p">.</span><span class="n">LineClockSrc</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_LINE_CLK_SRC_FCC_UNDERFLOW</span><span class="p">;</span>
+<span class="p">.</span><span class="n">FCCHwReloadSrc</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_FCC_HW_RELOAD_SRC_NONE</span><span class="p">;</span>
+<span class="p">.</span><span class="n">FCCReloadValue</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">.</span><span class="n">FCCClockSrc</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_FCC_CLK_SRC_DISABLE</span><span class="p">;</span>
+<span class="p">.</span><span class="n">FrameClockSrc</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_FCC_CLK_SRC_VSYNC_RISING</span><span class="p">;</span>
+<span class="p">.</span><span class="n">LineClockCalib</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_LINE_CLK_CALIB_DISABLE</span><span class="p">;</span>
+<span class="p">.</span><span class="n">FrameClockCalib</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_FRAME_CLK_CALIB_DISABLE</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="n">HAL_GFXTIM_ClockGenerator_Config</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                 </span><span class="o">&amp;</span><span class="n">pClockGeneratorConfig</span><span class="p">);</span>
+<span class="cm">/* Configure relative timer in continuous mode */</span>
+<span class="n">GFXTIM_RelativeTimerConfigTypeDef</span><span class="w"> </span><span class="n">pRelativeTimerConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="p">.</span><span class="n">AutoReloadValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span>
+<span class="p">.</span><span class="n">CounterMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_MODE_CONTINUOUS</span><span class="p">;</span>
+<span class="p">.</span><span class="n">ReloadInterrupt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ENABLE</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="n">HAL_GFXTIM_RelativeTimer_Config</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                </span><span class="o">&amp;</span><span class="n">pRelativeTimerConfig</span><span class="p">,</span>
+<span class="w">                               </span><span class="n">GFXTIM_RELATIVE_TIMER1</span><span class="p">);</span>
+<span class="cm">/* Start the relative counter in continuous mode */</span>
+<span class="n">HAL_GFXTIM_RelativeTimer_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                               </span><span class="n">GFXTIM_RELATIVE_TIMER1</span><span class="p">);</span>
+<span class="cm">/* Configure relative timer in oneshot mode */</span>
+<span class="n">GFXTIM_RelativeTimerConfigTypeDef</span><span class="w"> </span><span class="n">pRelativeTimerConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="p">.</span><span class="n">AutoReloadValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span>
+<span class="p">.</span><span class="n">CounterMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_MODE_ONE_SHOT</span><span class="p">;</span>
+<span class="p">.</span><span class="n">ReloadInterrupt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ENABLE</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="n">HAL_GFXTIM_RelativeTimer_Config</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                </span><span class="o">&amp;</span><span class="n">pRelativeTimerConfig</span><span class="p">,</span>
+<span class="w">                                </span><span class="n">GFXTIM_RELATIVE_TIMER1</span><span class="p">);</span>
+
+
+<span class="w"> </span><span class="cm">/* Start the absolute line counter in oneshot mode */</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_RelativeTimer_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                </span><span class="n">GFXTIM_RELATIVE_TIMER1</span><span class="p">);</span>
+
+
+
+<span class="cm">/* optional: if interrupt is enabled */</span>
+<span class="cm">/* IRQHandler function */</span>
+<span class="n">HAL_GFXTIM_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+<span class="cm">/* Callback function */</span>
+<span class="n">USER_GFXTIM_RelativeTimer_RFC1RCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+
+<span class="cm">/* optional */</span>
+<span class="cm">/* Set the relative frame counter reload value */</span>
+<span class="n">HAL_GFXTIM_RelativeTimer_SetReload</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                </span><span class="n">HAL_GFXTIM_RELTIM_COUNTER_1</span><span class="p">,</span>
+<span class="w">                                </span><span class="mh">0xFU</span><span class="p">);</span>
+<span class="cm">/* Force reload the relative frame counter */</span>
+<span class="n">HAL_GFXTIM_RelativeTimer_ForceReload</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                   </span><span class="n">GFXTIM_RELATIVE_TIMER1</span><span class="p">);</span>
+<span class="cm">/* Disable the relative frame counter in continuous mode */</span>
+<span class="n">HAL_GFXTIM_RelativeTimer_Stop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+
+<span class="cm">/* GFXTIM Deinitialization */</span>
+<span class="n">HAL_GFXTIM_DeInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_gfxtim_handle_t</span><span class="w"> </span><span class="n">hgfxtim</span><span class="p">;</span>
+
+
+
+<span class="cm">/* GFXTIM initialization */</span>
+<span class="n">HAL_GFXTIM_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_GFXTIM</span><span class="p">);</span>
+<span class="cm">/* optional: if interrupt is enabled */</span>
+<span class="cm">/* Registering the user callback function */</span>
+<span class="n">HAL_GFXTIM_RELTIM_RegisterFCntReloadCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                   </span><span class="n">USER_GFXTIM_RELTIM_FrmCntReloadCallback</span><span class="p">);</span>
+
+<span class="cm">/* Configure the GFXTIM clock generator */</span>
+<span class="n">hal_gfxtim_clkgen_frame_config_t</span><span class="w"> </span><span class="n">p_frame_config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+
+<span class="p">.</span><span class="n">reload_src</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_NO_RELOAD</span><span class="p">;</span>
+<span class="p">.</span><span class="n">reload_val</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">.</span><span class="n">counter_src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_DISABLE</span><span class="p">;</span>
+<span class="p">.</span><span class="n">clock_src</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_FRAME_VSYNC_RISING</span><span class="p">;</span>
+<span class="p">};</span>
+
+
+<span class="n">HAL_GFXTIM_CLKGEN_SetConfigFrameClock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                      </span><span class="o">&amp;</span><span class="n">p_frame_config</span><span class="p">);</span>
+
+
+
+
+
+
+
+
+
+<span class="cm">/* Start the relative frame counter in continuous mode */</span>
+<span class="n">HAL_GFXTIM_RELTIM_StartContinuous</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                </span><span class="n">HAL_GFXTIM_RELTIM_COUNTER_1</span><span class="p">,</span>
+<span class="w">                                </span><span class="mi">200U</span><span class="p">,</span>
+<span class="w">                                </span><span class="n">HAL_GFXTIM_RELTIM_COUNT_IT</span><span class="p">);</span>
+
+
+
+
+
+
+
+
+
+<span class="cm">/* Start the relative frame counter in one shot mode */</span>
+<span class="n">HAL_GFXTIM_RELTIM_StartOneShot</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                               </span><span class="n">HAL_GFXTIM_RELTIM_COUNTER_1</span><span class="p">,</span>
+<span class="w">                               </span><span class="mi">200U</span><span class="p">,</span>
+<span class="w">                               </span><span class="n">HAL_GFXTIM_RELTIM_COUNT_IT</span><span class="p">);</span>
+
+<span class="cm">/* optional: if interrupt is enabled */</span>
+<span class="cm">/* IRQHandler function */</span>
+<span class="n">HAL_GFXTIM_RELTIM_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+<span class="cm">/* Callback function */</span>
+<span class="n">USER_GFXTIM_RELTIM_FCntReloadCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                               </span><span class="n">HAL_GFXTIM_RELTIM_COUNTER_1</span><span class="p">);</span>
+<span class="cm">/* optional */</span>
+<span class="cm">/* Set the relative frame counter reload value */</span>
+<span class="n">HAL_GFXTIM_RELTIM_SetReloadValue</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                </span><span class="n">HAL_GFXTIM_RELTIM_COUNTER_1</span><span class="p">,</span>
+<span class="w">                                </span><span class="mh">0xFU</span><span class="p">);</span>
+<span class="cm">/* Force reload the relative frame counter */</span>
+<span class="n">HAL_GFXTIM_RELTIM_ForceReload</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                              </span><span class="n">GFXTIM_RELATIVE_TIMER1</span><span class="p">);</span>
+<span class="cm">/* Stop the relative frame counter in continuous mode */</span>
+<span class="n">HAL_GFXTIM_RELTIM_StopContinuous</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                               </span><span class="n">HAL_GFXTIM_RELTIM_COUNTER_1</span><span class="p">);</span>
+<span class="cm">/* GFXTIM Deinitialization */</span>
+<span class="n">HAL_GFXTIM_DeInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <section id="id2">
+          <h3 id="id2">
+           Related examples in HAL2
+           <a class="headerlink" href="#id2" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               Example Name
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               Description
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               example_hal_gfxtim_relative_timer_frame_count
+              </p>
+             </td>
+             <td>
+              <p>
+               This example is used to generate an interrupt for specific relative frame.
+              </p>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <hr class="docutils"/>
+         </section>
+        </section>
+        <section id="starting-the-gfxtim-with-event-generator">
+         <span id="hal-gfxtim-starting-event-generator-counter-use-case">
+         </span>
+         <h2 id="starting-the-gfxtim-with-event-generator">
+          Starting the GFXTIM with event generator
+          <a class="headerlink" href="#starting-the-gfxtim-with-event-generator" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p class="plantuml">
+              <img alt='@startuml
+
+   participant "User Application" as user
+   participant "GFXTIM Driver" as GFXTIM
+   participant "NVIC" as nvic
+
+   == GFXTIM Initialization ==
+   user-&gt;GFXTIM : HAL_GFXTIM_Init()
+   == GFXTIM configuration  ==
+   user-&gt;GFXTIM : HAL_GFXTIM_ClockGenerator_Config()
+   note right : Configure line and frame clock
+   user-&gt;GFXTIM : HAL_GFXTIM_AbsoluteTimer_Config()
+   note right : Configure absolute line counter
+   user-&gt;GFXTIM : HAL_GFXTIM_RelativeTimer_Config()
+   note right : Configure relative frame counter
+   user-&gt;GFXTIM : HAL_GFXTIM_EventGenerator_Config()
+   note right : Configure event generator
+   == GFXTIM absolute line and relative frame ==
+   user-&gt;GFXTIM : HAL_GFXTIM_AbsoluteTimer_Start()
+   note right : Start absolute line counter
+   user-&gt;GFXTIM : HAL_GFXTIM_RelativeTimer_Start()
+   note right : Start relative frame counter in continuous mode
+   == GFXTIM Event Generator ==
+   user-&gt;GFXTIM : HAL_GFXTIM_EventGenerator_Enable()
+   note right  : Start event generator
+   group  If interrupt is enabled
+   nvic-&gt;GFXTIM : HAL_GFXTIM_IRQHandler()
+   user&lt;--GFXTIM: HAL_GFXTIM_EventGenerator_EV1Callback()
+   note right : Event generator 1 interrupt
+   end
+
+   group  Optional
+   user-&gt;GFXTIM : HAL_GFXTIM_EventGenerator_Disable()
+   end
+   user-&gt;GFXTIM : HAL_GFXTIM_DeInit()
+   @enduml' src="../../../../../_images/plantuml-010400bdb2dba719a7130f7e6dcb6b9b861f5184.png"/>
+             </p>
+            </td>
+            <td>
+             <p class="plantuml">
+              <img alt='@startuml
+
+participant "User Application" as user
+participant "GFXTIM Driver" as GFXTIM
+participant "NVIC" as nvic
+
+== GFXTIM Initialization ==
+user-&gt;GFXTIM : HAL_GFXTIM_Init()
+== GFXTIM configuration  ==
+user-&gt;GFXTIM : HAL_GFXTIM_CLKGEN_SetConfigLineFrameClock()
+note right : Configure line and frame clock
+user-&gt;GFXTIM : HAL_GFXTIM_ABSTIM_SetLineCounter()
+note right : Optional : Configure absolute line counter
+user-&gt;GFXTIM : HAL_GFXTIM_ABSTIM_SetLineCompareValue()
+note right : Configure absolute line compare value
+user-&gt;GFXTIM : HAL_GFXTIM_EVENTGEN_SetConfig()
+note right : Configure event generator
+== GFXTIM absolute line and relative frame ==
+user-&gt;GFXTIM : HAL_GFXTIM_ABSTIM_Start()
+note right : Start absolute line counter
+user-&gt;GFXTIM : HAL_GFXTIM_RELTIM_StartContinuous()
+ note right : Start relative frame counter
+== GFXTIM Event Generator ==
+user-&gt;GFXTIM : HAL_GFXTIM_EVENTGEN_Start()
+note right : Start event generator
+group If interrupt is enabled
+nvic-&gt;GFXTIM : HAL_GFXTIM_IRQHandler()
+user&lt;--GFXTIM: HAL_GFXTIM_EVENTGEN_EventCallback()
+note right : Event generator 1 interrupt
+end
+
+group Optional
+user-&gt;GFXTIM : HAL_GFXTIM_EVENTGEN_Stop()
+end
+user-&gt;GFXTIM : HAL_GFXTIM_DeInit()
+@enduml' src="../../../../../_images/plantuml-add0235c3ca4d2c27a1b4200f9eed63eef15dae1.png"/>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">GFXTIM_HandleTypeDef</span><span class="w"> </span><span class="n">hgfxtim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+
+<span class="p">.</span><span class="n">Instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM</span><span class="p">;</span>
+<span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">SynchroSrc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_SYNC_SRC_HSYNC_VSYNC_0</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="cm">/* GFXTIM initialization */</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_GFXTIM_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">);</span>
+<span class="cm">/* optional: if interrupt is enabled */</span>
+<span class="cm">/* Registering the user callback function*/</span>
+<span class="n">HAL_GFXTIM_RegisterCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                         </span><span class="n">HAL_GFXTIM_EVENT1_CB_ID</span><span class="p">,</span>
+<span class="w">                         </span><span class="n">USER_GFXTIM_EVENTGEN_EventCallback</span><span class="p">);</span>
+<span class="cm">/* Clock generator configuration */</span>
+<span class="n">GFXTIM_ClockGeneratorConfigTypeDef</span><span class="w"> </span><span class="n">pClockGeneratorConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="p">.</span><span class="n">LCCClockSrc</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_LCC_CLK_SRC_SYSCLOCK</span><span class="p">;</span>
+<span class="p">.</span><span class="n">LCCHwReloadSrc</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_LCC_HW_RELOAD_SRC_NONE</span><span class="p">;</span>
+<span class="p">.</span><span class="n">LCCReloadValue</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">159999</span><span class="p">;</span>
+<span class="p">.</span><span class="n">LineClockSrc</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_LINE_CLK_SRC_HSYNC_FALLING</span><span class="p">;</span>
+
+
+<span class="p">.</span><span class="n">FCCReloadValue</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">.</span><span class="n">FCCHwReloadSrc</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_FCC_HW_RELOAD_SRC_NONE</span><span class="p">;</span>
+<span class="p">.</span><span class="n">FCCClockSrc</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_FCC_CLK_SRC_HSYNC_RISING</span><span class="p">;</span>
+<span class="p">.</span><span class="n">FrameClockSrc</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_FRAME_CLK_SRC_FCC_UNDERFLOW</span><span class="p">;</span>
+<span class="p">.</span><span class="n">LineClockCalib</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_LINE_CLK_CALIB_DISABLE</span><span class="p">;</span>
+<span class="p">.</span><span class="n">FrameClockCalib</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_FRAME_CLK_CALIB_DISABLE</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="n">HAL_GFXTIM_ClockGenerator_Config</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                 </span><span class="o">&amp;</span><span class="n">pClockGeneratorConfig</span><span class="p">);</span>
+
+<span class="cm">/* Absolute line configuration */</span>
+<span class="n">GFXTIM_AbsoluteTimerConfigTypeDef</span><span class="w"> </span><span class="n">pAbsoluteTimerConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="p">.</span><span class="n">LineCompare1Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">.</span><span class="n">LineCompare2Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="p">.</span><span class="n">LineCounterValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">.</span><span class="n">LineOverflowInterrupt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DISABLE</span><span class="p">;</span>
+<span class="p">.</span><span class="n">LineCompare1Interrupt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DISABLE</span><span class="p">;</span>
+<span class="p">.</span><span class="n">LineCompare2Interrupt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DISABLE</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="n">HAL_GFXTIM_AbsoluteTimer_Config</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                </span><span class="o">&amp;</span><span class="n">pAbsoluteTimerConfig</span><span class="p">);</span>
+<span class="cm">/* Relative frame configuration */</span>
+<span class="n">GFXTIM_RelativeTimerConfigTypeDef</span><span class="w"> </span><span class="n">RTimConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="p">.</span><span class="n">AutoReloadValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span>
+<span class="p">.</span><span class="n">CounterMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_MODE_CONTINUOUS</span><span class="p">;</span>
+<span class="p">.</span><span class="n">ReloadInterrupt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_IT_DISABLE</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="n">HAL_GFXTIM_RelativeTimer_Config</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                </span><span class="o">&amp;</span><span class="n">RTimConfig</span><span class="p">,</span>
+<span class="w">                                </span><span class="n">GFXTIM_RELATIVE_TIMER1</span><span class="p">);</span>
+<span class="cm">/* Event generator configuration */</span>
+<span class="n">GFXTIM_EventGeneratorConfigTypeDef</span><span class="w"> </span><span class="n">EventConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="p">.</span><span class="n">FrameEvent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_FRAME_EVENT_RFC1_RELOAD</span><span class="p">;</span>
+<span class="p">.</span><span class="n">LineEvent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_LINE_EVENT_ALC1_COMPARE</span><span class="p">;</span>
+<span class="p">.</span><span class="n">EventInterrupt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_IT_ENABLE</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="n">HAL_GFXTIM_EventGenerator_Config</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                 </span><span class="n">GFXTIM_EVENT_GENERATOR_1</span><span class="p">,</span>
+<span class="w">                                 </span><span class="o">&amp;</span><span class="n">EventConfig</span><span class="p">);</span>
+
+<span class="cm">/* Start absolute line */</span>
+<span class="n">HAL_GFXTIM_AbsoluteTimer_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+
+
+<span class="cm">/* Start relative frame */</span>
+<span class="n">HAL_GFXTIM_RelativeTimer_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                               </span><span class="n">GFXTIM_RELATIVE_TIMER1</span><span class="p">);</span>
+
+
+<span class="cm">/* Enable the event generator */</span>
+<span class="n">HAL_GFXTIM_EventGenerator_Enable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                 </span><span class="n">GFXTIM_EVENT_GENERATOR_1</span><span class="p">);</span>
+
+<span class="cm">/* optional: if interrupt is enabled */</span>
+<span class="cm">/* IRQHandler function */</span>
+<span class="n">HAL_GFXTIM_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+<span class="cm">/* Callback function */</span>
+<span class="n">USER_GFXTIM_EventGenerator_EV1Callback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+
+<span class="cm">/* optional */</span>
+<span class="cm">/* Stop the event generator 1 */</span>
+<span class="n">HAL_GFXTIM_EventGenerator_Disable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                  </span><span class="n">GFXTIM_EVENT_GENERATOR_1</span><span class="p">);</span>
+<span class="cm">/* GFXTIM Deinitialization */</span>
+<span class="n">HAL_GFXTIM_DeInit</span><span class="p">(</span><span class="n">hgfxtim</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="w">  </span><span class="n">hal_gfxtim_handle_t</span><span class="w"> </span><span class="n">hgfxtim</span><span class="p">;</span>
+
+
+
+
+<span class="cm">/* GFXTIM initialization */</span>
+<span class="n">HAL_GFXTIM_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_GFXTIM</span><span class="p">);</span>
+<span class="cm">/* optional: if interrupt is enabled */</span>
+<span class="cm">/* Registering the user callback function*/</span>
+<span class="n">HAL_GFXTIM_EVENTGEN_RegisterEventCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                     </span><span class="n">USER_GFXTIM_EVENTGEN_EventCallback</span><span class="p">);</span>
+
+<span class="cm">/* Configure the GFXTIM clock generator */</span>
+<span class="n">hal_gfxtim_clkgen_line_config_t</span><span class="w">  </span><span class="n">p_line_config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="p">.</span><span class="n">counter_src</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_LINE_COUNT_NONE</span><span class="p">;</span>
+<span class="p">.</span><span class="n">reload_src</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_LCNT_NO_RELOAD</span><span class="p">;</span>
+<span class="p">.</span><span class="n">reload_val</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">159999</span><span class="p">;</span>
+<span class="p">.</span><span class="n">clock_src</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_LINE_HSYNC_FALLING</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="n">hal_gfxtim_clkgen_frame_config_t</span><span class="w"> </span><span class="n">p_frame_config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="p">.</span><span class="n">reload_src</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_NO_RELOAD</span><span class="p">;</span>
+<span class="p">.</span><span class="n">reload_val</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">.</span><span class="n">counter_src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_HSYNC_RISING</span><span class="p">;</span>
+<span class="p">.</span><span class="n">clock_src</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_FRAME_FCNT_UNDERFLOW</span><span class="p">;</span>
+<span class="p">};</span>
+
+
+<span class="n">HAL_GFXTIM_CLKGEN_SetConfigLineFrameClock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                          </span><span class="o">&amp;</span><span class="n">p_frame_config</span><span class="p">,</span>
+<span class="w">                                          </span><span class="o">&amp;</span><span class="n">p_line_config</span><span class="p">);</span>
+<span class="cm">/* Absolute line configuration */</span>
+<span class="n">HAL_GFXTIM_ABSTIM_SetLineCounter</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span><span class="mh">0x0U</span><span class="p">);</span>
+<span class="n">HAL_GFXTIM_ABSTIM_SetLineCompareValue</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                 </span><span class="n">HAL_GFXTIM_ABSTIM_LINE_COMP_1</span><span class="p">,</span>
+<span class="w">                                 </span><span class="mi">1U</span><span class="p">);</span>
+<span class="n">HAL_GFXTIM_ABSTIM_SetLineCompareValue</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                 </span><span class="n">HAL_GFXTIM_ABSTIM_LINE_COMP_2</span><span class="p">,</span>
+<span class="w">                                 </span><span class="mi">3U</span><span class="p">);</span>
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="cm">/* Configure the event generator */</span>
+<span class="n">hal_gfxtim_eventgen_config_t</span><span class="w"> </span><span class="n">p_config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="p">.</span><span class="n">line_event</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_EVENTGEN_ABS_LCNT_1_COMP</span><span class="p">;</span>
+<span class="p">.</span><span class="n">frame_event</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_EVENTGEN_REL_FCNT_1_RELOAD</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="n">HAL_GFXTIM_EVENTGEN_SetConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                              </span><span class="n">HAL_GFXTIM_EVENTGEN_EVENT_1</span><span class="p">,</span>
+<span class="w">                              </span><span class="o">&amp;</span><span class="n">p_config</span><span class="p">);</span>
+
+
+<span class="cm">/* Start the absolute frame counter */</span>
+<span class="n">HAL_GFXTIM_ABSTIM_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                        </span><span class="n">HAL_GFXTIM_ABSTIM_LINE_COUNTER</span><span class="p">,</span>
+<span class="w">                        </span><span class="n">HAL_GFXTIM_NONE_IT</span><span class="p">);</span>
+<span class="cm">/* Start the relative frame counter in continuous mode */</span>
+<span class="n">HAL_GFXTIM_RELTIM_StartContinuous</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                  </span><span class="n">HAL_GFXTIM_RELTIM_COUNTER_1</span><span class="p">,</span>
+<span class="w">                                  </span><span class="mi">200U</span><span class="p">,</span>
+<span class="w">                                  </span><span class="n">HAL_GFXTIM_RELTIM_COUNT_IT</span><span class="p">);</span>
+<span class="cm">/* Start the event generator */</span>
+<span class="n">HAL_GFXTIM_EVENTGEN_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                          </span><span class="n">HAL_GFXTIM_EVENTGEN_EVENT_1</span><span class="p">,</span>
+<span class="w">                          </span><span class="n">HAL_GFXTIM_EVENTGEN_EVENT_IT</span><span class="p">);</span>
+<span class="cm">/* optional: if interrupt is enabled */</span>
+<span class="cm">/* IRQHandler function */</span>
+<span class="n">HAL_GFXTIM_EVENTGEN_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+<span class="cm">/* Callback function */</span>
+<span class="n">USER_GFXTIM_EVENTGEN_EventCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                             </span><span class="n">HAL_GFXTIM_EVENTGEN_EVENT_1</span><span class="p">);</span>
+<span class="cm">/* optional */</span>
+<span class="cm">/* Stop the event generator 1 */</span>
+<span class="n">HAL_GFXTIM_EVENTGEN_Stop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                         </span><span class="n">GFXTIM_EVENTGEN_Event_1</span><span class="p">);</span>
+<span class="cm">/* GFXTIM Deinitialization */</span>
+<span class="n">HAL_GFXTIM_DeInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="starting-the-gfxtim-with-watchdog-timer">
+         <span id="hal-gfxtim-starting-watchdog-timer-use-case">
+         </span>
+         <h2 id="starting-the-gfxtim-with-watchdog-timer">
+          Starting the GFXTIM with watchdog timer
+          <a class="headerlink" href="#starting-the-gfxtim-with-watchdog-timer" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p class="plantuml">
+              <img alt='@startuml
+
+   participant "User Application" as user
+   participant "GFXTIM Driver" as GFXTIM
+   participant "NVIC" as nvic
+
+   == GFXTIM Initialization ==
+   user-&gt;GFXTIM : HAL_GFXTIM_Init()
+   == GFXTIM Frame Clock Generator ==
+   user-&gt;GFXTIM : HAL_GFXTIM_ClockGenerator_Config()
+   note right : Configure line and frame clock generator
+   == GFXTIM Watchdog Timer ==
+   note over user, GFXTIM : Configure and start watchdog counter
+   user-&gt;GFXTIM : HAL_GFXTIM_WatchdogTimer_Config()
+   user-&gt;GFXTIM : HAL_GFXTIM_WatchdogTimer_Enable()
+   group If interrupt is enabled
+   nvic-&gt;GFXTIM : HAL_GFXTIM_IRQHandler()
+   user&lt;--GFXTIM: USER_GFXTIM_WatchdogTimer_AlarmCallback() \n USER_GFXTIM_WatchdogTimer_PreAlarmCallback()
+   note right : Watchdog alarm interrupt \n Watchdog pre alarm interrupt
+   end
+
+
+   group Optional
+   user-&gt;GFXTIM : HAL_GFXTIM_WDG_Refresh()
+   end
+   user-&gt;GFXTIM : HAL_GFXTIM_WatchdogTimer_Disable()
+   user-&gt;GFXTIM : HAL_GFXTIM_DeInit()
+   @enduml' src="../../../../../_images/plantuml-7a4cc3019d8a994fbdfebf4656ec724f05d8af10.png"/>
+             </p>
+            </td>
+            <td>
+             <p class="plantuml">
+              <img alt='@startuml
+
+participant "User Application" as user
+participant "GFXTIM Driver" as GFXTIM
+participant "NVIC" as nvic
+
+== GFXTIM Initialization ==
+user-&gt;GFXTIM : HAL_GFXTIM_Init()
+== GFXTIM Line Frame Clock Generator ==
+user-&gt;GFXTIM : HAL_GFXTIM_CLKGEN_SetConfigLineFrameClock()
+note right : Configure line and frame clock generator
+== GFXTIM Watchdog Timer ==
+note over user, GFXTIM : Configure and start watchdog counter
+user-&gt;GFXTIM : HAL_GFXTIM_WDG_SetConfig()
+user-&gt;GFXTIM : HAL_GFXTIM_WDG_Start()
+group If interrupt is enabled
+nvic-&gt;GFXTIM : HAL_GFXTIM_IRQHandler()
+user&lt;--GFXTIM: HAL_GFXTIM_WDG_AlarmCallback() \n HAL_GFXTIM_WDG_PreAlarmCallback()
+note right : Watchdog alarm interrupt \n Watchdog pre alarm interrupt
+end
+
+group Optional
+user-&gt;GFXTIM : HAL_GFXTIM_WDG_Refresh()
+user-&gt;GFXTIM : HAL_GFXTIM_WDG_Stop()
+end
+user-&gt;GFXTIM : HAL_GFXTIM_DeInit()
+@enduml' src="../../../../../_images/plantuml-06669b5f6778cdd68de48c012706e5dadfe15f18.png"/>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="w"> </span><span class="n">GFXTIM_HandleTypeDef</span><span class="w"> </span><span class="n">hgfxtim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w"> </span><span class="p">.</span><span class="n">Instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">SynchroSrc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_SYNC_SRC_HSYNC_VSYNC_0</span><span class="p">;</span>
+<span class="w"> </span><span class="p">};</span>
+<span class="w"> </span><span class="cm">/* GFXTIM initialization */</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+<span class="cm">/* optional: if interrupt is enabled */</span>
+<span class="cm">/* Registering the user callback function*/</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_RegisterCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">             </span><span class="n">HAL_GFXTIM_WDG_ALARM_CB_ID</span><span class="p">,</span>
+<span class="w">             </span><span class="n">USER_GFXTIM_WDG_AlarmCallback</span><span class="p">);</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_RegisterCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">             </span><span class="n">HAL_GFXTIM_WDG_PRE_ALARM_CB_ID</span><span class="p">,</span>
+<span class="w">             </span><span class="n">USER_GFXTIM_WDG_PreAlarmCallback</span><span class="p">);</span>
+
+<span class="w"> </span><span class="cm">/* Clock generator configuration */</span>
+<span class="w"> </span><span class="n">GFXTIM_ClockGeneratorConfigTypeDef</span><span class="w"> </span><span class="n">pClockGenConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="p">.</span><span class="n">LCCHwReloadSrc</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_LCC_HW_RELOAD_SRC_NONE</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">LCCReloadValue</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">159999</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">LCCClockSrc</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_LCC_CLK_SRC_SYSCLOCK</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">LineClockSrc</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_LINE_CLK_SRC_FCC_UNDERFLOW</span><span class="p">;</span>
+
+
+<span class="w"> </span><span class="p">.</span><span class="n">FCCHwReloadSrc</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_FCC_HW_RELOAD_SRC_NONE</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">FCCReloadValue</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mh">0xFU</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">FCCClockSrc</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_FRAME_CLK_SRC_LCC_UNDERFLOW</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">FrameClockSrc</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_FRAME_CLK_SRC_FCC_UNDERFLOW</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">LineClockCalib</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_LINE_CLK_CALIB_DISABLE</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">FrameClockCalib</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_FRAME_CLK_CALIB_DISABLE</span><span class="p">;</span>
+<span class="w"> </span><span class="p">};</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_ClockGenerator_Config</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                  </span><span class="o">&amp;</span><span class="n">pClockGenConfig</span><span class="p">);</span>
+
+<span class="w"> </span><span class="cm">/* Watchdog timer configuration */</span>
+<span class="w"> </span><span class="n">GFXTIM_WatchdogConfigTypeDef</span><span class="w"> </span><span class="n">WdgConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="p">.</span><span class="n">ClockSrc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_WATCHDOG_CLK_SRC_LINE_CLK</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">AutoReloadValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">PreAlarmValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">500</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">AlarmInterrupt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_IT_ENABLE</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">PreAlarmInterrupt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_IT_ENABLE</span><span class="p">;</span>
+<span class="w"> </span><span class="p">.</span><span class="n">HwReloadConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFXTIM_WATCHDOG_HW_RELOAD_DISABLE</span><span class="p">;</span>
+<span class="w"> </span><span class="p">};</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_WatchdogTimer_Config</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">WdgConfig</span><span class="p">);</span>
+
+<span class="w"> </span><span class="cm">/* Enable the watchdog timer */</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_WatchdogTimer_Enable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+
+
+
+
+<span class="w"> </span><span class="cm">/* optional: if interrupt is enabled */</span>
+<span class="w"> </span><span class="cm">/* IRQHandler function */</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+<span class="w"> </span><span class="cm">/* Watchdog alarm callback function */</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_WDG_AlarmCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+<span class="w"> </span><span class="cm">/* Watchdog pre alarm callback function */</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_WDG_PreAlarmCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+
+<span class="w"> </span><span class="cm">/* optional */</span>
+<span class="w"> </span><span class="cm">/* Refresh the watchdog timer */</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_WatchdogTimer_Refresh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+<span class="w"> </span><span class="cm">/* Disable the watchdog timer */</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_WatchdogTimer_Disable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+
+<span class="w"> </span><span class="cm">/* GFXTIM Deinitialization */</span>
+<span class="w"> </span><span class="n">HAL_GFXTIM_DeInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_gfxtim_handle_t</span><span class="w"> </span><span class="n">hgfxtim</span><span class="p">;</span>
+
+
+
+
+<span class="cm">/* GFXTIM initialization */</span>
+<span class="n">HAL_GFXTIM_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_GFXTIM</span><span class="p">);</span>
+<span class="cm">/* optional: if interrupt is enabled */</span>
+<span class="cm">/* Registering the user callback function */</span>
+<span class="n">HAL_GFXTIM_WDG_RegisterAlarmCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                </span><span class="n">USER_GFXTIM_WDG_AlarmCallback</span><span class="p">);</span>
+
+<span class="n">HAL_GFXTIM_WDG_RegisterPreAlarmCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                </span><span class="n">USER_GFXTIM_WDG_PreAlarmCallback</span><span class="p">);</span>
+
+
+<span class="cm">/* Configure the GFXTIM clock generator */</span>
+<span class="n">hal_gfxtim_clkgen_line_config_t</span><span class="w"> </span><span class="n">p_line_config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="p">.</span><span class="n">reload_src</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_LCNT_NO_RELOAD</span><span class="p">;</span>
+<span class="p">.</span><span class="n">reload_val</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">159999</span><span class="p">;</span>
+<span class="p">.</span><span class="n">counter_src</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_LINE_COUNT_GFXTIMHCLK</span><span class="p">;</span>
+<span class="p">.</span><span class="n">clock_src</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_LINE_FCNT_UNDERFLOW</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="n">hal_gfxtim_clkgen_frame_config_t</span><span class="w"> </span><span class="n">p_frame_config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="p">.</span><span class="n">reload_src</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_NO_RELOAD</span><span class="p">;</span>
+<span class="p">.</span><span class="n">reload_val</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mh">0xFU</span><span class="p">;</span>
+<span class="p">.</span><span class="n">counter_src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_FCNT_DISABLE</span><span class="p">;</span>
+<span class="p">.</span><span class="n">clock_src</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_CLKGEN_FRAME_FCNT_UNDERFLOW</span><span class="p">;</span>
+<span class="p">};</span>
+
+
+<span class="n">HAL_GFXTIM_CLKGEN_SetConfigFrameClock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                                      </span><span class="o">&amp;</span><span class="n">p_frame_config</span><span class="p">,</span>
+<span class="w">                                      </span><span class="o">&amp;</span><span class="n">p_line_config</span><span class="p">);</span>
+<span class="cm">/* Watchdog timer configuration */</span>
+<span class="n">hal_gfxtim_wdg_config_t</span><span class="w"> </span><span class="n">p_wdg_config</span><span class="p">;</span>
+<span class="n">p_wdg_config</span><span class="p">.</span><span class="n">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GFXTIM_WDG_CLK_LINE_CLK</span><span class="p">;</span>
+
+
+
+
+
+
+<span class="n">HAL_GFXTIM_WDG_SetConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">p_wdg_config</span><span class="p">);</span>
+
+<span class="cm">/* Start the watchdog timer */</span>
+<span class="n">HAL_GFXTIM_WDG_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">,</span>
+<span class="w">                     </span><span class="mi">1000U</span><span class="p">,</span>
+<span class="w">                     </span><span class="mi">500U</span><span class="p">,</span>
+<span class="w">                     </span><span class="n">HAL_GFXTIM_WDG_ALL_IT</span><span class="p">);</span>
+
+<span class="cm">/* optional: if interrupt is enabled */</span>
+<span class="cm">/* IRQHandler function */</span>
+<span class="n">HAL_GFXTIM_WDG_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+<span class="cm">/* Watchdog alarm callback function */</span>
+<span class="n">USER_GFXTIM_WatchdogTimer_AlarmCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+<span class="cm">/* Watchdog pre alarm callback function */</span>
+<span class="n">USER_GFXTIM_WatchdogTimer_PreAlarmCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+
+<span class="cm">/* optional */</span>
+<span class="cm">/* Refresh the watchdog timer */</span>
+<span class="n">HAL_GFXTIM_WatchdogTimer_Refresh</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+<span class="cm">/* Disable the watchdog timer */</span>
+<span class="n">HAL_GFXTIM_WDG_Stop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+
+<span class="cm">/* GFXTIM Deinitialization */</span>
+<span class="n">HAL_GFXTIM_DeInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hgfxtim</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <section id="id3">
+          <h3 id="id3">
+           Related examples in HAL2
+           <a class="headerlink" href="#id3" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               Example Name
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               Description
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               example_hal_gfxtim_watchdog_alarm_pre-alarm
+              </p>
+             </td>
+             <td>
+              <p>
+               This example is used to generate interrupts on alarm and pre-alarm events.
+              </p>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

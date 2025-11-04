@@ -1,0 +1,168 @@
+{{#if (eq @root.strategy "SW")}}
+{{assign 'file_name' 'SPI'~}}
+{{assign 'instances' (@root.SWConfigurationAPI.getInstances 'STMicroelectronics::Device:STM32CubeMX2 Config:SPI')~}}
+{{assign 'current_resource' 'SPI'~}}
+{{else}}
+{{#get_myctx~}}
+{{#with _myctx~}}
+{{!log "I2C template _myctx:" this~}}
+{{assign 'current_resource' resource~}}
+{{assign 'file_name' resource~}}
+{{assign 'instances' instances~}}
+{{/with~}}
+{{/get_myctx~}}
+{{/if}}
+/**
+  ******************************************************************************
+  * @file           : stm32_{{lowercase @root.current_resource}}.h
+  * @brief          : Header for stm32_{{lowercase @root.current_resource}}.c file.
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) {{year}} STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef STM32_{{@root.current_resource}}_H
+#define STM32_{{@root.current_resource}}_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+/* Includes ------------------------------------------------------------------*/
+{{assign 'only_ll' true~}}
+{{#each @root.instances}}
+{{#if (eq @root.strategy "SW")}}
+{{assign 'spi_cxt' (@root.SWConfigurationAPI.getSwInstanceConfiguration this)~}}
+{{assign 'current_resource' (@root.peripheralsResourceManagerAPI.getPeripheralBoundToSoftwareInstance this)~}}
+{{assign 'current_layer' @root.spi_cxt.info.layer~}}
+{{else}}
+{{assign 'current_layer' info.layer~}}
+{{/if}}
+{{#if (eq @root.current_layer 'HAL')}}
+{{assign 'only_ll' false~}}
+{{/if}}
+{{/each}}
+{{#if @root.only_ll}}
+#include "stm32_ll.h"
+{{else}}
+#include "stm32_hal.h"
+{{/if}}
+
+/* Exported types ------------------------------------------------------------*/
+/* Exported constants --------------------------------------------------------*/
+{{#each @root.instances}}
+{{#if (eq @root.strategy "HW")}}
+{{assign 'current_layer' info.layer~}}
+{{assign 'configs' this~}}
+{{else}}
+{{assign 'spi_cxt' (@root.SWConfigurationAPI.getSwInstanceConfiguration this)~}}
+{{assign 'current_layer' @root.spi_cxt.info.layer~}}
+{{assign 'configs' @root.spi_cxt~}}
+{{/if}}
+{{#with @root.configs.System}}
+{{assign 'gpio_needs' 'undefined'~}}
+{{#if gpio_sck.needs}}
+{{assign 'gpio_needs' (helper_common_concatenate_needs gpio_sck.needs @root.gpio_needs)~}}
+{{/if}}
+{{#if gpio_miso.needs}}
+{{assign 'gpio_needs' (helper_common_concatenate_needs gpio_miso.needs @root.gpio_needs)~}}
+{{/if}}
+{{#if gpio_mosi.needs}}
+{{assign 'gpio_needs' (helper_common_concatenate_needs gpio_mosi.needs @root.gpio_needs)~}}
+{{/if}}
+{{#if gpio_ss.needs}}
+{{assign 'gpio_needs' (helper_common_concatenate_needs gpio_ss.needs @root.gpio_needs)~}}
+{{/if}}
+{{#if gpio_rdy.needs}}
+{{assign 'gpio_needs' (helper_common_concatenate_needs gpio_rdy.needs @root.gpio_needs)~}}
+{{/if}}
+{{#if (eq @root.current_layer 'HAL')}}
+{{> GPIO_HAL fct='generate_labels' needs=@root.gpio_needs}}
+{{else}}
+{{> GPIO_LL fct='generate_labels' needs=@root.gpio_needs}}
+{{/if}}
+{{/with}}
+{{/each}}
+/* Exported macros -----------------------------------------------------------*/
+/* Exported variables --------------------------------------------------------*/
+/* Exported functions ------------------------------------------------------- */
+{{helper_common_initialize_index~}}
+{{assign 'current_index' (helper_common_get_index @root.current_resource)~}}
+{{#each @root.instances}}
+{{#if (eq @root.strategy "SW")}}
+{{assign 'spi_cxt' (@root.SWConfigurationAPI.getSwInstanceConfiguration this)~}}
+{{assign 'current_resource' (@root.peripheralsResourceManagerAPI.getPeripheralBoundToSoftwareInstance this)~}}
+{{assign 'current_layer' @root.spi_cxt.info.layer~}}
+{{assign 'configs' @root.spi_cxt~}}
+{{assign 'current_index' (helper_common_get_index @root.current_resource)~}}
+{{else}}
+{{assign 'current_layer' info.layer~}}
+{{assign 'configs' this~}}
+{{/if}}
+/******************************************************************************/
+/* Exported functions for SPI in {{@root.current_layer}} layer */
+/******************************************************************************/
+{{#with @root.configs}}
+{{assign 'fct_name' (helper_common_get_generated_function_name @root.current_resource @root.current_layer @root.current_index @root.current_function @root.from_where)~}}
+{{assign 'current_index' (helper_common_inc_index @root.current_resource)~}}
+/**
+  * @brief {{@root.fct_name}} init function
+  * This function configures the hardware resources used in this example
+  * @retval pointer to handle or NULL in case of failure
+  */
+{{#if (eq @root.current_layer 'HAL')}}
+hal_spi_handle_t *{{@root.fct_name}}_init(void);
+
+{{else}}
+SPI_TypeDef *{{@root.fct_name}}_init(void);
+
+{{/if}}
+/**
+  * @brief  De-initialize {{lowercase @root.current_resource}} instance and return it.
+  */
+void {{@root.fct_name}}_deinit(void);
+
+{{/with}}
+{{#if (eq @root.current_layer 'HAL')}}
+{{assign 'fct_name' (helper_common_get_generated_function_name @root.current_resource @root.current_layer undefined)~}}
+/**
+  * @brief  Get the {{@root.current_resource}} object.
+  * @retval Pointer on the {{@root.current_resource}} Handle
+  */
+hal_spi_handle_t *{{@root.fct_name}}_gethandle(void);
+
+{{/if}}
+{{/each}}
+
+{{#each @root.irq_info_list}}
+{{#if generate_handler}}
+/******************************************************************************/
+/*                     {{description}}                    */
+/******************************************************************************/
+void {{line}}_IRQHandler(void);
+
+{{else}}
+/******************************************************************************/
+/*    {{description}} is managed directly in user code.   */
+/******************************************************************************/
+/* void {{line}}_IRQHandler(void); */
+{{/if}}
+{{/each}}
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+{{#if (eq @root.strategy "SW")~}}
+{{~assign 'current_resource' 'SPI'~}}
+{{/if~}}
+
+#endif /* STM32_{{@root.current_resource}}_H */

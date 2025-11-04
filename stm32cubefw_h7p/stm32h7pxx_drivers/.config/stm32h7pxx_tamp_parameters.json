@@ -1,0 +1,1192 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "version": "0.0.1",
+  "componentid": "::Device:STM32CubeMX2 Config:TAMP",
+  "grammarVersion": "3.1",
+  "type": "object",
+  "functions": [
+    {
+      "path": ".config/template/helpers/tamp_helpers.js",
+      "accessor": "common"
+    }
+  ],
+  "properties": {
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "object",
+          "properties": {
+            "labels": {
+              "title": "Lablel",
+              "$comment": "label associated to the instance of the peripheral, can be overridden at sample level. In this case it becomes read-only.",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "layer": {
+              "type": "string",
+              "oneOf": [
+                {
+                  "const": "HAL"
+                },
+                {
+                  "const": "LL"
+                }
+              ],
+              "variables": [
+                {
+                  "on": "update-value",
+                  "name": "HAL_TAMP_PROJECT_USE_HAL",
+                  "condition": "$value === 'HAL'",
+                  "semaphore": true
+                }
+              ],
+              "default": "HAL",
+              "title": "Software Layer"
+            },
+            "init_type": {
+              "title": "resource initialization code generation",
+              "description": "generate or not the TAMP init code, call it or not at boot",
+              "$comment": "generate the init code of your TAMP or not (enabled/disabled), call it automatically at startup or not (called/enabled)",
+              "type": "string",
+              "oneOf": [
+                {
+                  "const": "called"
+                },
+                {
+                  "const": "enabled"
+                },
+                {
+                  "const": "disabled"
+                }
+              ],
+              "default": "called"
+            }
+          }
+        },
+        "basic": {
+          "title": "Main peripheral configuration",
+          "type": "object",
+          "properties": {
+            "tamper_indiv_config": {
+              "title": "Individual Tamper(s) Configuration",
+              "type": "object",
+              "properties": {
+                "tampers": {
+                  "type": "array",
+                  "itemsVar": "tamper",
+                  "itemId": "id",
+                  "itemVar": "tamper",
+                  "title": "Tampers",
+                  "source": "Array.from({ length: ($resource.parentDescription.features.tamper)}, (_, i) => ({ id: ('TAMPER_' + (i+1) ),  name: ('TAMPER ' + (i+1) ) }))",
+                  "itemTitle": "name",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "use_tamper": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Use and configure the tamper"
+                      },
+                      "tamper_label_name": {
+                        "title": "SW Label for tamper",
+                        "type": "array",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$item.use_tamper"
+                          }
+                        ],
+                        "items": {
+                          "type": "string",
+                          "pattern": "^([a-zA-Z_][a-zA-Z0-9_]{1,31})?$",
+                          "minLength": 0,
+                          "maxLength": 32
+                        }
+                      },
+                      "mode": {
+                        "type": "string",
+                        "oneOf": [
+                          {
+                            "const": "Passive"
+                          },
+                          {
+                            "const": "Active",
+                            "actions": [
+                              {
+                                "type": "include",
+                                "condition": "$resource.parentDescription.features.active_tamper"
+                              }
+                            ]
+                          }
+                        ],
+                        "default": "Passive",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$item.use_tamper"
+                          }
+                        ],
+                        "description": "Tamper mode"
+                      },
+                      "trigger": {
+                        "type": "string",
+                        "oneOf": [
+                          {
+                            "const": "RISING",
+                            "title": "Rising edge",
+                            "actions": [
+                              {
+                                "type": "include",
+                                "condition": "!$basic.tamper_global_config.passive.passive_filter"
+                              }
+                            ]
+                          },
+                          {
+                            "const": "FALLING",
+                            "title": "Falling edge ",
+                            "actions": [
+                              {
+                                "type": "include",
+                                "condition": "!$basic.tamper_global_config.passive.passive_filter"
+                              }
+                            ]
+                          },
+                          {
+                            "title": "Low level",
+                            "const": "LOW",
+                            "actions": [
+                              {
+                                "type": "include",
+                                "condition": "$basic.tamper_global_config.passive.passive_filter"
+                              }
+                            ]
+                          },
+                          {
+                            "const": "HIGH",
+                            "title": "High level",
+                            "actions": [
+                              {
+                                "type": "include",
+                                "condition": "$basic.tamper_global_config.passive.passive_filter"
+                              }
+                            ]
+                          }
+                        ],
+                        "title": "Tamper detection trigger",
+                        "description": "Passive tampers detection of edge level",
+                        "default": "RISING",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "($item.use_tamper) && ($item.mode == 'Passive')"
+                          },
+                          {
+                            "type": "set",
+                            "condition": "$basic.tamper_global_config.passive.passive_filter",
+                            "computed": {
+                              "default": "LOW"
+                            }
+                          }
+                        ]
+                      },
+                      "erase": {
+                        "title": "Erase",
+                        "type": "string",
+                        "oneOf": [
+                          {
+                            "title": "Confirmed mode",
+                            "description": "Tamper are in confirmed mode (device secrets are erased when a tamper is detected)",
+                            "const": "ERASE"
+                          },
+                          {
+                            "title": "Potential mode",
+                            "description": "Tamper are in potential mode (some device secrets are not erased when a tamper is detected)",
+                            "const": "NO_ERASE"
+                          }
+                        ],
+                        "description": "Tampers erase mode",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$item.use_tamper"
+                          }
+                        ],
+                        "default": "ERASE"
+                      },
+                      "mask": {
+                        "title": "Mask",
+                        "type": "string",
+                        "oneOf": [
+                          {
+                            "title": "Unmasked",
+                            "const": "UNMASKED",
+                            "description": "Tamper are not masked and behave as expected"
+                          },
+                          {
+                            "title": "Masked",
+                            "description": "Tamper are masked (a tamper detection does not trigger)",
+                            "const": "MASKED"
+                          }
+                        ],
+                        "default": "UNMASKED",
+                        "description": "Passive tampers masked",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "($item.use_tamper) && ($item.mode == 'Passive')"
+                          }
+                        ]
+                      },
+                      "tamper_output": {
+                        "title": "Tamper output",
+                        "type": "integer",
+                        "oneOf": [
+                          {
+                            "const": 1,
+                            "title": "Tamper 1",
+                            "actions": [
+                              {
+                                "type": "include",
+                                "condition": "$resource.parentDescription.features.tamper > 0"
+                              }
+                            ]
+                          },
+                          {
+                            "const": 2,
+                            "title": "Tamper 2",
+                            "actions": [
+                              {
+                                "type": "include",
+                                "condition": "$resource.parentDescription.features.tamper > 1"
+                              }
+                            ]
+                          },
+                          {
+                            "const": 3,
+                            "title": "Tamper 3",
+                            "actions": [
+                              {
+                                "type": "include",
+                                "condition": "$resource.parentDescription.features.tamper > 2"
+                              }
+                            ]
+                          },
+                          {
+                            "title": "Tamper 4",
+                            "const": 4,
+                            "actions": [
+                              {
+                                "type": "include",
+                                "condition": "$resource.parentDescription.features.tamper > 3"
+                              }
+                            ]
+                          },
+                          {
+                            "const": 5,
+                            "title": "Tamper 5",
+                            "actions": [
+                              {
+                                "type": "include",
+                                "condition": "$resource.parentDescription.features.tamper > 4"
+                              }
+                            ]
+                          },
+                          {
+                            "const": 6,
+                            "title": "Tamper 6",
+                            "actions": [
+                              {
+                                "type": "include",
+                                "condition": "$resource.parentDescription.features.tamper > 5"
+                              }
+                            ]
+                          },
+                          {
+                            "title": "Tamper 7",
+                            "const": 7,
+                            "actions": [
+                              {
+                                "type": "include",
+                                "condition": "$resource.parentDescription.features.tamper > 6"
+                              }
+                            ]
+                          },
+                          {
+                            "title": "Tamper 8",
+                            "const": 8,
+                            "actions": [
+                              {
+                                "type": "include",
+                                "condition": "$resource.parentDescription.features.tamper > 7"
+                              }
+                            ]
+                          }
+                        ],
+                        "description": "Active tamper output",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "($item.use_tamper) && ($item.mode == 'Active')"
+                          },
+                          {
+                            "type": "disable",
+                            "condition": "!$basic.tamper_global_config.active.output_shared"
+                          },
+                          {
+                            "type": "set",
+                            "condition": "!$basic.tamper_global_config.active.output_shared",
+                            "computed": {
+                              "const": "$common.helper_tamp_active_output($tamper.id, $resource.parentDescription.features.tamper)"
+                            }
+                          }
+                        ],
+                        "default": 1
+                      }
+                    }
+                  }
+                },
+                "internal_tampers": {
+                  "type": "array",
+                  "source": "Array.from({ length: ($common.helper_tamp_internal_array_length($resource.parentDescription.features))}, (_, i) => ({ id: ($common.helper_tamp_internal_array_get_id(i)), name: ($common.helper_tamp_internal_array_get_name(i)) }))",
+                  "itemId": "id",
+                  "itemVar": "internal_tamper",
+                  "title": "Internal Tampers",
+                  "itemTitle": "name",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "use_internal_tamper": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Use and configure the internal tamper"
+                      },
+                      "int_tamper_label_name": {
+                        "title": "SW Label for internal tamper",
+                        "type": "array",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$item.use_internal_tamper"
+                          }
+                        ],
+                        "items": {
+                          "type": "string",
+                          "pattern": "^([a-zA-Z_][a-zA-Z0-9_]{1,31})?$",
+                          "minLength": 0,
+                          "maxLength": 32
+                        }
+                      },
+                      "erase": {
+                        "type": "string",
+                        "oneOf": [
+                          {
+                            "const": "ERASE",
+                            "title": "Confirmed mode"
+                          },
+                          {
+                            "const": "NO_ERASE",
+                            "title": "Potential mode"
+                          }
+                        ],
+                        "title": "Erase",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$item.use_internal_tamper"
+                          }
+                        ],
+                        "default": "ERASE"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "tamper_global_config": {
+              "type": "object",
+              "title": "Global Tamper(s) Configuration",
+              "properties": {
+                "rtc_clock_frequency": {
+                  "title": "RTC Clock Frequency",
+                  "description": "(Unit Hz)",
+                  "type": "string",
+                  "default": 0,
+                  "unit": "Hz",
+                  "actions": [
+                    {
+                      "type": "set",
+                      "condition": "true",
+                      "computed": {
+                        "const": "$get('clock.frequency','RTC')"
+                      }
+                    },
+                    {
+                      "type": "disable",
+                      "condition": "true"
+                    }
+                  ]
+                },
+                "passive": {
+                  "type": "object",
+                  "title": "Passive Tamper Signals",
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "($common.helper_tamp_check_passive_mode($basic.tamper_indiv_config.tampers))"
+                    }
+                  ],
+                  "properties": {
+                    "precharge": {
+                      "description": "Passive tamper activation of the pull-up (precharge)",
+                      "title": "Pull-up precharge ",
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "precharge_duration": {
+                      "type": "integer",
+                      "oneOf": [
+                        {
+                          "const": 1,
+                          "title": "1 RTC clock"
+                        },
+                        {
+                          "const": 2,
+                          "title": "2 RTC clock"
+                        },
+                        {
+                          "const": 4,
+                          "title": "4 RTC clock"
+                        },
+                        {
+                          "const": 8,
+                          "title": "8 RTC clock"
+                        }
+                      ],
+                      "description": "Passive tamper duration of the precharge in RTC clock units",
+                      "actions": [
+                        {
+                          "type": "enable",
+                          "condition": "$basic.tamper_global_config.passive.precharge"
+                        }
+                      ],
+                      "title": "Pull-up precharge duration",
+                      "default": 1
+                    },
+                    "passive_filter": {
+                      "title": "Passive filter",
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Passive tamper filter activation."
+                    },
+                    "filter_type_activation": {
+                      "type": "integer",
+                      "oneOf": [
+                        {
+                          "const": 2,
+                          "title": "2 samples",
+                          "description": "Tamper is activated after two consecutive samples at the active level"
+                        },
+                        {
+                          "const": 4,
+                          "title": "4 samples",
+                          "description": "Tamper is activated after four consecutive samples at the active level"
+                        },
+                        {
+                          "const": 8,
+                          "title": "8 samples",
+                          "description": "Tamper is activated after eight consecutive samples at the active level"
+                        }
+                      ],
+                      "description": "Passive tamper activation type filter",
+                      "title": "Filter type activation",
+                      "actions": [
+                        {
+                          "type": "enable",
+                          "condition": "$basic.tamper_global_config.passive.passive_filter"
+                        }
+                      ],
+                      "default": 2
+                    },
+                    "sample_frequency_div": {
+                      "description": "Passive tamper sample frequency divider",
+                      "title": "Sample frequency divider",
+                      "type": "integer",
+                      "oneOf": [
+                        {
+                          "const": 256,
+                          "title": "DIV256"
+                        },
+                        {
+                          "const": 512,
+                          "title": "DIV512"
+                        },
+                        {
+                          "const": 1024,
+                          "title": "DIV1024"
+                        },
+                        {
+                          "const": 2048,
+                          "title": "DIV2048"
+                        },
+                        {
+                          "const": 4096,
+                          "title": "DIV4096"
+                        },
+                        {
+                          "const": 8192,
+                          "title": "DIV8192"
+                        },
+                        {
+                          "const": 16384,
+                          "title": "DIV16384"
+                        },
+                        {
+                          "const": 32768,
+                          "title": "DIV32768"
+                        }
+                      ],
+                      "default": 256
+                    },
+                    "sample frequency": {
+                      "type": "number",
+                      "default": 1000000,
+                      "actions": [
+                        {
+                          "type": "set",
+                          "condition": "true",
+                          "computed": {
+                            "const": "$common.helper_tamp_compute_sample_frequency($get('clock.frequency','RTC'), $basic.tamper_global_config.passive.sample_frequency_div)"
+                          }
+                        },
+                        {
+                          "type": "disable",
+                          "condition": "true"
+                        }
+                      ],
+                      "title": "Sample frequency",
+                      "description": "Passive tamper sample frequency (Unit Hz)"
+                    }
+                  }
+                },
+                "active": {
+                  "type": "object",
+                  "title": "Active Tamper Signals",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.parentDescription.features.active_tamper"
+                    },
+                    {
+                      "type": "enable",
+                      "condition": "$common.helper_tamp_check_active_mode($basic.tamper_indiv_config.tampers)"
+                    }
+                  ],
+                  "properties": {
+                    "output_periode": {
+                      "type": "integer",
+                      "default": 0,
+                      "maximum": 7,
+                      "display_format": [
+                        "dec"
+                      ],
+                      "description": "The period when the output signals changes."
+                    },
+                    "active_filter": {
+                      "title": "Active filter",
+                      "description": "Active tamper filter activation.",
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "asynchronous_prescaler": {
+                      "type": "integer",
+                      "oneOf": [
+                        {
+                          "const": 1,
+                          "title": "DIV1"
+                        },
+                        {
+                          "const": 2,
+                          "title": "DIV2"
+                        },
+                        {
+                          "const": 4,
+                          "title": "DIV4"
+                        },
+                        {
+                          "const": 8,
+                          "title": "DIV8"
+                        },
+                        {
+                          "const": 16,
+                          "title": "DIV16"
+                        },
+                        {
+                          "const": 32,
+                          "title": "DIV32"
+                        },
+                        {
+                          "const": 64,
+                          "title": "DIV64"
+                        },
+                        {
+                          "const": 128,
+                          "title": "DIV128"
+                        },
+                        {
+                          "const": 256,
+                          "title": "DIV256",
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "($resource.parentDescription.peripheralVersionNum != 3.2)"
+                            }
+                          ]
+                        },
+                        {
+                          "const": 512,
+                          "title": "DIV512",
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "($resource.parentDescription.peripheralVersionNum != 3.2)"
+                            }
+                          ]
+                        },
+                        {
+                          "const": 1024,
+                          "title": "DIV1024",
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "($resource.parentDescription.peripheralVersionNum != 3.2)"
+                            }
+                          ]
+                        },
+                        {
+                          "const": 2048,
+                          "title": "DIV2048"
+                        },
+                        {
+                          "const": 4096,
+                          "title": "DIV4096",
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "($resource.parentDescription.peripheralVersionNum != 3.2)"
+                            }
+                          ]
+                        },
+                        {
+                          "const": 8192,
+                          "title": "DIV8192",
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "($resource.parentDescription.peripheralVersionNum != 3.2)"
+                            }
+                          ]
+                        },
+                        {
+                          "const": 16384,
+                          "title": "DIV16384",
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "($resource.parentDescription.peripheralVersionNum != 3.2)"
+                            }
+                          ]
+                        },
+                        {
+                          "const": 32768,
+                          "title": "DIV32768",
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "($resource.parentDescription.peripheralVersionNum != 3.2)"
+                            }
+                          ]
+                        }
+                      ],
+                      "default": 1,
+                      "description": "Asynchronous prescaler clock selection",
+                      "title": "Asynchronous prescaler"
+                    },
+                    "output_shared": {
+                      "description": "Tampers outputs and inputs are shared or not.",
+                      "title": "Output shared",
+                      "type": "boolean",
+                      "default": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "additional": {
+          "title": "Additional features configuration",
+          "type": "object",
+          "actions": [
+            {
+              "type": "include",
+              "condition": "($resource.parentDescription.features.trust_zone )||($resource.parentDescription.features.num_device_secrets)"
+            }
+          ],
+          "properties": {
+            "hw_boot_key_block": {
+              "title": "Hardware Boot key Block",
+              "type": "boolean",
+              "default": false,
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$resource.parentDescription.features.trust_zone"
+                }
+              ],
+              "description": "Enable Hardware Boot key Block."
+            },
+            "use_resource_protection": {
+              "title": "Resource Protection",
+              "type": "boolean",
+              "default": false,
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$resource.parentDescription.features.num_device_secrets"
+                }
+              ],
+              "description": "Enable resource protection."
+            },
+            "resource": {
+              "description": "Resources to be protected",
+              "type": "string",
+              "oneOf": [
+                {
+                  "title": "SRAM2",
+                  "const": "1"
+                },
+                {
+                  "title": "RHUK, SAES, AES, CCB",
+                  "const": "2"
+                },
+                {
+                  "title": "ICACHE",
+                  "const": "3"
+                },
+                {
+                  "title": "HASH",
+                  "const": "4"
+                },
+                {
+                  "title": "PKA including PKA SRAM",
+                  "const": "5"
+                },
+                {
+                  "title": "DCACHE ",
+                  "const": "6"
+                },
+                {
+                  "title": "OTFDEC keys and OTFDEC KEYCRC",
+                  "const": "7"
+                },
+                {
+                  "title": "SRAM1",
+                  "const": "8"
+                },
+                {
+                  "title": "All Resources",
+                  "const": "S_ALL"
+                }
+              ],
+              "title": "Resource",
+              "actions": [
+                {
+                  "type": "enable",
+                  "condition": "$additional.use_resource_protection"
+                },
+                {
+                  "type": "include",
+                  "condition": "$resource.parentDescription.features.num_device_secrets"
+                }
+              ],
+              "default": "2"
+            }
+          }
+        },
+        "System": {
+          "description": "Tamper Global Configuration Structure definition.",
+          "type": "object",
+          "title": "System configuration",
+          "properties": {
+            "gpio_settings": {
+              "title": "GPIO Settings",
+              "type": "object",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$common.helper_tamp_need_at_least_one_gpio($basic)"
+                }
+              ],
+              "properties": {
+                "gpio_config_in_1": {
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "IN1"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($common.helper_tamp_need_gpio_in_tamper($basic.tamper_indiv_config.tampers, 'TAMPER_1'))"
+                    }
+                  ],
+                  "title": "GPIO Configuration Input 1"
+                },
+                "gpio_config_out_1": {
+                  "title": "GPIO Configuration Output 1",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "OUT1"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($common.helper_tamp_need_gpio_out_tamper($basic, 'TAMPER_1'))"
+                    }
+                  ]
+                },
+                "gpio_config_in_2": {
+                  "title": "GPIO Configuration Input 2",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "IN2"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($common.helper_tamp_need_gpio_in_tamper($basic.tamper_indiv_config.tampers, 'TAMPER_2'))"
+                    }
+                  ]
+                },
+                "gpio_config_out_2": {
+                  "title": "GPIO Configuration Output 2",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "OUT2"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($common.helper_tamp_need_gpio_out_tamper($basic, 'TAMPER_2'))"
+                    }
+                  ]
+                },
+                "gpio_config_in_3": {
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "IN3"
+                    }
+                  ],
+                  "title": "GPIO Configuration Input 3",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($common.helper_tamp_need_gpio_in_tamper($basic.tamper_indiv_config.tampers, 'TAMPER_3'))"
+                    }
+                  ]
+                },
+                "gpio_config_out_3": {
+                  "title": "GPIO Configuration Output 3",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "OUT3"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($common.helper_tamp_need_gpio_out_tamper($basic, 'TAMPER_3'))"
+                    }
+                  ]
+                },
+                "gpio_config_in_4": {
+                  "title": "GPIO Configuration Input 4",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "IN4"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($common.helper_tamp_need_gpio_in_tamper($basic.tamper_indiv_config.tampers, 'TAMPER_4'))"
+                    }
+                  ]
+                },
+                "gpio_config_out_4": {
+                  "title": "GPIO Configuration Output 4",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "OUT4"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($common.helper_tamp_need_gpio_out_tamper($basic, 'TAMPER_4'))"
+                    }
+                  ]
+                },
+                "gpio_config_in_5": {
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "IN5"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($common.helper_tamp_need_gpio_in_tamper($basic.tamper_indiv_config.tampers, 'TAMPER_5'))"
+                    }
+                  ],
+                  "title": "GPIO Configuration Input 5"
+                },
+                "gpio_config_out_5": {
+                  "title": "GPIO Configuration Output 5",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "OUT5"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($common.helper_tamp_need_gpio_out_tamper($basic, 'TAMPER_5'))"
+                    }
+                  ]
+                },
+                "gpio_config_in_6": {
+                  "title": "GPIO Configuration Input 6",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "IN6"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($common.helper_tamp_need_gpio_in_tamper($basic.tamper_indiv_config.tampers, 'TAMPER_6'))"
+                    }
+                  ]
+                },
+                "gpio_config_out_6": {
+                  "title": "GPIO Configuration Output 6",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "OUT6"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($common.helper_tamp_need_gpio_out_tamper($basic, 'TAMPER_6'))"
+                    }
+                  ]
+                },
+                "gpio_config_in_7": {
+                  "title": "GPIO Configuration Input 7",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "IN7"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($common.helper_tamp_need_gpio_in_tamper($basic.tamper_indiv_config.tampers, 'TAMPER_7'))"
+                    }
+                  ]
+                },
+                "gpio_config_out_7": {
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "OUT7"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($common.helper_tamp_need_gpio_out_tamper($basic, 'TAMPER_7'))"
+                    }
+                  ],
+                  "title": "GPIO Configuration Output 7"
+                },
+                "gpio_config_in_8": {
+                  "title": "GPIO Configuration Input 8",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "IN8"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($common.helper_tamp_need_gpio_in_tamper($basic.tamper_indiv_config.tampers, 'TAMPER_8'))"
+                    }
+                  ]
+                },
+                "gpio_config_out_8": {
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "OUT8"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($common.helper_tamp_need_gpio_out_tamper($basic, 'TAMPER_8'))"
+                    }
+                  ],
+                  "title": "GPIO Configuration Output 8"
+                }
+              }
+            },
+            "nvic_settings": {
+              "title": "NVIC Settings",
+              "type": "object",
+              "properties": {
+                "EnableInterruption": {
+                  "description": "Enable interruption mode for the peripheral.",
+                  "type": "boolean",
+                  "default": false,
+                  "title": "Interruption"
+                },
+                "irq_handler_generation": {
+                  "title": "IRQ Handler generation",
+                  "type": "boolean",
+                  "default": true,
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$System.nvic_settings.EnableInterruption && $info.layer === 'HAL'"
+                    }
+                  ]
+                },
+                "use_unitary_irq_handlers": {
+                  "title": "Use unitary IRQ handlers APIs",
+                  "type": "boolean",
+                  "default": false,
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$System.nvic_settings.irq_handler_generation"
+                    }
+                  ]
+                },
+                "unitary_apis": {
+                  "title": "List of unitary IRQ handlers",
+                  "type": "array",
+                  "allowRanking": true,
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$System.nvic_settings.use_unitary_irq_handlers"
+                    }
+                  ],
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "api_name": {
+                        "type": "string",
+                        "oneOf": [
+                          {
+                            "const": "HAL_TAMP_TamperIRQHandler"
+                          },
+                          {
+                            "const": "HAL_TAMP_InternalTamperIRQHandler"
+                          }
+                        ],
+                        "default": "HAL_TAMP_TamperIRQHandler"
+                      }
+                    }
+                  }
+                },
+                "nvicConfig": {
+                  "title": "NVIC configuration",
+                  "type": "object",
+                  "objectType": "need.interrupt.lines",
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "*"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$System.nvic_settings.EnableInterruption"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+@startuml Starting a Write/Read in DMA mode for regular memory
+== Initialization and configuration ==
+
+== Process DMA mode ==
+"Application" -> "XSPI" : HAL_XSPI_SendRegularCmd()
+note right: Reconfigure write operation
+"XSPI" --> "Application" :
+"Application" -> "XSPI" : HAL_XSPI_Transmit_DMA()
+note right: Start DMA channel transfer with interrupt enabled
+"IRQHandler" <-  : Interrupt
+"IRQHandler" -> "DMA" : HAL_DMA_IRQHandler()
+"DMA" -> "XSPI" : DMA_Trasfer_Complete
+"XSPI" --> "Application" : HAL_XSPI_TxCpltCallback()
+"Application" -> "XSPI" : HAL_XSPI_SendRegularCmd()
+"Application" -> "XSPI" : HAL_XSPI_ExecRegularAutoPoll_IT()
+note right : Reconfigure XSPI to AutoPolling mode to wait end of operation
+"IRQHandler" <-  : Interrupt
+"IRQHandler" --> "XSPI" : HAL_XSPI_IRQHandler()
+"XSPI" --> "Application" : HAL_XSPI_StatusMatchCallback()
+"Application" -> "XSPI" : HAL_XSPI_SendRegularCmd()
+note right: Reconfigure read operation
+"XSPI" --> "Application" :
+"Application" -> "XSPI" : HAL_XSPI_Receive_DMA()
+note right: Start DMA channel transfer with interrupt enabled
+"IRQHandler" <-  : Interrupt
+"IRQHandler" -> "DMA" : HAL_DMA_IRQHandler()
+"DMA" -> "XSPI" : DMA_Transfer_Complete
+"XSPI" --> "Application" : HAL_XSPI_RxCpltCallback()
+@enduml

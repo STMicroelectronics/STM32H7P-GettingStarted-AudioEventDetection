@@ -1,0 +1,346 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "version": "0.0.1",
+  "componentid": "::Device:STM32CubeMX2 Config:FMAC",
+  "grammarVersion": "3.1",
+  "type": "object",
+  "functions": [
+    {
+      "path": ".config/template/helpers/fmac_helpers.js",
+      "accessor": "common"
+    }
+  ],
+  "properties": {
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "object",
+          "properties": {
+            "labels": {
+              "type": "array",
+              "title": "Label",
+              "$comment": "Label associated to the instance of the peripheral, can be overridden at sample level. In this case it becomes read-only.",
+              "items": {
+                "type": "string",
+                "pattern": "^([a-zA-Z_][a-zA-Z0-9_]{1,31})?$",
+                "$comment": "[a-zA-Z_][a-zA-Z0-9_]+",
+                "minLength": 0,
+                "maxLength": 32,
+                "default": ""
+              }
+            },
+            "layer": {
+              "type": "string",
+              "title": "Software Layer",
+              "oneOf": [
+                {
+                  "const": "HAL"
+                },
+                {
+                  "const": "LL"
+                }
+              ],
+              "default": "HAL"
+            },
+            "init_type": {
+              "type": "string",
+              "title": "Resource initialization code generation",
+              "description": "Generate or not the FMAC init code, call it or not at boot",
+              "$comment": "Generate the init code of your FMAC or not (enabled/disabled), call it automatically at startup or not (called/enabled)",
+              "oneOf": [
+                {
+                  "const": "called"
+                },
+                {
+                  "const": "enabled"
+                },
+                {
+                  "const": "disabled"
+                }
+              ],
+              "default": "called"
+            }
+          }
+        },
+        "explanation": {
+          "type": "string",
+          "title": "Short description",
+          "default": "The X1 and X2 buffers are used to store data for input to the FMAC.\nEach multiplication takes a value from the X1 buffer and a value from the X2 buffer and multiplies them together.\nThe Y (output) buffer is used to store the output of an accumulation.\nEach new output value is stored in the Y buffer until it is read by the processor or DMA controller",
+          "actions": [
+            {
+              "type": "disable",
+              "condition": "true"
+            }
+          ]
+        },
+        "Basic": {
+          "type": "object",
+          "title": "Main peripheral configuration",
+          "properties": {
+            "buff_x1": {
+              "type": "object",
+              "title": "Input Buffer X1",
+              "description": "X1 buffer is used to store data for input to the FMAC",
+              "properties": {
+                "base_half_word": {
+                  "type": "integer",
+                  "title": "Base",
+                  "description": "Base address within the FMAC internal 16-bit memory (0x00 to 0xFF)",
+                  "minimum": 0,
+                  "maximum": 255,
+                  "default": 0,
+                  "display_format":[
+                    "hex"
+                  ]
+                },
+                "size_half_word": {
+                  "type": "integer",
+                  "title": "Size",
+                  "description": "The number of 16-bit addresses allocated to the X1 buffer",
+                  "minimum": 0,
+                  "maximum": 255,
+                  "default": 0
+                }
+              }
+            },
+            "buff_x2": {
+              "type": "object",
+              "title": "Input Buffer X2",
+              "description": "X2 buffer is used to store data for input to the FMAC",
+              "properties": {
+                "base_half_word": {
+                  "type": "integer",
+                  "title": "Base",
+                  "description": "Base address within the FMAC internal 16-bit memory (0x00 to 0xFF)",
+                  "minimum": 0,
+                  "maximum": 255,
+                  "default": 0,
+                  "display_format":[
+                    "hex"
+                  ],
+                  "actions": [
+                    {
+                      "type": "set",
+                      "condition": "true",
+                      "computed": {
+                        "default": "$common.helper_fmac_autofill_base($Basic.buff_x1.base_half_word, 0, $Basic.buff_x1.size_half_word)"
+                      }
+                    }
+                  ]
+                },
+                "size_half_word": {
+                  "type": "integer",
+                  "title": "Size",
+                  "description": "The number of 16-bit addresses allocated to the X2 buffer",
+                  "minimum": 0,
+                  "maximum": 255,
+                  "default": 0
+                }
+              }
+            },
+            "buff_y": {
+              "type": "object",
+              "title": "Output Buffer Y",
+              "description": "Y buffer is used to store the output of an accumulation",
+              "properties": {
+                "base_half_word": {
+                  "type": "integer",
+                  "title": "Base",
+                  "description": "Base address within the FMAC internal 16-bit memory (0x00 to 0xFF)",
+                  "minimum": 0,
+                  "maximum": 255,
+                  "default": 0,
+                  "display_format":[
+                    "hex"
+                  ],
+                  "actions": [
+                    {
+                      "type": "set",
+                      "condition": "true",
+                      "computed": {
+                        "default": "$common.helper_fmac_autofill_base($Basic.buff_x1.base_half_word, 0, $Basic.buff_x1.size_half_word)"
+                      }
+                    }
+                  ]
+                },
+                "size_half_word": {
+                  "type": "integer",
+                  "title": "Size",
+                  "description": "The number of 16-bit addresses allocated to the Y buffer",
+                  "minimum": 0,
+                  "maximum": 255,
+                  "default": 0
+                }
+              }
+            }
+          }
+        },
+        "Additional": {
+          "type": "object",
+          "title": "Additional feature configuration",
+          "properties": {
+            "Watermark": {
+              "type": "object",
+              "title": "Watermark",
+              "properties": {
+                "X1_Full": {
+                  "type": "integer",
+                  "title": "X1 Full",
+                  "description": "Configure the FMAC X1 full watermark threshold",
+                  "default": 1,
+                  "oneOf": [
+                    {
+                      "title": "Threshold value is 1 half word",
+                      "const": 1
+                    },
+                    {
+                      "title": "Threshold value is 2 half word",
+                      "const": 2
+                    },
+                    {
+                      "title": "Threshold value is 4 half word",
+                      "const": 3
+                    },
+                    {
+                      "title": "Threshold value is 8 half word",
+                      "const": 4
+                    }
+                  ]
+                },
+                "Y_Empty": {
+                  "type": "integer",
+                  "title": "Y Empty",
+                  "description": "Configure the FMAC Y empty watermark threshold",
+                  "default": 1,
+                  "oneOf": [
+                    {
+                      "title": "Threshold value is 1 half word",
+                      "const": 1
+                    },
+                    {
+                      "title": "Threshold value is 2 half word",
+                      "const": 2
+                    },
+                    {
+                      "title": "Threshold value is 4 half word",
+                      "const": 3
+                    },
+                    {
+                      "title": "Threshold value is 8 half word",
+                      "const": 4
+                    }
+                  ]
+                }
+              }
+            },
+            "Clippingrange": {
+              "type": "boolean",
+              "title": "Clipping q1.15 range",
+              "description": "By enabling clipping, the data output by the accumulator are saturated, and any value that exceeds the numeric range of the q1.15 output, is set to (+1 or -1), depending on the sign and if clipping is not enabled, the unused accumulator bits after applying the gain is truncated.",
+              "default": false
+            }
+          }
+        },
+        "System": {
+          "type": "object",
+          "title": "System configuration",
+          "properties": {
+            "nvic": {
+              "type": "object",
+              "title": "NVIC configuration",
+              "properties": {
+                "EnableInterruption": {
+                  "type": "boolean",
+                  "title": "Interruption",
+                  "description": "Enable interruption mode for the peripheral",
+                  "default": false
+                },
+                "irq_handler_generation": {
+                  "type": "boolean",
+                  "title": "IRQ Handler generation",
+                  "default": true,
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$System.nvic.EnableInterruption && $info.layer === 'HAL'"
+                    }
+                  ]
+                },
+                "nvic_config": {
+                  "type": "object",
+                  "title" : "NVIC configuration",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$System.nvic.EnableInterruption"
+                    }
+                  ],
+                  "objectType": "need.interrupt.lines",
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "*"
+                    }
+                  ]
+                }
+              }
+            },
+            "dma": {
+              "type": "object",
+              "title": "DMA configuration",
+              "properties": {
+                "EnableDMA_Write": {
+                  "type": "boolean",
+                  "title": "Write X1 DMA request",
+                  "description": "Enable the DMA Write X1 channel configuration",
+                  "default": false
+                },
+                "dmaConfigWrite": {
+                  "title": "DMA Write configuration",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$System.dma.EnableDMA_Write"
+                    }
+                  ],
+                  "type": "object",
+                  "objectType": "need.dma.channels",
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "wr"
+                    }
+                  ]
+                },
+                "EnableDMA_Read": {
+                  "type": "boolean",
+                  "title": "Read Y DMA request",
+                  "description": "Enable the DMA Read Y channel configuration",
+                  "default": false
+                },
+                "dmaConfigRead": {
+                  "title": "DMA Read configuration",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$System.dma.EnableDMA_Read"
+                    }
+                  ],
+                  "type": "object",
+                  "objectType": "need.dma.channels",
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "rd"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

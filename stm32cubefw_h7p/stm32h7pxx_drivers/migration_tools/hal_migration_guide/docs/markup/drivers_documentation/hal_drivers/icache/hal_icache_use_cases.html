@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html data-content_root="../../../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, HAL1, ICACHE, STM32H5, STM32G0, STM32F4, STM32L4, STM32C0, STM32H7" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     HAL ICACHE Typical use cases for migration — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/tabs.css?v=a5c4661c" rel="stylesheet" type="text/css"/>
+    <script src="../../../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <script src="../../../../../_static/tabs.js?v=3030b3cb">
+    </script>
+    <link href="../../../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../../../search.html" rel="search" title="Search"/>
+    <link href="hal_icache_exported_constants.html" rel="next" title="HAL ICACHE constants migration"/>
+    <link href="hal_icache_concepts_list.html" rel="prev" title="HAL ICACHE migration: List of applicable concepts"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/drivers_documentation/hal_drivers/icache/hal_icache_use_cases" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_script/migration_script_toc.html">
+            HAL1 detection
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../breaking_concepts/breaking_concepts_toc.html">
+              Breaking changes in concepts
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../hal_drivers_toc.html">
+              HAL drivers migration
+             </a>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../adc/hal_adc_toc.html">
+                ADC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../comp/hal_comp_toc.html">
+                COMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cortex/hal_cortex_toc.html">
+                CORTEX
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cordic/hal_cordic_toc.html">
+                CORDIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../crc/hal_crc_toc.html">
+                CRC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cryp/hal_cryp_toc.html">
+                CRYP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dac/hal_dac_toc.html">
+                DAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dcache/hal_dcache_toc.html">
+                DCACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dma/hal_dma_toc.html">
+                DMA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../exti/hal_exti_toc.html">
+                EXTI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../fmac/hal_fmac_toc.html">
+                FMAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../generic/hal_generic_toc.html">
+                GENERIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxmmu/hal_gfxmmu_toc.html">
+                GFXMMU
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxtim/hal_gfxtim_toc.html">
+                GFXTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gpio/hal_gpio_toc.html">
+                GPIO
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2c/hal_i2c_toc.html">
+                I2C
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2s/hal_i2s_toc.html">
+                I2S
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="hal_icache_toc.html">
+                ICACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../irda/hal_irda_toc.html">
+                IRDA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../iwdg/hal_iwdg_toc.html">
+                IWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../lptim/hal_lptim_toc.html">
+                LPTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../nor/hal_nor_toc.html">
+                NOR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../opamp/hal_opamp_toc.html">
+                OPAMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ospi/hal_ospi_toc.html">
+                OSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pka/hal_pka_toc.html">
+                PKA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pwr/hal_pwr_toc.html">
+                PWR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../qspi/hal_qspi_toc.html">
+                QSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ramcfg/hal_ramcfg_toc.html">
+                RAMCFG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rcc/hal_rcc_toc.html">
+                RCC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rng/hal_rng_toc.html">
+                RNG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rtc/hal_rtc_toc.html">
+                RTC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sdram/hal_sdram_toc.html">
+                SDRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smartcard/hal_smartcard_toc.html">
+                SMARTCARD
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smbus/hal_smbus_toc.html">
+                SMBUS
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../spi/hal_spi_toc.html">
+                SPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sram/hal_sram_toc.html">
+                SRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../tim/hal_tim_toc.html">
+                TIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../uart/hal_uart_toc.html">
+                UART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../usart/hal_usart_toc.html">
+                USART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../wwdg/hal_wwdg_toc.html">
+                WWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../xspi/hal_xspi_toc.html">
+                XSPI
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../ll_drivers/ll_drivers_toc.html">
+              LL drivers migration
+             </a>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-drivers-documentation-hal-drivers-icache-hal-icache-use-cases--page-root">
+            HAL ICACHE Typical use cases for migration
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-icache-maintenance-operations-in-polling-mode-sequence">
+               HAL ICACHE maintenance operations in polling mode sequence
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-icache-remap-region-successful-sequence">
+               HAL ICACHE remap region successful sequence
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-icache-remap-region-successful-use-case">
+               HAL ICACHE remap region successful use case
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#related-examples-in-hal2">
+                  Related examples in HAL2
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-icache-maintenance-operations-in-interrupt-mode-sequence">
+               HAL ICACHE Maintenance Operations in Interrupt mode sequence
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-icache-error-sequence">
+               HAL ICACHE Error sequence
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-icache-maintenance-operation-in-polling-mode-with-error-interrupt-enabled-sequence">
+               HAL ICACHE  Maintenance operation in polling mode with Error Interrupt enabled sequence
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#sequence-diagram">
+                  Sequence diagram
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="hal-icache-typical-use-cases-for-migration">
+        <span id="hal-icache-use-cases">
+        </span>
+        <h1 id="docs-markup-drivers-documentation-hal-drivers-icache-hal-icache-use-cases--page-root">
+         HAL ICACHE Typical use cases for migration
+         <a class="headerlink" href="#docs-markup-drivers-documentation-hal-drivers-icache-hal-icache-use-cases--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <p>
+         This section provides information about the HAL ICACHE Typical use cases for migration.
+        </p>
+        <section id="hal-icache-maintenance-operations-in-polling-mode-sequence">
+         <span id="hal-icache-monitors-use-case">
+         </span>
+         <h2 id="hal-icache-maintenance-operations-in-polling-mode-sequence">
+          HAL ICACHE maintenance operations in polling mode sequence
+          <a class="headerlink" href="#hal-icache-maintenance-operations-in-polling-mode-sequence" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          The key changes between HAL1 and HAL2 for the ICACHE driver
+         </p>
+         <div class="sphinx-tabs docutils container">
+          <div aria-label="Tabbed content" class="closeable" role="tablist">
+           <button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">
+            HAL1 Sequence diagram
+           </button>
+           <button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">
+            HAL2 Sequence diagram
+           </button>
+          </div>
+          <div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0">
+           <p class="plantuml">
+            <img alt="@startuml
+
+skinparam sequenceMessageAlign center
+
+participant &quot;User\nApplication&quot; as UA
+participant &quot;ICACHE\nDriver&quot; as ID
+
+group Loop [Can be repeated]
+
+group Optional
+UA-&gt;ID : **HAL_ICACHE_ConfigAssociativityMode**
+ID --&gt; UA : return HAL_OK
+UA-&gt;ID : **HAL_ICACHE_Monitor_Start**
+ID --&gt; UA : return HAL_OK
+|||
+end
+UA-&gt;ID : **HAL_ICACHE_Enable**
+ID --&gt; UA : return HAL_OK
+
+group Loop [Can be repeated]
+UA-&gt;ID : **HAL_ICACHE_Invalidate**
+ID --&gt; UA : return HAL_OK, HAL_BUSY, HAL_ERROR, HAL_TIMEOUT
+|||
+end
+group Optional
+UA-&gt;ID : **HAL_ICACHE_Monitor_GetHitValue**, **HAL_ICACHE_Monitor_GetMissValue**
+ID --&gt; UA : Monitor's value
+UA-&gt;ID : **HAL_ICACHE_Monitor_Reset**
+ID --&gt; UA : return HAL_OK
+end
+UA-&gt;ID : **HAL_ICACHE_Disable**
+ID --&gt; UA : return HAL_OK
+end
+UA-&gt;ID : **HAL_ICACHE_DeInit**
+ID --&gt; UA
+
+@enduml" src="../../../../../_images/plantuml-51af9f3fd350ed1e18414ac7e607cfebe0863820.png">
+            </img>
+           </p>
+          </div>
+          <div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0">
+           <p class="plantuml">
+            <img alt="@startuml
+
+skinparam sequenceMessageAlign center
+
+participant &quot;User\nApplication&quot; as UA
+participant &quot;ICACHE\nDriver&quot; as ID
+
+UA-&gt;ID : **HAL_ICACHE_Init**
+rnote over ID
+Invalidate Operation by Hardware
+endrnote
+UA &lt;-- ID : return HAL_OK or HAL_INVALID_PARAM
+|||
+group Loop [Can be repeated]
+
+group Optional
+UA-&gt;ID : **HAL_ICACHE_SetAssociativityMode**
+ID --&gt; UA : return HAL_OK
+UA-&gt;ID : **HAL_ICACHE_ECC_Enable * **
+note right : * ECC is only available in some stm32 devices\nPlease check the ref-man of your product
+ID --&gt; UA : return HAL_OK
+UA-&gt;ID : **HAL_ICACHE_EnableMonitors**
+ID --&gt; UA : return HAL_OK
+|||
+end
+UA-&gt;ID : **HAL_ICACHE_Start**
+note right : Choose to enable Write intrusion error interrupt
+ID --&gt; UA : return HAL_OK
+
+group Loop [Can be repeated]
+UA-&gt;ID : **HAL_ICACHE_Invalidate**
+ID --&gt; UA : return HAL_OK, HAL_BUSY, HAL_ERROR
+|||
+end
+group Optional
+UA-&gt;ID : **HAL_ICACHE_GetMonitorHitValue**, **HAL_ICACHE_GetMonitorMissValue**
+ID --&gt; UA : Monitor's value
+UA-&gt;ID : **HAL_ICACHE_ResetMonitors**
+ID --&gt; UA : return HAL_OK
+UA-&gt;ID : **HAL_ICACHE_ECC_Disable * **
+note right : * ECC is only available in some stm32 devices\nPlease check the ref-man of your product
+ID --&gt; UA : return HAL_OK
+|||
+end
+UA-&gt;ID : **HAL_ICACHE_Stop**
+ID --&gt; UA : return HAL_OK
+|||
+end
+UA-&gt;ID : **HAL_ICACHE_DeInit**
+ID --&gt; UA
+
+@enduml" src="../../../../../_images/plantuml-52a8142b8bb8cb60f3989101bbcf5c19231311c2.png"/>
+           </p>
+          </div>
+         </div>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-icache-remap-region-successful-sequence">
+         <span id="hal-icache-remap-region-use-case">
+         </span>
+         <h2 id="hal-icache-remap-region-successful-sequence">
+          HAL ICACHE remap region successful sequence
+          <a class="headerlink" href="#hal-icache-remap-region-successful-sequence" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          The key changes between HAL1 and HAL2 for the ICACHE driver
+         </p>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1 Sequence Diagrams
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2 Sequence Diagrams
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p class="plantuml">
+              <img alt='@startuml
+"User\nApplication"-&gt;"ICACHE\nDriver": =HAL_ICACHE_Disable
+"ICACHE\nDriver"--&gt;"User\nApplication":HAL_OK
+"User\nApplication"-&gt;"ICACHE\nDriver": =HAL_ICACHE_ConfigAssociativityMode
+"ICACHE\nDriver"--&gt;"User\nApplication":HAL_OK
+note left: return\nstatus
+"User\nApplication"-&gt;"ICACHE\nDriver": =HAL_ICACHE_EnableRemapRegion
+"ICACHE\nDriver"--&gt;"User\nApplication":HAL_OK
+note left: return\nstatus
+"User\nApplication"-&gt;"ICACHE\nDriver": =HAL_ICACHE_Enable
+"ICACHE\nDriver"--&gt;"User\nApplication":HAL_OK
+note left: return\nstatus
+@enduml' src="../../../../../_images/plantuml-1d41bdf7a305e5972f7b9c5261f23a755e336a0b.png"/>
+             </p>
+            </td>
+            <td>
+             <p class="plantuml">
+              <img alt='@startuml
+participant "User\nApplication" as UA
+participant "ICACHE\nDriver" as ID
+
+UA-&gt;ID: =HAL_ICACHE_Init
+ID--&gt;UA: return HAL_OK
+UA-&gt;ID: \n=HAL_ICACHE_SetAssociativityMode
+ID--&gt;UA: return HAL_OK
+note left : return\nstatus
+UA-&gt;ID :\n=HAL_ICACHE_SetConfigRemapRegion
+ID--&gt;UA: return HAL_OK
+note left : return\nstatus
+UA-&gt;ID :\n=HAL_ICACHE_EnableRemapRegion
+ID--&gt;UA: return HAL_OK
+note left : return\nstatus
+UA-&gt;ID: \n=HAL_ICACHE_Start
+ID--&gt;UA: return HAL_OK
+note left : return\nstatus
+@enduml' src="../../../../../_images/plantuml-c50b3e8216f427f682a8fa9eea1a56f77a0efb1b.png"/>
+             </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-icache-remap-region-successful-use-case">
+         <h2 id="hal-icache-remap-region-successful-use-case">
+          HAL ICACHE remap region successful use case
+          <a class="headerlink" href="#hal-icache-remap-region-successful-use-case" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          This use case demonstrates how to enable the remapping region with ICACHE functions using HAL1 compared to HAL2.
+         </p>
+         <p>
+          We have an extra function HAL_ICACHE_SetConfigRemapRegion() to configure the handle, the region and the configuration struct.
+         </p>
+         <p>
+          Then we can enable  the remapping of our region and start the process.
+         </p>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1 Example
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2 Example
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_ICACHE_Disable</span><span class="p">();</span>
+
+<span class="n">HAL_ICACHE_ConfigAssociativityMode</span><span class="p">(</span><span class="n">ICACHE_1WAY</span><span class="p">);</span>
+
+<span class="cm">/* Remap SRAM memory */</span>
+<span class="n">region_config</span><span class="p">.</span><span class="n">TrafficRoute</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">ICACHE_MASTER2_PORT</span><span class="p">;</span>
+<span class="n">region_config</span><span class="p">.</span><span class="n">OutputBurstType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ICACHE_OUTPUT_BURST_INCR</span><span class="p">;</span>
+<span class="n">region_config</span><span class="p">.</span><span class="n">Size</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="n">ICACHE_REGIONSIZE_2MB</span><span class="p">;</span>
+<span class="n">region_config</span><span class="p">.</span><span class="n">BaseAddress</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mh">0x10000000</span><span class="p">;</span>
+<span class="n">region_config</span><span class="p">.</span><span class="n">RemapAddress</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mh">0x60000000</span><span class="p">;</span>
+
+<span class="cm">/* Enable the remapped region */</span>
+<span class="k">if</span><span class="p">(</span><span class="n">HAL_ICACHE_EnableRemapRegion</span><span class="p">(</span><span class="n">ICACHE_REGION_1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">region_config</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="cm">/* Enable the Instruction and Data Cache */</span>
+<span class="n">HAL_ICACHE_Enable</span><span class="p">();</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_ICACHE_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hicache1</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_ICACHE1</span><span class="p">);</span>
+
+<span class="n">HAL_ICACHE_SetAssociativityMode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hicache1</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_ICACHE_ASSOCIATIVITY_1WAY</span><span class="p">);</span>
+
+<span class="cm">/* Remap SRAM memory */</span>
+<span class="n">region_config</span><span class="p">.</span><span class="n">master_port</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_ICACHE_MASTER2_PORT</span><span class="p">;</span>
+<span class="n">region_config</span><span class="p">.</span><span class="n">output_burst</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_ICACHE_BURST_INCR</span><span class="p">;</span>
+<span class="n">region_config</span><span class="p">.</span><span class="n">size</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_ICACHE_REGION_SIZE_2MBYTES</span><span class="p">;</span>
+<span class="n">region_config</span><span class="p">.</span><span class="n">base_address</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mh">0x10000000</span><span class="p">;</span>
+<span class="n">region_config</span><span class="p">.</span><span class="n">remap_address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x60000000</span><span class="p">;</span>
+
+<span class="cm">/* Enable the remapped region */</span>
+<span class="k">if</span><span class="p">(</span><span class="n">HAL_ICACHE_SetConfigRemapRegion</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hicache1</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_ICACHE_REGION_1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">region_config</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="k">if</span><span class="p">(</span><span class="n">HAL_ICACHE_EnableRemapRegion</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hicache1</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_ICACHE_REGION_1</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="cm">/* Start the Instruction Cache */</span>
+<span class="n">HAL_ICACHE_Start</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hicache1</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_ICACHE_IT_NONE</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <section id="related-examples-in-hal2">
+          <h3 id="related-examples-in-hal2">
+           Related examples in HAL2
+           <a class="headerlink" href="#related-examples-in-hal2" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               Example Name
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               Description
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               example_hal_icache_memory_remap
+              </p>
+             </td>
+             <td>
+              <p>
+               How to execute code from a remapped region configured through the ICACHE HAL driver.
+              </p>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <hr class="docutils"/>
+         </section>
+        </section>
+        <section id="hal-icache-maintenance-operations-in-interrupt-mode-sequence">
+         <span id="hal-icache-invalidate-with-it-use-case">
+         </span>
+         <h2 id="hal-icache-maintenance-operations-in-interrupt-mode-sequence">
+          HAL ICACHE Maintenance Operations in Interrupt mode sequence
+          <a class="headerlink" href="#hal-icache-maintenance-operations-in-interrupt-mode-sequence" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          The key changes between HAL1 and HAL2 for the ICACHE driver
+         </p>
+         <div class="sphinx-tabs docutils container">
+          <div aria-label="Tabbed content" class="closeable" role="tablist">
+           <button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">
+            HAL1 Sequence diagram
+           </button>
+           <button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">
+            HAL2 Sequence diagram
+           </button>
+          </div>
+          <div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0">
+           <p class="plantuml">
+            <img alt='@startuml
+participant "User\nApplication" order 1
+participant "ICACHE\nDriver" order 2
+participant "ICACHE_IRQHandler" order 3
+"User\nApplication"-&gt;"ICACHE\nDriver": =HAL_ICACHE_Enable
+"ICACHE\nDriver"--&gt;"User\nApplication":HAL_OK
+note left: return\nstatus
+"User\nApplication"-&gt;"ICACHE\nDriver": =HAL_ICACHE_Invalidate_IT
+note right: Invalid ICACHE interruption enabled\nthen ICACHE disabled
+"ICACHE\nDriver"--&gt;"User\nApplication":HAL_OK or HAL_ERROR
+note left: return\nstatus
+== Interruption Service Routine ==
+"ICACHE_IRQHandler" &lt;-]:Invalidate\ninterrupt
+"ICACHE_IRQHandler" -&gt; "ICACHE\nDriver" : HAL_ICACHE_IRQHandler
+note left: Interruption execution
+"ICACHE\nDriver"-&gt;"User\nApplication":HAL_ICACHE_InvalidateCompleteCallback
+@enduml' src="../../../../../_images/plantuml-17ed7e1b17a8bfebbafd1584e86afff9639e66ef.png"/>
+           </p>
+          </div>
+          <div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0">
+           <p class="plantuml">
+            <img alt='@startuml
+participant "User\nApplication" as UA
+participant "ICACHE\nDriver" as ID
+participant "ICACHE_IRQHandler" as IRQ
+
+skinparam sequenceMessageAlign center
+
+== ICACHE Initialization ==
+|||
+opt
+    UA -&gt; ID: **HAL_ICACHE_RegisterInvalidateCompleteCallback**(myICACHE_InvalidateCompleteCallback)
+    ID --&gt; UA : return HAL_OK
+end
+|||
+UA-&gt;ID : **HAL_ICACHE_Start**(HAL_ICACHE_IT_NONE)
+ID --&gt; UA : return HAL_OK
+|||
+UA -&gt; ID : **HAL_ICACHE_Invalidate_IT**
+rnote over ID
+Flag Command Interrupt (CMDENDIE) enabled
+endrnote
+ID --&gt; UA : return HAL_OK or HAL_ERROR
+|||
+== Interruption Service Routine ==
+|||
+IRQ &lt;- : ICACHE Maintenance interrupt
+IRQ -&gt; ID : **HAL_ICACHE_IRQHandler**
+note left : Interruption execution\nDisable BSYEND interrupt
+alt USE_HAL_ICACHE_REGISTER_CALLBACKS
+    ID -&gt; UA : **myICACHE_InvalidateCompleteCallback**
+    ID &lt;-- UA
+else USE OVERRIDDEN WEAK CALLBACKS
+    ID -&gt; UA : **HAL_ICACHE_InvalidateCompleteCallback**
+    ID &lt;-- UA
+end
+|||
+@enduml' src="../../../../../_images/plantuml-531d46368ba2ba0d349390abc8462db8303eb9fb.png"/>
+           </p>
+          </div>
+         </div>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-icache-error-sequence">
+         <span id="hal-icache-error-use-case">
+         </span>
+         <h2 id="hal-icache-error-sequence">
+          HAL ICACHE Error sequence
+          <a class="headerlink" href="#hal-icache-error-sequence" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          The key changes between HAL1 and HAL2 for the ICACHE driver
+         </p>
+         <div class="sphinx-tabs docutils container">
+          <div aria-label="Tabbed content" class="closeable" role="tablist">
+           <button aria-controls="panel-2-2-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-2-2-0" name="2-0" role="tab" tabindex="0">
+            HAL1 Sequence diagram
+           </button>
+           <button aria-controls="panel-2-2-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-2-2-1" name="2-1" role="tab" tabindex="-1">
+            HAL2 Sequence diagram
+           </button>
+          </div>
+          <div aria-labelledby="tab-2-2-0" class="sphinx-tabs-panel" id="panel-2-2-0" name="2-0" role="tabpanel" tabindex="0">
+           <p class="plantuml">
+            <img alt='@startuml
+participant "User\nApplication" order 1
+participant "ICACHE\nDriver" order 2
+participant "ICACHE_IRQHandler" order 3
+"User\nApplication"-&gt;"ICACHE\nDriver": =HAL_ICACHE_Enable
+note right: with Error IT enabled
+"ICACHE\nDriver"--&gt;"User\nApplication":HAL_OK
+note left: return\nstatus
+== Interruption Service Routine ==
+"ICACHE_IRQHandler" &lt;-]:Error interrupt
+"ICACHE_IRQHandler" -&gt; "ICACHE\nDriver": HAL_ICACHE_IRQHandler
+note left: Interruption execution
+"ICACHE\nDriver"-&gt;"User\nApplication":HAL_ICACHE_ErrorCallback()
+@enduml' src="../../../../../_images/plantuml-504cef7c82989c3594a53216191faddb426770de.png"/>
+           </p>
+          </div>
+          <div aria-labelledby="tab-2-2-1" class="sphinx-tabs-panel" hidden="true" id="panel-2-2-1" name="2-1" role="tabpanel" tabindex="0">
+           <p class="plantuml">
+            <img alt='@startuml
+participant "User\nApplication" as UA
+participant "ICACHE\nDriver" as ID
+participant "ICACHE_IRQHandler" as IRQ
+
+skinparam sequenceMessageAlign center
+
+== Init ICACHE ==
+|||
+opt USE_HAL_ICACHE_REGISTER_CALLBACKS
+    UA -&gt; ID: **HAL_ICACHE_RegisterErrorCallback**(ICACHE_Error_UserCallback)
+    ID --&gt; UA : return HAL_OK
+end
+|||
+UA -&gt; ID : **HAL_ICACHE_Start**
+note right : Enable Interruption (Eviction Clean)
+ID --&gt; UA : return HAL_OK
+|||
+== Interruption Service Routine ==
+|||
+IRQ &lt;- : Error\ninterrupt
+IRQ -&gt; ID : **HAL_ICACHE_IRQHandler**
+note left : Interruption execution
+alt USE_HAL_ICACHE_REGISTER_CALLBACKS
+    ID -&gt; UA : **ICACHE_Error_UserCallback**
+    ID &lt;-- UA
+else USE OVERRIDDEN WEAK CALLBACKS
+    ID -&gt; UA : **HAL_ICACHE_ErrorCallback**
+    ID &lt;-- UA
+end
+|||
+@enduml' src="../../../../../_images/plantuml-76debe14c21de6b70a1c204fed7ff8695625c241.png"/>
+           </p>
+          </div>
+         </div>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-icache-maintenance-operation-in-polling-mode-with-error-interrupt-enabled-sequence">
+         <span id="hal-icache-use-case">
+         </span>
+         <h2 id="hal-icache-maintenance-operation-in-polling-mode-with-error-interrupt-enabled-sequence">
+          HAL ICACHE  Maintenance operation in polling mode with Error Interrupt enabled sequence
+          <a class="headerlink" href="#hal-icache-maintenance-operation-in-polling-mode-with-error-interrupt-enabled-sequence" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          The key changes between HAL1 and HAL2 for the ICACHE driver
+         </p>
+         <section id="sequence-diagram">
+          <h3 id="sequence-diagram">
+           Sequence diagram
+           <a class="headerlink" href="#sequence-diagram" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <div class="sphinx-tabs docutils container">
+           <div aria-label="Tabbed content" class="closeable" role="tablist">
+            <button aria-controls="panel-3-3-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-3-3-0" name="3-0" role="tab" tabindex="0">
+             HAL1 Sequence diagram
+            </button>
+            <button aria-controls="panel-3-3-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-3-3-1" name="3-1" role="tab" tabindex="-1">
+             HAL2 Sequence diagram
+            </button>
+           </div>
+           <div aria-labelledby="tab-3-3-0" class="sphinx-tabs-panel" id="panel-3-3-0" name="3-0" role="tabpanel" tabindex="0">
+            <p class="plantuml">
+             <img alt='@startuml
+participant "User\nApplication" order 1
+participant "ICACHE\nDriver" order 2
+participant "ICACHE\nIRQHandler" order 3
+
+skinparam sequenceMessageAlign center
+
+group Option Register Error Callback
+"User\nApplication" -&gt;"ICACHE\nDriver": =HAL_ICACHE_RegisterErrorCallback(USER_ICACHE_ErrorCallback)
+"ICACHE\nDriver"--&gt;"User\nApplication":HAL_OK
+end
+"User\nApplication"-&gt;"ICACHE\nDriver": =HAL_ICACHE_Enable
+"User\nApplication"-&gt;"ICACHE\nDriver": __HAL_ICACHE_ENABLE_IT
+note right: ICACHE_IT_ERROR
+"ICACHE\nDriver"--&gt;"User\nApplication":HAL_OK
+"User\nApplication" [#blue]-&gt;"ICACHE\nDriver": =HAL_ICACHE_Invalidate
+activate "ICACHE\nDriver" #blue
+note over "ICACHE\nDriver":Check Busy flag : Flag = 0
+"ICACHE\nIRQHandler" &lt;[#orange]-:ICACHE Error interrupt
+"ICACHE\nIRQHandler" -[#orange]&gt; "ICACHE\nDriver" : HAL_ICACHE_IRQHandler
+activate "ICACHE\nDriver" #orange
+note over "ICACHE\nDriver":Flag Error Interrupt = 1
+
+"ICACHE\nDriver"-[#orange]&gt;"User\nApplication":USER_ICACHE_ErrorCallback(HAL_ICACHE_ERROR_WRITE_INTRUSION)
+"User\nApplication" -[#orange]-&gt;"ICACHE\nDriver"
+
+deactivate "ICACHE\nDriver"
+"ICACHE\nDriver"-[#blue]-&gt;"User\nApplication":HAL_OK
+deactivate "ICACHE\nDriver"
+
+note over "User\nApplication":For other user application
+@enduml' src="../../../../../_images/plantuml-827ddc3ac59624dbf28fce9751df4865959f07a6.png"/>
+            </p>
+           </div>
+           <div aria-labelledby="tab-3-3-1" class="sphinx-tabs-panel" hidden="true" id="panel-3-3-1" name="3-1" role="tabpanel" tabindex="0">
+            <p class="plantuml">
+             <img alt='@startuml
+participant "User\nApplication" as UA order 1
+participant "ICACHE\nDriver" as ID order 2
+participant "ICACHE_IRQHandler" as IRQ order 3
+
+skinparam sequenceMessageAlign center
+
+== ICACHE Initialization ==
+group Option [USE_HAL_ICACHE_REGISTER_CALLBACKS]
+UA -&gt;  ID : **HAL_ICACHE_RegisterErrorCallback**(myICACHE_ErrorCallback)
+ID --&gt; UA : return HAL_OK
+end
+UA -&gt; ID : **HAL_ICACHE_Start**(HAL_ICACHE_IT_ERROR)
+rnote over ID
+Enable ERROR Interrupt
+endrnote
+ID --&gt; UA : return HAL_OK
+|||
+UA [#blue]-&gt;ID: **HAL_ICACHE_Invalidate**
+activate ID #blue
+note over ID : Check Busy flag : Flag = 0
+IRQ &lt;[#orange]- : **ICACHE Error interrupt**
+IRQ -[#orange]&gt; ID : **HAL_ICACHE_IRQHandler**
+activate ID #orange
+note over ID : Flag Error Interrupt = 1
+alt USE_HAL_ICACHE_REGISTER_CALLBACKS
+ID-[#orange]&gt;UA:**myICACHE_ErrorCallback**
+UA -[#orange]-&gt;ID
+else USE OVERRIDDEN WEAK CALLBACKS
+ID-[#orange]&gt;UA:**HAL_ICACHE_ErrorCallback**
+UA -[#orange]-&gt;ID
+end
+deactivate  ID
+ID-[#blue]-&gt; UA : return HAL_OK
+deactivate  ID
+|||
+rnote over UA
+The user can call HAL_ICACHE_Stop() to disable the Error Interrupt
+             and stop the ICACHE or make another action.
+endrnote
+@enduml' src="../../../../../_images/plantuml-e13387751c75e2e9441b2949fd1162f285cdf509.png"/>
+            </p>
+           </div>
+          </div>
+         </section>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

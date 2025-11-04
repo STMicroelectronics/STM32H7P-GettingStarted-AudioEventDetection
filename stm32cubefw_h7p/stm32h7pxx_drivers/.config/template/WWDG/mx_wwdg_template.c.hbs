@@ -1,0 +1,193 @@
+{{assign "strategy" (@root.EnvVarAPI.getVariableValue 'SYSTEM_PROJECT_CODEGEN_STRATEGY')~}}
+{{log "strategy" @root.strategy~}}
+{{#if (eq @root.strategy "SW")}}
+{{~assign 'current_resource' 'WWDG'~}}
+{{~assign 'instances' (@root.SWConfigurationAPI.getInstances 'STMicroelectronics::Device:STM32CubeMX2 Config:WWDG')~}}
+{{else}}
+{{assign "strategy" 'HW'~}}
+{{#get_myctx~}}
+{{#with _myctx~}}
+{{~log "WWDG template _myctx:" this.instances.configs~}}
+{{~assign 'current_resource' resource~}}
+{{~assign 'instances' instances~}}
+{{/with~}}
+{{/get_myctx~}}
+{{/if}}
+{{log "WWDG template current_resource:" @root.current_resource~}}
+{{log "WWDG template instances:" (toJSON @root.instances)~}}
+
+/**
+  ******************************************************************************
+  * @file           : mx_{{lowercase @root.current_resource}}.c
+  * @brief          : {{@root.current_resource}} Peripheral initialization
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2024-2025 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* Includes ------------------------------------------------------------------*/
+#include "mx_{{lowercase @root.current_resource}}.h"
+{{> RCC fct='include_rcc'}}
+/* Private typedef -----------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+/* Private macro -------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+/* Private functions prototype------------------------------------------------*/
+/* Exported variables by reference--------------------------------------------*/
+{{assign 'hal_handle_exist' false~}}
+{{#each @root.instances~}}
+{{#if (eq @root.strategy "SW")}}
+{{~assign 'wwdg_cxt' (@root.SWConfigurationAPI.getSwInstanceConfiguration this)~}}
+{{~log "WWDG template wwdg_cxt:" (toJSON @root.wwdg_cxt)~}}
+{{~assign 'current_resource' (@root.peripheralsResourceManagerAPI.getPeripheralBoundToSoftwareInstance this)~}}
+{{~assign 'current_layer' @root.wwdg_cxt.info.layer~}}
+{{~log "WWDG template current_resource:" @root.current_resource~}}
+{{else}}
+{{assign 'current_layer' info.layer~}}
+{{/if}}
+{{#if (eq @root.current_layer 'HAL')}}
+{{#if (eq @root.hal_handle_exist false)}}
+static hal_wwdg_handle_t h{{@root.current_resource}};
+{{~assign 'hal_handle_exist' true~}}
+{{/if}}
+{{/if}}
+{{/each}}
+{{assign 'hal_handle_exist' false~}}
+{{helper_common_initialize_index~}}
+{{assign 'current_index' (helper_common_get_index @root.current_resource)~}}
+{{assign 'nvic_context' 'undefined'~}}
+{{#each @root.instances}}
+{{#if (eq @root.strategy "HW")}}
+{{assign 'name' name~}}
+{{assign 'current_layer' info.layer~}}
+{{~assign 'wwdg_cxt' this}}
+{{else}}
+{{assign 'wwdg_cxt' (@root.SWConfigurationAPI.getSwInstanceConfiguration this)~}}
+{{assign 'current_resource' (@root.peripheralsResourceManagerAPI.getPeripheralBoundToSoftwareInstance this)~}}
+{{assign 'name' @root.wwdg_cxt.name~}}
+{{~assign 'current_layer' @root.wwdg_cxt.info.layer~}}
+{{assign 'current_index' (helper_common_get_index @root.current_resource)~}}
+{{/if}}
+{{~log "WWDG template instance:" (toJSON this)~}}
+/******************************************************************************/
+/* Exported functions for {{@root.current_resource}} in {{@root.current_layer}} layer (SW instance {{@root.name}}) */
+/******************************************************************************/
+{{assign 'fct_name' (helper_common_get_generated_function_name @root.current_resource @root.current_layer @root.current_index)~}}
+{{assign 'current_index' (helper_common_inc_index @root.current_resource)~}}
+{{!
+    Generation of initialization function used in HAL
+~}}
+{{#if (eq @root.current_layer 'HAL')}}
+hal_wwdg_handle_t *{{@root.fct_name}}_init(void)
+{
+  if (HAL_WWDG_Init(&h{{@root.current_resource}},HAL_{{@root.current_resource}}{{@root.current_index}}) != HAL_OK)
+  {
+    return NULL;
+  }
+{{#if System.nvicSettings.EnableInterruption}}
+  /* Enable the interruption for WWDG */
+{{assign 'nvic_context' (helper_cortex_nvic_concatenate_irq_context @root.nvic_context System.nvicSettings.nvicConfig.needs @root.current_resource System.nvicSettings.irq_handler_generation)~}}
+{{> CORTEX fct='init' layer=@root.current_layer needs=System.nvicSettings.nvicConfig.needs}}
+{{/if}}
+  return &h{{@root.current_resource}};
+}
+{{#if RunTime.Start}}
+hal_status_t {{@root.fct_name}}_start(void)
+{
+{{#if System.NVIC_Settings.EnableInterruption }}
+  return HAL_WWDG_Start(&h{{@root.current_resource}}, {{Applicative.MinTime.InputMinTime}}UL, {{Applicative.MaxTime.InputMaxTime}}UL, 1UL);
+{{else}}
+  return HAL_WWDG_Start(&h{{@root.current_resource}}, {{Applicative.MinTime.InputMinTime}}UL, {{Applicative.MaxTime.InputMaxTime}}UL, 0UL);
+{{/if}}
+}
+{{/if}} {{!Runtime.Start~}}
+{{else}}
+{{assign 'nvic_generate_handler' false~}}
+{{!
+    Generation of initialization function used in LL
+~}}
+WWDG_TypeDef *{{@root.fct_name}}_init(void)
+{
+{{#if System.nvicSettings.EnableInterruption}}
+  /* Enable the interruption for WWDG */
+{{assign 'nvic_context' (helper_cortex_nvic_concatenate_irq_context @root.nvic_context System.nvicSettings.nvicConfig.needs @root.current_resource System.nvicSettings.irq_handler_generation)~}}
+{{> CORTEX fct='init' layer=@root.current_layer needs=System.nvicSettings.nvicConfig.needs}}
+{{/if}}
+  return {{@root.current_resource}};
+}
+{{#if RunTime.Start}}
+{{#with Applicative}}
+system_status_t {{@root.fct_name}}_start(void)
+{
+  /* These values are calculated from the ones inputted by the user in the WWDG panel. */
+  uint32_t prescaler = {{@root.EnvVarAPI.getVariableValue 'WWDG_PRESCALER'}}UL;
+  uint32_t reload = {{@root.EnvVarAPI.getVariableValue 'WWDG_RELOAD'}}UL;
+{{#if MinTime.InputMinTime}}
+  uint32_t window = {{@root.EnvVarAPI.getVariableValue 'WWDG_WINDOW'}}UL;
+{{else}}
+  uint32_t window = 64UL;
+{{/if}}
+{{#if System.NVIC_Settings.EnableInterruption }}
+  uint32_t early_wakeup = 1U;
+{{else}}
+  uint32_t early_wakeup = 0U;
+{{/if}}
+  if (early_wakeup != 0U)
+  {
+    LL_WWDG_EnableIT_EWKUP({{@root.current_resource}});
+  }
+
+  /* Enable the WWDG driver and set the reload value to work with */
+  LL_WWDG_SetControl({{@root.current_resource}},reload);
+
+  /* Write to WWDG CFR register the Prescaler and Window values to work with */
+  LL_WWDG_SetConfig({{@root.current_resource}},prescaler,window);
+
+{{/with}}
+  return SYSTEM_OK;
+}
+{{/if}} {{!Runtime.Start~}}
+{{/if}} {{!nvic_generate_handler}}
+{{/each}}
+{{#if (eq @root.current_layer 'HAL')}}
+{{#if (eq @root.hal_handle_exist 0)}}
+{{assign 'fct_name' (helper_common_get_generated_function_name @root.current_resource @root.current_layer undefined 'WWDG')~}}
+{{!
+    Generation of getHandle functions used in HAL
+~}}
+hal_wwdg_handle_t *{{@root.fct_name}}_gethandle(void)
+{
+  return &h{{@root.current_resource}};
+}
+{{/if}}{{!hal_handle_exist}}
+{{assign 'hal_handle_exist' 1~}}
+{{/if}} {{!current_layer 'HAL'}}
+{{assign 'irq_info_list' (helper_cortex_nvic_get_irqline_info_list @root.NvicAPI @root.nvic_context 'WWDG')~}}
+{{#each @root.irq_info_list}}
+{{#if generate_handler}}
+/******************************************************************************/
+/*                     {{description}}                    */
+/******************************************************************************/
+void {{line}}_IRQHandler(void)
+{
+  HAL_{{component}}_IRQHandler(&h{{resource_hw}});
+}
+
+{{else}}
+/******************************************************************************/
+/*    {{description}} is managed directly in user code.   */
+/******************************************************************************/
+/*
+void {{line}}_IRQHandler(void)
+{
+}
+*/
+{{/if}}
+{{/each}}

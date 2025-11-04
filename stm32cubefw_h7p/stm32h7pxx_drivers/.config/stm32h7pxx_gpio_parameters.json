@@ -1,0 +1,305 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "version": "0.0.1",
+  "componentid": "::Device:STM32CubeMX2 Config:GPIO",
+  "grammarVersion": "3.1",
+  "type": "object",
+  "functions": [
+    {
+      "path": ".config/template/helpers/gpio_helpers.js",
+      "accessor": "common"
+    }
+  ],
+  "properties": {
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "object",
+          "title": "Software information",
+          "properties": {
+            "labels": {
+              "type": "array",
+              "title": "Label for peripheral instance",
+              "description": "Labels allow to create aliases inside mx_hal_def.h file like '<label>_init', '<label>_deinit' and '<label>_gethandle'. These aliases can be used on application side.",
+              "items": {
+                "type": "string",
+                "pattern": "^([a-zA-Z_][a-zA-Z0-9_]{1,31})?$",
+                "minLength": 0,
+                "maxLength": 32,
+                "unique": "project",
+                "default": ""
+              }
+            },
+            "layer": {
+              "type": "string",
+              "title": "Layer",
+              "oneOf": [
+                {
+                  "const": "HAL"
+                },
+                {
+                  "const": "LL"
+                }
+              ],
+              "variables": [
+                {
+                  "on": "update-value",
+                  "name": "HAL_GPIO_PROJECT_USE_HAL",
+                  "condition": "$value === 'HAL'",
+                  "semaphore": true
+                }
+              ],
+              "default": "HAL"
+            },
+            "init_type": {
+              "type": "string",
+              "title": "resource initialization code generation",
+              "description": "generate or not the GPIO init code, call it or not at boot",
+              "oneOf": [
+                {
+                  "const": "called"
+                },
+                {
+                  "const": "enabled"
+                },
+                {
+                  "const": "disabled"
+                }
+              ],
+              "default": "called"
+            }
+          }
+        },
+        "pins": {
+          "type": "array",
+          "source": "$resource.pins",
+          "itemId": "name",
+          "itemVar": "resource",
+          "items": {
+            "type": "object",
+            "configFor": ["need.pinout.signals"],
+            "properties": {
+              "label_name": {
+                  "type": "array",
+                  "$comment": "Default SW label name should be associated to Hardware name",
+                  "title": "SW Label for signal",
+                  "items": {
+                  "type": "string",
+                  "pattern": "^([a-zA-Z_][a-zA-Z0-9_]{1,31})?$",
+                  "minLength": 0,
+                  "maxLength": 32,
+                  "default": ""
+                }
+              },
+              "basic": {
+                "type": "object",
+                "title": "Main peripheral configuration",
+                "description": "GPIO configuration structure definition.",
+                "actions": [
+                  {
+                    "type": "include",
+                    "condition": "$resource.signal.type!=='additional'"
+                  }
+                ],
+                "properties": {
+                  "mode": {
+                    "type": "string",
+                    "title": "Mode",
+                    "description": "Specifies the operating mode for the selected pin.",
+                    "oneOf": [
+                      {
+                        "title": "Input",
+                        "const": "INPUT"
+                      },
+                      {
+                        "title": "Output",
+                        "const": "OUTPUT"
+                      },
+                      {
+                        "title": "Alternate",
+                        "const": "ALTERNATE",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$isNeed"
+                          }
+                        ]
+                      },
+                      {
+                        "title": "Eventout",
+                        "const": "EVENTOUT",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "!$isNeed"
+                          }
+                        ]
+                      },
+                      {
+                        "title": "Analog",
+                        "const": "ANALOG"
+                      }
+                    ],
+                    "default": "INPUT"
+                  },
+                  "pull": {
+                    "type": "string",
+                    "title": "Pull",
+                    "description": "Specifies the Pull-up or Pull-Down activation for the selected pin.",
+                    "oneOf": [
+                      {
+                        "title": "No pull-up and no pull-down",
+                        "const": "NO"
+                      },
+                      {
+                        "title": "Pull-up",
+                        "const": "UP",
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$config.basic.mode!=='ANALOG'"
+                          }
+                        ]
+                      },
+                      {
+                        "title": "Pull-down",
+                        "const": "DOWN"
+                      }
+                    ],
+                    "default": "NO"
+                  },
+                  "output_init_state": {
+                    "type": "string",
+                    "title": "Initialization state of the GPIO",
+                    "description": "Specifies the default output state",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$config.basic.mode==='OUTPUT'"
+                      }
+                    ],
+                    "oneOf": [
+                      {
+                        "title": "Low",
+                        "const": "LOW"
+                      },
+                      {
+                        "title": "High",
+                        "const": "HIGH"
+                      }
+                    ],
+                    "default": "LOW"
+                  },
+                  "output_active_state": {
+                    "type": "string",
+                    "title": "Active state of the GPIO",
+                    "description": "Specifies the active output state",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$config.basic.mode==='OUTPUT'"
+                      }
+                    ],
+                    "oneOf": [
+                      {
+                        "title": "Low",
+                        "const": "LOW"
+                      },
+                      {
+                        "title": "High",
+                        "const": "HIGH"
+                      }
+                    ],
+                    "default": "HIGH"
+                  },
+                  "speed": {
+                    "type": "string",
+                    "title": "Speed",
+                    "description": "Specifies the speed for the selected pin.",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$config.basic.mode==='OUTPUT' || $config.basic.mode==='ALTERNATE'"
+                      }
+                    ],
+                    "oneOf": [
+                      {
+                        "title": "Low",
+                        "const": "LOW"
+                      },
+                      {
+                        "title": "Medium",
+                        "const": "MEDIUM"
+                      },
+                      {
+                        "title": "High",
+                        "const": "HIGH"
+                      },
+                      {
+                        "title": "Very High",
+                        "const": "VERY_HIGH"
+                      }
+                    ],
+                    "default": "LOW"
+                  },
+                  "output_type": {
+                    "type": "string",
+                    "title": "Output Type",
+                    "description": "Specifies the operating output type for the selected pin.",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$config.basic.mode==='OUTPUT' || $config.basic.mode==='ALTERNATE'"
+                      }
+                    ],
+                    "oneOf": [
+                      {
+                        "title": "Push Pull",
+                        "const": "PUSHPULL"
+                      },
+                      {
+                        "title": "Open Drain",
+                        "const": "OPENDRAIN"
+                      }
+                    ],
+                    "default": "PUSHPULL"
+                  },
+                  "EnableEXTI": {
+                    "type": "boolean",
+                    "title": "EXTI",
+                    "description": "Specifies whether EXTI is enabled or disabled for the selected pin",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$config.basic.mode!=='ANALOG'"
+                      }
+                    ],
+                    "default": false
+                  },
+                  "extiConfig": {
+                    "title": "EXTI configuration",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$config.basic.EnableEXTI"
+                      }
+                    ],
+                    "type": "object",
+                    "objectType": "need.exti.lines",
+                    "owner": "$resource.id",
+                    "needs": [
+                      {
+                        "selector": "*"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

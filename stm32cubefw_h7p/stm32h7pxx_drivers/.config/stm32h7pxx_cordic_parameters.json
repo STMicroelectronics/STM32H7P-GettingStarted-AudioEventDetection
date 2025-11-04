@@ -1,0 +1,538 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "version": "0.0.1",
+  "componentid": "::Device:STM32CubeMX2 Config:CORDIC",
+  "grammarVersion": "3.1",
+  "type": "object",
+  "properties": {
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "object",
+          "properties": {
+            "labels": {
+              "type": "array",
+              "title": "Label",
+              "$comment": "label associated to the instance of the peripheral, can be overridden at sample level. In this case it becomes read-only.",
+              "items": {
+                "type": "string",
+                "pattern": "^([a-zA-Z_][a-zA-Z0-9_]{1,31})?$",
+                "minLength": 0,
+                "maxLength": 32,
+                "default": ""
+              }
+            },
+            "layer": {
+              "type": "string",
+              "title": "Software Layer",
+              "oneOf": [
+                {
+                  "const": "HAL"
+                },
+                {
+                  "const": "LL"
+                }
+              ],
+              "default": "HAL"
+            },
+            "init_type": {
+              "type": "string",
+              "title": "resource initialization code generation",
+              "description": "generate or not the CORDIC init code, call it or not at boot",
+              "$comment": "generate the init code of your CORDIC or not (enabled/disabled), call it automatically at startup or not (called/enabled)",
+              "oneOf": [
+                {
+                  "const": "called"
+                },
+                {
+                  "const": "enabled"
+                },
+                {
+                  "const": "disabled"
+                }
+              ],
+              "default": "called"
+            }
+          }
+        },
+        "Basic": {
+          "type": "object",
+          "description": "Global Configuration Structure definition.",
+          "title": "Main peripheral configuration",
+          "properties": {
+            "function": {
+              "type": "string",
+              "title": "Function",
+              "description": "This function implements the CORDIC algorithm for calculating trigonometric functions such as sine, cosine, and magnitude ",
+              "default": "COSINE",
+              "oneOf": [
+                {
+                  "title": "Cosine",
+                  "const": "COSINE"
+                },
+                {
+                  "title": "Sine",
+                  "const": "SINE"
+                },
+                {
+                  "title": "Phase",
+                  "const": "PHASE"
+                },
+                {
+                  "title": "Modulus",
+                  "const": "MODULUS"
+                },
+                {
+                  "title": "Arctangent",
+                  "const": "ARCTANGENT"
+                },
+                {
+                  "title": "Hyperbolic cosine",
+                  "const": "HCOSINE",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.g_func === 1"
+                    }
+                  ]
+                },
+                {
+                  "title": "Hyperbolic sine",
+                  "const": "HSINE",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.g_func === 1"
+                    }
+                  ]
+                },
+                {
+                  "title": "Hyperbolic arctangent",
+                  "const": "HARCTANGENT",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.g_func === 1"
+                    }
+                  ]
+                },
+                {
+                  "title": "Natural logarithm",
+                  "const": "NATURALLOG",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.g_func === 1"
+                    }
+                  ]
+                },
+                {
+                  "title": "Square root",
+                  "const": "SQUAREROOT",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.g_func === 1"
+                    }
+                  ]
+                },
+                {
+                  "title": "Arccosine",
+                  "const": "ARCCOSINE",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.g_func === 2"
+                    }
+                  ]
+                },
+                {
+                  "title": "Arcsine",
+                  "const": "ARCSINE",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$resource.features.g_func === 2"
+                    }
+                  ]
+                }
+              ]
+            },
+            "in_width": {
+              "type": "integer",
+              "title": "Input Width",
+              "description": "Input data size 16 bits or 32bits",
+              "default": 32,
+              "oneOf": [
+                {
+                  "title": "32 bits",
+                  "const": 32
+                },
+                {
+                  "title": "16 bits",
+                  "const": 16
+                }
+              ]
+            },
+            "nb_arg": {
+              "type": "integer",
+              "title": "Number of arguments",
+              "description": "Number of 32-bit arguments required for one calculus",
+              "default": 1,
+              "oneOf": [
+                {
+                  "title": "1",
+                  "const": 1
+                },
+                {
+                  "title": "2",
+                  "const": 2,
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "($Basic.function === 'COSINE') || ($Basic.function === 'SINE') || ($Basic.function === 'PHASE') || ($Basic.function === 'MODULUS')"
+                    }
+                  ]
+                }
+              ]
+            },
+            "out_width": {
+              "type": "integer",
+              "title": "Output Width",
+              "description": "Output data size 16 bits or 32bits",
+              "default": 32,
+              "oneOf": [
+                {
+                  "title": "32 bits",
+                  "const": 32
+                },
+                {
+                  "title": "16 bits",
+                  "const": 16
+                }
+              ]
+            },
+            "nb_result": {
+              "type": "integer",
+              "title": "Number of Results",
+              "description": "Number of 32-bit result required after one calculus",
+              "default": 1,
+              "oneOf": [
+                {
+                  "title": "1",
+                  "const": 1
+                },
+                {
+                  "title": "2",
+                  "const": 2,
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "(($Basic.function === 'COSINE') || ($Basic.function === 'SINE') || ($Basic.function === 'PHASE') || ($Basic.function === 'MODULUS') || ($Basic.function === 'HCOSINE') || ($Basic.function === 'HSINE')) && ($Basic.out_width === 32)"
+                    }
+                  ]
+                }
+              ]
+            },
+            "scaling_factor": {
+              "type": "integer",
+              "title": "Scaling Factor",
+              "description": "CORDIC scaling factor",
+              "default": 0,
+              "oneOf": [
+                {
+                  "title": "Scale 0",
+                  "const": 0,
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "($Basic.function === 'COSINE') || ($Basic.function === 'SINE') || ($Basic.function === 'PHASE') || ($Basic.function === 'MODULUS') || ($Basic.function === 'SQUAREROOT') || ($Basic.function === 'ARCTANGENT')"
+                    }
+                  ]
+                },
+                {
+                  "title": "Scale 1",
+                  "const": 1,
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "($Basic.function === 'NATURALLOG') || ($Basic.function === 'SQUAREROOT') || ($Basic.function === 'ARCTANGENT') || ($Basic.function === 'HARCTANGENT') || ($Basic.function === 'HCOSINE') || ($Basic.function === 'HSINE')"
+                    }
+                  ]
+                },
+                {
+                  "title": "Scale 2",
+                  "const": 2,
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "($Basic.function === 'SQUAREROOT') || ($Basic.function === 'ARCTANGENT') || ($Basic.function === 'NATURALLOG')"
+                    }
+                  ]
+                },
+                {
+                  "title": "Scale 3",
+                  "const": 3,
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "($Basic.function === 'ARCTANGENT') || ($Basic.function === 'NATURALLOG')"
+                    }
+                  ]
+                },
+                {
+                  "title": "Scale 4",
+                  "const": 4,
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "($Basic.function === 'ARCTANGENT') || ($Basic.function === 'NATURALLOG')"
+                    }
+                  ]
+                },
+                {
+                  "title": "Scale 5",
+                  "const": 5,
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "($Basic.function === 'ARCTANGENT')"
+                    }
+                  ]
+                },
+                {
+                  "title": "Scale 6",
+                  "const": 6,
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "($Basic.function === 'ARCTANGENT')"
+                    }
+                  ]
+                },
+                {
+                  "title": "Scale 7",
+                  "const": 7,
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "($Basic.function === 'ARCTANGENT')"
+                    }
+                  ]
+                }
+              ]
+            },
+            "precision": {
+              "type": "integer",
+              "title": "Precision",
+              "description": "Precision in cycles number",
+              "default": 5,
+              "oneOf": [
+                {
+                  "title": "1 Cycle",
+                  "const": 1
+                },
+                {
+                  "title": "2 Cycles",
+                  "const": 2
+                },
+                {
+                  "title": "3 Cycles",
+                  "const": 3
+                },
+                {
+                  "title": "4 Cycles",
+                  "const": 4
+                },
+                {
+                  "title": "5 Cycles",
+                  "const": 5
+                },
+                {
+                  "title": "6 Cycles",
+                  "const": 6
+                },
+                {
+                  "title": "7 Cycles",
+                  "const": 7
+                },
+                {
+                  "title": "8 Cycles",
+                  "const": 8
+                },
+                {
+                  "title": "9 Cycles",
+                  "const": 9
+                },
+                {
+                  "title": "10 Cycles",
+                  "const": 10
+                },
+                {
+                  "title": "11 Cycles",
+                  "const": 11
+                },
+                {
+                  "title": "12 Cycles",
+                  "const": 12
+                },
+                {
+                  "title": "13 Cycles",
+                  "const": 13
+                },
+                {
+                  "title": "14 Cycles",
+                  "const": 14
+                },
+                {
+                  "title": "15 Cycles",
+                  "const": 15
+                }
+              ],
+              "actions": [
+                {
+                      "type": "warning",
+                      "condition": "($Basic.precision > 3) && ($Basic.function === 'SQUAREROOT') ",
+                      "message": "The recommended precision range is 3."
+                },
+                {
+                      "type": "warning",
+                      "condition": "($Basic.precision > 6) && ($Basic.function != 'SQUAREROOT') ",
+                      "message": "The recommended precision range is 6 "
+                }
+              ]
+            }
+          }
+        },
+        "System": {
+          "type": "object",
+          "title": "System configuration",
+          "properties": {
+            "nvicSettings": {
+              "type": "object",
+              "title": "NVIC Settings",
+              "properties": {
+                "Interruption_global": {
+                  "title": "Interruption",
+                  "description": "Enable interruption mode for the peripheral",
+                  "type": "boolean",
+                  "default": false
+                },
+                "irq_handler_generation": {
+                  "type": "boolean",
+                  "title": "IRQ Handler generation",
+                  "default": true,
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($System.nvicSettings.Interruption_global) && ($info.layer === 'HAL')"
+                    }
+                  ]
+                },
+                "nvicConfig": {
+                  "title": "NVIC CORDIC global configurations",
+                  "type": "object",
+                  "objectType": "need.interrupt.lines",
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "*"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$System.nvicSettings.Interruption_global"
+                    }
+                  ]
+                }
+              }
+            },
+            "DMA_Settings": {
+              "type": "object",
+              "title": "DMA Settings",
+              "description": "DMA settings",
+              "properties": {
+                "EnableDMA_WR": {
+                  "type": "boolean",
+                  "title": "DMA Write",
+                  "description": "Enable Write DMA",
+                  "default": false
+                },
+                "dmaConfigWR": {
+                  "title": "DMA Write configuration",
+                  "type": "object",
+                  "objectType": "need.dma.channels",
+                  "owner": "$resource.id",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$System.DMA_Settings.EnableDMA_WR"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "WR",
+                      "constraints": {
+                        "direction": {
+                          "const": "MEMORY_TO_PERIPH"
+                        },
+                        "src_inc": {
+                          "default": "INCREMENTED"
+                        },
+                        "src_data_width": {
+                          "default": "WORD"
+                        },
+                        "dest_data_width": {
+                          "default": "WORD"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "EnableDMA_RD": {
+                  "type": "boolean",
+                  "title": "DMA Read",
+                  "description": "Enable Read DMA",
+                  "default": false
+                },
+                "dmaConfigRD": {
+                  "title": "DMA Read configuration",
+                  "type": "object",
+                  "objectType": "need.dma.channels",
+                  "owner": "$resource.id",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$System.DMA_Settings.EnableDMA_RD"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "RD",
+                      "constraints": {
+                        "direction": {
+                          "const": "PERIPH_TO_MEMORY"
+                        },
+                        "dest_inc": {
+                          "default": "INCREMENTED"
+                        },
+                        "src_data_width": {
+                          "default": "WORD"
+                        },
+                        "dest_data_width": {
+                          "default": "WORD"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

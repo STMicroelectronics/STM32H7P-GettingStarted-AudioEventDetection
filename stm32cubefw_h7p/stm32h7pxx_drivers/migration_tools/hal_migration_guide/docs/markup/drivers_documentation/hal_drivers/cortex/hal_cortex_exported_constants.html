@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html data-content_root="../../../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, HAL1, CORTEX, STM32H5, STM32G0, STM32F4, STM32L4, STM32C0, STM32H7" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     HAL CORTEX constants migration — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <script src="../../../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <link href="../../../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../../../search.html" rel="search" title="Search"/>
+    <link href="hal_cortex_exported_macros.html" rel="next" title="HAL CORTEX macros migration"/>
+    <link href="hal_cortex_use_cases.html" rel="prev" title="HAL CORTEX Typical use cases for migration"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/drivers_documentation/hal_drivers/cortex/hal_cortex_exported_constants" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_script/migration_script_toc.html">
+            HAL1 detection
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../breaking_concepts/breaking_concepts_toc.html">
+              Breaking changes in concepts
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../hal_drivers_toc.html">
+              HAL drivers migration
+             </a>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../adc/hal_adc_toc.html">
+                ADC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../comp/hal_comp_toc.html">
+                COMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="hal_cortex_toc.html">
+                CORTEX
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cordic/hal_cordic_toc.html">
+                CORDIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../crc/hal_crc_toc.html">
+                CRC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cryp/hal_cryp_toc.html">
+                CRYP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dac/hal_dac_toc.html">
+                DAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dcache/hal_dcache_toc.html">
+                DCACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dma/hal_dma_toc.html">
+                DMA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../exti/hal_exti_toc.html">
+                EXTI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../fmac/hal_fmac_toc.html">
+                FMAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../generic/hal_generic_toc.html">
+                GENERIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxmmu/hal_gfxmmu_toc.html">
+                GFXMMU
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxtim/hal_gfxtim_toc.html">
+                GFXTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gpio/hal_gpio_toc.html">
+                GPIO
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2c/hal_i2c_toc.html">
+                I2C
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2s/hal_i2s_toc.html">
+                I2S
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../icache/hal_icache_toc.html">
+                ICACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../irda/hal_irda_toc.html">
+                IRDA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../iwdg/hal_iwdg_toc.html">
+                IWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../lptim/hal_lptim_toc.html">
+                LPTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../nor/hal_nor_toc.html">
+                NOR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../opamp/hal_opamp_toc.html">
+                OPAMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ospi/hal_ospi_toc.html">
+                OSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pka/hal_pka_toc.html">
+                PKA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pwr/hal_pwr_toc.html">
+                PWR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../qspi/hal_qspi_toc.html">
+                QSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ramcfg/hal_ramcfg_toc.html">
+                RAMCFG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rcc/hal_rcc_toc.html">
+                RCC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rng/hal_rng_toc.html">
+                RNG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rtc/hal_rtc_toc.html">
+                RTC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sdram/hal_sdram_toc.html">
+                SDRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smartcard/hal_smartcard_toc.html">
+                SMARTCARD
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smbus/hal_smbus_toc.html">
+                SMBUS
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../spi/hal_spi_toc.html">
+                SPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sram/hal_sram_toc.html">
+                SRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../tim/hal_tim_toc.html">
+                TIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../uart/hal_uart_toc.html">
+                UART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../usart/hal_usart_toc.html">
+                USART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../wwdg/hal_wwdg_toc.html">
+                WWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../xspi/hal_xspi_toc.html">
+                XSPI
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../ll_drivers/ll_drivers_toc.html">
+              LL drivers migration
+             </a>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-drivers-documentation-hal-drivers-cortex-hal-cortex-exported-constants--page-root">
+            HAL CORTEX constants migration
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-cortex-nvic-priority-prioritygouping-preemption-sub-priority-constants">
+               HAL CORTEX NVIC Priority(PriorityGouping/Preemption/Sub Priority) constants
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#specific-changes">
+                  Specific changes
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-cortex-systick-clock-source-constants">
+               HAL CORTEX SYSTICK Clock source constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-cortex-mpu-access-control-constants">
+               HAL CORTEX MPU Access Control constants
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#id1">
+                  Specific changes
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-cortex-mpu-region-enable-constants">
+               HAL CORTEX MPU Region Enable constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-cortex-mpu-instruction-access-constants">
+               HAL CORTEX MPU Instruction Access constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-cortex-mpu-access-shareable-constants">
+               HAL CORTEX MPU Access Shareable constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-cortex-mpu-memory-attributes-constants">
+               HAL CORTEX MPU Memory Attributes constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-cortex-mpu-region-permission-attributes-constants">
+               HAL CORTEX MPU Region Permission attributes constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-cortex-mpu-region-number-constants">
+               HAL CORTEX MPU Region Number constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-cortex-mpu-attributes-number-constants">
+               HAL CORTEX MPU Attributes Number constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-cortex-mpu-device-memory-attributes-constants">
+               HAL CORTEX MPU device memory attributes constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-cortex-mpu-region-size-constants">
+               HAL CORTEX MPU region size constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-cortex-mpu-normal-memory-attributes-constants">
+               HAL CORTEX MPU Normal memory attributes constants
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#id2">
+                  Specific changes
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="hal-cortex-constants-migration">
+        <span id="hal-cortex-exported-constants">
+        </span>
+        <h1 id="docs-markup-drivers-documentation-hal-drivers-cortex-hal-cortex-exported-constants--page-root">
+         HAL CORTEX constants migration
+         <a class="headerlink" href="#docs-markup-drivers-documentation-hal-drivers-cortex-hal-cortex-exported-constants--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <p>
+         This section provides information about the HAL CORTEX constants migration .
+        </p>
+        <div class="admonition note">
+         <p class="admonition-title">
+          Note
+         </p>
+         <p>
+          For the following CORTEX constants, which were previously defined using #define macros, have been converted to an enumerated type (enum).
+This change enhances type safety and makes the code more readable and maintainable.
+         </p>
+         <p>
+          For more details refer to the concept :
+          <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+           <span class="std std-ref">
+            Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels
+           </span>
+          </a>
+         </p>
+        </div>
+        <section id="hal-cortex-nvic-priority-prioritygouping-preemption-sub-priority-constants">
+         <span id="hal-nvic-prio-constants">
+         </span>
+         <h2 id="hal-cortex-nvic-priority-prioritygouping-preemption-sub-priority-constants">
+          HAL CORTEX NVIC Priority(PriorityGouping/Preemption/Sub Priority) constants
+          <a class="headerlink" href="#hal-cortex-nvic-priority-prioritygouping-preemption-sub-priority-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define NVIC_PRIORITYGROUP_0</span>
+<span class="cp">#define NVIC_PRIORITYGROUP_1</span>
+<span class="cp">#define NVIC_PRIORITYGROUP_2</span>
+<span class="cp">#define NVIC_PRIORITYGROUP_3</span>
+<span class="cp">#define NVIC_PRIORITYGROUP_4</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_PRIORITY_GROUP_0</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_PRIORITY_GROUP_1</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_PRIORITY_GROUP_2</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_PRIORITY_GROUP_3</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_PRIORITY_GROUP_4</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_cortex_nvic_priority_group_t</span><span class="p">;</span>
+
+<span class="cm">/*! CORTEX preemption priority enumeration definition */</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_0</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_1</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_2</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_3</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_4</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_5</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_6</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_7</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_8</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_9</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_10</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_11</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_12</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_13</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_14</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_15</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_cortex_nvic_preemp_priority_t</span><span class="p">;</span>
+
+<span class="cm">/*! CORTEX sub priority enumeration definition */</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_0</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_1</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_2</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_3</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_4</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_5</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_6</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_7</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_8</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_9</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_10</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_11</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_12</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_13</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_14</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_15</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_cortex_nvic_sub_priority_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <section id="specific-changes">
+          <h3 id="specific-changes">
+           Specific changes
+           <a class="headerlink" href="#specific-changes" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           Added Enumerations: The CORTEX preemption &amp; sub priority constants, are now defined using enumerations in HAL2, as it used to be numerical value in HAL1.
+          </p>
+          <hr class="docutils"/>
+         </section>
+        </section>
+        <section id="hal-cortex-systick-clock-source-constants">
+         <span id="hal-systick-clk-constants">
+         </span>
+         <h2 id="hal-cortex-systick-clock-source-constants">
+          HAL CORTEX SYSTICK Clock source constants
+          <a class="headerlink" href="#hal-cortex-systick-clock-source-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          In HAL2, the multiple clock source defines are replaced by a simplified enum with only two options: internal or external clock source.
+You should map your previous clock source to one of these enum values as follows:
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            Use
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              HAL_CORTEX_SYSTICK_CLKSOURCE_INTERNAL
+             </span>
+            </code>
+            for clock sources like
+            <strong>
+             HCLK
+            </strong>
+            and
+            <strong>
+             SYSCLK
+            </strong>
+            .
+           </p>
+          </li>
+          <li>
+           <p>
+            Use
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              HAL_CORTEX_SYSTICK_CLKSOURCE_EXTERNAL
+             </span>
+            </code>
+            for clock sources such as
+            <strong>
+             HCLK_DIV8
+            </strong>
+            ,
+            <strong>
+             LSI
+            </strong>
+            ,
+            <strong>
+             LSE
+            </strong>
+            ,
+            <strong>
+             SYSCLK_DIV16
+            </strong>
+            , and
+            <strong>
+             SYSCLK_DIV64
+            </strong>
+            .
+           </p>
+          </li>
+         </ul>
+         <p>
+          This mapping ensures compatibility with the new HAL2 clock source configuration.
+         </p>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define SYSTICK_CLKSOURCE_HCLK_DIV8</span>
+<span class="cp">#define SYSTICK_CLKSOURCE_LSI</span>
+<span class="cp">#define SYSTICK_CLKSOURCE_LSE</span>
+<span class="cp">#define SYSTICK_CLKSOURCE_HCLK</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_SYSTICK_CLKSOURCE_INTERNAL</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_SYSTICK_CLKSOURCE_EXTERNAL</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_cortex_systick_clk_src_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-cortex-mpu-access-control-constants">
+         <span id="hal-mpu-acc-constants">
+         </span>
+         <h2 id="hal-cortex-mpu-access-control-constants">
+          HAL CORTEX MPU Access Control constants
+          <a class="headerlink" href="#hal-cortex-mpu-access-control-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define  MPU_HFNMI_PRIVDEF_NONE</span>
+<span class="cp">#define  MPU_HARDFAULT_NMI</span>
+
+
+
+
+<span class="cp">#define  MPU_PRIVILEGED_DEFAULT</span>
+<span class="cp">#define  MPU_HFNMI_PRIVDEF</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_ACCESS_FAULT_ALL</span><span class="w">       </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_ACCESS_FAULT_ONLY_PRIV</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_cortex_mpu_unmapped_addr_fault_t</span><span class="p">;</span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_HARDFAULT_NMI_DISABLED</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_HARDFAULT_NMI_ENABLED</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_cortex_mpu_hardfault_nmi_state_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <section id="id1">
+          <h3 id="id1">
+           Specific changes
+           <a class="headerlink" href="#id1" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           Split the constants: The CORTEX Access Control constants, are now split into two separate enumeration hal_cortex_mpu_unmapped_addr_fault_t / hal_cortex_mpu_hardfault_nmi_state_t.
+          </p>
+          <hr class="docutils"/>
+         </section>
+        </section>
+        <section id="hal-cortex-mpu-region-enable-constants">
+         <span id="hal-mpu-reg-constants">
+         </span>
+         <h2 id="hal-cortex-mpu-region-enable-constants">
+          HAL CORTEX MPU Region Enable constants
+          <a class="headerlink" href="#hal-cortex-mpu-region-enable-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define  MPU_REGION_ENABLE</span>
+<span class="cp">#define  MPU_REGION_DISABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_DISABLED</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_ENABLED</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_cortex_mpu_region_state_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-cortex-mpu-instruction-access-constants">
+         <span id="hal-mpu-instruction-acc-constants">
+         </span>
+         <h2 id="hal-cortex-mpu-instruction-access-constants">
+          HAL CORTEX MPU Instruction Access constants
+          <a class="headerlink" href="#hal-cortex-mpu-instruction-access-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define  MPU_INSTRUCTION_ACCESS_ENABLE</span>
+<span class="cp">#define  MPU_INSTRUCTION_ACCESS_DISABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_EXECUTION_ATTR_DISABLE</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_EXECUTION_ATTR_ENABLE</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_cortex_mpu_execution_attr_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-cortex-mpu-access-shareable-constants">
+         <span id="hal-mpu-share-constants">
+         </span>
+         <h2 id="hal-cortex-mpu-access-shareable-constants">
+          HAL CORTEX MPU Access Shareable constants
+          <a class="headerlink" href="#hal-cortex-mpu-access-shareable-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define  MPU_ACCESS_NOT_SHAREABLE</span>
+<span class="cp">#define  MPU_ACCESS_OUTER_SHAREABLE</span>
+<span class="cp">#define  MPU_ACCESS_INNER_SHAREABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">Removed</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">HAL2</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">STM32</span><span class="w"> </span><span class="n">series</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">ARMv8</span><span class="o">-</span><span class="n">M</span><span class="w"> </span><span class="n">architecture</span><span class="p">.</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <div class="admonition important">
+          <p class="admonition-title">
+           Important
+          </p>
+          <p>
+           The shareability has been removed in series with ARMv8-M but it still exist in ARMv8.1-M.
+          </p>
+          <p>
+           This change is related to the STM32 Hardware specifications.
+          </p>
+         </div>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-cortex-mpu-memory-attributes-constants">
+         <span id="hal-mpu-scb-constants">
+         </span>
+         <h2 id="hal-cortex-mpu-memory-attributes-constants">
+          HAL CORTEX MPU Memory Attributes constants
+          <a class="headerlink" href="#hal-cortex-mpu-memory-attributes-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               ARM Architecture
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              ARMv7-M, ARMv6-M
+             </p>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define  MPU_ACCESS_SHAREABLE</span>
+<span class="cp">#define  MPU_ACCESS_NOT_SHAREABLE</span>
+
+<span class="cp">#define  MPU_ACCESS_CACHEABLE</span>
+<span class="cp">#define  MPU_ACCESS_NOT_CACHEABLE</span>
+
+<span class="cp">#define  MPU_ACCESS_BUFFERABLE</span>
+<span class="cp">#define  MPU_ACCESS_NOT_BUFFERABLE</span>
+
+<span class="cp">#define  MPU_TEX_LEVEL0</span>
+<span class="cp">#define  MPU_TEX_LEVEL1</span>
+<span class="cp">#define  MPU_TEX_LEVEL2</span>
+<span class="cp">#define  MPU_TEX_LEVEL4</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_SO_MEM_SHAREABLE</span><span class="w">                 </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_DEVICE_MEM_SHAREABLE</span><span class="w">             </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_NORMAL_MEM_NSHAREABLE_WT_NWA</span><span class="w">     </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_NORMAL_MEM_NSHAREABLE_WB_NWA</span><span class="w">     </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_NORMAL_MEM_SHAREABLE_WT_NWA</span><span class="w">      </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_NORMAL_MEM_SHAREABLE_WB_NWA</span><span class="w">      </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_NORMAL_MEM_NSHAREABLE_NCACHEABLE</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_NORMAL_MEM_SHAREABLE_NCACHEABLE</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_NORMAL_MEM_NSHAREABLE_WB_RWA</span><span class="w">     </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_NORMAL_MEM_SHAREABLE_WB_RWA</span><span class="w">      </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_DEVICE_MEM_NSHAREABLE</span><span class="w">            </span><span class="p">,</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_cortex_mpu_memory_attr_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <div class="admonition important">
+          <p class="admonition-title">
+           Important
+          </p>
+          <p>
+           The Shareability, Cacheablility, Bufferability and TEX levels have been replaced in series in ARMv7-M and ARMv6-M architecture with a single enumeration.
+          </p>
+          <p>
+           This enumeration allows the user to replace the 4 definitions used to define memory attributes in a single instruction for easier and simpler implementation.
+          </p>
+         </div>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-cortex-mpu-region-permission-attributes-constants">
+         <span id="hal-mpu-reg-permission-constants">
+         </span>
+         <h2 id="hal-cortex-mpu-region-permission-attributes-constants">
+          HAL CORTEX MPU Region Permission attributes constants
+          <a class="headerlink" href="#hal-cortex-mpu-region-permission-attributes-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               Arm Architecture
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              ARMv8-M
+             </p>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define  MPU_REGION_PRIV_RW</span>
+<span class="cp">#define  MPU_REGION_ALL_RW</span>
+<span class="cp">#define  MPU_REGION_PRIV_RO</span>
+<span class="cp">#define  MPU_REGION_ALL_RO</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_ONLY_PRIV_RW</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_ALL_RW</span><span class="w">       </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_ONLY_PRIV_RO</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_ALL_RO</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_cortex_mpu_region_access_attr_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              ARMv7-M, ARMv6-M
+             </p>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define  MPU_REGION_NO_ACCESS</span>
+<span class="cp">#define  MPU_REGION_PRIV_RW</span>
+<span class="cp">#define  MPU_REGION_PRIV_RW_URO</span>
+<span class="cp">#define  MPU_REGION_FULL_ACCESS</span>
+<span class="cp">#define  MPU_REGION_PRIV_RO</span>
+<span class="cp">#define  MPU_REGION_PRIV_RO_URO</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_ALL_RW_FAULT</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_ONLY_PRIV_RW</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_NPRIV_W_FAULT</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_ALL_RW</span><span class="w">        </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_ONLY_PRIV_RO</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_ALL_RO</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_cortex_mpu_region_access_attr_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-cortex-mpu-region-number-constants">
+         <span id="hal-mpu-reg-num-constants">
+         </span>
+         <h2 id="hal-cortex-mpu-region-number-constants">
+          HAL CORTEX MPU Region Number constants
+          <a class="headerlink" href="#hal-cortex-mpu-region-number-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define  MPU_REGION_NUMBER0</span>
+<span class="cp">#define  MPU_REGION_NUMBER1</span>
+<span class="cp">#define  MPU_REGION_NUMBER2</span>
+<span class="cp">#define  MPU_REGION_NUMBER3</span>
+<span class="cp">#define  MPU_REGION_NUMBER4</span>
+<span class="cp">#define  MPU_REGION_NUMBER5</span>
+<span class="cp">#define  MPU_REGION_NUMBER6</span>
+<span class="cp">#define  MPU_REGION_NUMBER7</span>
+<span class="p">...</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_0</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_1</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_2</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_3</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_4</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_5</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_6</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_7</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_cortex_mpu_region_idx_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-cortex-mpu-attributes-number-constants">
+         <span id="hal-mpu-att-num-constants">
+         </span>
+         <h2 id="hal-cortex-mpu-attributes-number-constants">
+          HAL CORTEX MPU Attributes Number constants
+          <a class="headerlink" href="#hal-cortex-mpu-attributes-number-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define  MPU_ATTRIBUTES_NUMBER0</span>
+<span class="cp">#define  MPU_ATTRIBUTES_NUMBER1</span>
+<span class="cp">#define  MPU_ATTRIBUTES_NUMBER2</span>
+<span class="cp">#define  MPU_ATTRIBUTES_NUMBER3</span>
+<span class="cp">#define  MPU_ATTRIBUTES_NUMBER4</span>
+<span class="cp">#define  MPU_ATTRIBUTES_NUMBER5</span>
+<span class="cp">#define  MPU_ATTRIBUTES_NUMBER6</span>
+<span class="cp">#define  MPU_ATTRIBUTES_NUMBER7</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_MEM_ATTR_0</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_MEM_ATTR_1</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_MEM_ATTR_2</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_MEM_ATTR_3</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_MEM_ATTR_4</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_MEM_ATTR_5</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_MEM_ATTR_6</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_MEM_ATTR_7</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_cortex_mpu_mem_attr_idx_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-cortex-mpu-device-memory-attributes-constants">
+         <span id="hal-mpu-device-mem-att-constants">
+         </span>
+         <h2 id="hal-cortex-mpu-device-memory-attributes-constants">
+          HAL CORTEX MPU device memory attributes constants
+          <a class="headerlink" href="#hal-cortex-mpu-device-memory-attributes-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define  MPU_DEVICE_NGNRNE</span>
+<span class="cp">#define  MPU_DEVICE_NGNRE</span>
+<span class="cp">#define  MPU_DEVICE_NGRE</span>
+<span class="cp">#define  MPU_DEVICE_GRE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_DEVICE_MEM_NGNRNE</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_DEVICE_MEM_NGNRE</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_DEVICE_MEM_NGRE</span><span class="w">   </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_DEVICE_MEM_GRE</span><span class="w">    </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_DEVICE_MEM_INVALID</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_cortex_mpu_device_mem_attr_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-cortex-mpu-region-size-constants">
+         <span id="hal-mpu-region-size-constants">
+         </span>
+         <h2 id="hal-cortex-mpu-region-size-constants">
+          HAL CORTEX MPU region size constants
+          <a class="headerlink" href="#hal-cortex-mpu-region-size-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define   MPU_REGION_SIZE_32KB</span>
+<span class="cp">#define   MPU_REGION_SIZE_64KB</span>
+<span class="cp">#define   MPU_REGION_SIZE_128KB</span>
+<span class="cp">#define   MPU_REGION_SIZE_256KB</span>
+<span class="cp">#define   MPU_REGION_SIZE_512KB</span>
+<span class="cp">#define   MPU_REGION_SIZE_1MB</span>
+<span class="p">...</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_SIZE_32KB</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_SIZE_64KB</span><span class="w">  </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_SIZE_128KB</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_SIZE_256KB</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_SIZE_512KB</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_REGION_SIZE_1MB</span><span class="w">   </span><span class="p">,</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_cortex_mpu_device_mem_attr_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-cortex-mpu-normal-memory-attributes-constants">
+         <span id="hal-mpu-normal-mem-att-constants">
+         </span>
+         <h2 id="hal-cortex-mpu-normal-memory-attributes-constants">
+          HAL CORTEX MPU Normal memory attributes constants
+          <a class="headerlink" href="#hal-cortex-mpu-normal-memory-attributes-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define  MPU_NOT_CACHEABLE</span>
+<span class="cp">#define  MPU_WRITE_THROUGH</span>
+<span class="cp">#define  MPU_WRITE_BACK</span>
+<span class="cp">#define  MPU_TRANSIENT</span>
+<span class="cp">#define  MPU_NON_TRANSIENT</span>
+<span class="cp">#define  MPU_NO_ALLOCATE</span>
+<span class="cp">#define  MPU_W_ALLOCATE</span>
+<span class="cp">#define  MPU_R_ALLOCATE</span>
+<span class="cp">#define  MPU_RW_ALLOCATE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_NORMAL_MEM_NCACHEABLE</span><span class="w"> </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_NORMAL_MEM_WT_NOA</span><span class="w">     </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_NORMAL_MEM_WT_WA</span><span class="w">      </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_NORMAL_MEM_WT_RA</span><span class="w">      </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_NORMAL_MEM_WT_RWA</span><span class="w">     </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_NORMAL_MEM_WB_NOA</span><span class="w">     </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_NORMAL_MEM_WB_WA</span><span class="w">      </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_NORMAL_MEM_WB_RA</span><span class="w">      </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_NORMAL_MEM_WB_RWA</span><span class="w">     </span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_MPU_NORMAL_MEM_INVALID</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_cortex_mpu_normal_mem_cache_attr_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <section id="id2">
+          <h3 id="id2">
+           Specific changes
+           <a class="headerlink" href="#id2" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           The new enum values in hal_cortex_mpu_normal_mem_cache_attr_t combine the old defines into predefined options.
+This simplifies configuration, ensures compatibility, and reduces errors, making the process more intuitive for users.
+          </p>
+         </section>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

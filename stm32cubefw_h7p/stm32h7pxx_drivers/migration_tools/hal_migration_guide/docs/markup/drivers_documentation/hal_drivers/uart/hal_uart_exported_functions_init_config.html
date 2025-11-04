@@ -1,0 +1,2197 @@
+<!DOCTYPE html>
+<html data-content_root="../../../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, HAL1, UART, STM32H5, STM32G0, STM32F4, STM32L4, STM32C0, STM32H7" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     HAL UART initialization and configuration functions migration — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <script src="../../../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <link href="../../../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../../../search.html" rel="search" title="Search"/>
+    <link href="hal_uart_exported_functions_io_operation.html" rel="next" title="HAL UART I/O operations migration"/>
+    <link href="hal_uart_exported_types.html" rel="prev" title="HAL UART types migration"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/drivers_documentation/hal_drivers/uart/hal_uart_exported_functions_init_config" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_script/migration_script_toc.html">
+            HAL1 detection
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../breaking_concepts/breaking_concepts_toc.html">
+              Breaking changes in concepts
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../hal_drivers_toc.html">
+              HAL drivers migration
+             </a>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../adc/hal_adc_toc.html">
+                ADC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../comp/hal_comp_toc.html">
+                COMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cortex/hal_cortex_toc.html">
+                CORTEX
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cordic/hal_cordic_toc.html">
+                CORDIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../crc/hal_crc_toc.html">
+                CRC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cryp/hal_cryp_toc.html">
+                CRYP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dac/hal_dac_toc.html">
+                DAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dcache/hal_dcache_toc.html">
+                DCACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dma/hal_dma_toc.html">
+                DMA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../exti/hal_exti_toc.html">
+                EXTI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../fmac/hal_fmac_toc.html">
+                FMAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../generic/hal_generic_toc.html">
+                GENERIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxmmu/hal_gfxmmu_toc.html">
+                GFXMMU
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxtim/hal_gfxtim_toc.html">
+                GFXTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gpio/hal_gpio_toc.html">
+                GPIO
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2c/hal_i2c_toc.html">
+                I2C
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2s/hal_i2s_toc.html">
+                I2S
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../icache/hal_icache_toc.html">
+                ICACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../irda/hal_irda_toc.html">
+                IRDA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../iwdg/hal_iwdg_toc.html">
+                IWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../lptim/hal_lptim_toc.html">
+                LPTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../nor/hal_nor_toc.html">
+                NOR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../opamp/hal_opamp_toc.html">
+                OPAMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ospi/hal_ospi_toc.html">
+                OSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pka/hal_pka_toc.html">
+                PKA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pwr/hal_pwr_toc.html">
+                PWR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../qspi/hal_qspi_toc.html">
+                QSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ramcfg/hal_ramcfg_toc.html">
+                RAMCFG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rcc/hal_rcc_toc.html">
+                RCC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rng/hal_rng_toc.html">
+                RNG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rtc/hal_rtc_toc.html">
+                RTC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sdram/hal_sdram_toc.html">
+                SDRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smartcard/hal_smartcard_toc.html">
+                SMARTCARD
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smbus/hal_smbus_toc.html">
+                SMBUS
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../spi/hal_spi_toc.html">
+                SPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sram/hal_sram_toc.html">
+                SRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../tim/hal_tim_toc.html">
+                TIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="hal_uart_toc.html">
+                UART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../usart/hal_usart_toc.html">
+                USART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../wwdg/hal_wwdg_toc.html">
+                WWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../xspi/hal_xspi_toc.html">
+                XSPI
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../ll_drivers/ll_drivers_toc.html">
+              LL drivers migration
+             </a>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-drivers-documentation-hal-drivers-uart-hal-uart-exported-functions-init-config--page-root">
+            HAL UART initialization and configuration functions migration
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#configure-the-sw-layer-hal">
+               Configure the SW layer HAL
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#configure-the-basic-features">
+               Configure the basic features
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#configure-the-uart-additional-features">
+                  Configure the UART additional features
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#configure-the-nvic">
+               Configure the NVIC
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#configure-the-uart-dma-s">
+               Configure the UART DMA(s)
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#generate-the-code">
+               Generate the code
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#uart-lin-mode-initialization">
+               UART LIN Mode Initialization
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#additional-configuration">
+                  Additional Configuration
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#code-generation">
+                  Code Generation
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#uart-rs485-mode-initialization">
+               UART RS485 Mode Initialization
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#id1">
+                  Code Generation
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#uart-multiprocessor-mode-initialization">
+               UART MultiProcessor Mode Initialization
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#additional-features-configuration">
+                  Additional Features Configuration
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#id2">
+                  Code Generation
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#uart-half-duplex-mode-initialization">
+               UART Half-Duplex Mode Initialization
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#id3">
+                  Code Generation
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="hal-uart-initialization-and-configuration-functions-migration">
+        <span id="hal-uart-exported-functions-init-config">
+        </span>
+        <h1 id="docs-markup-drivers-documentation-hal-drivers-uart-hal-uart-exported-functions-init-config--page-root">
+         HAL UART initialization and configuration functions migration
+         <a class="headerlink" href="#docs-markup-drivers-documentation-hal-drivers-uart-hal-uart-exported-functions-init-config--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <p>
+         The goal of this page is to show how to migrate the Init sequence using
+         <strong>
+          STM32CubeMX2
+         </strong>
+         :
+        </p>
+        <ul class="simple">
+         <li>
+          <p>
+           Open STM32CubeMX2 UART configuration panel
+          </p>
+         </li>
+         <li>
+          <p>
+           Configure the UART basic features
+          </p>
+         </li>
+         <li>
+          <p>
+           Configure the additional features of the UART if needed
+          </p>
+         </li>
+         <li>
+          <p>
+           Configure the GPIOs needed by the UART
+          </p>
+         </li>
+         <li>
+          <p>
+           Configure the NVIC if the application requires the UART interrupts
+          </p>
+         </li>
+         <li>
+          <p>
+           Configure the UART DMA(s) if the application requires to use the UART in DMA mode
+          </p>
+         </li>
+         <li>
+          <p>
+           Configure the SW layer HAL
+          </p>
+         </li>
+         <li>
+          <p>
+           Generate the code
+          </p>
+         </li>
+        </ul>
+        <div class="admonition note">
+         <p class="admonition-title">
+          Note
+         </p>
+         <p>
+          The configuration below might varies from a series to another.
+         </p>
+        </div>
+        <p>
+         create a new project with
+         <strong>
+          STM32CubeMX2
+         </strong>
+         , start by enabling the UART instance as
+         <strong>
+          Serial
+         </strong>
+         , as shown in this example with the selected UART4.
+        </p>
+        <a class="reference internal image-reference" href="../../../../../_images/Project_Setup3.png">
+         <img alt="Example Image" src="../../../../../_images/Project_Setup3.png" style="width: 700px;">
+         </img>
+        </a>
+        <section id="configure-the-sw-layer-hal">
+         <h2 id="configure-the-sw-layer-hal">
+          Configure the SW layer HAL
+          <a class="headerlink" href="#configure-the-sw-layer-hal" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          The HAL library is used for UART initialization, with resource initialization code set to be generated and called within the project.
+         </p>
+         <a class="reference internal image-reference" href="../../../../../_images/Software_Layer_and_Resource_Initialization_Configuration2.png">
+          <img alt="Example Image" src="../../../../../_images/Software_Layer_and_Resource_Initialization_Configuration2.png" style="width: 700px;"/>
+         </a>
+        </section>
+        <section id="configure-the-basic-features">
+         <h2 id="configure-the-basic-features">
+          Configure the basic features
+          <a class="headerlink" href="#configure-the-basic-features" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <ul class="simple">
+          <li>
+           <p>
+            The UART mode is configured to Asynchronous.
+           </p>
+          </li>
+          <li>
+           <p>
+            The UART baud rate is set to 115200.
+           </p>
+          </li>
+          <li>
+           <p>
+            The UART word length is configured to 8-bit (including parity).
+           </p>
+          </li>
+          <li>
+           <p>
+            The UART parity is set to None.
+           </p>
+          </li>
+          <li>
+           <p>
+            The UART stop bit is configured to 1.
+           </p>
+          </li>
+          <li>
+           <p>
+            The UART data direction is set to Transmit and Receive.
+           </p>
+          </li>
+          <li>
+           <p>
+            The UART hardware flow control (RS232) is set to None.
+           </p>
+          </li>
+          <li>
+           <p>
+            The UART oversampling is configured to 16.
+           </p>
+          </li>
+          <li>
+           <p>
+            The UART one bit sampling is disabled.
+           </p>
+          </li>
+          <li>
+           <p>
+            The UART clock prescaler is set to DIV1.
+           </p>
+          </li>
+         </ul>
+         <a class="reference internal image-reference" href="../../../../../_images/UART_Basic_features_Configuration.png">
+          <img alt="Example Image" src="../../../../../_images/UART_Basic_features_Configuration.png" style="width: 700px;"/>
+         </a>
+         <section id="configure-the-uart-additional-features">
+          <h3 id="configure-the-uart-additional-features">
+           Configure the UART additional features
+           <a class="headerlink" href="#configure-the-uart-additional-features" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <a class="reference internal image-reference" href="../../../../../_images/Additional_features_Configuration3.png">
+           <img alt="Example Image" src="../../../../../_images/Additional_features_Configuration3.png" style="width: 700px;"/>
+          </a>
+         </section>
+        </section>
+        <section id="configure-the-nvic">
+         <h2 id="configure-the-nvic">
+          Configure the NVIC
+          <a class="headerlink" href="#configure-the-nvic" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          The NVIC configuration for UART enables both event and error interrupts, with each set to priority 0 and subpriority 0.
+         </p>
+         <a class="reference internal image-reference" href="../../../../../_images/NVIC_Configuration_for_UART.png">
+          <img alt="Example Image" src="../../../../../_images/NVIC_Configuration_for_UART.png" style="width: 700px;"/>
+         </a>
+        </section>
+        <section id="configure-the-uart-dma-s">
+         <h2 id="configure-the-uart-dma-s">
+          Configure the UART DMA(s)
+          <a class="headerlink" href="#configure-the-uart-dma-s" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          The DMA configuration for UART is set for both TX and RX.
+         </p>
+         <a class="reference internal image-reference" href="../../../../../_images/DMA_Configuration_for_UART.png">
+          <img alt="Example Image" src="../../../../../_images/DMA_Configuration_for_UART.png" style="width: 700px;"/>
+         </a>
+         <hr class="docutils"/>
+        </section>
+        <section id="generate-the-code">
+         <span id="hal-uart-generate-code">
+         </span>
+         <h2 id="generate-the-code">
+          Generate the code
+          <a class="headerlink" href="#generate-the-code" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <dl class="simple">
+          <dt>
+           <strong>
+            Related concept
+           </strong>
+           :
+          </dt>
+          <dd>
+           <ul class="simple">
+            <li>
+             <p>
+              <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_A.html#breaking-concepts-concept-a1">
+               <span class="std std-ref">
+                Split legacy HAL_PPP_Init into Init (build handle object) and config (apply configuration)
+               </span>
+              </a>
+             </p>
+            </li>
+            <li>
+             <p>
+              <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_A.html#breaking-concepts-concept-a5">
+               <span class="std std-ref">
+                Remove MspInit and MspDeInit callbacks
+               </span>
+              </a>
+             </p>
+            </li>
+           </ul>
+          </dd>
+         </dl>
+         <table id="id4">
+          <caption>
+           <span class="caption-text">
+            STM32CubeMX2 Generated : UART initialization and De-initialization sequence
+           </span>
+           <a class="headerlink" href="#id4" title="Link to this table">
+            ¶
+           </a>
+          </caption>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               Topic
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <strong>
+               Brief
+              </strong>
+             </p>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                The UART initialization sequence involves a basic
+configuration for the appropriate UART within the
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  MX_UART4_Init
+                 </span>
+                </code>
+                function in the
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  main.c
+                 </span>
+                </code>
+                file.
+               </p>
+              </li>
+              <li>
+               <p>
+                The setup of peripheral clocks, GPIO, NVIC, and DMA occurs in the
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_UART_MspInit
+                 </span>
+                </code>
+                function in the
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  stm32tnxx_hal_msp.c
+                 </span>
+                </code>
+                file.
+               </p>
+              </li>
+              <li>
+               <p>
+                The IRQ handler is managed in the
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  stm32tnxx_it.c
+                 </span>
+                </code>
+                file.
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <p>
+              The UART initialisation sequence is generated in the
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                mx_uart4_hal_uart_init
+               </span>
+              </code>
+              function in
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                mx_uart4.c
+               </span>
+              </code>
+              file under $PROJ_DIR$/generated/STM32Cube_CodeGen.
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              The declaration of the handle
+             </p>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">UART_HandleTypeDef</span><span class="w"> </span><span class="n">huart4</span><span class="p">;</span>
+<span class="n">DMA_HandleTypeDef</span><span class="w"> </span><span class="n">hLPDMA1_CH0</span><span class="p">;</span>
+<span class="n">DMA_HandleTypeDef</span><span class="w"> </span><span class="n">hLPDMA1_CH1</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_uart_handle_t</span><span class="w"> </span><span class="n">hUART4</span><span class="p">;</span>
+<span class="n">hal_dma_handle_t</span><span class="w"> </span><span class="n">hLPDMA1_CH0</span><span class="p">;</span>
+<span class="n">hal_dma_handle_t</span><span class="w"> </span><span class="n">hLPDMA1_CH1</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              The init and config sequence function including the Clock, the GPIO, the NVIC, the DMA settings
+             </p>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">MX_UART4_Init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART4</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">BaudRate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">115200</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">WordLength</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_WORDLENGTH_8B</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">StopBits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_STOPBITS_1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">Parity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_PARITY_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_MODE_TX_RX</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">HwFlowCtl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_HWCONTROL_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">OverSampling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_OVERSAMPLING_16</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">OneBitSampling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_ONE_BIT_SAMPLE_DISABLE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">ClockPrescaler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_PRESCALER_DIV1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">AdvancedInit</span><span class="p">.</span><span class="n">AdvFeatureInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_ADVFEATURE_NO_INIT</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">huart4</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+
+
+
+
+
+
+
+<span class="w">  </span><span class="cm">/* Fifo configuration */</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UARTEx_SetTxFifoThreshold</span><span class="p">(</span><span class="o">&amp;</span><span class="n">huart4</span><span class="p">,</span><span class="w"> </span><span class="n">UART_TXFIFO_THRESHOLD_1_8</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UARTEx_SetRxFifoThreshold</span><span class="p">(</span><span class="o">&amp;</span><span class="n">huart4</span><span class="p">,</span><span class="w"> </span><span class="n">UART_RXFIFO_THRESHOLD_1_8</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UARTEx_EnableFifoMode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">huart4</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">HAL_UART_MspInit</span><span class="p">(</span><span class="n">UART_HandleTypeDef</span><span class="o">*</span><span class="w"> </span><span class="n">huart</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">GPIO_InitTypeDef</span><span class="w"> </span><span class="n">GPIO_InitStruct</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<span class="w">  </span><span class="n">RCC_PeriphCLKInitTypeDef</span><span class="w"> </span><span class="n">PeriphClkInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">huart</span><span class="o">-&gt;</span><span class="n">Instance</span><span class="o">==</span><span class="n">UART4</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">__HAL_RCC_UART4_CLK_ENABLE</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">PeriphClkInit</span><span class="p">.</span><span class="n">PeriphClockSelection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RCC_PERIPHCLK_UART4</span><span class="p">;</span>
+<span class="w">    </span><span class="n">PeriphClkInit</span><span class="p">.</span><span class="n">Uart4ClockSelection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RCC_UART4CLKSOURCE_PCLK1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_RCCEx_PeriphCLKConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">PeriphClkInit</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+
+
+<span class="w">    </span><span class="cm">/*GPIO*/</span>
+<span class="w">    </span><span class="n">__HAL_RCC_GPIOA_CLK_ENABLE</span><span class="p">();</span>
+
+
+
+<span class="w">    </span><span class="cm">/* UART4 TX Configuration */</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_PIN_12</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_MODE_AF_PP</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Pull</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_NOPULL</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_SPEED_FREQ_LOW</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Alternate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_AF6_UART4</span><span class="p">;</span>
+<span class="w">    </span><span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">GPIOA</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">GPIO_InitStruct</span><span class="p">);</span>
+
+<span class="w">    </span><span class="cm">/* UART4 RX Configuration */</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_PIN_1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_MODE_AF_PP</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Pull</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_NOPULL</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_SPEED_FREQ_LOW</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Alternate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_AF8_UART4</span><span class="p">;</span>
+<span class="w">    </span><span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">GPIOA</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">GPIO_InitStruct</span><span class="p">);</span>
+
+<span class="w">    </span><span class="cm">/* Enable interrupt */</span>
+<span class="w">    </span><span class="n">HAL_NVIC_SetPriority</span><span class="p">(</span><span class="n">UART4_IRQn</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">HAL_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">UART4_IRQn</span><span class="p">);</span>
+
+
+<span class="w">  </span><span class="cm">/* Configure the DMA TX */</span>
+<span class="w">  </span><span class="n">__HAL_RCC_LPDMA1_CLK_ENABLE</span><span class="p">();</span>
+
+<span class="w">  </span><span class="n">hLPDMA1_CH0</span><span class="p">.</span><span class="n">Instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LPDMA1_Channel0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hLPDMA1_CH0</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">Request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LPDMA1_REQUEST_UART4_TX</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hLPDMA1_CH0</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">Direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DMA_MEMORY_TO_MEMORY</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hLPDMA1_CH0</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">SrcInc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DMA_SINC_FIXED</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hLPDMA1_CH0</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">DestInc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DMA_DINC_FIXED</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hLPDMA1_CH0</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">SrcDataWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DMA_SRC_DATAWIDTH_BYTE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hLPDMA1_CH0</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">DestDataWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DMA_DEST_DATAWIDTH_BYTE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hLPDMA1_CH0</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">Priority</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DMA_LOW_PRIORITY_LOW_WEIGHT</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_DMA_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hLPDMA1_CH0</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+
+
+
+
+
+
+<span class="w">  </span><span class="cm">/* Link the Transmit DMA handle to the UART handle */</span>
+<span class="w">  </span><span class="n">__HAL_LINKDMA</span><span class="p">(</span><span class="n">huart4</span><span class="p">,</span><span class="w"> </span><span class="n">hdmarx</span><span class="p">,</span><span class="w"> </span><span class="n">LPDMA1_Channel0</span><span class="p">);</span>
+
+
+
+
+<span class="w">  </span><span class="cm">/* Enable the interruption for LPDMA1_CH0 */</span>
+<span class="w">  </span><span class="n">HAL_NVIC_SetPriority</span><span class="p">(</span><span class="n">LPDMA1_Channel0_IRQn</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">  </span><span class="n">HAL_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">LPDMA1_Channel0_IRQn</span><span class="p">);</span>
+
+<span class="w"> </span><span class="cm">/* Configure the DMA RX */</span>
+<span class="w">  </span><span class="n">hLPDMA1_CH1</span><span class="p">.</span><span class="n">Instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LPDMA1_Channel1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hLPDMA1_CH1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">Request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LPDMA1_REQUEST_UART4_RX</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hLPDMA1_CH1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">Direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DMA_MEMORY_TO_MEMORY</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hLPDMA1_CH1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">SrcInc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DMA_SINC_FIXED</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hLPDMA1_CH1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">DestInc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DMA_DINC_FIXED</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hLPDMA1_CH1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">SrcDataWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DMA_SRC_DATAWIDTH_BYTE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hLPDMA1_CH1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">DestDataWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DMA_DEST_DATAWIDTH_BYTE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hLPDMA1_CH1</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">Priority</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DMA_LOW_PRIORITY_LOW_WEIGHT</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_DMA_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hLPDMA1_CH1</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+
+
+
+
+
+
+<span class="w">  </span><span class="cm">/* Link the Transmit DMA handle to the UART handle */</span>
+<span class="w">  </span><span class="n">__HAL_LINKDMA</span><span class="p">(</span><span class="n">huart4</span><span class="p">,</span><span class="w"> </span><span class="n">hdmatx</span><span class="p">,</span><span class="w"> </span><span class="n">LPDMA1_Channel1</span><span class="p">);</span>
+
+
+
+
+
+<span class="w">  </span><span class="n">HAL_NVIC_SetPriority</span><span class="p">(</span><span class="n">LPDMA1_Channel1_IRQn</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">  </span><span class="n">HAL_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">LPDMA1_Channel1_IRQn</span><span class="p">);</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_uart_handle_t</span><span class="w"> </span><span class="o">*</span><span class="nf">mx_uart4_hal_uart_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">hal_uart_config_t</span><span class="w"> </span><span class="n">uart_config</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">baud_rate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">115200</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">clock_prescaler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_PRESCALER_DIV1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">word_length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_WORD_LENGTH_8_BIT</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">stop_bit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_STOP_BIT_1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">parity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_PARITY_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_DIRECTION_TX_RX</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">hw_flow_ctl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_HW_CONTROL_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">over_sampling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_OVERSAMPLING_16</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">one_bit_sampling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_ONE_BIT_SAMPLE_DISABLE</span><span class="p">;</span>
+
+<span class="w">  </span><span class="cm">/* Basic configuration */</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_UART4</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_SetConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">uart_config</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+
+<span class="w">  </span><span class="cm">/* Fifo configuration */</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_SetTxFifoThreshold</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_UART_FIFO_THRESHOLD_1_8</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_SetRxFifoThreshold</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_UART_FIFO_THRESHOLD_1_8</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_EnableFifoMode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+
+
+
+
+
+
+
+<span class="w">  </span><span class="n">HAL_RCC_UART4_EnableClock</span><span class="p">();</span>
+
+
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_RCC_UART4_SetKernelClkSource</span><span class="p">(</span><span class="n">HAL_RCC_UART4_CLK_SRC_PCLK1</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+
+
+<span class="w">  </span><span class="cm">/* GPIO */</span>
+<span class="w">  </span><span class="n">HAL_RCC_GPIOA_EnableClock</span><span class="p">();</span>
+
+<span class="w">  </span><span class="n">hal_gpio_config_t</span><span class="w">  </span><span class="n">gpio_config</span><span class="p">;</span>
+
+<span class="w">  </span><span class="cm">/** PA12  ---------&gt;  UART4_TX  **/</span>
+<span class="w">  </span><span class="n">gpio_config</span><span class="p">.</span><span class="n">mode</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_MODE_ALTERNATE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">gpio_config</span><span class="p">.</span><span class="n">output_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_OUTPUT_PUSHPULL</span><span class="p">;</span>
+<span class="w">  </span><span class="n">gpio_config</span><span class="p">.</span><span class="n">pull</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_PULL_NO</span><span class="p">;</span>
+<span class="w">  </span><span class="n">gpio_config</span><span class="p">.</span><span class="n">speed</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_SPEED_FREQ_LOW</span><span class="p">;</span>
+<span class="w">  </span><span class="n">gpio_config</span><span class="p">.</span><span class="n">alternate</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_AF_6</span><span class="p">;</span>
+<span class="w">  </span><span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">HAL_GPIOA</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_GPIO_PIN_12</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">gpio_config</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/** PA1  ---------&gt;  UART4_RX  **/</span>
+<span class="w">  </span><span class="n">gpio_config</span><span class="p">.</span><span class="n">mode</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_MODE_ALTERNATE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">gpio_config</span><span class="p">.</span><span class="n">output_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_OUTPUT_PUSHPULL</span><span class="p">;</span>
+<span class="w">  </span><span class="n">gpio_config</span><span class="p">.</span><span class="n">pull</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_PULL_NO</span><span class="p">;</span>
+<span class="w">  </span><span class="n">gpio_config</span><span class="p">.</span><span class="n">speed</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_SPEED_FREQ_LOW</span><span class="p">;</span>
+<span class="w">  </span><span class="n">gpio_config</span><span class="p">.</span><span class="n">alternate</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_AF_8</span><span class="p">;</span>
+<span class="w">  </span><span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">HAL_GPIOA</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_GPIO_PIN_1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">gpio_config</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* Enable interrupt */</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SetPriority</span><span class="p">(</span><span class="n">UART4_IRQn</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_0</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_0</span><span class="p">);</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">UART4_IRQn</span><span class="p">);</span>
+
+
+<span class="w">  </span><span class="cm">/* Configure the DMA TX */</span>
+<span class="w">  </span><span class="n">HAL_RCC_LPDMA1_EnableClock</span><span class="p">();</span>
+
+<span class="w">  </span><span class="n">hal_dma_direct_xfer_config_t</span><span class="w"> </span><span class="n">xfer_cfg_uart4_tx_dma</span><span class="p">;</span>
+<span class="w">  </span><span class="n">xfer_cfg_uart4_tx_dma</span><span class="p">.</span><span class="n">request</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_LPDMA1_REQUEST_UART4_TX</span><span class="p">;</span>
+<span class="w">  </span><span class="n">xfer_cfg_uart4_tx_dma</span><span class="p">.</span><span class="n">direction</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_DMA_DIRECTION_MEMORY_TO_PERIPH</span><span class="p">;</span>
+<span class="w">  </span><span class="n">xfer_cfg_uart4_tx_dma</span><span class="p">.</span><span class="n">src_inc</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_DMA_SRC_ADDR_FIXED</span><span class="p">;</span>
+<span class="w">  </span><span class="n">xfer_cfg_uart4_tx_dma</span><span class="p">.</span><span class="n">dest_inc</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_DMA_DEST_ADDR_FIXED</span><span class="p">;</span>
+<span class="w">  </span><span class="n">xfer_cfg_uart4_tx_dma</span><span class="p">.</span><span class="n">src_data_width</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_DMA_SRC_DATA_WIDTH_BYTE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">xfer_cfg_uart4_tx_dma</span><span class="p">.</span><span class="n">dest_data_width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_DMA_DEST_DATA_WIDTH_BYTE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">xfer_cfg_uart4_tx_dma</span><span class="p">.</span><span class="n">priority</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_DMA_PRIORITY_LOW_WEIGHT_LOW</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_DMA_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hLPDMA1_CH0</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_LPDMA1_CH0</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_DMA_SetConfigPeriphDirectXfer</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hLPDMA1_CH0</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">xfer_cfg_uart4_tx_dma</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="cm">/* Link the Transmit DMA handle to the UART handle */</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_SetTxDMA</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">hLPDMA1_CH0</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cm">/* Enable the interruption for LPDMA1_CH0 */</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SetPriority</span><span class="p">(</span><span class="n">LPDMA1_CH0_IRQn</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_0</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_0</span><span class="p">);</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">LPDMA1_CH0_IRQn</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* Configure the DMA RX */</span>
+<span class="w">  </span><span class="n">hal_dma_direct_xfer_config_t</span><span class="w"> </span><span class="n">xfer_cfg_uart4_rx_dma</span><span class="p">;</span>
+<span class="w">  </span><span class="n">xfer_cfg_uart4_rx_dma</span><span class="p">.</span><span class="n">request</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_LPDMA1_REQUEST_UART4_RX</span><span class="p">;</span>
+<span class="w">  </span><span class="n">xfer_cfg_uart4_rx_dma</span><span class="p">.</span><span class="n">direction</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_DMA_DIRECTION_PERIPH_TO_MEMORY</span><span class="p">;</span>
+<span class="w">  </span><span class="n">xfer_cfg_uart4_rx_dma</span><span class="p">.</span><span class="n">src_inc</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_DMA_SRC_ADDR_FIXED</span><span class="p">;</span>
+<span class="w">  </span><span class="n">xfer_cfg_uart4_rx_dma</span><span class="p">.</span><span class="n">dest_inc</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_DMA_DEST_ADDR_FIXED</span><span class="p">;</span>
+<span class="w">  </span><span class="n">xfer_cfg_uart4_rx_dma</span><span class="p">.</span><span class="n">src_data_width</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_DMA_SRC_DATA_WIDTH_BYTE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">xfer_cfg_uart4_rx_dma</span><span class="p">.</span><span class="n">dest_data_width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_DMA_DEST_DATA_WIDTH_BYTE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">xfer_cfg_uart4_rx_dma</span><span class="p">.</span><span class="n">priority</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_DMA_PRIORITY_LOW_WEIGHT_LOW</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_DMA_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hLPDMA1_CH1</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_LPDMA1_CH1</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_DMA_SetConfigPeriphDirectXfer</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hLPDMA1_CH1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">xfer_cfg_uart4_rx_dma</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="cm">/* Link the Transmit DMA handle to the PPP handle */</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_SetRxDMA</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">hLPDMA1_CH1</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="cm">/* Enable the interruption for LPDMA1_CH1 */</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_SetPriority</span><span class="p">(</span><span class="n">LPDMA1_CH1_IRQn</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_0</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_0</span><span class="p">);</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">LPDMA1_CH1_IRQn</span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              The deinit sequence function
+             </p>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">HAL_UART_MspDeInit</span><span class="p">(</span><span class="n">UART_HandleTypeDef</span><span class="o">*</span><span class="w"> </span><span class="n">huart</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">huart</span><span class="o">-&gt;</span><span class="n">Instance</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">UART4</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="cm">/* Disable UART4 interrupt */</span>
+<span class="w">    </span><span class="n">HAL_NVIC_DisableIRQ</span><span class="p">(</span><span class="n">UART4_IRQn</span><span class="p">);</span>
+
+
+<span class="w">    </span><span class="cm">/* Disable UART4 clock */</span>
+<span class="w">    </span><span class="n">__HAL_RCC_UART4_CLK_DISABLE</span><span class="p">();</span>
+
+
+
+<span class="w">    </span><span class="cm">/* Deinitialize GPIO pins for UART4 TX and RX */</span>
+<span class="w">    </span><span class="n">HAL_GPIO_DeInit</span><span class="p">(</span><span class="n">GPIOA</span><span class="p">,</span><span class="w"> </span><span class="n">GPIO_PIN_1</span><span class="p">);</span><span class="w"> </span><span class="c1">// TX</span>
+
+<span class="w">    </span><span class="n">HAL_GPIO_DeInit</span><span class="p">(</span><span class="n">GPIOA</span><span class="p">,</span><span class="w"> </span><span class="n">GPIO_PIN_12</span><span class="p">);</span><span class="w"> </span><span class="c1">// RX</span>
+
+
+<span class="w">    </span><span class="cm">/* De-initialize the DMA channels for RX and TX */</span>
+
+<span class="w">      </span><span class="n">HAL_DMA_DeInit</span><span class="p">(</span><span class="n">huart</span><span class="o">-&gt;</span><span class="n">hdmarx</span><span class="p">);</span>
+
+<span class="w">      </span><span class="n">HAL_DMA_DeInit</span><span class="p">(</span><span class="n">huart</span><span class="o">-&gt;</span><span class="n">hdmatx</span><span class="p">);</span>
+
+
+<span class="w">    </span><span class="cm">/* Disable the DMA interrupts */</span>
+<span class="w">    </span><span class="n">HAL_NVIC_DisableIRQ</span><span class="p">(</span><span class="n">LPDMA1_Channel0_IRQn</span><span class="p">);</span>
+
+
+<span class="w">    </span><span class="n">HAL_NVIC_DisableIRQ</span><span class="p">(</span><span class="n">LPDMA1_Channel1_IRQn</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">mx_uart4_hal_uart_deinit</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+
+
+<span class="w">  </span><span class="cm">/* Disable interrupt */</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_DisableIRQ</span><span class="p">(</span><span class="n">UART4_IRQn</span><span class="p">);</span>
+<span class="w">  </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">HAL_UART_DeInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">HAL_RCC_UART4_Reset</span><span class="p">();</span>
+
+<span class="w">  </span><span class="n">HAL_RCC_UART4_DisableClock</span><span class="p">();</span>
+
+<span class="w">  </span><span class="cm">/* ###  GPIO pins de-initialization ################################# */</span>
+<span class="w">  </span><span class="cm">/* Deinitialization of UART4: UART4_TX  */</span>
+<span class="w">  </span><span class="n">HAL_GPIO_DeInit</span><span class="p">(</span><span class="n">HAL_GPIOA</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_GPIO_PIN_12</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* ###  GPIO pins de-initialization ################################# */</span>
+<span class="w">  </span><span class="cm">/* Deinitialization of UART4: UART4_RX  */</span>
+<span class="w">  </span><span class="n">HAL_GPIO_DeInit</span><span class="p">(</span><span class="n">HAL_GPIOA</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_GPIO_PIN_1</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* De-initialize the DMA channel */</span>
+<span class="w">  </span><span class="n">HAL_DMA_DeInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hLPDMA1_CH0</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* De-initialize the DMA channel */</span>
+<span class="w">  </span><span class="n">HAL_DMA_DeInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hLPDMA1_CH1</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* Disable the interruption for DMA */</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_DisableIRQ</span><span class="p">(</span><span class="n">LPDMA1_CH0_IRQn</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* Disable the interruption for DMA */</span>
+<span class="w">  </span><span class="n">HAL_CORTEX_NVIC_DisableIRQ</span><span class="p">(</span><span class="n">LPDMA1_CH1_IRQn</span><span class="p">);</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              The IRQ handle function
+             </p>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">UART4_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_UART_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">huart4</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">LPDMA1_Channel0_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_DMA_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hLPDMA1_CH0</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">LPDMA1_Channel1_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_DMA_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hLPDMA1_CH1</span><span class="p">);</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">UART4_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_UART_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">LPDMA1_CH0_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_DMA_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hLPDMA1_CH0</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">LPDMA1_CH1_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_DMA_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hLPDMA1_CH1</span><span class="p">);</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="uart-lin-mode-initialization">
+         <span id="hal-lin-initialization">
+         </span>
+         <h2 id="uart-lin-mode-initialization">
+          UART LIN Mode Initialization
+          <a class="headerlink" href="#uart-lin-mode-initialization" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          To create a new project with STM32CubeMX, start by enabling the UART instance as Serial. This example demonstrates the setup using UART4.
+         </p>
+         <a class="reference internal image-reference" href="../../../../../_images/Project_Setup_lin.png">
+          <img alt="Example Image" src="../../../../../_images/Project_Setup_lin.png" style="width: 700px;"/>
+         </a>
+         <section id="additional-configuration">
+          <h3 id="additional-configuration">
+           Additional Configuration
+           <a class="headerlink" href="#additional-configuration" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           When selecting LIN mode, an additional configuration is required: the break data length. Ensure this setting is configured appropriately to enable LIN communication.
+          </p>
+          <a class="reference internal image-reference" href="../../../../../_images/UART_config_LIN.png">
+           <img alt="Example Image" src="../../../../../_images/UART_config_LIN.png" style="width: 700px;"/>
+          </a>
+         </section>
+         <section id="code-generation">
+          <h3 id="code-generation">
+           Code Generation
+           <a class="headerlink" href="#code-generation" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table id="id5">
+           <caption>
+            <span class="caption-text">
+             STM32CubeMX2 Generated: UART Initialization in LIN Mode
+            </span>
+            <a class="headerlink" href="#id5" title="Link to this table">
+             ¶
+            </a>
+           </caption>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                Topic
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               Declaration of the Handle
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">UART_HandleTypeDef</span><span class="w"> </span><span class="n">huart4</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_uart_handle_t</span><span class="w"> </span><span class="n">hUART4</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               Initialization and Configuration Sequence in LIN Mode
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">MX_UART4_Init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART4</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">BaudRate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">115200</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">WordLength</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_WORDLENGTH_8B</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">StopBits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_STOPBITS_1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">Parity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_PARITY_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_MODE_TX_RX</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">HwFlowCtl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_HWCONTROL_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">OverSampling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_OVERSAMPLING_16</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">OneBitSampling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_ONE_BIT_SAMPLE_DISABLE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">ClockPrescaler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_PRESCALER_DIV1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">AdvancedInit</span><span class="p">.</span><span class="n">AdvFeatureInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_ADVFEATURE_NO_INIT</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_LIN_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">huart4</span><span class="p">,</span><span class="w"> </span><span class="n">UART_LINBREAKDETECTLENGTH_10B</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_uart_handle_t</span><span class="w"> </span><span class="o">*</span><span class="nf">mx_uart4_hal_uart_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">hal_uart_config_t</span><span class="w"> </span><span class="n">uart_config</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">baud_rate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">115200</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">clock_prescaler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_PRESCALER_DIV1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">word_length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_WORD_LENGTH_8_BIT</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">stop_bit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_STOP_BIT_1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">parity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_PARITY_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_DIRECTION_TX_RX</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">hw_flow_ctl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_HW_CONTROL_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">over_sampling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_OVERSAMPLING_16</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">one_bit_sampling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_ONE_BIT_SAMPLE_DISABLE</span><span class="p">;</span>
+
+<span class="w">  </span><span class="cm">/* Basic configuration */</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_UART4</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_SetConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">uart_config</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_SetLINModeBreakDetectLength</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_UART_LIN_BREAK_DETECT_10_BIT</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_EnableLINMode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <hr class="docutils"/>
+         </section>
+        </section>
+        <section id="uart-rs485-mode-initialization">
+         <span id="hal-rs485-initialization">
+         </span>
+         <h2 id="uart-rs485-mode-initialization">
+          UART RS485 Mode Initialization
+          <a class="headerlink" href="#uart-rs485-mode-initialization" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          To configure
+          <strong>
+           RS485 communication
+          </strong>
+          in STM32CubeMX, begin by enabling the UART instance for
+          <strong>
+           serial communication mode
+          </strong>
+          . Then, enable the RS485 driver and adjust the necessary settings for driver enable polarity and timing parameters in the additional features configuration section.
+         </p>
+         <a class="reference internal image-reference" href="../../../../../_images/Project_Setup_rs485.png">
+          <img alt="Example Image" src="../../../../../_images/Project_Setup_rs485.png" style="width: 800px;"/>
+         </a>
+         <section id="id1">
+          <h3 id="id1">
+           Code Generation
+           <a class="headerlink" href="#id1" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table id="id6">
+           <caption>
+            <span class="caption-text">
+             STM32CubeMX2 Generated: UART Initialization in RS485 Mode
+            </span>
+            <a class="headerlink" href="#id6" title="Link to this table">
+             ¶
+            </a>
+           </caption>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                Topic
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               Declaration of the Handle
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">UART_HandleTypeDef</span><span class="w"> </span><span class="n">huart4</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_uart_handle_t</span><span class="w"> </span><span class="n">hUART4</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               Initialization and Configuration Sequence in RS485 Mode
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">MX_UART4_Init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART4</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">BaudRate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">115200</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">WordLength</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_WORDLENGTH_8B</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">StopBits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_STOPBITS_1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">Parity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_PARITY_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_MODE_TX_RX</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">HwFlowCtl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_HWCONTROL_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">OverSampling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_OVERSAMPLING_16</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">OneBitSampling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_ONE_BIT_SAMPLE_DISABLE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">ClockPrescaler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_PRESCALER_DIV1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">AdvancedInit</span><span class="p">.</span><span class="n">AdvFeatureInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_ADVFEATURE_NO_INIT</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_RS485Ex_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">huart4</span><span class="p">,</span><span class="w"> </span><span class="n">UART_DE_POLARITY_LOW</span><span class="p">,</span><span class="w"> </span><span class="mh">0x10</span><span class="p">,</span><span class="w"> </span><span class="mh">0x10</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_uart_handle_t</span><span class="w"> </span><span class="o">*</span><span class="nf">mx_uart4_hal_uart_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">hal_uart_config_t</span><span class="w"> </span><span class="n">uart_config</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">baud_rate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">115200</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">clock_prescaler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_PRESCALER_DIV1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">word_length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_WORD_LENGTH_8_BIT</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">stop_bit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_STOP_BIT_1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">parity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_PARITY_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_DIRECTION_TX_RX</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">hw_flow_ctl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_HW_CONTROL_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">over_sampling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_OVERSAMPLING_16</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">one_bit_sampling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_ONE_BIT_SAMPLE_DISABLE</span><span class="p">;</span>
+
+<span class="w">  </span><span class="cm">/* Basic configuration */</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_UART4</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_SetConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">uart_config</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="cm">/* RS485 driver enable configuration */</span>
+<span class="w">  </span><span class="n">hal_uart_rs485_config_t</span><span class="w"> </span><span class="n">uart_rs485_config</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_rs485_config</span><span class="p">.</span><span class="n">assertion_time_samples</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mh">0x10</span><span class="w"> </span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_rs485_config</span><span class="p">.</span><span class="n">deassertion_time_samples</span><span class="w">  </span><span class="o">=</span><span class="mh">0x10</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_rs485_config</span><span class="p">.</span><span class="n">polarity</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_DE_POLARITY_LOW</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_SetConfigRS485Mode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">rs485_config</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_EnableRS485Mode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <hr class="docutils"/>
+         </section>
+        </section>
+        <section id="uart-multiprocessor-mode-initialization">
+         <span id="hal-multiprocessor-initialization">
+         </span>
+         <h2 id="uart-multiprocessor-mode-initialization">
+          UART MultiProcessor Mode Initialization
+          <a class="headerlink" href="#uart-multiprocessor-mode-initialization" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          To create a new project with STM32CubeMX, start by enabling the UART instance for
+          <strong>
+           MultiProcessor
+          </strong>
+          mode. This example demonstrates the setup using UART4.
+         </p>
+         <a class="reference internal image-reference" href="../../../../../_images/Project_Setup_multi_processor.png">
+          <img alt="Example Image" src="../../../../../_images/Project_Setup_multi_processor.png" style="width: 350px;"/>
+         </a>
+         <section id="additional-features-configuration">
+          <h3 id="additional-features-configuration">
+           Additional Features Configuration
+           <a class="headerlink" href="#additional-features-configuration" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           When configuring the UART in MultiProcessor mode, additional settings are required to manage wake-up functionality from mute mode. These settings include:
+          </p>
+          <ul class="simple">
+           <li>
+            <p>
+             <strong>
+              Wake Up Method From Mute Mode
+             </strong>
+             : Choose the method for waking up from mute mode.
+            </p>
+           </li>
+           <li>
+            <p>
+             <strong>
+              Wake Up Address Length
+             </strong>
+             : Specify the length of the wake-up address. This setting is necessary when the wake-up method selected is “Address Mark”.
+            </p>
+           </li>
+           <li>
+            <p>
+             <strong>
+              Wake Up Address
+             </strong>
+             : Define the specific wake-up address. This is needed when the wake-up method selected is “Address Mark”.
+            </p>
+           </li>
+          </ul>
+          <p>
+           These configurations are crucial for ensuring proper communication in MultiProcessor mode.
+          </p>
+          <a class="reference internal image-reference" href="../../../../../_images/UART_config_MP.png">
+           <img alt="Additional Features Configuration" src="../../../../../_images/UART_config_MP.png" style="width: 845px;"/>
+          </a>
+         </section>
+         <section id="id2">
+          <h3 id="id2">
+           Code Generation
+           <a class="headerlink" href="#id2" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table id="id7">
+           <caption>
+            <span class="caption-text">
+             STM32CubeMX2 Generated: UART Initialization in MultiProcessor Mode
+            </span>
+            <a class="headerlink" href="#id7" title="Link to this table">
+             ¶
+            </a>
+           </caption>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                Topic
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               Declaration of the Handle
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">UART_HandleTypeDef</span><span class="w"> </span><span class="n">huart4</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_uart_handle_t</span><span class="w"> </span><span class="n">hUART4</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               Initialization and Configuration Sequence in MultiProcessor Mode
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">MX_UART4_Init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART4</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">BaudRate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">115200</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">WordLength</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_WORDLENGTH_8B</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">StopBits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_STOPBITS_1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">Parity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_PARITY_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_MODE_TX_RX</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">HwFlowCtl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_HWCONTROL_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">OverSampling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_OVERSAMPLING_16</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">OneBitSampling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_ONE_BIT_SAMPLE_DISABLE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">ClockPrescaler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_PRESCALER_DIV1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">AdvancedInit</span><span class="p">.</span><span class="n">AdvFeatureInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_ADVFEATURE_NO_INIT</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_MultiProcessor_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">huart4</span><span class="p">,</span><span class="w"> </span><span class="mh">0x01</span><span class="p">,</span><span class="w"> </span><span class="n">UART_WAKEUPMETHOD_ADDRESSMARK</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_MultiProcessorEx_AddressLength_Set</span><span class="p">(</span><span class="o">&amp;</span><span class="n">huart1</span><span class="p">,</span><span class="w"> </span><span class="n">UART_ADDRESS_DETECT_4B</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_MultiProcessor_EnableMuteMode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">huart1</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="p">}</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_uart_handle_t</span><span class="w"> </span><span class="o">*</span><span class="nf">mx_uart4_hal_uart_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">hal_uart_config_t</span><span class="w"> </span><span class="n">uart_config</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">baud_rate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">115200</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">clock_prescaler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_PRESCALER_DIV1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">word_length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_WORD_LENGTH_8_BIT</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">stop_bit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_STOP_BIT_1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">parity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_PARITY_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_DIRECTION_TX_RX</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">hw_flow_ctl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_HW_CONTROL_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">over_sampling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_OVERSAMPLING_16</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">one_bit_sampling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_ONE_BIT_SAMPLE_DISABLE</span><span class="p">;</span>
+
+<span class="w">  </span><span class="cm">/* Basic configuration */</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_UART4</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_SetConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">uart_config</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="cm">/* MultiProcessor mode configuration */</span>
+<span class="w">  </span><span class="n">hal_uart_multi_processor_mode_wakeup_config_t</span><span class="w"> </span><span class="n">uart_multi_processor_mode_wakeup_config</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_multi_processor_mode_wakeup_config</span><span class="p">.</span><span class="n">wakeup_method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_WAKEUP_METHOD_ADDRESS_MARK</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_multi_processor_mode_wakeup_config</span><span class="p">.</span><span class="n">address_length</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_ADDRESS_DETECT_4_BIT</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_multi_processor_mode_wakeup_config</span><span class="p">.</span><span class="n">address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x01</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_SetConfigMultiProcessorMode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">uart_multi_processor_mode_wakeup_config</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_EnableMultiProcessorMode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <hr class="docutils"/>
+         </section>
+        </section>
+        <section id="uart-half-duplex-mode-initialization">
+         <span id="hal-half-duplex-initialization">
+         </span>
+         <h2 id="uart-half-duplex-mode-initialization">
+          UART Half-Duplex Mode Initialization
+          <a class="headerlink" href="#uart-half-duplex-mode-initialization" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          To create a new project with STM32CubeMX, start by enabling the UART instance for
+          <strong>
+           Half-Duplex
+          </strong>
+          mode. This example demonstrates the setup using UART4.
+         </p>
+         <a class="reference internal image-reference" href="../../../../../_images/Project_Setup_half_duplex.png">
+          <img alt="Example Image" src="../../../../../_images/Project_Setup_half_duplex.png" style="width: 350px;"/>
+         </a>
+         <section id="id3">
+          <h3 id="id3">
+           Code Generation
+           <a class="headerlink" href="#id3" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table id="id8">
+           <caption>
+            <span class="caption-text">
+             STM32CubeMX2 Generated: UART Initialization in Half-Duplex Mode
+            </span>
+            <a class="headerlink" href="#id8" title="Link to this table">
+             ¶
+            </a>
+           </caption>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                Topic
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               Declaration of the Handle
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">UART_HandleTypeDef</span><span class="w"> </span><span class="n">huart4</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_uart_handle_t</span><span class="w"> </span><span class="n">hUART4</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               Initialization and Configuration Sequence in Half-Duplex Mode
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">MX_UART4_Init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART4</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">BaudRate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">115200</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">WordLength</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_WORDLENGTH_8B</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">StopBits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_STOPBITS_1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">Parity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_PARITY_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_MODE_TX_RX</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">HwFlowCtl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_HWCONTROL_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">OverSampling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_OVERSAMPLING_16</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">OneBitSampling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_ONE_BIT_SAMPLE_DISABLE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">ClockPrescaler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_PRESCALER_DIV1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">huart4</span><span class="p">.</span><span class="n">AdvancedInit</span><span class="p">.</span><span class="n">AdvFeatureInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UART_ADVFEATURE_NO_INIT</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_HalfDuplex_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">huart4</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_uart_handle_t</span><span class="w"> </span><span class="o">*</span><span class="nf">mx_uart4_hal_uart_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">hal_uart_config_t</span><span class="w"> </span><span class="n">uart_config</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">baud_rate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">115200</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">clock_prescaler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_PRESCALER_DIV1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">word_length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_WORD_LENGTH_8_BIT</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">stop_bit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_STOP_BIT_1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">parity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_PARITY_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_DIRECTION_TX_RX</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">hw_flow_ctl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_HW_CONTROL_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">over_sampling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_OVERSAMPLING_16</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uart_config</span><span class="p">.</span><span class="n">one_bit_sampling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_UART_ONE_BIT_SAMPLE_DISABLE</span><span class="p">;</span>
+
+<span class="w">  </span><span class="cm">/* Basic configuration */</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_UART4</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_SetConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">uart_config</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="cm">/* Enable Half-Duplex mode */</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_UART_EnableHalfDuplexMode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hUART4</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

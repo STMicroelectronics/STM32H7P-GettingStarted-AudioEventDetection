@@ -1,0 +1,123 @@
+{{assign "usbxFilter" (JSONparse '{"cgroup": "STM32CubeMX2 Config", "csub": "USBX"}')~}}
+{{assign 'usbx_context' (@root.SWConfigurationAPI.getInstancesConfiguration @root.usbxFilter)~}}
+{{assign 'usbx_cxt' @root.usbx_context.[0].settings.parameters~}}
+{{assign 'USBX_Controllers_Driver' (@root.SWProjectAPI.getUsedComponents 'asObject' cgroup="USBX Controllers Driver")~}}
+{{assign 'USBX_Class_Selected' (@root.SWProjectAPI.getUsedComponents 'asObject' cgroup="STM32CubeMX2 Codegen")~}}
+/**
+  ******************************************************************************
+  * @file    mx_usbx_host.h
+  * @author  MCD Application Team
+  *
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2025 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef MX_USBX_HOST_H
+#define MX_USBX_HOST_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+{{#with @root.usbx_cxt~}}
+{{#with core_config.basic~}}
+
+/* Includes ----------------------------------------------------------*/
+#include "ux_api.h"
+{{#if (helper_USBX_Controllers_is_enabled @root.USBX_Controllers_Driver 'Host')}}
+#include "ux_hcd_stm32.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'HID_Mouse_Host_Class')}}
+#include "mx_usbx_host_hid_mouse.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'HID_Keyboard_Host_Class')}}
+#include "mx_usbx_host_hid_Keyboard.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'HID_RCU_Host_Class')}}
+#include "mx_usbx_host_hid_rcu.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'MSC_Host_Class')}}
+#include "mx_usbx_host_msc.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'CDC_ACM_Host_Class')}}
+#include "mx_usbx_host_cdc_acm.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'AUDIO_Host_Class')}}
+#include "mx_usbx_host_audio.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'VIDEO_Host_Class')}}
+#include "mx_usbx_host_video.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'PRINTER_Host_Class')}}
+#include "mx_usbx_host_printer.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'PIMA_MTP_Host_Class')}}
+#include "mx_usbx_host_pima_mtp.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'GSER_Host_Class')}}
+#include "mx_usbx_host_gser.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'PROLIFIC_Host_Class')}}
+#include "mx_usbx_host_prolific.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'SWAR_Host_Class')}}
+#include "mx_usbx_host_swar.h"
+{{/if}}
+{{#if (helper_USBX_Class_Selected @root.USBX_Class_Selected 'ASIX_Host_Class')}}
+#include "mx_usbx_host_asix.h"
+{{/if}}
+#include "mx_hal_def.h"
+#include "mx_usbx_app.h"
+
+/* Exported types ------------------------------------------------------------*/
+/* Exported constants --------------------------------------------------------*/
+/* Exported macro ------------------------------------------------------------*/
+/* Exported functions prototypes ---------------------------------------------*/
+UINT app_usbx_host_init(VOID);
+UINT app_usbx_host_deinit(VOID);
+/* Private defines -----------------------------------------------------------*/
+#if defined(_TRACE)
+#define DPM_USER_DEBUG_TRACE_SIZE       50u
+
+#define USBH_USRLOG(...)  do {                                                             \
+                               char _str[DPM_USER_DEBUG_TRACE_SIZE];                       \
+                               uint8_t _size = snprintf(_str, DPM_USER_DEBUG_TRACE_SIZE, __VA_ARGS__);\
+                               if (_size < DPM_USER_DEBUG_TRACE_SIZE)                                 \
+                               USBPD_TRACE_Add(USBPD_TRACE_DEBUG, 0, 0, (uint8_t*)_str, strlen(_str));\
+                               else                                                        \
+                               USBPD_TRACE_Add(USBPD_TRACE_DEBUG, 0, 0, (uint8_t*)_str, DPM_USER_DEBUG_TRACE_SIZE); \
+                             } while(0)
+
+#define  USBH_ERRLOG(...)   do {                                                           \
+                                 char _str[DPM_USER_DEBUG_TRACE_SIZE];                     \
+                                 uint8_t _size = snprintf(_str, DPM_USER_DEBUG_TRACE_SIZE, __VA_ARGS__);\
+                                 if (_size < DPM_USER_DEBUG_TRACE_SIZE)                    \
+                                 USBPD_TRACE_Add(USBPD_TRACE_DEBUG, 0, 0, (uint8_t*)_str, strlen(_str));\
+                                 else                                                                    \
+                                 USBPD_TRACE_Add(USBPD_TRACE_DEBUG, 0, 0, (uint8_t*)_str, DPM_USER_DEBUG_TRACE_SIZE);\
+                               } while(0)
+#else
+#define USBH_USRLOG(...)   printf(__VA_ARGS__);\
+  printf("\n");
+
+#define USBH_ERRLOG(...)   printf("ERROR: ") ;\
+  printf(__VA_ARGS__);\
+  printf("\n");
+#endif /* _TRACE */
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* MX_USBX_HOST_H */
+{{/with}}
+{{/with}}

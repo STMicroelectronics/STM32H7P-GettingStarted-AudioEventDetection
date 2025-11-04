@@ -1,0 +1,141 @@
+{{~assign "strategy" (@root.EnvVarAPI.getVariableValue 'SYSTEM_PROJECT_CODEGEN_STRATEGY')~}}
+{{~log "strategy" @root.strategy~}}
+{{!#if (eq @root.strategy "SW")}}
+  {{~assign 'current_resource' 'CORTEX_SYSTICK'~}}
+  {{~assign 'instances' (@root.SWConfigurationAPI.getInstances 'STMicroelectronics::Device:STM32CubeMX2 Config:CORTEX SYSTICK')~}}
+{{!else}}
+  {{!~assign "strategy" 'HW'~}}
+  {{!#get_myctx~}}
+    {{!#with _myctx~}}
+      {{!~log "CORTEX SYSTICK template _myctx:" this~}}
+      {{!~assign 'current_resource' resource~}}
+      {{!~assign 'instances' instances~}}
+    {{!/with~}}
+  {{!/get_myctx~}}
+{{!/if}}
+{{~log "CORTEX SYSTICK template current_resource:" @root.current_resource~}}
+{{~log "CORTEX SYSTICK template instances:" (toJSON @root.instances)~}}
+{{> SYSTEM fct='system_check_ll_optim'}}
+/**
+  ******************************************************************************
+  * @file           : mx_{{lowercase @root.current_resource}}.c
+  * @brief          : {{@root.current_resource}} Peripheral initialization
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) {{year}} STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+
+/* Includes ------------------------------------------------------------------*/
+#include "mx_{{lowercase @root.current_resource}}.h"
+
+/* Private typedef -----------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+/* Private macro -------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+/* Private functions prototype------------------------------------------------*/
+/* Exported variables by reference--------------------------------------------*/
+{{#each @root.instances~}}
+  {{#if (eq @root.strategy "SW")}}
+    {{~assign 'cortex_systick_cxt' (@root.SWConfigurationAPI.getSwInstanceConfiguration this)~}}
+    {{~log "CORTEX SYSTICK template cortex_systick_cxt:" (toJSON @root.cortex_systick_cxt)~}}
+    {{~assign 'current_resource' (@root.peripheralsResourceManagerAPI.getPeripheralBoundToSoftwareInstance this)~}}
+    {{~assign 'current_layer' @root.cortex_systick_cxt.info.layer~}}
+    {{~log "CORTEX SYSTICK template current_resource:" @root.current_resource~}}
+  {{else}}
+    {{~assign 'current_layer' info.layer~}}
+  {{/if}}
+{{/each}}
+{{helper_common_initialize_index~}}
+{{~assign 'current_index' (helper_common_get_index @root.current_resource)~}}
+{{~assign 'nvic_context' 'undefined'~}}
+{{#each @root.instances}}
+  {{!#if (eq @root.strategy "SW")}}
+    {{~assign 'cortex_systick_cxt' (@root.SWConfigurationAPI.getSwInstanceConfiguration this)~}}
+    {{~assign 'current_resource' (@root.peripheralsResourceManagerAPI.getPeripheralBoundToSoftwareInstance this)~}}
+    {{~assign 'name' @root.cortex_systick_cxt.name~}}
+    {{~assign 'current_layer' @root.cortex_systick_cxt.info.layer~}}
+    {{~assign 'current_index' (helper_common_get_index @root.current_resource)~}}
+  {{!else}}
+    {{!~assign 'name' name~}}
+    {{!~assign 'current_layer' info.layer~}}
+    {{!~assign 'cortex_systick_cxt' this}}
+  {{!/if}}
+  {{! Initialize the context for LL code optimization ~}}
+  {{!~assign 'lut_table' (helper_cortex_systick_get_lut_table 'CORTEX SYSTICKV1')~}}
+  {{!~helper_common_initialize_ll_code @root.optim_enable @root.lut_table @root.current_resource~}}
+  {{~log "CORTEX SYSTICK template instance:" (toJSON this)~}}
+/******************************************************************************/
+/* Exported functions for {{@root.current_resource}} in {{@root.current_layer}} layer (SW instance {{@root.name}}) */
+/******************************************************************************/
+  {{~assign 'fct_name' (helper_common_get_generated_function_name @root.current_resource @root.current_layer @root.current_index)~}}
+  {{~assign 'current_index' (helper_common_inc_index @root.current_resource)}}
+  {{#with @root.cortex_systick_cxt}}
+    {{#if (eq @root.current_layer 'HAL')}}
+{{!
+    Generation of initialization function used in HAL
+~}}
+      {{~assign 'found_region' false~}}
+system_status_t mx_cortex_systick_init(void)
+{
+
+      {{#if Basic.UseDefault}}
+  /* Nothing to do */
+
+      {{else}}
+  HAL_SuspendTick();
+
+  HAL_CORTEX_SYSTICK_SetClkSource(HAL_CORTEX_SYSTICK_CLKSOURCE_{{Basic.ClockSource}});
+
+  /* Setup the 1ms HAL timebase */
+  HAL_InitTick(HAL_TICK_FREQ_{{Basic.TickFrequency}}, uwTickPrio);
+      {{/if}}
+
+  return SYSTEM_OK;
+}
+
+void mx_cortex_systick_deinit(void)
+{
+  /* to implement */
+}
+
+    {{else}}
+{{!
+    Generation of initialization function used in LL
+~}}
+system_status_t mx_cortex_systick_init(void)
+{
+      {{#if Basic.UseDefault}}
+  /* Nothing to do */
+
+      {{else}}
+  SysTick_DisableIT();
+
+        {{#if (eq Basic.ClockSource "INTERNAL")}}
+  SysTick_SetClkSource(SysTick_CTRL_CLKSOURCE_Msk);
+        {{else}}
+  SysTick_SetClkSource(0);
+        {{/if}}
+
+  /* Setup the 1ms HAL timebase */
+  //HAL_InitTick(HAL_TICK_FREQ_{{Basic.TickFrequency}}, uwTickPrio);
+      {{/if}}
+
+  return SYSTEM_OK;
+}
+
+void mx_cortex_systick_deinit(void)
+{
+  /* to implement */
+}
+
+    {{/if}}
+  {{/with}}
+{{/each}}

@@ -1,0 +1,255 @@
+{{#get_myctx~}}
+{{#with _myctx~}}
+{{!log "SDIO template _myctx:" this~}}
+{{assign 'current_resource' resource~}}
+{{log "SDIO template current_resource:" @root.current_resource~}}
+/**
+  ******************************************************************************
+  * @file           : mx_{{lowercase @root.current_resource}}.c
+  * @brief          : {{@root.current_resource}} Peripheral initialization
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) {{year}} STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* Includes ------------------------------------------------------------------*/
+#include "mx_{{lowercase @root.current_resource}}.h"
+{{> RCC fct='include_rcc'}}
+
+/* Private typedef -----------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+/* Private macro -------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+/* Private functions prototype------------------------------------------------*/
+/* Exported variables by reference--------------------------------------------*/
+{{assign 'hal_handle_exist' 0~}}
+{{#each instances~}}
+{{assign 'current_layer' info.layer~}}
+  {{#if (eq @root.current_layer 'HAL')~}}
+{{> GPIO_HAL fct='gpio_exti_variables' resource=@root.current_resource~}}
+    {{#if (eq @root.hal_handle_exist 0)~}}
+      static hal_sdio_handle_t h{{@root.current_resource}};
+      {{assign 'hal_handle_exist' 1~}}
+    {{/if}}
+  {{/if}}
+{{/each}}
+{{~assign 'hal_handle_exist' 0~}}
+{{~assign 'current_index' 0~}}
+{{~assign 'nvic_needs' 'undefined'~}}
+{{~assign 'nvic_generate_handler' true~}}
+{{#each instances}}
+{{~assign 'current_layer' info.layer}}
+/******************************************************************************/
+/* Exported functions for SDIO in {{@root.current_layer}} layer (SW instance {{name}}) */
+/******************************************************************************/
+{{assign 'fct_name' (helper_common_get_generated_function_name @root.current_resource @root.current_layer @root.current_index 'SDIO')~}}
+{{assign 'current_index' (add @root.current_index 1)~}}
+{{!
+    Generation of initialization function used in HAL
+~}}
+{{#if (eq @root.current_layer 'HAL')}}
+hal_sdio_handle_t *{{@root.fct_name}}_init(void)
+{
+{{#if (eq Basic.sdio_identify_card true)}}
+  hal_sdio_config_t sdio_config;
+  {{#with additional_view}}
+    {{#if (eq Use_Delay_Block true)}}
+      {{#if (eq Delay_Block_Config.detection_clock_phase true)}}
+  uint32_t max_clock_phase;
+      {{/if}}{{~!Delay_Block_Config.detection_clock_phase~}}
+    {{/if}}{{!Use_Delay_Block~}}
+  {{/with}}{{!additional_view}}
+{{/if}}{{!Basic.sdio_identify_card true~}}
+{{#if (eq @root.current_resource 'SDMMC1')}}
+  if (HAL_SDIO_Init(&h{{@root.current_resource}}, HAL_SDIO_CARD_1) != HAL_OK)
+  {
+    return NULL;
+  }
+{{else}}
+  if (HAL_SDIO_Init(&h{{@root.current_resource}}, HAL_SDIO_CARD_2) != HAL_OK)
+  {
+    return NULL;
+  }
+{{/if}}{{!root.current_resource}}
+{{#with System.GPIO_Configuration}}
+  /* SDIO GPIO Configuration **************************************************/
+  {{assign 'gpio_needs' 'undefined'}}
+  {{#if gpio_std.needs~}}
+    {{assign 'gpio_needs' (helper_common_concatenate_needs gpio_std.needs @root.gpio_needs)~}}
+  {{/if}}{{!gpio_std.needs~}}
+  {{#if gpio_spf1.needs~}}
+    {{assign 'gpio_needs' (helper_common_concatenate_needs gpio_spf1.needs @root.gpio_needs)~}}
+  {{/if}}{{!gpio_spf1.needs~}}
+  {{#if gpio_spf2.needs~}}
+    {{assign 'gpio_needs' (helper_common_concatenate_needs gpio_spf2.needs @root.gpio_needs)~}}
+  {{/if}}{{!gpio_spf2.needs~}}
+  {{> GPIO_HAL fct='init' needs=@root.gpio_needs resource=@root.current_resource~}}
+{{/with}}{{!System.GPIO_Configuration~}}
+{{> RCC fct='generate_kernel_clock' hw_resource=@root.current_resource~}}
+{{> SYSTEM component='sdio' resource=@root.current_resource}}
+{{#if (eq Basic.sdio_identify_card true)}}
+  sdio_config.clk_cfg.clk_edge       = {{#if (eq Basic.clock_config.clk_edge true)}}HAL_SDIO_CLOCK_EDGE_RISING{{else}}HAL_SDIO_CLOCK_EDGE_FALLING{{/if}};
+  sdio_config.clk_cfg.clk_power_save = {{#if (eq Basic.clock_config.clk_power_save true)}}HAL_SDIO_CLOCK_POWER_SAVE_ENABLE{{else}}HAL_SDIO_CLOCK_POWER_SAVE_DISABLE{{/if}};
+  sdio_config.bus_wide               = {{#if (eq Basic.bus_wide 0)}}HAL_SDIO_BUS_WIDE_1BIT{{else if (eq Basic.bus_wide 1)}}HAL_SDIO_BUS_WIDE_4BIT{{else}}HAL_SDIO_BUS_WIDE_8BIT{{/if}};
+  sdio_config.hw_flow_ctrl           = {{#if (eq Basic.hw_flow_ctrl true)}}HAL_SDIO_HARDWARE_FLOW_CONTROL_ENABLE{{else}}HAL_SDIO_HARDWARE_FLOW_CONTROL_DISABLE{{/if}};
+  sdio_config.clk_cfg.clk_hz         = {{Basic.clock_config.Clock_frequency}};
+  sdio_config.transceiver            = {{#if (eq Basic.transceiver true)}}HAL_SDIO_TRANSCEIVER_PRESENT{{else}}HAL_SDIO_TRANSCEIVER_NOT_PRESENT{{/if}};
+  sdio_config.data_timeout_cycle     = {{#if (eq Basic.default_timeout true)}}HAL_SDIO_DATA_MAX_TIMEOUT{{else}}{{Basic.timeout_config.data_timeout_cycle}}{{/if}};
+  {{assign 'found_SetConfig' true~}}
+  if (HAL_SDIO_SetConfig(&h{{@root.current_resource}}, &sdio_config, NULL) != HAL_OK)
+  {
+    return NULL;
+  }
+  {{#if (eq additional_view.Use_Delay_Block true)~}}
+    {{#if (eq additional_view.Delay_Block_Config.detection_clock_phase true)}}
+
+  if (HAL_SDIO_CalculateDlybMaxClockPhase(&h{{@root.current_resource}}, &max_clock_phase) != HAL_OK)
+  {
+    return NULL;
+  }
+
+  if (HAL_SDIO_SetConfigDlybDelay(&h{{@root.current_resource}}, max_clock_phase) != HAL_OK)
+  {
+    return NULL;
+  }
+  {{else}}
+
+  if (HAL_SDIO_SetConfigDlybDelay(&h{{@root.current_resource}}, {{additional_view.Delay_Block_Config.Clock_phase}}) != HAL_OK)
+  {
+    return NULL;
+  }
+    {{/if}}{{!additional_view.Delay_Block_Config.detection_clock_phase~}}
+  {{/if}}{{!additional_view.Use_Delay_Block~}}
+{{/if}}{{!Basic.sdio_identify_card true~}}
+{{#if (eq System.nvic_settings.irq_handler_generation false)~}}
+  {{~assign 'nvic_generate_handler' false~}}
+{{/if~}}
+{{#if System.nvic_settings.EnableGlobalInterruption~}}
+  {{~assign 'found_sdio_nvic_ev' true}}
+  /* Enable the Event interruption for SDIO */
+  {{~assign 'nvic_needs' (helper_common_concatenate_needs System.nvic_settings.nvicGlobalInterrupt.needs @root.nvic_needs)}}
+  {{#> CORTEX fct='init' layer=@root.current_layer needs=System.nvic_settings.nvicGlobalInterrupt.needs}}
+    #warning "Partial CORTEX is not present"
+  {{/CORTEX~}}{{~!CORTEX~}}
+{{/if}}{{!System.nvic_settings.EnableGlobalInterruption}}
+  return &h{{@root.current_resource}};
+}
+
+void {{@root.fct_name}}_deinit(void)
+{
+{{#if System.nvic_settings.EnableGlobalInterruption}}
+  /* Disable the Event interruption for SDIO */
+  {{#> CORTEX fct='deinit' layer=@root.current_layer}}
+  {{/CORTEX}}
+{{/if}}
+
+  (void)HAL_SDIO_DeInit(&h{{@root.current_resource}});
+
+  HAL_RCC_{{@root.current_resource}}_Reset();
+  HAL_RCC_{{@root.current_resource}}_DisableClock();
+
+{{#with System.GPIO_Configuration}}
+  {{~assign 'gpio_needs' 'undefined'~}}
+  {{#if gpio_std.needs}}
+    {{~assign 'gpio_needs' (helper_common_concatenate_needs gpio_std.needs @root.gpio_needs)~}}
+  {{/if}}{{!gpio_std.needs~}}
+  {{#if gpio_spf1.needs~}}
+    {{~assign 'gpio_needs' (helper_common_concatenate_needs gpio_spf1.needs @root.gpio_needs)~}}
+  {{/if}}{{!gpio_spf1.needs~}}
+  {{#if gpio_spf2.needs~}}
+    {{~assign 'gpio_needs' (helper_common_concatenate_needs gpio_spf2.needs @root.gpio_needs)~}}
+  {{/if}}{{!gpio_spf2.needs~}}
+  {{> GPIO_HAL fct='deinit' needs=@root.gpio_needs resource=@root.current_resource}}
+{{/with}}{{~!System.GPIO_Configuration~}}
+}
+
+{{#if (eq Basic.sdio_identify_card false)~}}
+hal_status_t mx_sdio_set_config(hal_sdio_identify_card_t sdio_identify_card)
+{
+  hal_sdio_config_t sdio_config;
+{{#if (eq additional_view.Use_Delay_Block true)}}
+  {{#if (eq additional_view.Delay_Block_Config.detection_clock_phase true)}}
+  uint32_t max_clock_phase;
+  {{/if}}{{!Delay_Block_Config.detection_clock_phase~}}
+{{/if}}{{!Use_Delay_Block}}
+  sdio_config.clk_cfg.clk_edge       = {{#if (eq Basic.clock_config.clk_edge true)}}HAL_SDIO_CLOCK_EDGE_RISING{{else}}HAL_SDIO_CLOCK_EDGE_FALLING{{/if}};
+  sdio_config.clk_cfg.clk_power_save = {{#if (eq Basic.clock_config.clk_power_save true)}}HAL_SDIO_CLOCK_POWER_SAVE_ENABLE{{else}}HAL_SDIO_CLOCK_POWER_SAVE_DISABLE{{/if}};
+  sdio_config.bus_wide               = {{#if (eq Basic.bus_wide 0)}}HAL_SDIO_BUS_WIDE_1BIT{{else if (eq Basic.bus_wide 1)}}HAL_SDIO_BUS_WIDE_4BIT{{else}}HAL_SDIO_BUS_WIDE_8BIT{{/if}};
+  sdio_config.hw_flow_ctrl           = {{#if (eq Basic.hw_flow_ctrl true)}}HAL_SDIO_HARDWARE_FLOW_CONTROL_ENABLE{{else}}HAL_SDIO_HARDWARE_FLOW_CONTROL_DISABLE{{/if}};
+  sdio_config.clk_cfg.clk_hz         = {{Basic.clock_config.Clock_frequency}};
+  sdio_config.transceiver            = {{#if (eq Basic.transceiver true)}}HAL_SDIO_TRANSCEIVER_PRESENT{{else}}HAL_SDIO_TRANSCEIVER_NOT_PRESENT{{/if}};
+  sdio_config.data_timeout_cycle     = {{#if (eq Basic.default_timeout true)}}HAL_SDIO_DATA_MAX_TIMEOUT{{else}}{{Basic.timeout_config.data_timeout_cycle}}{{/if}};
+
+  if (HAL_SDIO_SetConfig(&h{{@root.current_resource}}, &sdio_config, sdio_identify_card) != HAL_OK)
+  {
+    return HAL_ERROR;
+  }
+  {{#if (eq additional_view.Use_Delay_Block true)~}}
+    {{#if (eq additional_view.Delay_Block_Config.detection_clock_phase true)}}
+
+  if (HAL_SDIO_CalculateDlybMaxClockPhase(&h{{@root.current_resource}}, &max_clock_phase) != HAL_OK)
+  {
+    return HAL_ERROR;
+  }
+
+  if (HAL_SDIO_SetConfigDlybDelay(&h{{@root.current_resource}}, max_clock_phase) != HAL_OK)
+  {
+    return HAL_ERROR;
+  }
+      {{else}}
+
+  if (HAL_SDIO_SetConfigDlybDelay(&h{{@root.current_resource}}, {{additional_view.Delay_Block_Config.Clock_phase}}) != HAL_OK)
+  {
+    return HAL_ERROR;
+  }
+      {{/if}}{{!additional_view.Delay_Block_Config.detection_clock_phase~}}
+    {{/if}}{{!additional_view.Use_Delay_Block}}
+  return HAL_OK;
+}
+    {{/if}}{{!Basic.sdio_identify_card false~}}
+  {{/if}}
+
+{{#if (eq @root.current_layer 'HAL')~}}
+  {{#if (eq @root.hal_handle_exist 0)~}}
+    {{assign 'fct_name' (helper_common_get_generated_function_name @root.current_resource @root.current_layer undefined 'SDIO')~}}
+{{!
+    Generation of getHandle functions used in HAL
+~}}
+hal_sdio_handle_t *{{@root.fct_name}}_gethandle(void)
+{
+  return &h{{@root.current_resource}};
+}
+    {{assign 'hal_handle_exist' 1~}}
+  {{/if}}
+{{/if}}
+
+{{/each}}
+{{assign 'nvic_context' (helper_cortex_nvic_get_irqline_info_list_legacy @root.NvicAPI @root.nvic_needs @root.current_resource 'SDIO' @root.function)~}}
+{{#each @root.nvic_context.list_irq}}
+{{#if @root.nvic_generate_handler}}
+/******************************************************************************/
+/*                     {{description}}                    */
+/******************************************************************************/
+void {{line}}_IRQHandler(void)
+{
+  HAL_{{component}}_IRQHandler(&h{{resource_hw}});
+}
+
+{{else}}
+/******************************************************************************/
+/*    {{description}} is managed directly in user code.   */
+/******************************************************************************/
+/* void {{line}}_IRQHandler(void); */
+
+{{/if}}
+{{/each}}
+
+{{/with~}}
+{{/get_myctx~}}

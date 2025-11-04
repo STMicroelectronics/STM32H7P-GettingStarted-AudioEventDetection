@@ -1,0 +1,3379 @@
+<!DOCTYPE html>
+<html data-content_root="../../../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, HAL1, SBS, STM32H5, STM32G0, STM32F4, STM32L4, STM32C0, STM32H7" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     HAL GENERIC constants migration — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <script src="../../../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <link href="../../../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../../../search.html" rel="search" title="Search"/>
+    <link href="hal_generic_exported_macros.html" rel="next" title="HAL GENERIC macros migration"/>
+    <link href="hal_generic_use_cases.html" rel="prev" title="HAL GENERIC Typical Use Cases for Migration"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/drivers_documentation/hal_drivers/generic/hal_generic_exported_constants" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_script/migration_script_toc.html">
+            HAL1 detection
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../breaking_concepts/breaking_concepts_toc.html">
+              Breaking changes in concepts
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../hal_drivers_toc.html">
+              HAL drivers migration
+             </a>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../adc/hal_adc_toc.html">
+                ADC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../comp/hal_comp_toc.html">
+                COMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cortex/hal_cortex_toc.html">
+                CORTEX
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cordic/hal_cordic_toc.html">
+                CORDIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../crc/hal_crc_toc.html">
+                CRC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cryp/hal_cryp_toc.html">
+                CRYP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dac/hal_dac_toc.html">
+                DAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dcache/hal_dcache_toc.html">
+                DCACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dma/hal_dma_toc.html">
+                DMA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../exti/hal_exti_toc.html">
+                EXTI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../fmac/hal_fmac_toc.html">
+                FMAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="hal_generic_toc.html">
+                GENERIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxmmu/hal_gfxmmu_toc.html">
+                GFXMMU
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxtim/hal_gfxtim_toc.html">
+                GFXTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gpio/hal_gpio_toc.html">
+                GPIO
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2c/hal_i2c_toc.html">
+                I2C
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2s/hal_i2s_toc.html">
+                I2S
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../icache/hal_icache_toc.html">
+                ICACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../irda/hal_irda_toc.html">
+                IRDA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../iwdg/hal_iwdg_toc.html">
+                IWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../lptim/hal_lptim_toc.html">
+                LPTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../nor/hal_nor_toc.html">
+                NOR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../opamp/hal_opamp_toc.html">
+                OPAMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ospi/hal_ospi_toc.html">
+                OSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pka/hal_pka_toc.html">
+                PKA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pwr/hal_pwr_toc.html">
+                PWR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../qspi/hal_qspi_toc.html">
+                QSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ramcfg/hal_ramcfg_toc.html">
+                RAMCFG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rcc/hal_rcc_toc.html">
+                RCC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rng/hal_rng_toc.html">
+                RNG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rtc/hal_rtc_toc.html">
+                RTC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sdram/hal_sdram_toc.html">
+                SDRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smartcard/hal_smartcard_toc.html">
+                SMARTCARD
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smbus/hal_smbus_toc.html">
+                SMBUS
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../spi/hal_spi_toc.html">
+                SPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sram/hal_sram_toc.html">
+                SRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../tim/hal_tim_toc.html">
+                TIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../uart/hal_uart_toc.html">
+                UART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../usart/hal_usart_toc.html">
+                USART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../wwdg/hal_wwdg_toc.html">
+                WWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../xspi/hal_xspi_toc.html">
+                XSPI
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../ll_drivers/ll_drivers_toc.html">
+              LL drivers migration
+             </a>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-drivers-documentation-hal-drivers-generic-hal-generic-exported-constants--page-root">
+            HAL GENERIC constants migration
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#id1">
+               HAL GENERIC constants migration
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#device-revision-id">
+                  Device Revision ID
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-syscfg-sbs-constants-migration">
+               HAL SYSCFG/SBS Constants Migration
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#floating-point-unit-interrupts">
+                  Floating Point Unit Interrupts
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#tim-break-inputs">
+                  TIM Break Inputs
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#fast-mode-plus-driving-capability">
+                  Fast-mode Plus Driving Capability
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#syscfg-get-flag">
+                  SYSCFG Get Flag
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#memories-erase-flags-status">
+                  Memories Erase Flags Status
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#pin-remapping">
+                  Pin Remapping
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#ethernet-interface-selection">
+                  Ethernet Interface Selection
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#next-hdpl-selection">
+                  Next HDPL Selection
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#hdpl-value-selection">
+                  HDPL Value Selection
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#configuring-the-otg-hs-phy">
+                  Configuring the OTG_HS PHY
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#memory-address-remap">
+                  Memory Address Remap
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#ir-modulation-envelope-source">
+                  IR Modulation Envelope Source
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#ir-modulation-output-polarity">
+                  IR Modulation Output Polarity
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#interrupt-line-configuration">
+                  Interrupt Line Configuration
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#hal-source-pin-binding">
+                  HAL Source Pin Binding
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#package-pin-binding">
+                  Package Pin Binding
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#hspi-capacitance">
+                  HSPI Capacitance
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#transmitter-pre-emphasis-current">
+                  Transmitter Pre-emphasis Current
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#disconnect-threshold-adjustment">
+                  Disconnect Threshold Adjustment
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#squelch-threshold-adjustment">
+                  Squelch Threshold Adjustment
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#interrupt-line-mapping">
+                  Interrupt Line Mapping
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#io-compensation-cell-config">
+                  IO Compensation Cell Config
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#otg-hs-phy-power-down-config">
+                  OTG HS PHY Power Down Config
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#otg-hs-phy-enable">
+                  OTG_HS PHY Enable
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-vrefbuf-constants-migration">
+               HAL VREFBUF constants migration
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#voltage-scaling">
+                  Voltage Scaling
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#vrefbuf-mode">
+                  VREFBUF Mode
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-exti-constants-migration">
+               HAL EXTI constants migration
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#exti-lines">
+                  EXTI lines
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#exti-mode">
+                  EXTI mode
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#exti-trigger">
+                  EXTI trigger
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="hal-generic-constants-migration">
+        <span id="hal-generic-exported-constants">
+        </span>
+        <h1 id="docs-markup-drivers-documentation-hal-drivers-generic-hal-generic-exported-constants--page-root">
+         HAL GENERIC constants migration
+         <a class="headerlink" href="#docs-markup-drivers-documentation-hal-drivers-generic-hal-generic-exported-constants--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <p>
+         This section provides information about the HAL GENERIC constants migration.
+        </p>
+        <section id="id1">
+         <h2 id="id1">
+          HAL GENERIC constants migration
+          <a class="headerlink" href="#id1" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <section id="device-revision-id">
+          <span id="id2">
+          </span>
+          <h3 id="device-revision-id">
+           Device Revision ID
+           <a class="headerlink" href="#device-revision-id" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <div class="admonition note">
+           <p class="admonition-title">
+            Note
+           </p>
+           <p>
+            These defines are used internally and do not impact user-level operations.
+           </p>
+          </div>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define REV_ID_A</span>
+<span class="cp">#define REV_ID_B</span>
+<span class="cp">#define REV_ID_V</span>
+<span class="cp">#define REV_ID_X</span>
+<span class="cp">#define REV_ID_Y</span>
+<span class="cp">#define REV_ID_Z</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define LL_DBGMCU_REV_ID_A</span>
+<span class="cp">#define LL_DBGMCU_REV_ID_B</span>
+<span class="cp">#define LL_DBGMCU_REV_ID_V</span>
+<span class="cp">#define LL_DBGMCU_REV_ID_X</span>
+<span class="cp">#define LL_DBGMCU_REV_ID_Y</span>
+<span class="cp">#define LL_DBGMCU_REV_ID_Z</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+        </section>
+        <hr class="docutils"/>
+        <section id="hal-syscfg-sbs-constants-migration">
+         <h2 id="hal-syscfg-sbs-constants-migration">
+          HAL SYSCFG/SBS Constants Migration
+          <a class="headerlink" href="#hal-syscfg-sbs-constants-migration" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <section id="floating-point-unit-interrupts">
+          <span id="hal-exported-constants-sbs-fpu-interrupts">
+          </span>
+          <h3 id="floating-point-unit-interrupts">
+           Floating Point Unit Interrupts
+           <a class="headerlink" href="#floating-point-unit-interrupts" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           In HAL2, the FPU interrupts are updated with the
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             HAL_
+            </span>
+           </code>
+           prefix.
+          </p>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example SBS
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define SBS_IT_FPU_IOC</span>
+<span class="cp">#define SBS_IT_FPU_DZC</span>
+<span class="cp">#define SBS_IT_FPU_UFC</span>
+<span class="cp">#define SBS_IT_FPU_OFC</span>
+<span class="cp">#define SBS_IT_FPU_IDC</span>
+<span class="cp">#define SBS_IT_FPU_IXC</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define HAL_SBS_IT_FPU_IOC</span>
+<span class="cp">#define HAL_SBS_IT_FPU_DZC</span>
+<span class="cp">#define HAL_SBS_IT_FPU_UFC</span>
+<span class="cp">#define HAL_SBS_IT_FPU_OFC</span>
+<span class="cp">#define HAL_SBS_IT_FPU_IDC</span>
+<span class="cp">#define HAL_SBS_IT_FPU_IXC</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               <strong>
+                Example SYSCFG
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define SYSCFG_IT_FPU_IOC</span>
+<span class="cp">#define SYSCFG_IT_FPU_DZC</span>
+<span class="cp">#define SYSCFG_IT_FPU_UFC</span>
+<span class="cp">#define SYSCFG_IT_FPU_OFC</span>
+<span class="cp">#define SYSCFG_IT_FPU_IDC</span>
+<span class="cp">#define SYSCFG_IT_FPU_IXC</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define HAL_SYSCFG_IT_FPU_IOC</span>
+<span class="cp">#define HAL_SYSCFG_IT_FPU_DZC</span>
+<span class="cp">#define HAL_SYSCFG_IT_FPU_UFC</span>
+<span class="cp">#define HAL_SYSCFG_IT_FPU_OFC</span>
+<span class="cp">#define HAL_SYSCFG_IT_FPU_IDC</span>
+<span class="cp">#define HAL_SYSCFG_IT_FPU_IXC</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="summary-block docutils container">
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p18">
+             <span class="std std-ref">
+              Add HAL_PPP Prefix to All HAL Peripheral APIs (Defines, Macros, Types, and Functions).
+             </span>
+            </a>
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="tim-break-inputs">
+          <span id="hal-exported-constants-tim-break-inputs">
+          </span>
+          <h3 id="tim-break-inputs">
+           TIM Break Inputs
+           <a class="headerlink" href="#tim-break-inputs" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           In HAL2, the TIM break inputs are updated with the
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             HAL_
+            </span>
+           </code>
+           prefix.
+          </p>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example SBS
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define SBS_BREAK_FLASH_ECC</span>
+<span class="cp">#define SBS_BREAK_PVD</span>
+<span class="cp">#define SBS_BREAK_SRAM_ECC</span>
+<span class="cp">#define SBS_BREAK_LOCKUP</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define HAL_SBS_FLASH_ECC_DOUBLE_ERROR</span>
+<span class="cp">#define HAL_SBS_PVD</span>
+<span class="cp">#define HAL_SBS_SRAM_ECC_DOUBLE_ERROR</span>
+<span class="cp">#define HAL_SBS_LOCKUP_OUT</span>
+<span class="cp">#define HAL_SBS_TIM_BREAK_INPUTS_ALL</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               <strong>
+                Example SYSCFG
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define SYSCFG_BREAK_FLASH_ECC</span>
+<span class="cp">#define SYSCFG_BREAK_PVD</span>
+<span class="cp">#define SYSCFG_BREAK_SRAM_ECC</span>
+<span class="cp">#define SYSCFG_BREAK_LOCKUP</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define HAL_SYSCFG_FLASH_ECC_DOUBLE_ERROR</span>
+<span class="cp">#define HAL_SYSCFG_PVD</span>
+<span class="cp">#define HAL_SYSCFG_SRAM_ECC_DOUBLE_ERROR</span>
+<span class="cp">#define HAL_SYSCFG_LOCKUP_OUT</span>
+<span class="cp">#define HAL_SYSCFG_TIM_BREAK_INPUTS_ALL</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="summary-block docutils container">
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p18">
+             <span class="std std-ref">
+              Add HAL_PPP Prefix to All HAL Peripheral APIs (Defines, Macros, Types, and Functions).
+             </span>
+            </a>
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="fast-mode-plus-driving-capability">
+          <span id="hal-exported-constants-fastmode-plus">
+          </span>
+          <h3 id="fast-mode-plus-driving-capability">
+           Fast-mode Plus Driving Capability
+           <a class="headerlink" href="#fast-mode-plus-driving-capability" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           In HAL2, the naming has been updated with the
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             HAL_
+            </span>
+           </code>
+           prefix and more descriptive names.
+          </p>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example SBS
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define SBS_FASTMODEPLUS_PB6</span>
+<span class="cp">#define SBS_FASTMODEPLUS_PB7</span>
+<span class="cp">#define SBS_FASTMODEPLUS_PB8</span>
+<span class="cp">#define SBS_FASTMODEPLUS_PB9</span>
+<span class="w">              </span><span class="p">.</span>
+<span class="w">              </span><span class="p">.</span>
+<span class="w">              </span><span class="p">.</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define HAL_SBS_DRIVE_PB6</span>
+<span class="cp">#define HAL_SBS_DRIVE_PB7</span>
+<span class="cp">#define HAL_SBS_DRIVE_PB8</span>
+<span class="cp">#define HAL_SBS_DRIVE_PB9</span>
+<span class="w">              </span><span class="p">.</span>
+<span class="w">              </span><span class="p">.</span>
+<span class="w">              </span><span class="p">.</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               <strong>
+                Example SYSCFG
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define SYSCFG_FASTMODEPLUS_PB6</span>
+<span class="cp">#define SYSCFG_FASTMODEPLUS_PB7</span>
+<span class="cp">#define SYSCFG_FASTMODEPLUS_PB8</span>
+<span class="cp">#define SYSCFG_FASTMODEPLUS_PB9</span>
+<span class="w">              </span><span class="p">.</span>
+<span class="w">              </span><span class="p">.</span>
+<span class="w">              </span><span class="p">.</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define HAL_SYSCFG_DRIVE_PB6</span>
+<span class="cp">#define HAL_SYSCFG_DRIVE_PB7</span>
+<span class="cp">#define HAL_SYSCFG_DRIVE_PB8</span>
+<span class="cp">#define HAL_SYSCFG_DRIVE_PB9</span>
+<span class="w">              </span><span class="p">.</span>
+<span class="w">              </span><span class="p">.</span>
+<span class="w">              </span><span class="p">.</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="summary-block docutils container">
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p18">
+             <span class="std std-ref">
+              Add HAL_PPP Prefix to All HAL Peripheral APIs (Defines, Macros, Types, and Functions).
+             </span>
+            </a>
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="syscfg-get-flag">
+          <span id="hal-exported-constants-sram2-flags">
+          </span>
+          <h3 id="syscfg-get-flag">
+           SYSCFG Get Flag
+           <a class="headerlink" href="#syscfg-get-flag" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define SYSCFG_FLAG_SRAM2_PE</span>
+<span class="cp">#define SYSCFG_FLAG_SRAM2_BUSY</span>
+<span class="cp">#define SYSCFG_FLAG_SRAM_PE</span>
+<span class="cp">#define SYSCFG_FLAG_CCMSRAM_BUSY</span>
+<span class="w">                 </span><span class="p">.</span>
+<span class="w">                 </span><span class="p">.</span>
+<span class="w">                 </span><span class="p">.</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <p>
+               In HAL1, these defines are used by the macro
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 __HAL_SYSCFG_GET_FLAG(__FLAG__)
+                </span>
+               </code>
+               to retrieve the flag status.
+              </p>
+              <p>
+               In HAL2, the HAL flag defines and macros have been removed. Instead, use
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 HAL_SYSCFG_IsActiveFlag()
+                </span>
+               </code>
+               with the appropriate parameters.
+              </p>
+              <p>
+               For more details, refer to
+               <a class="reference internal" href="hal_generic_exported_macros.html#hal-generic-exported-macros-syscfg-flags">
+                <span class="std std-ref">
+                 Flags Management
+                </span>
+               </a>
+               .
+              </p>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="admonition note">
+           <p class="admonition-title">
+            Note
+           </p>
+           <p>
+            The availability and behavior of these flags may vary between different STM32 series.
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="memories-erase-flags-status">
+          <span id="hal-exported-constants-memories-erase-flags">
+          </span>
+          <h3 id="memories-erase-flags-status">
+           Memories Erase Flags Status
+           <a class="headerlink" href="#memories-erase-flags-status" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example SBS
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define SBS_MEMORIES_ERASE_FLAG_MCLR</span>
+<span class="cp">#define SBS_MEMORIES_ERASE_FLAG_IPMEE</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <p>
+               In HAL1, these defines are used by the macros
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 __HAL_SBS_GET_MEMORIES_ERASE_STATUS(__FLAG__)
+                </span>
+               </code>
+              </p>
+              <p>
+               or
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 __HAL_SBS_CLEAR_MEMORIES_ERASE_STATUS(__FLAG__)
+                </span>
+               </code>
+               to manage the status of memory erase flags.
+              </p>
+              <p>
+               In HAL2, the HAL flag defines and macros have been removed.
+              </p>
+              <p>
+               Instead, use the static inline functions declared in the LL layer to manage memory erase status.
+              </p>
+              <p>
+               For more details, refer to
+               <a class="reference internal" href="hal_generic_exported_macros.html#hal-generic-exported-macros-memories-erase-flags">
+                <span class="std std-ref">
+                 Check and Clear SBS Memories Erase Status Flags
+                </span>
+               </a>
+               .
+              </p>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="admonition note">
+           <p class="admonition-title">
+            Note
+           </p>
+           <p>
+            The availability and behavior of these flags may vary between different STM32 series.
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="pin-remapping">
+          <span id="hal-exported-constants-pin-remapping">
+          </span>
+          <h3 id="pin-remapping">
+           Pin Remapping
+           <a class="headerlink" href="#pin-remapping" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           In HAL2, remapping of pins uses a more structured naming convention.
+          </p>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define SYSCFG_REMAP_PA11</span>
+<span class="cp">#define SYSCFG_REMAP_PA12</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define HAL_SYSCFG_REMAP_PA9_TO_PA11</span>
+<span class="cp">#define HAL_SYSCFG_REMAP_PA10_TO_PA12</span>
+<span class="cp">#define HAL_SYSCFG_REMAP_ALL_IO</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="summary-block docutils container">
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p18">
+             <span class="std std-ref">
+              Add HAL_PPP Prefix to All HAL Peripheral APIs (Defines, Macros, Types, and Functions).
+             </span>
+            </a>
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="ethernet-interface-selection">
+          <span id="hal-exported-constants-ethernet-interface">
+          </span>
+          <h3 id="ethernet-interface-selection">
+           Ethernet Interface Selection
+           <a class="headerlink" href="#ethernet-interface-selection" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example SBS
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define SBS_ETH_MII</span>
+<span class="cp">#define SBS_ETH_RMII</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_SBS_ETH_PHY_INT_GMII_MII</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SBS_ETH_PHY_INT_RMII</span><span class="p">,</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_sbs_eth_interface_t</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               <strong>
+                Example SYSCFG
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define SYSCFG_ETH_MII</span>
+<span class="cp">#define SYSCFG_ETH_RMII</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_ETH_PHY_INT_GMII_MII</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_ETH_PHY_INT_RMII</span><span class="p">,</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_syscfg_eth_interface_t</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="summary-block docutils container">
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="next-hdpl-selection">
+          <span id="hal-exported-constants-next-hdpl-selection">
+          </span>
+          <h3 id="next-hdpl-selection">
+           Next HDPL Selection
+           <a class="headerlink" href="#next-hdpl-selection" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define SBS_OBKHDPL_INCR_0</span>
+<span class="cp">#define SBS_OBKHDPL_INCR_1</span>
+<span class="cp">#define SBS_OBKHDPL_INCR_2</span>
+<span class="cp">#define SBS_OBKHDPL_INCR_3</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_SBS_HDP_OBK_LEVEL_0</span>
+<span class="w">  </span><span class="n">HAL_SBS_HDP_OBK_LEVEL_1</span>
+<span class="w">  </span><span class="n">HAL_SBS_HDP_OBK_LEVEL_2</span>
+<span class="w">  </span><span class="n">HAL_SBS_HDP_OBK_LEVEL_3</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_sbs_hdp_obk_level_value_t</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="summary-block docutils container">
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="hdpl-value-selection">
+          <span id="hal-exported-constants-hdpl-value-selection">
+          </span>
+          <h3 id="hdpl-value-selection">
+           HDPL Value Selection
+           <a class="headerlink" href="#hdpl-value-selection" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+<span class="w"> </span><span class="cp">#define SBS_HDPL_VALUE_0</span>
+<span class="w"> </span><span class="cp">#define SBS_HDPL_VALUE_1</span>
+<span class="w"> </span><span class="cp">#define SBS_HDPL_VALUE_2</span>
+<span class="w"> </span><span class="cp">#define SBS_HDPL_VALUE_3</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_SBS_HDP_LEVEL_0</span>
+<span class="w">  </span><span class="n">HAL_SBS_HDP_LEVEL_1</span>
+<span class="w">  </span><span class="n">HAL_SBS_HDP_LEVEL_2</span>
+<span class="w">  </span><span class="n">HAL_SBS_HDP_LEVEL_3</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_sbs_hdp_level_value_t</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="summary-block docutils container">
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="configuring-the-otg-hs-phy">
+          <span id="hal-exported-constants-configuring">
+          </span>
+          <h3 id="configuring-the-otg-hs-phy">
+           Configuring the OTG_HS PHY
+           <a class="headerlink" href="#configuring-the-otg-hs-phy" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           <strong>
+            OTG HS PHY reference clock frequency selection
+           </strong>
+          </p>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define SYSCFG_OTG_HS_PHY_CLK_SELECT_1</span>
+<span class="cp">#define SYSCFG_OTG_HS_PHY_CLK_SELECT_2</span>
+<span class="cp">#define SYSCFG_OTG_HS_PHY_CLK_SELECT_3</span>
+<span class="cp">#define SYSCFG_OTG_HS_PHY_CLK_SELECT_4</span>
+<span class="cp">#define SYSCFG_OTG_HS_PHY_CLK_SELECT_5</span>
+<span class="cp">#define SYSCFG_OTG_HS_PHY_CLK_SELECT_6</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_USBHSPHY_16MHZ</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_USBHSPHY_19_2MHZ</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_USBHSPHY_20MHZ</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_USBHSPHY_24MHZ</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_USBHSPHY_26MHZ</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_USBHSPHY_32MHZ</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_syscfg_usbhsphy_frequency_t</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="summary-block docutils container">
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="memory-address-remap">
+          <span id="hal-exported-constants-memory-address-remap">
+          </span>
+          <h3 id="memory-address-remap">
+           Memory Address Remap
+           <a class="headerlink" href="#memory-address-remap" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define SYSCFG_BOOT_MAINFLASH</span>
+<span class="cp">#define SYSCFG_BOOT_SYSTEMFLASH</span>
+<span class="cp">#define SYSCFG_BOOT_SRAM</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_MEMORY_ADDR_REMAP_MAINFLASH</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_MEMORY_ADDR_REMAP_SYSTEMFLASH</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_MEMORY_ADDR_REMAP_SRAM</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_syscfg_memory_addr_remap_t</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="summary-block docutils container">
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="ir-modulation-envelope-source">
+          <span id="hal-exported-constants-ir-modulation-envelope-source">
+          </span>
+          <h3 id="ir-modulation-envelope-source">
+           IR Modulation Envelope Source
+           <a class="headerlink" href="#ir-modulation-envelope-source" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+<span class="w"> </span><span class="cp">#define HAL_SYSCFG_IRDA_ENV_SEL_TIM16</span>
+<span class="w"> </span><span class="cp">#define HAL_SYSCFG_IRDA_ENV_SEL_USART1</span>
+<span class="w"> </span><span class="cp">#define HAL_SYSCFG_IRDA_ENV_SEL_USART2</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_IR_MOD_ENVLP_TIM16</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_IR_MOD_ENVLP_USART1</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_IR_MOD_ENVLP_USART2</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_syscfg_ir_mod_envelope_src_t</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="summary-block docutils container">
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="ir-modulation-output-polarity">
+          <span id="hal-exported-constants-ir-modulation-output-polarity">
+          </span>
+          <h3 id="ir-modulation-output-polarity">
+           IR Modulation Output Polarity
+           <a class="headerlink" href="#ir-modulation-output-polarity" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_SYSCFG_IRDA_POLARITY_NOT_INVERTED</span>
+<span class="cp">#define HAL_SYSCFG_IRDA_POLARITY_INVERTED</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_IR_MOD_OUT_NOT_INVERTED</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_IR_MOD_OUT_INVERTED</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_syscfg_ir_mod_out_polarity_t</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="summary-block docutils container">
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="interrupt-line-configuration">
+          <span id="hal-exported-constants-interrupt-line-configuration">
+          </span>
+          <h3 id="interrupt-line-configuration">
+           Interrupt Line Configuration
+           <a class="headerlink" href="#interrupt-line-configuration" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_ITLINE_WWDG</span>
+<span class="cp">#define HAL_ITLINE_RTC</span>
+<span class="cp">#define HAL_ITLINE_FLASH_ITF</span>
+<span class="cp">#define HAL_ITLINE_CLK_CTRL</span>
+<span class="cp">#define HAL_ITLINE_EXTI0</span>
+<span class="cp">#define HAL_ITLINE_EXTI1</span>
+<span class="cp">#define HAL_ITLINE_EXTI2</span>
+<span class="cp">#define HAL_ITLINE_EXTI3</span>
+<span class="w">             </span><span class="p">.</span>
+<span class="w">             </span><span class="p">.</span>
+<span class="w">             </span><span class="p">.</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_IT_REQUEST_WWDG</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_IT_REQUEST_RTC</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_IT_REQUEST_FLASH</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_IT_REQUEST_RCC</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_IT_REQUEST_EXTI0</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_IT_REQUEST_EXTI1</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_IT_REQUEST_EXTI2</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_IT_REQUEST_EXTI3</span>
+<span class="w">                  </span><span class="p">.</span>
+<span class="w">                  </span><span class="p">.</span>
+<span class="w">                  </span><span class="p">.</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_syscfg_it_request_source_t</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="summary-block docutils container">
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="hal-source-pin-binding">
+          <span id="hal-exported-constants-source-pin-binding">
+          </span>
+          <h3 id="hal-source-pin-binding">
+           HAL Source Pin Binding
+           <a class="headerlink" href="#hal-source-pin-binding" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define HAL_BIND_SO8_PIN1_PB7</span>
+<span class="cp">#define HAL_BIND_SO8_PIN1_PC14</span>
+<span class="cp">#define HAL_BIND_SO8_PIN4_PF2</span>
+<span class="cp">#define HAL_BIND_SO8_PIN4_PA0</span>
+<span class="cp">#define HAL_BIND_SO8_PIN4_PA1</span>
+<span class="w">                </span><span class="p">.</span>
+<span class="w">                </span><span class="p">.</span>
+<span class="w">                </span><span class="p">.</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_BIND_SO8_PIN1_TO_PB7</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_BIND_SO8_PIN1_TO_PC14</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_BIND_SO8_PIN4_TO_PF2</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_BIND_SO8_PIN4_TO_PA0</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_BIND_SO8_PIN4_TO_PA1</span><span class="p">,</span>
+<span class="w">              </span><span class="p">.</span>
+<span class="w">              </span><span class="p">.</span>
+<span class="w">              </span><span class="p">.</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_syscfg_bind_package_pin_src_t</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="summary-block docutils container">
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="package-pin-binding">
+          <span id="hal-exported-constants-package-pin-binding">
+          </span>
+          <h3 id="package-pin-binding">
+           Package Pin Binding
+           <a class="headerlink" href="#package-pin-binding" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+<span class="w">  </span><span class="cp">#define HAL_BIND_SO8_PIN1</span>
+<span class="w">  </span><span class="cp">#define HAL_BIND_SO8_PIN4</span>
+<span class="w">  </span><span class="cp">#define HAL_BIND_SO8_PIN5</span>
+<span class="w">  </span><span class="cp">#define HAL_BIND_SO8_PIN8</span>
+<span class="w">  </span><span class="cp">#define HAL_BIND_WLCSP12_PINE2</span>
+<span class="w">  </span><span class="cp">#define HAL_BIND_WLCSP12_PINF1</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_BIND_SO8_PIN1</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_BIND_SO8_PIN4</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_BIND_SO8_PIN5</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_BIND_SO8_PIN8</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_BIND_WLCSP12_PINE2</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_BIND_WLCSP12_PINF1</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_syscfg_bind_package_pin_t</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="summary-block docutils container">
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="hspi-capacitance">
+          <span id="hal-exported-constants-hspi-capacitance">
+          </span>
+          <h3 id="hspi-capacitance">
+           HSPI Capacitance
+           <a class="headerlink" href="#hspi-capacitance" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define SYSCFG_HSPI_CAPACITANCE_OFF</span>
+<span class="cp">#define SYSCFG_HSPI_CAPACITANCE_1_DIV_3</span>
+<span class="cp">#define SYSCFG_HSPI_CAPACITANCE_2_DIV_3</span>
+<span class="cp">#define SYSCFG_HSPI_CAPACITANCE_FULL</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_CAPACITANCE_OFF</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_CAPACITANCE_1_DIV_3</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_CAPACITANCE_2_DIV_3</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_CAPACITANCE_FULL</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_syscfg_capacitance_t</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="summary-block docutils container">
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="transmitter-pre-emphasis-current">
+          <span id="hal-exported-constants-src-current">
+          </span>
+          <h3 id="transmitter-pre-emphasis-current">
+           Transmitter Pre-emphasis Current
+           <a class="headerlink" href="#transmitter-pre-emphasis-current" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define SYSCFG_OTG_HS_PHY_PREEMP_DISABLED</span>
+<span class="cp">#define SYSCFG_OTG_HS_PHY_PREEMP_1X</span>
+<span class="cp">#define SYSCFG_OTG_HS_PHY_PREEMP_2X</span>
+<span class="cp">#define SYSCFG_OTG_HS_PHY_PREEMP_3X</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_SRC_CURRENT_NO</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_SRC_CURRENT_1</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_SRC_CURRENT_2</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_SRC_CURRENT_3</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_syscfg_src_current_t</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="summary-block docutils container">
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="disconnect-threshold-adjustment">
+          <span id="hal-exported-constants-disconnect-threshold-adjustment">
+          </span>
+          <h3 id="disconnect-threshold-adjustment">
+           Disconnect Threshold Adjustment
+           <a class="headerlink" href="#disconnect-threshold-adjustment" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define SYSCFG_OTG_HS_PHY_DISCONNECT_0PERCENT</span>
+<span class="cp">#define SYSCFG_OTG_HS_PHY_DISCONNECT_5_9PERCENT</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_DIS_ADJUST_0_PERCENT</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_DIS_ADJUST_PLUS_5_9_PERCENT</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_syscfg_disconnect_adjustment_t</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="summary-block docutils container">
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="squelch-threshold-adjustment">
+          <span id="hal-exported-constants-squelch-threshold-adjustment">
+          </span>
+          <h3 id="squelch-threshold-adjustment">
+           Squelch Threshold Adjustment
+           <a class="headerlink" href="#squelch-threshold-adjustment" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define SYSCFG_OTG_HS_PHY_SQUELCH_15PERCENT</span>
+<span class="cp">#define SYSCFG_OTG_HS_PHY_SQUELCH_0PERCENT</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_SQUELCH_ADJUST_0_PERCENT</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_SYSCFG_SQUELCH_ADJUST_PLUS_15_PERCENT</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_syscfg_squelch_adjust_t</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="summary-block docutils container">
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="interrupt-line-mapping">
+          <span id="hal-exported-constants-interrupt-line-mapping">
+          </span>
+          <h3 id="interrupt-line-mapping">
+           Interrupt Line Mapping
+           <a class="headerlink" href="#interrupt-line-mapping" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <div class="admonition note">
+           <p class="admonition-title">
+            Note
+           </p>
+           <p>
+            These defines are used internally and do not impact user-level operations.
+           </p>
+          </div>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define HAL_SYSCFG_ITLINE0</span>
+<span class="cp">#define HAL_SYSCFG_ITLINE2</span>
+<span class="cp">#define HAL_SYSCFG_ITLINE3</span>
+<span class="cp">#define HAL_SYSCFG_ITLINE4</span>
+<span class="w">               </span><span class="p">.</span>
+<span class="w">               </span><span class="p">.</span>
+<span class="w">               </span><span class="p">.</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define LL_SYSCFG_ITLINE0</span>
+<span class="cp">#define LL_SYSCFG_ITLINE2</span>
+<span class="cp">#define LL_SYSCFG_ITLINE3</span>
+<span class="cp">#define LL_SYSCFG_ITLINE4</span>
+<span class="w">               </span><span class="p">.</span>
+<span class="w">               </span><span class="p">.</span>
+<span class="w">               </span><span class="p">.</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <hr class="docutils"/>
+         </section>
+         <section id="io-compensation-cell-config">
+          <span id="hal-exported-constants-io-compensation-cell-config">
+          </span>
+          <h3 id="io-compensation-cell-config">
+           IO Compensation Cell Config
+           <a class="headerlink" href="#io-compensation-cell-config" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Description
+               </strong>
+              </p>
+             </td>
+             <td>
+              <p>
+               In HAL1, the IO compensation cell configuration was managed using macros.
+              </p>
+             </td>
+             <td>
+              <p>
+               In HAL2, this functionality has been updated to use different macros for default and custom configurations, and it is managed in LL.
+              </p>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define SBS_VDD_CELL_CODE</span>
+<span class="cp">#define SBS_VDD_REGISTER_CODE</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cp">#define LL_SBS_CCELL_VDDIO_DEFAULT_CODE</span>
+<span class="cp">#define LL_SBS_CCELL_VDDIO_CUSTOM_CODE</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="summary-block docutils container">
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p18">
+             <span class="std std-ref">
+              Add HAL_PPP Prefix to All HAL Peripheral APIs (Defines, Macros, Types, and Functions).
+             </span>
+            </a>
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="otg-hs-phy-power-down-config">
+          <span id="hal-exported-constants-otg-hs-phy-power-down">
+          </span>
+          <h3 id="otg-hs-phy-power-down-config">
+           OTG HS PHY Power Down Config
+           <a class="headerlink" href="#otg-hs-phy-power-down-config" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+
+
+<span class="cp">#define SYSCFG_OTG_HS_PHY_POWER_ON</span>
+
+
+<span class="cp">#define SYSCFG_OTG_HS_PHY_POWER_DOWN</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">In</span><span class="w"> </span><span class="n">HAL2</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">OTG_HS</span><span class="w"> </span><span class="n">PHY</span><span class="w"> </span><span class="n">Power</span><span class="w"> </span><span class="n">Down</span><span class="w"> </span><span class="n">defines</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">removed</span><span class="p">.</span>
+<span class="n">Instead</span><span class="p">,</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">following</span><span class="w"> </span><span class="n">functions</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">manage</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">OTG_HS</span><span class="w"> </span><span class="n">PHY</span><span class="w"> </span><span class="n">Power</span><span class="w"> </span><span class="n">Down</span><span class="o">:</span>
+
+<span class="c1">// To enable the OTG_HS PHY Power Down</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">HAL_SYSCFG_EnableUSBHSPHYPowerDown</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="c1">// To disable the OTG_HS PHY Power Down</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">HAL_SYSCFG_DisableUSBHSPHYPowerDown</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <hr class="docutils"/>
+         </section>
+         <section id="otg-hs-phy-enable">
+          <span id="hal-exported-constants-otg-hs-phy-enable">
+          </span>
+          <h3 id="otg-hs-phy-enable">
+           OTG_HS PHY Enable
+           <a class="headerlink" href="#otg-hs-phy-enable" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+
+
+<span class="cp">#define SYSCFG_OTG_HS_PHY_ENABLE</span>
+
+
+<span class="cp">#define SYSCFG_OTG_HS_PHY_UNDERRESET</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">In</span><span class="w"> </span><span class="n">HAL2</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">OTG_HS</span><span class="w"> </span><span class="n">PHY</span><span class="w"> </span><span class="n">Enable</span><span class="w"> </span><span class="n">defines</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">removed</span><span class="p">.</span>
+<span class="n">Instead</span><span class="p">,</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">following</span><span class="w"> </span><span class="n">functions</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">manage</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">OTG_HS</span><span class="w"> </span><span class="n">PHY</span><span class="o">:</span>
+
+<span class="c1">// To enable the OTG_HS PHY</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">HAL_SYSCFG_EnableUSBHSPHY</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+
+<span class="c1">// To reset or disable the OTG_HS PHY</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">HAL_SYSCFG_DisableUSBHSPHY</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+        </section>
+        <hr class="docutils"/>
+        <section id="hal-vrefbuf-constants-migration">
+         <h2 id="hal-vrefbuf-constants-migration">
+          HAL VREFBUF constants migration
+          <a class="headerlink" href="#hal-vrefbuf-constants-migration" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <section id="voltage-scaling">
+          <span id="hal-vrefbuf-voltage-scaling">
+          </span>
+          <h3 id="voltage-scaling">
+           Voltage Scaling
+           <a class="headerlink" href="#voltage-scaling" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define SYSCFG_VREFBUF_VOLTAGE_SCALE0</span>
+<span class="cp">#define SYSCFG_VREFBUF_VOLTAGE_SCALE1</span>
+<span class="cp">#define SYSCFG_VREFBUF_VOLTAGE_SCALE2</span>
+<span class="cp">#define SYSCFG_VREFBUF_VOLTAGE_SCALE3</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">HAL_VREFBUF_VOLTAGE_1_5V</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_VREFBUF_VOLTAGE_1_8V</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_VREFBUF_VOLTAGE_2_048V</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_VREFBUF_VOLTAGE_2_5V</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_vrefbuf_voltage_scale_t</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="summary-block docutils container">
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </div>
+          <hr class="docutils"/>
+         </section>
+         <section id="vrefbuf-mode">
+          <span id="hal-exported-constants-vrefbuf-mode-migration">
+          </span>
+          <h3 id="vrefbuf-mode">
+           VREFBUF Mode
+           <a class="headerlink" href="#vrefbuf-mode" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               <strong>
+                Example
+               </strong>
+              </p>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define SYSCFG_VREFBUF_HIGH_IMPEDANCE_DISABLE</span>
+<span class="cp">#define SYSCFG_VREFBUF_HIGH_IMPEDANCE_ENABLE</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">HAL_VREFBUF_MODE_PULL_DOWN</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_VREFBUF_MODE_EXT_VOLTAGE_REF</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_VREFBUF_MODE_INT_VOLTAGE_REF</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_VREFBUF_MODE_HOLD</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_vrefbuf_mode_t</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <div class="summary-block docutils container">
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+             <span class="std std-ref">
+              Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+             </span>
+            </a>
+           </p>
+          </div>
+         </section>
+        </section>
+        <hr class="docutils"/>
+        <section id="hal-exti-constants-migration">
+         <h2 id="hal-exti-constants-migration">
+          HAL EXTI constants migration
+          <a class="headerlink" href="#hal-exti-constants-migration" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <section id="exti-lines">
+          <span id="hal-generic-exti-lines">
+          </span>
+          <h3 id="exti-lines">
+           EXTI lines
+           <a class="headerlink" href="#exti-lines" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           The EXTI line constants are removed from the HAL GENERIC driver and replaced with enumerations in the
+           <strong>
+            HAL EXTI driver
+           </strong>
+           .
+          </p>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define EXTI_LINE_0</span>
+<span class="cp">#define EXTI_LINE_1</span>
+<span class="cp">#define EXTI_LINE_2</span>
+<span class="cp">#define EXTI_LINE_3</span>
+<span class="cp">#define EXTI_LINE_4</span>
+<span class="cp">#define EXTI_LINE_5</span>
+<span class="cp">#define EXTI_LINE_6</span>
+<span class="cp">#define EXTI_LINE_7</span>
+<span class="cp">#define EXTI_LINE_8</span>
+<span class="cp">#define EXTI_LINE_9</span>
+<span class="cp">#define EXTI_LINE_10</span>
+<span class="cp">#define EXTI_LINE_11</span>
+<span class="cp">#define EXTI_LINE_12</span>
+<span class="cp">#define EXTI_LINE_13</span>
+<span class="cp">#define EXTI_LINE_14</span>
+<span class="cp">#define EXTI_LINE_15</span>
+<span class="cp">#define EXTI_LINE_16</span>
+<span class="cp">#define EXTI_LINE_17</span>
+<span class="cp">#define EXTI_LINE_18</span>
+<span class="cp">#define EXTI_LINE_19</span>
+<span class="cp">#define EXTI_LINE_20</span>
+<span class="cp">#define EXTI_LINE_21</span>
+<span class="cp">#define EXTI_LINE_22</span>
+<span class="cp">#define EXTI_LINE_23</span>
+<span class="cp">#define EXTI_LINE_24</span>
+<span class="cp">#define EXTI_LINE_25</span>
+<span class="w">          </span><span class="p">.</span>
+<span class="w">          </span><span class="p">.</span>
+<span class="w">          </span><span class="p">.</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_0</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_1</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_2</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_3</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_4</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_5</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_6</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_7</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_8</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_9</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_10</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_11</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_12</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_13</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_14</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_15</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_16</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_17</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_18</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_19</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_20</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_21</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_22</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_23</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_24</span>
+<span class="w"> </span><span class="n">HAL_EXTI_LINE_25</span>
+<span class="w">           </span><span class="p">.</span>
+<span class="w">           </span><span class="p">.</span>
+<span class="w">           </span><span class="p">.</span>
+<span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="n">hal_exti_line_t</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+         <section id="exti-mode">
+          <span id="hal-generic-exti-modes">
+          </span>
+          <h3 id="exti-mode">
+           EXTI mode
+           <a class="headerlink" href="#exti-mode" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           The EXTI mode constants are removed from the HAL GENERIC driver and replaced with enumerations in the
+           <strong>
+            HAL EXTI driver
+           </strong>
+           .
+          </p>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define EXTI_MODE_INTERRUPT</span>
+<span class="cp">#define EXTI_MODE_EVENT</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w"> </span><span class="n">HAL_EXTI_MODE_INTERRUPT</span>
+<span class="w"> </span><span class="n">HAL_EXTI_MODE_EVENT</span>
+<span class="w"> </span><span class="n">HAL_EXTI_MODE_INTERRUPT_EVENT</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_exti_mode_t</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+         <section id="exti-trigger">
+          <span id="hal-generic-exti-trigger">
+          </span>
+          <h3 id="exti-trigger">
+           EXTI trigger
+           <a class="headerlink" href="#exti-trigger" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           The EXTI trigger constants are removed from the HAL GENERIC driver and replaced with enumerations in the
+           <strong>
+            HAL EXTI driver
+           </strong>
+           .
+          </p>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define EXTI_RISING_EDGE</span>
+<span class="cp">#define EXTI_FALLING_EDGE</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w"> </span><span class="n">HAL_EXTI_TRIGGER_NONE</span>
+<span class="w"> </span><span class="n">HAL_EXTI_TRIGGER_RISING</span>
+<span class="w"> </span><span class="n">HAL_EXTI_TRIGGER_FALLING</span>
+<span class="w"> </span><span class="n">HAL_EXTI_TRIGGER_RISING_FALLING</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_exti_trigger_t</span><span class="p">;</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

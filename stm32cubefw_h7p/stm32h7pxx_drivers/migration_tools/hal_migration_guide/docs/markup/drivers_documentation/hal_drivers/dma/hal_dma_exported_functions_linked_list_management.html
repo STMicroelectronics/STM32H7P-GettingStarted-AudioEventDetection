@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html data-content_root="../../../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, HAL1, DMA, STM32H5, STM32G0, STM32F4, STM32L4, STM32C0, STM32H7" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     HAL DMA linked-list management functions migration — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <script src="../../../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <link href="../../../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../../../search.html" rel="search" title="Search"/>
+    <link href="hal_dma_exported_functions_IRQ_Handler_and_Callbacks.html" rel="next" title="HAL DMA IRQ Handler and Callbacks Functions Migration"/>
+    <link href="hal_dma_exported_functions_io_operation.html" rel="prev" title="HAL DMA io operation functions migration"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/drivers_documentation/hal_drivers/dma/hal_dma_exported_functions_linked_list_management" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_script/migration_script_toc.html">
+            HAL1 detection
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../breaking_concepts/breaking_concepts_toc.html">
+              Breaking changes in concepts
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../hal_drivers_toc.html">
+              HAL drivers migration
+             </a>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../adc/hal_adc_toc.html">
+                ADC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../comp/hal_comp_toc.html">
+                COMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cortex/hal_cortex_toc.html">
+                CORTEX
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cordic/hal_cordic_toc.html">
+                CORDIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../crc/hal_crc_toc.html">
+                CRC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cryp/hal_cryp_toc.html">
+                CRYP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dac/hal_dac_toc.html">
+                DAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dcache/hal_dcache_toc.html">
+                DCACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="hal_dma_toc.html">
+                DMA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../exti/hal_exti_toc.html">
+                EXTI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../fmac/hal_fmac_toc.html">
+                FMAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../generic/hal_generic_toc.html">
+                GENERIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxmmu/hal_gfxmmu_toc.html">
+                GFXMMU
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxtim/hal_gfxtim_toc.html">
+                GFXTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gpio/hal_gpio_toc.html">
+                GPIO
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2c/hal_i2c_toc.html">
+                I2C
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2s/hal_i2s_toc.html">
+                I2S
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../icache/hal_icache_toc.html">
+                ICACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../irda/hal_irda_toc.html">
+                IRDA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../iwdg/hal_iwdg_toc.html">
+                IWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../lptim/hal_lptim_toc.html">
+                LPTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../nor/hal_nor_toc.html">
+                NOR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../opamp/hal_opamp_toc.html">
+                OPAMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ospi/hal_ospi_toc.html">
+                OSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pka/hal_pka_toc.html">
+                PKA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pwr/hal_pwr_toc.html">
+                PWR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../qspi/hal_qspi_toc.html">
+                QSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ramcfg/hal_ramcfg_toc.html">
+                RAMCFG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rcc/hal_rcc_toc.html">
+                RCC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rng/hal_rng_toc.html">
+                RNG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rtc/hal_rtc_toc.html">
+                RTC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sdram/hal_sdram_toc.html">
+                SDRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smartcard/hal_smartcard_toc.html">
+                SMARTCARD
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smbus/hal_smbus_toc.html">
+                SMBUS
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../spi/hal_spi_toc.html">
+                SPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sram/hal_sram_toc.html">
+                SRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../tim/hal_tim_toc.html">
+                TIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../uart/hal_uart_toc.html">
+                UART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../usart/hal_usart_toc.html">
+                USART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../wwdg/hal_wwdg_toc.html">
+                WWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../xspi/hal_xspi_toc.html">
+                XSPI
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../ll_drivers/ll_drivers_toc.html">
+              LL drivers migration
+             </a>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-drivers-documentation-hal-drivers-dma-hal-dma-exported-functions-linked-list-management--page-root">
+            HAL DMA linked-list management functions migration
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-dma-operation-functions-in-polling-mode">
+               HAL DMA operation functions in polling mode
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#hal-dma-configure-circular-mode">
+                  HAL DMA configure circular mode
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#hal-dma-insert-node">
+                  HAL DMA insert node
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#hal-dma-remove-node">
+                  HAL DMA remove node
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#hal-dma-replace-node">
+                  HAL DMA replace node
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#hal-dma-reset-queue">
+                  HAL DMA reset queue
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#hal-dma-insert-queue">
+                  HAL DMA insert queue
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#hal-dma-link-unlink-queue">
+                  HAL DMA link/unlink queue
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-dma-data-handling-trigger-and-repeated-block-configuration-functions">
+               HAL DMA data handling, trigger and repeated block configuration functions
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-dma-suspend-and-resume-operation-functions">
+               HAL DMA suspend and resume operation functions
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-dma-fifo-status-function">
+               HAL DMA FIFO status function
+              </a>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="hal-dma-linked-list-management-functions-migration">
+        <span id="hal-dma-exported-functions-linked-list-management">
+        </span>
+        <h1 id="docs-markup-drivers-documentation-hal-drivers-dma-hal-dma-exported-functions-linked-list-management--page-root">
+         HAL DMA linked-list management functions migration
+         <a class="headerlink" href="#docs-markup-drivers-documentation-hal-drivers-dma-hal-dma-exported-functions-linked-list-management--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <p>
+         This section provides information about the HAL DMA io operation functions migration.
+        </p>
+        <section id="hal-dma-operation-functions-in-polling-mode">
+         <span id="hal-dma-linkedlist-io-operation">
+         </span>
+         <h2 id="hal-dma-operation-functions-in-polling-mode">
+          HAL DMA operation functions in polling mode
+          <a class="headerlink" href="#hal-dma-operation-functions-in-polling-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_List_BuildNode</span><span class="p">(</span><span class="n">DMA_NodeConfTypeDef</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pNodeConfig</span><span class="p">,</span>
+<span class="w">                                  </span><span class="n">DMA_NodeTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pNode</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_DMA_FillNodeConfig</span><span class="p">(</span><span class="n">hal_dma_node_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_node</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_dma_node_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_conf</span><span class="p">,</span>
+<span class="w">                           </span><span class="n">hal_dma_node_type_t</span><span class="w"> </span><span class="n">node_type</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_List_GetNodeConfig</span><span class="p">(</span><span class="n">DMA_NodeConfTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pNodeConfig</span><span class="p">,</span>
+<span class="w">                                      </span><span class="n">DMA_NodeTypeDef</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pNode</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">HAL_DMA_GetNodeConfig</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">hal_dma_node_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_node</span><span class="p">,</span><span class="w"> </span><span class="n">hal_dma_node_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_conf</span><span class="p">,</span>
+<span class="w">                  </span><span class="n">hal_dma_node_type_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_node_type</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_List_ConvertQToDynamic</span><span class="p">(</span><span class="n">DMA_QListTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pQList</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_DMA_ConvertQNodesToDynamic</span><span class="p">(</span><span class="n">hal_q_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_q</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_List_ConvertQToStatic</span><span class="p">(</span><span class="n">DMA_QListTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pQList</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_DMA_ConvertQNodesToStatic</span><span class="p">(</span><span class="n">hal_q_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_q</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          In HAL2, all queuing functions are removed from
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            HAL
+           </span>
+           <span class="pre">
+            DMA
+           </span>
+           <span class="pre">
+            driver
+           </span>
+          </code>
+          and replaced in the
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            HAL
+           </span>
+           <span class="pre">
+            Q
+           </span>
+           <span class="pre">
+            driver
+           </span>
+          </code>
+          .
+         </p>
+         <section id="hal-dma-configure-circular-mode">
+          <span id="id1">
+          </span>
+          <h3 id="hal-dma-configure-circular-mode">
+           HAL DMA configure circular mode
+           <a class="headerlink" href="#hal-dma-configure-circular-mode" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_List_SetCircularModeConfig</span><span class="p">(</span><span class="n">DMA_QListTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pQList</span><span class="p">,</span>
+<span class="w">                                              </span><span class="n">DMA_NodeTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pFirstCircularNode</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_Q_SetCircularLinkQ</span><span class="p">(</span><span class="n">hal_q_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_q</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">p_node</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_List_ClearCircularMode</span><span class="p">(</span><span class="n">DMA_QListTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pQList</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_Q_ClearCircularLinkQ</span><span class="p">(</span><span class="n">hal_q_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_q</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_List_SetCircularMode</span><span class="p">(</span><span class="n">DMA_QListTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pQList</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_Q_SetCircularLinkQ_Head</span><span class="p">(</span><span class="n">hal_q_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_q</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+         <section id="hal-dma-insert-node">
+          <span id="id2">
+          </span>
+          <h3 id="hal-dma-insert-node">
+           HAL DMA insert node
+           <a class="headerlink" href="#hal-dma-insert-node" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_List_InsertNode</span><span class="p">(</span><span class="n">DMA_QListTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pQList</span><span class="p">,</span>
+<span class="w">                                   </span><span class="n">DMA_NodeTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pPrevNode</span><span class="p">,</span>
+<span class="w">                                   </span><span class="n">DMA_NodeTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pNewNode</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_Q_InsertNode</span><span class="p">(</span><span class="n">hal_q_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_q</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">p_node</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">p_new_node</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_List_InsertNode_Head</span><span class="p">(</span><span class="n">DMA_QListTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pQList</span><span class="p">,</span>
+<span class="w">                                        </span><span class="n">DMA_NodeTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pNewNode</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_Q_InsertNode_Head</span><span class="p">(</span><span class="n">hal_q_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_q</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">p_new_node</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_List_InsertNode_Tail</span><span class="p">(</span><span class="n">DMA_QListTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pQList</span><span class="p">,</span>
+<span class="w">                                        </span><span class="n">DMA_NodeTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pNewNode</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_Q_InsertNode_Tail</span><span class="p">(</span><span class="n">hal_q_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_q</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">p_new_node</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+         <section id="hal-dma-remove-node">
+          <span id="id3">
+          </span>
+          <h3 id="hal-dma-remove-node">
+           HAL DMA remove node
+           <a class="headerlink" href="#hal-dma-remove-node" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_List_RemoveNode</span><span class="p">(</span><span class="n">DMA_QListTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pQList</span><span class="p">,</span>
+<span class="w">                                   </span><span class="n">DMA_NodeTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pNode</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_Q_RemoveNode</span><span class="p">(</span><span class="n">hal_q_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_q</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">p_node</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_List_RemoveNode_Head</span><span class="p">(</span><span class="n">DMA_QListTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pQList</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_Q_RemoveNode_Head</span><span class="p">(</span><span class="n">hal_q_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_q</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_List_RemoveNode_Tail</span><span class="p">(</span><span class="n">DMA_QListTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pQList</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_Q_RemoveNode_Tail</span><span class="p">(</span><span class="n">hal_q_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_q</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+         <section id="hal-dma-replace-node">
+          <span id="id4">
+          </span>
+          <h3 id="hal-dma-replace-node">
+           HAL DMA replace node
+           <a class="headerlink" href="#hal-dma-replace-node" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_List_ReplaceNode</span><span class="p">(</span><span class="n">DMA_QListTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pQList</span><span class="p">,</span>
+<span class="w">                                    </span><span class="n">DMA_NodeTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pOldNode</span><span class="p">,</span>
+<span class="w">                                    </span><span class="n">DMA_NodeTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pNewNode</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_Q_ReplaceNode</span><span class="p">(</span><span class="n">hal_q_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_q</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">p_old_node</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">p_new_node</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_List_ReplaceNode_Head</span><span class="p">(</span><span class="n">DMA_QListTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pQList</span><span class="p">,</span>
+<span class="w">                                         </span><span class="n">DMA_NodeTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pNewNode</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_Q_ReplaceNode_Head</span><span class="p">(</span><span class="n">hal_q_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_q</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">p_new_node</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_List_ReplaceNode_Tail</span><span class="p">(</span><span class="n">DMA_QListTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pQList</span><span class="p">,</span>
+<span class="w">                                         </span><span class="n">DMA_NodeTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pNewNode</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_Q_ReplaceNode_Tail</span><span class="p">(</span><span class="n">hal_q_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_q</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">p_new_node</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+         <section id="hal-dma-reset-queue">
+          <span id="id5">
+          </span>
+          <h3 id="hal-dma-reset-queue">
+           HAL DMA reset queue
+           <a class="headerlink" href="#hal-dma-reset-queue" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_List_ResetQ</span><span class="p">(</span><span class="n">DMA_QListTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pQList</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="kt">void</span><span class="w">         </span><span class="nf">HAL_Q_DeInit</span><span class="p">(</span><span class="n">hal_q_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_q</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+         <section id="hal-dma-insert-queue">
+          <span id="id6">
+          </span>
+          <h3 id="hal-dma-insert-queue">
+           HAL DMA insert queue
+           <a class="headerlink" href="#hal-dma-insert-queue" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_List_InsertQ</span><span class="p">(</span><span class="n">DMA_QListTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pSrcQList</span><span class="p">,</span>
+<span class="w">                                </span><span class="n">DMA_NodeTypeDef</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pPrevNode</span><span class="p">,</span>
+<span class="w">                                </span><span class="n">DMA_QListTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pDestQList</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_Q_InsertQ</span><span class="p">(</span><span class="n">hal_q_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_dest_q</span><span class="p">,</span><span class="w"> </span><span class="n">hal_q_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_src_q</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">p_node</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_List_InsertQ_Head</span><span class="p">(</span><span class="n">DMA_QListTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pSrcQList</span><span class="p">,</span>
+<span class="w">                                     </span><span class="n">DMA_QListTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pDestQList</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_Q_InsertQ_Head</span><span class="p">(</span><span class="n">hal_q_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_dest_q</span><span class="p">,</span><span class="w"> </span><span class="n">hal_q_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_src_q</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_List_InsertQ_Tail</span><span class="p">(</span><span class="n">DMA_QListTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pSrcQList</span><span class="p">,</span>
+<span class="w">                                     </span><span class="n">DMA_QListTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pDestQList</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_Q_InsertQ_Tail</span><span class="p">(</span><span class="n">hal_q_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_dest_q</span><span class="p">,</span><span class="w"> </span><span class="n">hal_q_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_src_q</span><span class="p">);</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+         <section id="hal-dma-link-unlink-queue">
+          <span id="hal-dma-link-queue">
+          </span>
+          <h3 id="hal-dma-link-unlink-queue">
+           HAL DMA link/unlink queue
+           <a class="headerlink" href="#hal-dma-link-unlink-queue" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">HAL_DMAEx_List_LinkQ</span><span class="p">();</span>
+<span class="n">HAL_DMAEx_List_UnLinkQ</span><span class="p">();</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="nl">Removed</span><span class="p">:</span><span class="w"> </span><span class="n">APIs</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">link</span><span class="w"> </span><span class="n">DMA</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">queue</span><span class="w"> </span><span class="n">object</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">removed</span><span class="w"> </span><span class="n">within</span><span class="w"> </span><span class="n">HAL2</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">simplify</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">queue</span><span class="w"> </span><span class="n">assigning</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">physical</span><span class="w"> </span><span class="n">channel</span><span class="w"> </span><span class="n">through</span><span class="w"> </span><span class="n">linked</span><span class="o">-</span><span class="n">list</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="n">process</span><span class="w"> </span><span class="n">APIs</span><span class="p">.</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+        </section>
+        <section id="hal-dma-data-handling-trigger-and-repeated-block-configuration-functions">
+         <span id="hal-dma-repeated-block-trigger-configuration">
+         </span>
+         <h2 id="hal-dma-data-handling-trigger-and-repeated-block-configuration-functions">
+          HAL DMA data handling, trigger and repeated block configuration functions
+          <a class="headerlink" href="#hal-dma-data-handling-trigger-and-repeated-block-configuration-functions" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_ConfigDataHandling</span><span class="p">(</span><span class="n">DMA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">hdma</span><span class="p">,</span>
+<span class="w">                                      </span><span class="n">DMA_DataHandlingConfTypeDef</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pConfigDataHandling</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_DMA_SetConfigDirectXferDataHandling</span><span class="p">(</span><span class="n">hal_dma_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hdma</span><span class="p">,</span>
+<span class="w">                                            </span><span class="k">const</span><span class="w"> </span><span class="n">hal_dma_data_handling_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_ConfigTrigger</span><span class="p">(</span><span class="n">DMA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">hdma</span><span class="p">,</span>
+<span class="w">                                 </span><span class="n">DMA_TriggerConfTypeDef</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pConfigTrigger</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_DMA_SetConfigDirectXferTrigger</span><span class="p">(</span><span class="n">hal_dma_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hdma</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">hal_dma_trigger_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_ConfigRepeatBlock</span><span class="p">(</span><span class="n">DMA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">hdma</span><span class="p">,</span>
+<span class="w">                                     </span><span class="n">DMA_RepeatBlockConfTypeDef</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">pConfigRepeatBlock</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_DMA_SetConfigDirectXferRepeatBlock</span><span class="p">(</span><span class="n">hal_dma_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hdma</span><span class="p">,</span>
+<span class="w">                                           </span><span class="k">const</span><span class="w"> </span><span class="n">hal_dma_repeat_block_config_t</span><span class="w"> </span><span class="o">*</span><span class="n">p_config</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-dma-suspend-and-resume-operation-functions">
+         <span id="hal-dma-suspend-resumek-operation-functions">
+         </span>
+         <h2 id="hal-dma-suspend-and-resume-operation-functions">
+          HAL DMA suspend and resume operation functions
+          <a class="headerlink" href="#hal-dma-suspend-and-resume-operation-functions" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_Suspend</span><span class="p">(</span><span class="n">DMA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">hdma</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_DMA_Suspend</span><span class="p">(</span><span class="n">hal_dma_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hdma</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_Suspend_IT</span><span class="p">(</span><span class="n">DMA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">hdma</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_DMA_Suspend_IT</span><span class="p">(</span><span class="n">hal_dma_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hdma</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">HAL_DMAEx_Resume</span><span class="p">(</span><span class="n">DMA_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">hdma</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="nf">HAL_DMA_Resume</span><span class="p">(</span><span class="n">hal_dma_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hdma</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-dma-fifo-status-function">
+         <span id="id7">
+         </span>
+         <h2 id="hal-dma-fifo-status-function">
+          HAL DMA FIFO status function
+          <a class="headerlink" href="#hal-dma-fifo-status-function" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">HAL_DMAEx_GetFifoLevel</span><span class="p">(</span><span class="n">DMA_HandleTypeDef</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="n">hdma</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">HAL_DMA_GetFifoDataByte</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">hal_dma_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hdma</span><span class="p">);</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

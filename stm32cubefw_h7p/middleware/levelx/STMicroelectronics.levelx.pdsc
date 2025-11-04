@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<package xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:stm32="https://stm32cube.st.com/schemas/stm32cube/1.0.0" schemaVersion="1.7.44" xs:noNamespaceSchemaLocation="PACK.xsd" xs:schemaLocation="https://stm32cube.st.com/schemas/stm32cube/1.0.0 stm32cube.xsd" Dvendor="STMicroelectronics:13" Dname="STM32*">
+  <vendor>STMicroelectronics</vendor>
+  <name>levelx</name>
+  <environments>
+    <environment name="STM32Cube">
+      <stm32:pack type="MW" friendlyName="levelx" shortDesc="levelx middleware">
+        <relocation-info parent="middleware" layer="" element=""/>
+      </stm32:pack>
+    </environment>
+  </environments>
+  <ECCN>
+    <ECCN-EU>NEC</ECCN-EU>
+    <ECCN-US>5D992.c</ECCN-US>
+  </ECCN>
+  <description>alpha version of cube2 levelx pack</description>
+  <repository type="git">https://codex.cro.st.com/plugins/git/stm32cube/mw/levelx</repository>
+  <url>https://artifactory.st.com/artifactory/mcdc2embsw-mcd-cube2-packs-prod-local/STMicroelectronics.levelx/</url>
+  <license>LICENSE.md</license>
+  <releases>
+    <release date="2025-10-10" version="0.7.0">
+       Add Interface configuration panel for W25N01GVXX and MX66UW1G45G parts
+       Add changelog reference check in pdsc to avoid missing release notes
+       Add MX66UW1G45G nor polling interface component
+       Add W25Q128J nor interface components
+    </release>
+    <release date="2025-08-18" version="0.6.0">
+       Add some metadata into LevelX pack to help pack relocation into IDE project structure
+       Update MX25LM51245G nor interfaces
+       Add W25N01GVXX nand interface components
+       Add a memory open check in the user NOR and NAND APIs to prevent unexpected behavior after flash memory closure
+       Rename generator into levelx_mx2codegen
+    </release>
+    <release date="2025-05-30" version="0.5.0">
+       Support CodeGen new grammar 3.1
+       Update .json file
+       Add mx_levelx_app.c/.h hbs template files
+       Update MX25LM51245G and MX66LM1G45G nor interfaces
+       Update CMakeLists.txt
+    </release>
+    <release date="2025-04-28" version="0.4.0">
+       Update pack and gpdsc naming
+       Update MX25LM51245G and MX66LM1G45G nor interfaces to use memory mapped base address getter function
+       CodeGen update: Add Main and Applicative configuration panels and implement progressive view
+       Remove double quotes from .bat/.sh scripts
+    </release>
+    <release date="2025-03-24" version="0.3.1">
+       Minor update in PDSC file: using the new version format and adding ECCN
+    </release>
+    <release date="2025-02-24" version="0.3.0+pack.6.4.1">
+       Add .config folder with configuration parameters files: json and hbs files
+       Update the declaration of user-friendly name components and entry points
+       Add MX25LM51245G nor interface components
+       Add MX66LM1G45G nor interface components
+    </release>
+    <release date="2024-10-21" version="0.2.0+pack.6.4.1">
+       Implement RTOS agnostic support features
+       Add port files with RTOS and NO RTOS conditions
+    </release>
+    <release date="2024-09-05" version="0.1.0+pack.6.4.1">
+       First LevelX pack alpha version based on the 6.4.1 Release
+    </release>
+  </releases>
+  <changelogs>
+    <changelog id="Release Notes" name="st_readme.txt"/>
+  </changelogs>
+  <keywords>
+    <keyword>Cortex-M</keyword>
+    <keyword>STMicroelectronics</keyword>
+    <keyword>levelX</keyword>
+    <keyword>STM32</keyword>
+  </keywords>
+  <conditions>
+    <condition id="Use NOR Flash Core">
+      <description>LevelX NOR Flash Core dependency</description>
+    </condition>
+    <condition id="Use NAND Flash Core">
+      <description>LevelX NAND Flash Core dependency</description>
+    </condition>
+    <condition id="LX NOR Flash Core condition">
+      <description>LX NOR Flash Core dependency</description>
+      <require Cclass="File System" Cgroup="LevelX" Csub="NOR Flash Core"/>
+    </condition>
+    <condition id="LX MX25LM51245G condition">
+      <description>LX MX25LM51245G interface dependency</description>
+      <require Cclass="File System" Cgroup="LevelX" Csub="NOR Flash Core"/>
+      <require Cclass="Board Part" Cgroup="Memory" Csub="MX25LM51245G Core"/>
+    </condition>
+    <condition id="LX MX66LM1G45G condition">
+      <description>LX MX66LM1G45G interface dependency</description>
+      <require Cclass="File System" Cgroup="LevelX" Csub="NOR Flash Core"/>
+      <require Cclass="Board Part" Cgroup="Memory" Csub="MX66LM1G45G Core"/>
+    </condition>
+    <condition id="LX W25Q128J condition">
+      <description>LX W25Q128J interface dependency</description>
+      <require Cclass="File System" Cgroup="LevelX" Csub="NOR Flash Core"/>
+      <require Cclass="Board Part" Cgroup="Memory" Csub="W25Q128J Core"/>
+    </condition>
+    <condition id="LX DMA OS condition">
+      <description>RTOS dependency</description>
+      <require Cclass="RTOS" Cgroup="FreeRTOS" Csub="Core"/>
+    </condition>
+    <condition id="LX DMA NO OS condition">
+      <description>NO RTOS dependency</description>
+      <deny Cclass="RTOS" Cgroup="FreeRTOS" Csub="Core"/>
+    </condition>
+    <condition id="USE W25N01GVXX POLLING">
+      <description>LX W25N01GVXX POLLING interface dependency</description>
+    </condition>
+    <condition id="USE W25N01GVXX DMA NO OS">
+      <description>LX W25N01GVXX NO OS interface dependency</description>
+    </condition>
+    <condition id="USE W25N01GVXX DMA OS">
+      <description>LX W25N01GVXX DMA OS interface dependency</description>
+    </condition>
+    <condition id="USE MX66UW1G45G POLLING">
+      <description>LX MX66UW1G45G POLLING interface dependency</description>
+    </condition>
+    <condition id="LX Core condition">
+      <description>levelx core dependency</description>
+      <require condition="Use NOR Flash Core"/>
+      <require condition="Use NAND Flash Core"/>
+      <require condition="USE W25N01GVXX POLLING"/>
+      <require condition="USE W25N01GVXX DMA NO OS"/>
+      <require condition="USE W25N01GVXX DMA OS"/>
+      <require condition="USE MX66UW1G45G POLLING"/>
+      <accept Cclass="File System" Cgroup="LevelX" Csub="NOR Flash Core"/>
+      <accept Cclass="File System" Cgroup="LevelX" Csub="NAND Flash Core"/>
+    </condition>
+  </conditions>
+  <generators>
+    <!-- This generator is launched if any component referencing this generator by 'id' is selected and the specified <gpdsc> file does not exist -->
+    <generator id="levelx_mx2codegen">
+      <description>ST Microelectronics: STM32 Cube Code Generator for LevelX Pack</description>
+      <exe>
+        <command host="win">.config/gen_code.bat</command>
+        <command host="linux">.config/gen_code.sh</command>
+        <!-- $S = Device Family Pack base folder -->
+        <argument>$S</argument>
+        <!-- D = Device (Dname/Dvariant as configured by environment) -->
+        <argument>$D</argument>
+        <!-- Project path and project name (as configured by environment) -->
+        <argument>$P</argument>
+        <argument>#P</argument>
+        <!-- #name of the gpdsc template contained in this PACK and aligned with GPDSC name-->
+        <argument>STMicroelectronics.levelx.gpdsc.hbs</argument>
+        <!-- passing the generator name-->
+        <argument>levelx_mx2codegen</argument>
+        <argument>$G</argument>
+        <!-- Flag to indicate that this Generator is dry-run capable  -->
+        <argument mode="dry-run">--dry-run</argument>
+      </exe>
+      <!-- workingDir></workingDir -->
+      <!-- path is specified either absolute or relative to PDSC or GPDSC file. If not specified it is the project directory configured by the environment -->
+      <gpdsc name="$P/mw_levelx_codegen.gpdsc"/>
+    </generator>
+  </generators>
+  <components>
+    <component Cclass="File System" Cgroup="LevelX" Csub="NOR Flash Core" condition="Use NOR Flash Core" Cversion="6.4.1" maxInstances="1">
+      <description>Component to support NOR flash</description>
+      <files>
+        <!-- levelX nor flash core common files -->
+        <file category="doc" name="README.md"/>
+        <file category="doc" name="st_readme.txt"/>
+        <file category="doc" name="docs/deps.png"/>
+        <file category="source" name="common/src/lx_nor_flash_block_reclaim.c"/>
+        <file category="source" name="common/src/lx_nor_flash_close.c"/>
+        <file category="source" name="common/src/lx_nor_flash_defragment.c"/>
+        <file category="source" name="common/src/lx_nor_flash_driver_block_erase.c"/>
+        <file category="source" name="common/src/lx_nor_flash_driver_read.c"/>
+        <file category="source" name="common/src/lx_nor_flash_driver_write.c"/>
+        <file category="source" name="common/src/lx_nor_flash_extended_cache_enable.c"/>
+        <file category="source" name="common/src/lx_nor_flash_initialize.c"/>
+        <file category="source" name="common/src/lx_nor_flash_logical_sector_find.c"/>
+        <file category="source" name="common/src/lx_nor_flash_next_block_to_erase_find.c"/>
+        <file category="source" name="common/src/lx_nor_flash_open.c"/>
+        <file category="source" name="common/src/lx_nor_flash_partial_defragment.c"/>
+        <file category="source" name="common/src/lx_nor_flash_physical_sector_allocate.c"/>
+        <file category="source" name="common/src/lx_nor_flash_sector_mapping_cache_invalidate.c"/>
+        <file category="source" name="common/src/lx_nor_flash_sector_read.c"/>
+        <file category="source" name="common/src/lx_nor_flash_sector_release.c"/>
+        <file category="source" name="common/src/lx_nor_flash_sector_write.c"/>
+        <file category="source" name="common/src/lx_nor_flash_system_error.c"/>
+        <file category="header" name="common/inc/lx_api.h"/>
+        <file category="include" name="ports/freertos/inc/" condition="LX DMA OS condition"/>
+        <file category="include" name="ports/generic/inc/" condition="LX DMA NO OS condition"/>
+      </files>
+    </component>
+    <component Cclass="File System" Cgroup="LevelX" Csub="NAND Flash Core" condition="Use NAND Flash Core" Cversion="6.4.1" maxInstances="1">
+      <description>Component to support NAND flash</description>
+      <files>
+        <!-- levelX nand flash core common files -->
+        <file category="doc" name="README.md"/>
+        <file category="doc" name="st_readme.txt"/>
+        <file category="doc" name="docs/deps.png"/>
+        <file category="source" name="common/src/lx_nand_flash_256byte_ecc_check.c"/>
+        <file category="source" name="common/src/lx_nand_flash_256byte_ecc_compute.c"/>
+        <file category="source" name="common/src/lx_nand_flash_block_allocate.c"/>
+        <file category="source" name="common/src/lx_nand_flash_block_data_move.c"/>
+        <file category="source" name="common/src/lx_nand_flash_block_find.c"/>
+        <file category="source" name="common/src/lx_nand_flash_block_mapping_set.c"/>
+        <file category="source" name="common/src/lx_nand_flash_block_status_set.c"/>
+        <file category="source" name="common/src/lx_nand_flash_close.c"/>
+        <file category="source" name="common/src/lx_nand_flash_data_page_copy.c"/>
+        <file category="source" name="common/src/lx_nand_flash_defragment.c"/>
+        <file category="source" name="common/src/lx_nand_flash_driver_block_erase.c"/>
+        <file category="source" name="common/src/lx_nand_flash_driver_block_erased_verify.c"/>
+        <file category="source" name="common/src/lx_nand_flash_driver_block_status_get.c"/>
+        <file category="source" name="common/src/lx_nand_flash_driver_block_status_set.c"/>
+        <file category="source" name="common/src/lx_nand_flash_driver_page_erased_verify.c"/>
+        <file category="source" name="common/src/lx_nand_flash_erase_count_set.c"/>
+        <file category="source" name="common/src/lx_nand_flash_extended_cache_enable.c"/>
+        <file category="source" name="common/src/lx_nand_flash_format.c"/>
+        <file category="source" name="common/src/lx_nand_flash_free_block_list_add.c"/>
+        <file category="source" name="common/src/lx_nand_flash_initialize.c"/>
+        <file category="source" name="common/src/lx_nand_flash_mapped_block_list_add.c"/>
+        <file category="source" name="common/src/lx_nand_flash_mapped_block_list_get.c"/>
+        <file category="source" name="common/src/lx_nand_flash_mapped_block_list_remove.c"/>
+        <file category="source" name="common/src/lx_nand_flash_memory_initialize.c"/>
+        <file category="source" name="common/src/lx_nand_flash_metadata_allocate.c"/>
+        <file category="source" name="common/src/lx_nand_flash_metadata_build.c"/>
+        <file category="source" name="common/src/lx_nand_flash_metadata_write.c"/>
+        <file category="source" name="common/src/lx_nand_flash_open.c"/>
+        <file category="source" name="common/src/lx_nand_flash_page_ecc_check.c"/>
+        <file category="source" name="common/src/lx_nand_flash_page_ecc_compute.c"/>
+        <file category="source" name="common/src/lx_nand_flash_partial_defragment.c"/>
+        <file category="source" name="common/src/lx_nand_flash_sector_read.c"/>
+        <file category="source" name="common/src/lx_nand_flash_sector_release.c"/>
+        <file category="source" name="common/src/lx_nand_flash_sector_write.c"/>
+        <file category="source" name="common/src/lx_nand_flash_sectors_read.c"/>
+        <file category="source" name="common/src/lx_nand_flash_sectors_release.c"/>
+        <file category="source" name="common/src/lx_nand_flash_sectors_write.c"/>
+        <file category="source" name="common/src/lx_nand_flash_system_error.c"/>
+        <file category="header" name="common/inc/lx_api.h"/>
+        <file category="include" name="ports/freertos/inc/" condition="LX DMA OS condition"/>
+        <file category="include" name="ports/generic/inc/" condition="LX DMA NO OS condition"/>
+      </files>
+    </component>
+    <!-- levelX nor flash simulator interface component -->
+    <component Cclass="File System" Cgroup="LevelX" Csub="nor_flash_simulator_itf" condition="LX NOR Flash Core condition" Cversion="6.4.1" maxInstances="1">
+      <description>Simulator interface for NOR flash </description>
+      <files>
+        <file category="source" name="interfaces/nor/simulator/stm32_lx_nor_flash_simulator_driver.c"/>
+        <file category="header" name="interfaces/nor/simulator/stm32_lx_nor_flash_simulator_driver.h"/>
+        <file category="include" name="interfaces/nor/"/>
+        <file category="include" name="interfaces/nor/simulator/"/>
+      </files>
+    </component>
+    <!-- levelx mx25lm51245g nor flash interface components -->
+    <component Cclass="File System" Cgroup="LevelX" Csub="mx25lm51245g_nor_polling_itf" condition="LX MX25LM51245G condition" Cversion="6.4.1" maxInstances="1">
+      <description>Polling interface for NOR flash mx25lm51245g</description>
+      <files>
+        <file category="source" name="interfaces/nor/mx25lm51245g/stm32_lx_mx25lm51245g_nor_flash_polling_driver.c"/>
+        <file category="header" name="interfaces/nor/mx25lm51245g/stm32_lx_mx25lm51245g_nor_flash_polling_driver.h"/>
+        <file category="include" name="interfaces/nor/"/>
+        <file category="include" name="interfaces/nor/mx25lm51245g/"/>
+      </files>
+    </component>
+    <component Cclass="File System" Cgroup="LevelX" Csub="mx25lm51245g_nor_dma_no_os_itf" condition="LX MX25LM51245G condition" Cversion="6.4.1" maxInstances="1">
+      <description>DMA no os interface for NOR flash mx25lm51245g</description>
+      <files>
+        <file category="source" name="interfaces/nor/mx25lm51245g/stm32_lx_mx25lm51245g_nor_flash_dma_no_os_driver.c"/>
+        <file category="header" name="interfaces/nor/mx25lm51245g/stm32_lx_mx25lm51245g_nor_flash_dma_no_os_driver.h"/>
+        <file category="include" name="interfaces/nor/"/>
+        <file category="include" name="interfaces/nor/mx25lm51245g/"/>
+      </files>
+    </component>
+    <component Cclass="File System" Cgroup="LevelX" Csub="mx25lm51245g_nor_dma_os_itf" condition="LX MX25LM51245G condition" Cversion="6.4.1" maxInstances="1">
+      <description>DMA os interface for NOR flash mx25lm51245g</description>
+      <files>
+        <file category="source" name="interfaces/nor/mx25lm51245g/stm32_lx_mx25lm51245g_nor_flash_dma_os_driver.c"/>
+        <file category="header" name="interfaces/nor/mx25lm51245g/stm32_lx_mx25lm51245g_nor_flash_dma_os_driver.h"/>
+        <file category="include" name="interfaces/nor/"/>
+        <file category="include" name="interfaces/nor/mx25lm51245g/"/>
+      </files>
+    </component>
+    <!-- levelX mx66lm1g45g nor flash interface components -->
+    <component Cclass="File System" Cgroup="LevelX" Csub="mx66lm1g45g_nor_polling_itf" condition="LX MX66LM1G45G condition" Cversion="6.4.1" maxInstances="1">
+      <description>Polling interface for NOR flash mx66lm1g45g</description>
+      <files>
+        <file category="source" name="interfaces/nor/mx66lm1g45g/stm32_lx_mx66lm1g45g_nor_flash_polling_driver.c"/>
+        <file category="header" name="interfaces/nor/mx66lm1g45g/stm32_lx_mx66lm1g45g_nor_flash_polling_driver.h"/>
+        <file category="include" name="interfaces/nor/"/>
+        <file category="include" name="interfaces/nor/mx66lm1g45g/"/>
+      </files>
+    </component>
+    <component Cclass="File System" Cgroup="LevelX" Csub="mx66lm1g45g_nor_dma_no_os_itf" condition="LX MX66LM1G45G condition" Cversion="6.4.1" maxInstances="1">
+      <description>DMA no os interface for NOR flash mx66lm1g45g</description>
+      <files>
+        <file category="source" name="interfaces/nor/mx66lm1g45g/stm32_lx_mx66lm1g45g_nor_flash_dma_no_os_driver.c"/>
+        <file category="header" name="interfaces/nor/mx66lm1g45g/stm32_lx_mx66lm1g45g_nor_flash_dma_no_os_driver.h"/>
+        <file category="include" name="interfaces/nor/"/>
+        <file category="include" name="interfaces/nor/mx66lm1g45g/"/>
+      </files>
+    </component>
+    <component Cclass="File System" Cgroup="LevelX" Csub="mx66lm1g45g_nor_dma_os_itf" condition="LX MX66LM1G45G condition" Cversion="6.4.1" maxInstances="1">
+      <description>DMA os interface for NOR flash mx66lm1g45g</description>
+      <files>
+        <file category="source" name="interfaces/nor/mx66lm1g45g/stm32_lx_mx66lm1g45g_nor_flash_dma_os_driver.c"/>
+        <file category="header" name="interfaces/nor/mx66lm1g45g/stm32_lx_mx66lm1g45g_nor_flash_dma_os_driver.h"/>
+        <file category="include" name="interfaces/nor/"/>
+        <file category="include" name="interfaces/nor/mx66lm1g45g/"/>
+      </files>
+    </component>
+    <!-- levelX w25q128j nor flash interface components -->
+    <component Cclass="File System" Cgroup="LevelX" Csub="w25q128j_nor_polling_itf" condition="LX W25Q128J condition" Cversion="6.4.1" maxInstances="1">
+      <description>Polling interface for NOR flash w25q128j</description>
+      <files>
+        <file category="source" name="interfaces/nor/w25q128j/stm32_lx_w25q128j_nor_flash_polling_driver.c"/>
+        <file category="header" name="interfaces/nor/w25q128j/stm32_lx_w25q128j_nor_flash_polling_driver.h"/>
+        <file category="include" name="interfaces/nor/"/>
+        <file category="include" name="interfaces/nor/w25q128j/"/>
+      </files>
+    </component>
+    <component Cclass="File System" Cgroup="LevelX" Csub="w25q128j_nor_dma_no_os_itf" condition="LX W25Q128J condition" Cversion="6.4.1" maxInstances="1">
+      <description>DMA no os interface for NOR flash w25q128j</description>
+      <files>
+        <file category="source" name="interfaces/nor/w25q128j/stm32_lx_w25q128j_nor_flash_dma_no_os_driver.c"/>
+        <file category="header" name="interfaces/nor/w25q128j/stm32_lx_w25q128j_nor_flash_dma_no_os_driver.h"/>
+        <file category="include" name="interfaces/nor/"/>
+        <file category="include" name="interfaces/nor/w25q128j/"/>
+      </files>
+    </component>
+    <component Cclass="File System" Cgroup="LevelX" Csub="w25q128j_nor_dma_os_itf" condition="LX W25Q128J condition" Cversion="6.4.1" maxInstances="1">
+      <description>DMA os interface for NOR flash w25q128j</description>
+      <files>
+        <file category="source" name="interfaces/nor/w25q128j/stm32_lx_w25q128j_nor_flash_dma_os_driver.c"/>
+        <file category="header" name="interfaces/nor/w25q128j/stm32_lx_w25q128j_nor_flash_dma_os_driver.h"/>
+        <file category="include" name="interfaces/nor/"/>
+        <file category="include" name="interfaces/nor/w25q128j/"/>
+      </files>
+    </component>
+    <!-- levelX w25n01gvxx nand flash interface components -->
+    <component Cclass="File System" Cgroup="LevelX" Csub="w25n01gvxx_nand_polling_itf" condition="USE W25N01GVXX POLLING" Cversion="6.4.1" maxInstances="1">
+      <description>Polling interface for NAND flash w25n01gvxx</description>
+      <files>
+        <file category="source" name="interfaces/nand/w25n01gvxx/stm32_lx_w25n01gvxx_nand_flash_polling_driver.c"/>
+        <file category="header" name="interfaces/nand/w25n01gvxx/stm32_lx_w25n01gvxx_nand_flash_polling_driver.h"/>
+        <file category="include" name="interfaces/nand/"/>
+        <file category="include" name="interfaces/nand/w25n01gvxx/"/>
+      </files>
+    </component>
+    <component Cclass="File System" Cgroup="LevelX" Csub="w25n01gvxx_nand_dma_no_os_itf" condition="USE W25N01GVXX DMA NO OS" Cversion="6.4.1" maxInstances="1">
+      <description>DMA no os interface for NAND flash w25n01gvxx</description>
+      <files>
+        <file category="source" name="interfaces/nand/w25n01gvxx/stm32_lx_w25n01gvxx_nand_flash_dma_no_os_driver.c"/>
+        <file category="header" name="interfaces/nand/w25n01gvxx/stm32_lx_w25n01gvxx_nand_flash_dma_no_os_driver.h"/>
+        <file category="include" name="interfaces/nand/"/>
+        <file category="include" name="interfaces/nand/w25n01gvxx/"/>
+      </files>
+    </component>
+    <component Cclass="File System" Cgroup="LevelX" Csub="w25n01gvxx_nand_dma_os_itf" condition="USE W25N01GVXX DMA OS" Cversion="6.4.1" maxInstances="1">
+      <description>DMA os interface for NAND flash w25n01gvxx</description>
+      <files>
+        <file category="source" name="interfaces/nand/w25n01gvxx/stm32_lx_w25n01gvxx_nand_flash_dma_os_driver.c"/>
+        <file category="header" name="interfaces/nand/w25n01gvxx/stm32_lx_w25n01gvxx_nand_flash_dma_os_driver.h"/>
+        <file category="include" name="interfaces/nand/"/>
+        <file category="include" name="interfaces/nand/w25n01gvxx/"/>
+      </files>
+    </component>
+    <!-- levelX mx66uw1g45g nor flash interface components -->
+    <component Cclass="File System" Cgroup="LevelX" Csub="mx66uw1g45g_nor_polling_itf" condition="USE MX66UW1G45G POLLING" Cversion="6.4.1" maxInstances="1">
+      <description>Polling interface for NOR flash mx66uw1g45g</description>
+      <files>
+        <file category="source" name="interfaces/nor/mx66uw1g45g/stm32_lx_mx66uw1g45g_nor_flash_polling_driver.c"/>
+        <file category="header" name="interfaces/nor/mx66uw1g45g/stm32_lx_mx66uw1g45g_nor_flash_polling_driver.h"/>
+        <file category="include" name="interfaces/nor/"/>
+        <file category="include" name="interfaces/nor/mx66uw1g45g/"/>
+      </files>
+    </component>
+    <!-- START: STMicroelectronics MW LevelX CODE GEN -->
+    <component generator="levelx_mx2codegen" Cclass="File System" Cgroup="STM32CubeMX2 Config" Csub="LevelX" Cversion="0.1.0" condition="LX Core condition">
+      <description>STMicroelectronics: STM32 Cube Configuration Code Geneneration for LevelX</description>
+      <environments>
+        <environment name="STM32Cube">
+          <stm32:component>
+            <middleware-entry-point id="LevelX" name="LevelX" category="File System"/>
+          </stm32:component>
+        </environment>
+      </environments>
+      <files>
+        <file category="genAsset" name=".config/gen_code.bat"/>
+        <file category="genAsset" name=".config/gen_code.sh"/>
+        <file category="genAsset" name=".config/STMicroelectronics.levelx.gpdsc.hbs"/>
+        <file category="genAsset" name=".config/template/lx_user_template.h.hbs"/>
+        <file category="genAsset" name=".config/template/mx_levelx_app_template.c.hbs"/>
+        <file category="genAsset" name=".config/template/mx_levelx_app_template.h.hbs"/>
+        <file category="genAsset" name=".config/template/mx_levelx_interfaces_template.c.hbs"/>
+        <file category="genAsset" name=".config/template/mx_levelx_interfaces_template.h.hbs"/>
+        <file category="genAsset" name=".config/lx_config_parameters.json"/>
+        <file category="genAsset" name=".config/template/helpers/levelx_helpers.js"/>
+      </files>
+    </component>
+  </components>
+</package>

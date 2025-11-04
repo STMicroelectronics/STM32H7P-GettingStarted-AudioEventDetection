@@ -1,0 +1,164 @@
+{{!--
+  Partial used for HAL ADC:
+  how to use
+  > ADC_LL fct='xxxx' with xxxx:
+    * init
+    * deinit
+--}}
+{{#if (eq fct 'init')}}
+{{!==================== debug ====================~}}
+{{log '========== feat_basic: 'feat_basic~}}
+{{log '========== feat_opt:   'feat_opt~}}
+{{assign 'regular_sequencer' feat_basic.group_panel.reg_config_t.reg_sequencer~}}
+{{assign 'injected_sequencer' feat_basic.group_panel.inj_config_t.inj_sequencer~}}
+{{#with feat_basic}}
+  {{helper_common_gen_ll_code 'LL_ADC_SetResolution' (concat 'LL_ADC_RESOLUTION_' resolution 'B')}}
+  {{helper_common_gen_ll_code 'LL_ADC_SetSamplingMode' (concat 'LL_ADC_SAMPLING_MODE_' sampling_mode )}}
+{{/with}}
+
+{{!==================== Features basic (mandatory) ====================}}
+  /****************************************************************************/
+  /* Configuration of basic features (mandatory)                              */
+  /****************************************************************************/
+{{assign 'available_channels' feat_basic.channels}}
+{{#with feat_basic.group_panel}}
+{{#if (eq reg_config_t.grp_reg_sel true)}}
+  /* ==================== Group Regular ====================*/
+{{#with reg_config_t}}
+  {{helper_common_gen_ll_code 'LL_ADC_REG_SetContinuousMode' (concat 'LL_ADC_REG_CONV_' continuous)}}
+{{#if (eq trigger_src true)}}
+  {{helper_common_gen_ll_code 'LL_ADC_REG_SetTriggerSource' 'LL_ADC_REG_TRIG_SOFTWARE'}}
+{{else}}
+  {{helper_common_gen_ll_code 'LL_ADC_REG_SetTriggerSource' (concat 'LL_ADC_REG_TRIG_EXT_' (helper_ll_adc_transform_trigger_name trigger_src_ext.trigger_src_query.source))}}
+  LL_ADC_REG_SetTriggerEdge({{@root.current_resource}}, LL_ADC_REG_TRIG_EXT_{{trigger_src_ext.trigger_edge}});
+{{/if}}{{! trigger_src true}}
+  {{helper_common_gen_ll_code 'LL_ADC_REG_SetSequencerDiscont' (concat 'LL_ADC_REG_SEQ_DISCONT_' sequencer_discontinuous)}}
+  {{helper_common_gen_ll_code 'LL_ADC_REG_SetOverrun' (concat 'LL_ADC_REG_OVR_DATA_' overrun)}}
+{{#if (eq (helper_adc_is_sequencer_not_empty @root.regular_sequencer) 1)}}
+{{#if (eq (helper_adc_get_sequencer_length @root.regular_sequencer) 1)}}
+  {{helper_common_gen_ll_code 'LL_ADC_REG_SetSequencerLength' 'LL_ADC_REG_SEQ_SCAN_DISABLE'}}
+{{else}}
+  LL_ADC_REG_SetSequencerLength({{@root.current_resource}},LL_ADC_REG_SEQ_SCAN_ENABLE_{{helper_adc_get_sequencer_length @root.regular_sequencer}}RANKS);
+{{/if}}{{! helper_adc_get_sequencer_length}}
+  /* Configure the ADC regular group sequencer */
+{{#each reg_sequencer}}
+  LL_ADC_REG_SetSequencerRanks({{@root.current_resource}}, LL_ADC_REG_RANK_{{helper_adc_increment @index}}, LL_{{helper_adc_transform_channel_name channel.source}});
+{{#with (helper_adc_lookup_channel @root.available_channels channel.source) as |channel_reg|}}
+  LL_ADC_SetChannelSamplingTime({{@root.current_resource}}, LL_{{helper_adc_transform_channel_name ../channel.source}}, LL_ADC_SAMPLINGTIME_{{channel_reg.sampling_time}});
+  LL_ADC_SetChannelSingleDiff({{@root.current_resource}}, LL_{{helper_adc_transform_channel_name ../channel.source}}, LL_ADC_IN_{{channel_reg.single_diff}});
+{{/with}}{{! helper_adc_lookup_channel}}
+{{/each}}{{! reg_sequencer~}}
+{{else}} {{! else helper_adc_is_sequencer_not_empty}}
+  /* The sequencer is currently empty, please add a channel */
+  {{helper_common_gen_ll_code 'LL_ADC_REG_SetSequencerLength' 'LL_ADC_REG_SEQ_SCAN_DISABLE'}}
+{{/if}}{{!helper_adc_is_sequencer_not_empty~}}
+{{/with}}{{! reg_config_t~}}
+{{/if}}{{! grp_reg_sel true~}}
+{{#if (eq inj_config_t.grp_inj_sel true)}}
+  /* ==================== Group Injected ====================*/
+{{#with inj_config_t}}
+{{#if (eq trigger_src "SOFTWARE")}}
+  {{helper_common_gen_ll_code 'LL_ADC_INJ_SetTriggerSource' 'LL_ADC_INJ_TRIG_SOFTWARE'}}
+{{else if (eq trigger_src "TRIG_FROM_GRP_REG")}}
+  LL_ADC_INJ_SetTrigAuto({{@root.current_resource}}, LL_ADC_INJ_TRIG_FROM_REGULAR);
+{{else}}
+  {{helper_common_gen_ll_code 'LL_ADC_INJ_SetTrigAuto' 'LL_ADC_INJ_TRIG_INDEPENDENT'}}
+  {{helper_common_gen_ll_code 'LL_ADC_INJ_SetTriggerSource' (concat 'LL_ADC_INJ_TRIG_EXT_' (helper_ll_adc_transform_trigger_name trigger_src_ext.trigger_src_query.source))}}
+  LL_ADC_INJ_SetTriggerEdge({{@root.current_resource}}, LL_ADC_INJ_TRIG_EXT_{{trigger_src_ext.trigger_edge}});
+{{/if}}{{! trigger_src}}
+  {{helper_common_gen_ll_code 'LL_ADC_INJ_SetSequencerDiscont' (concat 'LL_ADC_INJ_SEQ_DISCONT_' sequencer_discontinuous)}}
+{{#if (eq (helper_adc_is_sequencer_not_empty @root.injected_sequencer) 1)}}
+{{#if (eq (helper_adc_get_sequencer_length @root.injected_sequencer) 1)}}
+  {{helper_common_gen_ll_code 'LL_ADC_INJ_SetSequencerLength' 'LL_ADC_INJ_SEQ_SCAN_DISABLE'}}
+{{else}}
+  LL_ADC_INJ_SetSequencerLength({{@root.current_resource}},LL_ADC_INJ_SEQ_SCAN_ENABLE_{{helper_adc_get_sequencer_length @root.injected_sequencer}}RANKS);
+{{/if~}}{{! helper_adc_get_sequencer_length}}
+  /* Configure the ADC injected group sequencer */
+{{#each inj_sequencer}}
+  LL_ADC_INJ_SetSequencerRanks({{@root.current_resource}}, LL_ADC_INJ_RANK_{{helper_adc_increment @index}}, LL_{{helper_adc_transform_channel_name channel.source}});
+{{#with (helper_adc_lookup_channel @root.available_channels channel.source) as |channel_inj|}}
+  LL_ADC_SetChannelSamplingTime({{@root.current_resource}}, LL_{{helper_adc_transform_channel_name ../channel.source}}, LL_ADC_SAMPLINGTIME_{{channel_inj.sampling_time}});
+  LL_ADC_SetChannelSingleDiff({{@root.current_resource}}, LL_{{helper_adc_transform_channel_name ../channel.source}}, LL_ADC_IN_{{channel_inj.single_diff}});
+
+{{/with}}{{! helper_adc_lookup_channel~}}
+{{/each}}{{! inj_sequencer~}}
+{{else}} {{! else helper_adc_is_sequencer_not_empty}}
+  /* The sequencer is currently empty, please add a channel */
+  {{helper_common_gen_ll_code 'LL_ADC_INJ_SetSequencerLength' 'LL_ADC_INJ_SEQ_SCAN_DISABLE'}}
+{{/if}}{{!helper_adc_is_sequencer_not_empty~}}
+{{/with}}{{! inj_config_t~}}
+{{/if}}{{! grp_inj_sel true~}}
+{{/with}}{{! feat_basic.group_panel~}}
+{{!==================== Features additional (optional) ====================}}
+{{#if (or feat_opt.postproc_sel feat_opt.lowpower_sel feat_opt.awd_sel feat_opt.ovs_sel feat_opt.offset_sel)}}
+  /****************************************************************************/
+  /* Configuration of additional features (optional)                          */
+  /****************************************************************************/
+{{/if}}
+{{!==================== Post processing ====================~}}
+{{#if (eq feat_opt.postproc_sel true)}}
+{{#with feat_opt.postproc_panel}}
+  {{helper_common_gen_ll_code 'LL_ADC_SetLeftBitShift' (concat 'LL_ADC_LEFT_BIT_SHIFT_' (helper_adc_remove_suffix left_bit_shift))}}
+  {{helper_common_gen_ll_code 'LL_ADC_SetGainCompensation' gain_compensation_x1000}}
+{{/with}}
+{{/if~}}{{!(eq feat_opt.postproc_sel true)}}
+{{!==================== Low power ====================~}}
+{{#if (eq feat_opt.lowpower_sel true)}}
+{{#with feat_opt.low_power_config_t}}
+{{#if (eq lp_auto_wait true)}}
+  {{helper_common_gen_ll_code 'LL_ADC_SetLowPowerMode' 'LL_ADC_LP_AUTOWAIT'}}
+{{else}}
+  {{helper_common_gen_ll_code 'LL_ADC_SetLowPowerMode' 'LL_ADC_LP_MODE_NONE'}}
+{{/if}}{{!lowpower_sel~}}
+{{/with}}
+{{/if~}}{{!(eq feat_opt.lowpower_sel true)}}
+{{!==================== AWD ====================~}}
+{{#if (eq feat_opt.awd_sel true)}}
+{{#helper_adc_get_awd_panels this}}
+{{#each awdPanels}}
+{{#with panel}}
+  LL_ADC_SetAnalogWDScope({{@root.current_resource}}, LL_ADC_AWD_{{../awd_number}}, LL_{{group}}, LL_{{helper_adc_transform_channel_name adc_channel.source}});
+  LL_ADC_SetAnalogWDThresholds({{@root.current_resource}}, LL_ADC_AWD_{{../awd_number}},LL_ADC_AWD_THRESHOLD_HIGH,{{threshold_high}});
+  LL_ADC_SetAnalogWDThresholds({{@root.current_resource}}, LL_ADC_AWD_{{../awd_number}},LL_ADC_AWD_THRESHOLD_LOW,{{threshold_low}});
+{{#if filtering}}
+  {{helper_common_gen_ll_code 'LL_ADC_SetAnalogWDFiltering' (concat 'LL_ADC_AWD_' ../awd_number) (concat 'LL_' filtering)}}
+{{/if}}
+{{/with}}{{!panel}}
+{{/each}}{{!awdPanels~}}
+{{/helper_adc_get_awd_panels}}
+{{/if}}{{!(eq feat_opt.awd_sel true)}}
+{{!==================== Oversampling ====================~}}
+{{#if (eq feat_opt.ovs_sel true)}}
+{{#with feat_opt.ovs_panel}}
+  {{helper_common_gen_ll_code 'LL_ADC_SetOverSamplingScope' (concat 'LL_ADC_OVS_' scope)}}
+{{#if (not (eq scope DISABLE))}}
+  {{helper_common_gen_ll_code 'LL_ADC_SetOverSamplingDiscont' (concat 'LL_ADC_OVS_' discont)}}
+  LL_ADC_ConfigOverSamplingRatioShift({{@root.current_resource}}, {{ratio}}, LL_ADC_OVS_SHIFT_RIGHT_{{shift}});
+{{/if~}}{{!(eq scope DISABLE)~}}
+{{/with}}{{!ovs_panel~}}
+{{/if~}}{{!(eq feat_opt.ovs_sel true)}}
+{{!==================== Offset ====================~}}
+{{#if (eq feat_opt.offset_sel true)}}
+{{#helper_adc_get_offset_panels this}}
+{{#each offsetPanels}}
+{{#with panel}}
+  LL_ADC_SetOffsetChannel({{@root.current_resource}}, LL_ADC_OFFSET_{{../offset_number}}, LL_{{helper_adc_transform_channel_name adc_channel.source}});
+  LL_ADC_SetOffsetLevel({{@root.current_resource}}, LL_ADC_OFFSET_{{../offset_number}}, {{level}});
+{{#if (eq saturation_signed true)}}
+  LL_ADC_SetOffsetSignedSaturation({{@root.current_resource}}, LL_ADC_OFFSET_{{../offset_number}}, LL_ADC_OFFSET_SIGNED_SATURATION_ENABLE);
+{{else}}
+  LL_ADC_SetOffsetSignedSaturation({{@root.current_resource}}, LL_ADC_OFFSET_{{../offset_number}}, LL_ADC_OFFSET_SIGNED_SATURATION_DISABLE);
+{{/if}}{{!saturation_signed~}}
+{{#if (eq saturation_unsigned true)}}
+  LL_ADC_SetOffsetUnsignedSaturation({{@root.current_resource}}, LL_ADC_OFFSET_{{../offset_number}}, LL_ADC_OFFSET_UNSIGNED_SATURATION_ENABLE);
+{{else}}
+  LL_ADC_SetOffsetUnsignedSaturation({{@root.current_resource}}, LL_ADC_OFFSET_{{../offset_number}}, LL_ADC_OFFSET_UNSIGNED_SATURATION_DISABLE);
+{{/if}}{{!saturation_unsigned~}}
+{{/with}}{{!panel~}}
+{{/each}}{{!offsetPanels~}}
+{{/helper_adc_get_offset_panels}}
+{{/if}}{{!(eq feat_opt.offset_sel true)~}}
+
+{{else}}
+#warning "step {{fct}} in partial ADC_HAL not managed"
+{{/if}}

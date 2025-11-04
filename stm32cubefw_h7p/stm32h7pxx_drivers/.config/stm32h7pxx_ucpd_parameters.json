@@ -1,0 +1,200 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "version": "0.0.1",
+  "componentid": "::Device:STM32CubeMX2 Config:UCPD",
+  "grammarVersion": "3.1",
+  "properties": {
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "object",
+          "properties": {
+            "labels": {
+              "type": "array",
+              "title": "Label",
+              "$comment": "label associated to the instance of the peripheral, can be overridden at sample level. In this case it becomes read-only.",
+              "items": {
+                "type": "string",
+                "pattern": "^([a-zA-Z_][a-zA-Z0-9_]{1,31})?$",
+                "minLength": 3,
+                "maxLength": 32,
+                "default": ""
+              }
+            },
+            "layer": {
+              "type": "string",
+              "title": "Software Layer",
+              "actions": [
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ],
+              "default": "This configuration is not implemented yet.",
+              "variables": [
+                {
+                  "on": "update-value",
+                  "name": "HAL_UCPD_PROJECT_USE_HAL",
+                  "condition": "$value === 'HAL'",
+                  "semaphore": true
+                }
+              ]
+            },
+            "init_type": {
+              "type": "string",
+              "title": "Resource initialization code generation",
+              "actions": [
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ],
+              "default": "This configuration is not implemented yet."
+            }
+          }
+        },
+        "Basic": {
+          "type": "object",
+          "title": "Main peripheral configuration",
+          "properties": {
+            "mode": {
+              "title": "Mode",
+              "type": "string",
+              "oneOf": [
+                {
+                  "title": "Source",
+                  "const": "SOURCE"
+                },
+                {
+                  "title": "Sink",
+                  "const": "SINK"
+                },
+                {
+                  "title": "Dual_Role",
+                  "const": "DUAL_ROLE"
+                }
+              ],
+              "default": "SOURCE"
+            }
+          }
+        },
+        "Additional": {
+          "type": "object",
+          "title": "Additional features configuration",
+          "properties": {
+            "EnableFRS_TX": {
+              "description": "Fast Role Swap TX can be enabled with Dual Role mode",
+              "type": "boolean",
+              "default": false,
+              "actions": [
+                {
+                  "type": "enable",
+                  "condition": "$Basic.mode == 'DUAL_ROLE'"
+                }
+              ]
+            }
+          }
+        },
+        "System": {
+          "type": "object",
+          "title": "System configuration",
+          "properties": {
+            "GPIO_Settings": {
+              "type": "object",
+              "properties": {
+                "gpio_cc": {
+                  "title": "GPIOs CC configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_GPIO_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "needs": [
+                    {
+                      "selector": "CC1",
+                      "constraints": {
+                        "mode": {
+                          "const": "ANALOG"
+                        }
+                      }
+                    },
+                    {
+                      "selector": "CC2",
+                      "constraints": {
+                        "mode": {
+                          "const": "ANALOG"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_frstx": {
+                  "title": "GPIOs FRSTX configuration",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Additional.EnableFRS_TX==true"
+                    }
+                  ],
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "name": "HAL_GPIO_PROJECT_USE_HAL",
+                      "condition": "$info.layer === 'HAL'",
+                      "semaphore": true
+                    }
+                  ],
+                  "owner": "$resource.id",
+                  "needs": []
+                }
+              }
+            },
+            "EnableInterruption": {
+              "description": "Global interrupt",
+              "type": "boolean",
+              "default": false,
+              "actions": [
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ]
+            },
+            "EnableDMA_TX": {
+              "description": "Enable Tx DMA",
+              "type": "boolean",
+              "default": false,
+              "actions": [
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ]
+            },
+            "EnableDMA_RX": {
+              "description": "Enable Rx DMA",
+              "type": "boolean",
+              "default": false,
+              "actions": [
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,97 @@
+{{#if (eq fct 'init')}}
+{{! }}
+{{! Generate the CORTEX HAL or CMSIS NVIC initialization code inside the PPPi init function}}
+{{! > CORTEX fct='init' layer=@root.current_layer needs=System.nvicConfig.needs}}
+{{! }}
+{{!log "CORTEX fct='init': layer=" layer " needs=" needs~}}
+{{assign 'layer' layer~}}
+{{#each needs}}
+{{assign 'nvic_config' (@root.NvicAPI.getNeedById id)~}}
+{{log "CORTEX fct='init': nvic_config=" @root.nvic_config~}}
+{{/each}}
+{{#with @root.nvic_config}}
+{{#if (eq @root.layer 'HAL')}}
+  HAL_CORTEX_NVIC_SetPriority({{name}}_IRQn, HAL_CORTEX_NVIC_PREEMP_PRIORITY_{{priority}}, HAL_CORTEX_NVIC_SUB_PRIORITY_{{subpriority}});
+  HAL_CORTEX_NVIC_EnableIRQ({{name}}_IRQn);
+{{else}}
+  NVIC_SetPriority({{name}}_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), {{priority}}, {{subpriority}}));
+  NVIC_EnableIRQ({{name}}_IRQn);
+{{/if}}
+{{/with}}
+{{else if (eq fct 'deinit')}}
+{{! }}
+{{! Generate the CORTEX HAL or LL code de-initialization inside the PPPi init function}}
+{{! > CORTEX fct='deinit' layer=@root.current_layer needs=System.nvicConfig.needs}}
+{{! }}
+{{!log "CORTEX fct='deinit': layer=" layer "~}}
+{{assign 'layer' layer~}}
+{{#each needs}}
+{{assign 'nvic_config' (@root.NvicAPI.getNeedById id)~}}
+{{log "CORTEX fct='deinit': nvic_config=" @root.nvic_config~}}
+{{/each}}
+{{#with @root.nvic_config}}
+{{#if (eq @root.layer 'HAL')}}
+  HAL_CORTEX_NVIC_DisableIRQ({{name}}_IRQn);
+{{else}}
+  NVIC_DisableIRQ({{name}}_IRQn);
+{{/if}}
+{{/with}}
+{{else if (eq fct 'cortex_create_aliases')}}
+{{! }}
+{{! Create labels inside mx_pppi.h for IRQ lines and handler                }}
+{{! > CORTEX fct='cortex_create_aliases' hw_resource='I2C1' labels=@root.labels needs=@root.needs}}
+{{! }}
+{{log "CORTEX fct='cortex_create_aliases': labels:" (toJSON labels)~}}
+{{assign 'labels' labels~}}
+{{#each needs}}
+{{assign 'nvic_config' (@root.NvicAPI.getNeedById id)~}}
+{{log "CORTEX fct='cortex_create_aliases': nvic_config=" @root.nvic_config~}}
+{{/each}}
+{{#with @root.nvic_config}}
+{{assign 'found_label' false~}}
+{{assign 'current_nvic' this}}
+{{#each @root.labels}}
+{{#if (not @root.found_label)}}
+{{assign 'found_label' true~}}
+{{assign 'master' (uppercase this)~}}
+#define {{@root.master}}_IRQN       {{@root.current_nvic.name}}_IRQn
+#define {{@root.master}}_IRQHANDLER {{@root.current_nvic.name}}_IRQHandler
+{{else}}
+#define {{uppercase this}}_IRQN       {{@root.master}}_IRQN
+#define {{uppercase this}}_IRQHANDLER {{@root.master}}_IRQHANDLER
+{{/if}}{{!not @root.found_label~}}
+{{/each}}{{!labels~}}
+{{/with}}
+{{else if (eq fct 'cortex_system_lines')}}
+{{! }}
+{{! Create labels inside mx_interrupts.c for System lines }}
+{{! > CORTEX fct='cortex_system_lines' layer=@root.current_layer}}
+{{! }}
+{{log "CORTEX fct='cortex_system_lines'"~}}
+{{assign 'layer' layer~}}
+{{assign 'getSystemLines' (@root.NvicAPI.getSystemLines)~}}
+{{log "test_cortex_getters getSystemLines:" (toJSON @root.getSystemLines)~}}
+{{assign 'getPriorityGrouping' (@root.NvicAPI.getPriorityGrouping)~}}
+{{log "test_cortex_getters getPriorityGrouping:" (toJSON @root.getPriorityGrouping)~}}
+  /* Configure the Priority grouping */
+{{#if (eq @root.layer 'HAL')}}
+{{assign "hal_group_prio" (helper_cortex_nvic_retrieve_hal_priority_grouping @root.getPriorityGrouping)~}}
+  HAL_CORTEX_NVIC_SetPriorityGrouping(HAL_CORTEX_NVIC_PRIORITY_GROUP_{{@root.hal_group_prio}});
+{{else}}
+{{assign "ll_group_prio" (helper_cortex_nvic_retrieve_ll_priority_grouping @root.getPriorityGrouping)~}}
+  NVIC_SetPriorityGrouping({{@root.ll_group_prio}});
+{{/if}}
+
+{{#each @root.getSystemLines}}
+{{assign 'find_alias' (helper_cortex_nvic_convert_system_lines name)~}}
+  /* {{description}} */
+{{#if (eq @root.layer 'HAL')}}
+  HAL_CORTEX_NVIC_SetPriority({{@root.find_alias}}_IRQn, HAL_CORTEX_NVIC_PREEMP_PRIORITY_{{priority}}, HAL_CORTEX_NVIC_SUB_PRIORITY_{{subpriority}});
+{{else}}
+  NVIC_SetPriority({{@root.find_alias}}_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), {{priority}}, {{subpriority}}));
+{{/if}}
+
+{{/each}}
+{{else}}
+#warning "Function {{fct}} not present in partial CORTEX_partial.hbs"
+{{/if}}

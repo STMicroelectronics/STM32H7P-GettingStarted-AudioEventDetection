@@ -1,0 +1,37 @@
+{{assign "usbxFilter" (JSONparse '{"cgroup": "STM32CubeMX2 Config", "csub": "USBX"}')~}}
+{{assign 'usbx_context' (@root.SWConfigurationAPI.getInstancesConfiguration @root.usbxFilter)~}}
+{{assign 'usbx_cxt' @root.usbx_context.[0].settings.parameters~}}
+/**
+  ******************************************************************************
+  * file           : mx_usbx_host_audio.h
+  * brief          : Header for mx_usbx_host_audio.c file.
+  *                  This file contains the common defines of the application.
+  ******************************************************************************
+  *
+  * Copyright (c) 2025 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef MX_USBX_HOST_AUDIO_H
+#define MX_USBX_HOST_AUDIO_H
+{{#with @root.usbx_cxt~}}
+/* Includes ------------------------------------------------------------------*/
+#include "ux_api.h"
+#include "ux_host_class_audio.h"
+/* Exported types ------------------------------------------------------------*/
+/* Exported constants --------------------------------------------------------*/
+/* Exported macros -----------------------------------------------------------*/
+/* Exported functions prototypes -------------------------------------------- */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* MX_USBX_HOST_AUDIO_H */
+{{~/with~}}

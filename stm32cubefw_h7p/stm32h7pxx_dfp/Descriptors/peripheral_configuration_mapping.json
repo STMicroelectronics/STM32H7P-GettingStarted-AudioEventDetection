@@ -1,0 +1,2529 @@
+{
+    "series": "STM32H7P",
+    "version": "0.0.1",
+    "configurable_elements": [
+        {
+            "name": "ADC1",
+            "description": "Analog-to-digital 14-bit converter #1",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "33"
+            },
+            "category": "Analog",
+            "configurationType": "adc",
+            "associatedPeripherals": [
+                {
+                    "name": "ADC1",
+                    "type": "adc"
+                }
+            ]
+        },
+        {
+            "name": "ADC2",
+            "description": "Analog-to-digital 14-bit converter #2",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "33"
+            },
+            "category": "Analog",
+            "configurationType": "adc",
+            "associatedPeripherals": [
+                {
+                    "name": "ADC2",
+                    "type": "adc"
+                }
+            ]
+        },
+        {
+            "name": "ADC3",
+            "description": "Analog-to-digital 12-bit converter #3",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "34"
+            },
+            "category": "Analog",
+            "configurationType": "adc",
+            "associatedPeripherals": [
+                {
+                    "name": "ADC3",
+                    "type": "adc"
+                }
+            ]
+        },
+        {
+            "name": "ADC4",
+            "description": "Analog-to-digital 12-bit converter #4",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "34"
+            },
+            "category": "Analog",
+            "configurationType": "adc",
+            "associatedPeripherals": [
+                {
+                    "name": "ADC4",
+                    "type": "adc"
+                }
+            ]
+        },
+        {
+            "name": "ADF1",
+            "description": "Audio digital filter",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "40"
+            },
+            "category": "Multimedia",
+            "configurationType": "adf",
+            "functions": [
+                {
+                    "label": "PDM",
+                    "configurationType": "adf",
+                    "protocols": [
+                        "Dual Channel PDM"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "ADF1",
+                    "type": "adf"
+                }
+            ]
+        },
+        {
+            "name": "COMP1",
+            "description": "Comparator #1",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "37"
+            },
+            "category": "Analog",
+            "configurationType": "comp",
+            "associatedPeripherals": [
+                {
+                    "name": "COMP1",
+                    "type": "comp"
+                }
+            ]
+        },
+        {
+            "name": "COMP2",
+            "description": "Comparator #2",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "37"
+            },
+            "category": "Analog",
+            "configurationType": "comp",
+            "associatedPeripherals": [
+                {
+                    "name": "COMP2",
+                    "type": "comp"
+                }
+            ]
+        },
+        {
+            "name": "COMP3",
+            "description": "Comparator #4",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "37"
+            },
+            "category": "Analog",
+            "configurationType": "comp",
+            "associatedPeripherals": [
+                {
+                    "name": "COMP3",
+                    "type": "comp"
+                }
+            ]
+        },
+        {
+            "name": "COMP4",
+            "description": "Comparator #4",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "37"
+            },
+            "category": "Analog",
+            "configurationType": "comp",
+            "associatedPeripherals": [
+                {
+                    "name": "COMP4",
+                    "type": "comp"
+                }
+            ]
+        },
+        {
+            "name": "COMP5",
+            "description": "Comparator #5",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "37"
+            },
+            "category": "Analog",
+            "configurationType": "comp",
+            "associatedPeripherals": [
+                {
+                    "name": "COMP5",
+                    "type": "comp"
+                }
+            ]
+        },
+        {
+            "name": "COMP6",
+            "description": "Comparator #6",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "37"
+            },
+            "category": "Analog",
+            "configurationType": "comp",
+            "associatedPeripherals": [
+                {
+                    "name": "COMP6",
+                    "type": "comp"
+                }
+            ]
+        },
+        {
+            "name": "COMP7",
+            "description": "Comparator #7",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "37"
+            },
+            "category": "Analog",
+            "configurationType": "comp",
+            "associatedPeripherals": [
+                {
+                    "name": "COMP7",
+                    "type": "comp"
+                }
+            ]
+        },
+        {
+            "name": "COMP8",
+            "description": "Comparator #8",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "37"
+            },
+            "category": "Analog",
+            "configurationType": "comp",
+            "associatedPeripherals": [
+                {
+                    "name": "COMP8",
+                    "type": "comp"
+                }
+            ]
+        },
+        {
+            "name": "CORDIC",
+            "description": "CORDIC co-processor",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "25"
+            },
+            "category": "Computing",
+            "configurationType": "cordic",
+            "associatedPeripherals": [
+                {
+                    "name": "CORDIC",
+                    "type": "cordic"
+                }
+            ]
+        },
+        {
+            "name": "CRC",
+            "description": "Cyclic redundancy check calculation unit",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "24"
+            },
+            "category": "Computing",
+            "configurationType": "crc",
+            "associatedPeripherals": [
+                {
+                    "name": "CRC",
+                    "type": "crc"
+                }
+            ]
+        },
+        {
+            "name": "CRS",
+            "description": "Clock recovery system",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "12"
+            },
+            "category": "System",
+            "configurationType": "crs",
+            "associatedPeripherals": [
+                {
+                    "name": "CRS",
+                    "type": "crs"
+                }
+            ]
+        },
+        {
+            "name": "Cortex_Debug",
+            "description": "Cortex-M7 debug features",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "3"
+            },
+            "category": "Cortex",
+            "configurationType": "cortex_debug",
+            "associatedPeripherals": [
+                {
+                    "name": "CM7",
+                    "type": "cortex"
+                }
+            ]
+        },
+        {
+            "name": "Cortex_IDAU/SAU",
+            "description": "Cortex-M7 Implementation-Defined Attribution Unit and Security Attribution Unit",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "3"
+            },
+            "category": "Cortex",
+            "configurationType": "cortex_idau_sau",
+            "associatedPeripherals": [
+                {
+                    "name": "CM7",
+                    "type": "cortex"
+                }
+            ]
+        },
+        {
+            "name": "Cortex_MPU",
+            "description": "Cortex-M7 Memory protection unit",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "3"
+            },
+            "category": "Cortex",
+            "configurationType": "cortex_mpu",
+            "associatedPeripherals": [
+                {
+                    "name": "CM7",
+                    "type": "cortex"
+                }
+            ]
+        },
+        {
+            "name": "Cortex_NVIC",
+            "description": "Nested vectored interrupt controller",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "22"
+            },
+            "category": "Cortex",
+            "configurationType": "cortex_nvic",
+            "associatedPeripherals": [
+                {
+                    "name": "CM7",
+                    "type": "cortex"
+                }
+            ]
+        },
+        {
+            "name": "NVIC",
+            "description": "Nested vectored interrupt controller",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "22"
+            },
+            "category": "System",
+            "configurationType": "nvic",
+            "associatedPeripherals": [
+                {
+                    "name": "CM7",
+                    "type": "cortex"
+                }
+            ]
+        },
+        {
+            "name": "Cortex_SCB",
+            "description": "Cortex-M7 System Control Block",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "3"
+            },
+            "category": "Cortex",
+            "configurationType": "cortex_scb",
+            "associatedPeripherals": [
+                {
+                    "name": "CM7",
+                    "type": "cortex"
+                }
+            ]
+        },
+        {
+            "name": "Cortex_Systick",
+            "description": "Cortex-M7 System Timer",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "3"
+            },
+            "category": "Cortex",
+            "configurationType": "cortex_systick",
+            "associatedPeripherals": [
+                {
+                    "name": "CM7",
+                    "type": "cortex"
+                }
+            ]
+        },
+        {
+            "name": "DAC1",
+            "description": "Digital-to-analog 12-bit converter #1",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "35"
+            },
+            "category": "Analog",
+            "configurationType": "dac",
+            "associatedPeripherals": [
+                {
+                    "name": "DAC1",
+                    "type": "dac"
+                }
+            ]
+        },
+        {
+            "name": "DAC2",
+            "description": "Digital-to-analog 12-bit converter #2",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "35"
+            },
+            "category": "Analog",
+            "configurationType": "dac",
+            "associatedPeripherals": [
+                {
+                    "name": "DAC2",
+                    "type": "dac"
+                }
+            ]
+        },
+        {
+            "name": "DAC3",
+            "description": "Digital-to-analog 12-bit converter #3",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "35"
+            },
+            "category": "Analog",
+            "configurationType": "dac",
+            "associatedPeripherals": [
+                {
+                    "name": "DAC3",
+                    "type": "dac"
+                }
+            ]
+        },
+        {
+            "name": "DAC4",
+            "description": "Digital-to-analog 12-bit converter #4",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "35"
+            },
+            "category": "Analog",
+            "configurationType": "dac",
+            "associatedPeripherals": [
+                {
+                    "name": "DAC4",
+                    "type": "dac"
+                }
+            ]
+        },
+        {
+            "name": "DTS",
+            "description": "Digital temperature sensor",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "33"
+            },
+            "category": "Analog",
+            "configurationType": "dts",
+            "associatedPeripherals": [
+                {
+                    "name": "DTS",
+                    "type": "dts"
+                }
+            ]
+        },
+        {
+            "name": "EXTI",
+            "description": "Extended interrupts and event controller",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "23"
+            },
+            "category": "I/O",
+            "configurationType": "exti",
+            "associatedPeripherals": [
+                {
+                    "name": "EXTI",
+                    "type": "exti"
+                }
+            ]
+        },
+        {
+            "name": "FDCAN1",
+            "description": "FD controller area network #1",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "70"
+            },
+            "category": "Connectivity",
+            "configurationType": "fdcan",
+            "associatedPeripherals": [
+                {
+                    "name": "FDCAN1",
+                    "type": "fdcan"
+                },
+                {
+                    "name": "FDCANRAM",
+                    "type": "fdcanram",
+                    "optional": true
+                }
+            ]
+        },
+        {
+            "name": "FDCAN2",
+            "description": "FD controller area network #2",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "68"
+            },
+            "category": "Connectivity",
+            "configurationType": "fdcan",
+            "associatedPeripherals": [
+                {
+                    "name": "FDCAN2",
+                    "type": "fdcan"
+                },
+                {
+                    "name": "FDCANRAM",
+                    "type": "fdcanram",
+                    "optional": true
+                }
+            ]
+        },
+        {
+            "name": "FDCAN3",
+            "description": "FD controller area network #3",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "68"
+            },
+            "category": "Connectivity",
+            "configurationType": "fdcan",
+            "associatedPeripherals": [
+                {
+                    "name": "FDCAN3",
+                    "type": "fdcan"
+                },
+                {
+                    "name": "FDCANRAM",
+                    "type": "fdcanram",
+                    "optional": true
+                }
+            ]
+        },
+        {
+            "name": "FLASH",
+            "description": "Embedded flash memory controller",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "7"
+            },
+            "category": "Memory",
+            "configurationType": "nvm",
+            "associatedPeripherals": [
+                {
+                    "name": "FLASH",
+                    "type": "nvm"
+                },
+                {
+                    "name": "FLITF",
+                    "type": "nvm"
+                }
+            ]
+        },
+        {
+            "name": "FMAC",
+            "description": "Filter math accelerator",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "26"
+            },
+            "category": "Computing",
+            "configurationType": "fmac",
+            "associatedPeripherals": [
+                {
+                    "name": "FMAC",
+                    "type": "fmac"
+                }
+            ]
+        },
+        {
+            "name": "FMC",
+            "description": "Flexible memory controller",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "27"
+            },
+            "category": "Memory",
+            "configurationType": "fmc",
+            "configurable": false,
+            "associatedPeripherals": [
+                {
+                    "name": "FMC",
+                    "type": "fmc"
+                },
+                {
+                    "name": "NOR_PSRAM",
+                    "type": "fmc_nor_psram"
+                },
+                {
+                    "name": "NAND",
+                    "type": "fmc_nand"
+                },
+                {
+                    "name": "SDRAM",
+                    "type": "fmc_sdram"
+                }
+            ],
+            "configurableElements": [
+                {
+                    "name": "NOR_PSRAM1",
+                    "description": "FMC Bank 1 - NOR/PSRAM 1",
+                    "configurationType": "fmc",
+                    "functions": [
+                        {
+                            "label": "NOR Flash",
+                            "configurationType": "fmc_nor",
+                            "protocols": [
+                                "NOR Flash"
+                            ]
+                        },
+                        {
+                            "label": "SRAM",
+                            "configurationType": "fmc_sram",
+                            "protocols": [
+                                "SRAM"
+                            ]
+                        }
+                    ],
+                    "associatedPeripherals": [
+                        {
+                            "name": "NOR_PSRAM",
+                            "type": "fmc_nor_psram"
+                        }
+                    ]
+                },
+                {
+                    "name": "NOR_PSRAM2",
+                    "description": "FMC Bank 1 - NOR/PSRAM 2",
+                    "configurationType": "fmc",
+                    "functions": [
+                        {
+                            "label": "NOR Flash",
+                            "configurationType": "fmc_nor",
+                            "protocols": [
+                                "NOR Flash"
+                            ]
+                        },
+                        {
+                            "label": "SRAM",
+                            "configurationType": "fmc_sram",
+                            "protocols": [
+                                "SRAM"
+                            ]
+                        }
+                    ],
+                    "associatedPeripherals": [
+                        {
+                            "name": "NOR_PSRAM",
+                            "type": "fmc_nor_psram"
+                        }
+                    ]
+                },
+                {
+                    "name": "NOR_PSRAM3",
+                    "description": "FMC Bank 1 - NOR/PSRAM 3",
+                    "configurationType": "fmc",
+                    "functions": [
+                        {
+                            "label": "NOR Flash",
+                            "configurationType": "fmc_nor",
+                            "protocols": [
+                                "NOR Flash"
+                            ]
+                        },
+                        {
+                            "label": "SRAM",
+                            "configurationType": "fmc_sram",
+                            "protocols": [
+                                "SRAM"
+                            ]
+                        }
+                    ],
+                    "associatedPeripherals": [
+                        {
+                            "name": "NOR_PSRAM",
+                            "type": "fmc_nor_psram"
+                        }
+                    ]
+                },
+                {
+                    "name": "NOR_PSRAM4",
+                    "description": "FMC Bank 1 - NOR/PSRAM 4",
+                    "configurationType": "fmc",
+                    "functions": [
+                        {
+                            "label": "NOR Flash",
+                            "configurationType": "fmc_nor",
+                            "protocols": [
+                                "NOR Flash"
+                            ]
+                        },
+                        {
+                            "label": "SRAM",
+                            "configurationType": "fmc_sram",
+                            "protocols": [
+                                "SRAM"
+                            ]
+                        }
+                    ],
+                    "associatedPeripherals": [
+                        {
+                            "name": "NOR_PSRAM",
+                            "type": "fmc_nor_psram"
+                        }
+                    ]
+                },
+                {
+                    "name": "NAND",
+                    "description": "FMC Bank 3 - NAND",
+                    "configurationType": "fmc",
+                    "functions": [
+                        {
+                            "label": "NAND_Flash",
+                            "configurationType": "fmc_nand",
+                            "protocols": [
+                                "NAND_Flash"
+                            ]
+                        }
+                    ],
+                    "associatedPeripherals": [
+                        {
+                            "name": "NAND",
+                            "type": "fmc_nand"
+                        }
+                    ]
+                },
+                {
+                    "name": "SDRAM",
+                    "description": "FMC Bank 4 - SDRAM",
+                    "configurationType": "fmc",
+                    "functions": [
+                        {
+                            "label": "SDRAM",
+                            "configurationType": "fmc_sdram",
+                            "protocols": [
+                                "SDRAM"
+                            ]
+                        }
+                    ],
+                    "associatedPeripherals": [
+                        {
+                            "name": "SDRAM",
+                            "type": "fmc_sdram"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "GPDMA1",
+            "description": "General purpose direct memory access controller #1",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "12"
+            },
+            "category": "System",
+            "configurationType": "gpdma",
+            "associatedPeripherals": [
+                {
+                    "name": "GPDMA1",
+                    "type": "dma"
+                }
+            ]
+        },
+        {
+            "name": "GPDMA2",
+            "description": "General purpose direct memory access controller #2",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "12"
+            },
+            "category": "System",
+            "configurationType": "gpdma",
+            "associatedPeripherals": [
+                {
+                    "name": "GPDMA2",
+                    "type": "dma"
+                }
+            ]
+        },
+        {
+            "name": "GPIO",
+            "description": "General-Purpose I/Os",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "13"
+            },
+            "category": "I/O",
+            "configurationType": "gpio",
+            "associatedPeripherals": [
+                {
+                    "name": "GPIOA",
+                    "type": "gpio",
+                    "optional": true
+                },
+                {
+                    "name": "GPIOB",
+                    "type": "gpio",
+                    "optional": true
+                },
+                {
+                    "name": "GPIOC",
+                    "type": "gpio",
+                    "optional": true
+                },
+                {
+                    "name": "GPIOD",
+                    "type": "gpio",
+                    "optional": true
+                },
+                {
+                    "name": "GPIOE",
+                    "type": "gpio",
+                    "optional": true
+                },
+                {
+                    "name": "GPIOF",
+                    "type": "gpio",
+                    "optional": true
+                },
+                {
+                    "name": "GPIOG",
+                    "type": "gpio",
+                    "optional": true
+                },
+                {
+                    "name": "GPIOH",
+                    "type": "gpio",
+                    "optional": true
+                },
+                {
+                    "name": "GPIOI",
+                    "type": "gpio",
+                    "optional": true
+                },
+                {
+                    "name": "GPIOJ",
+                    "type": "gpio",
+                    "optional": true
+                },
+                {
+                    "name": "GPIOK",
+                    "type": "gpio",
+                    "optional": true
+                },
+                {
+                    "name": "GPIOM",
+                    "type": "gpio",
+                    "optional": true
+                },
+                {
+                    "name": "GPION",
+                    "type": "gpio",
+                    "optional": true
+                },
+                {
+                    "name": "GPIOO",
+                    "type": "gpio",
+                    "optional": true
+                },
+                {
+                    "name": "GPIOP",
+                    "type": "gpio",
+                    "optional": true
+                },
+                {
+                    "name": "GPIOQ",
+                    "type": "gpio",
+                    "optional": true
+                },
+                {
+                    "name": "GPIOR",
+                    "type": "gpio",
+                    "optional": true
+                }
+            ]
+        },
+        {
+            "name": "HASH",
+            "description": "Hash processor",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "51"
+            },
+            "category": "Security",
+            "configurationType": "hash",
+            "associatedPeripherals": [
+                {
+                    "name": "HASH",
+                    "type": "hash"
+                }
+            ]
+        },
+        {
+            "name": "HPDMA1",
+            "description": "High-performance direct memory access controller #1",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "11"
+            },
+            "category": "System",
+            "configurationType": "gpdma",
+            "associatedPeripherals": [
+                {
+                    "name": "HPDMA1",
+                    "type": "dma"
+                }
+            ]
+        },
+        {
+            "name": "HRTIM1",
+            "description": "High-resolution timer #1",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "49"
+            },
+            "category": "Timers",
+            "configurationType": "hrtim",
+            "associatedPeripherals": [
+                {
+                    "name": "HRTIM1",
+                    "type": "hrtim"
+                }
+            ]
+        },
+        {
+            "name": "HRTIM2",
+            "description": "High-resolution timer #2",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "49"
+            },
+            "category": "Timers",
+            "configurationType": "hrtim",
+            "associatedPeripherals": [
+                {
+                    "name": "HRTIM2",
+                    "type": "hrtim"
+                }
+            ]
+        },
+        {
+            "name": "HSP1",
+            "description": "Hardware signal processor #1",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "19"
+            },
+            "category": "Computing",
+            "configurationType": "hsp",
+            "associatedPeripherals": [
+                {
+                    "name": "HSP1",
+                    "type": "hsp"
+                }
+            ]
+        },
+        {
+            "name": "I2C1",
+            "description": "Inter-integrated circuit interface #1",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "65"
+            },
+            "category": "Connectivity",
+            "configurationType": "i2c",
+            "functions": [
+                {
+                    "label": "I2C",
+                    "configurationType": "i2c",
+                    "protocols": [
+                        "I2C"
+                    ]
+                },
+                {
+                    "label": "SMBus",
+                    "configurationType": "smbus",
+                    "protocols": [
+                        "SMBus"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "I2C1",
+                    "type": "i2c"
+                }
+            ]
+        },
+        {
+            "name": "I2C2",
+            "description": "Inter-integrated circuit interface #2",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "65"
+            },
+            "category": "Connectivity",
+            "configurationType": "i2c",
+            "functions": [
+                {
+                    "label": "I2C",
+                    "configurationType": "i2c",
+                    "protocols": [
+                        "I2C"
+                    ]
+                },
+                {
+                    "label": "SMBus",
+                    "configurationType": "smbus",
+                    "protocols": [
+                        "SMBus"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "I2C2",
+                    "type": "i2c"
+                }
+            ]
+        },
+        {
+            "name": "I2C3",
+            "description": "Inter-integrated circuit interface #3",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "65"
+            },
+            "category": "Connectivity",
+            "configurationType": "i2c",
+            "functions": [
+                {
+                    "label": "I2C",
+                    "configurationType": "i2c",
+                    "protocols": [
+                        "I2C"
+                    ]
+                },
+                {
+                    "label": "SMBus",
+                    "configurationType": "smbus",
+                    "protocols": [
+                        "SMBus"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "I2C3",
+                    "type": "i2c"
+                }
+            ]
+        },
+        {
+            "name": "I3C1",
+            "description": "Improved inter-integrated circuit #1",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "61"
+            },
+            "category": "Connectivity",
+            "configurationType": "i3c",
+            "associatedPeripherals": [
+                {
+                    "name": "I3C1",
+                    "type": "i3c"
+                }
+            ]
+        },
+        {
+            "name": "IWDG",
+            "description": "Independent watchdog",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "61"
+            },
+            "category": "System",
+            "configurationType": "iwdg",
+            "associatedPeripherals": [
+                {
+                    "name": "IWDG",
+                    "type": "iwdg"
+                }
+            ]
+        },
+        {
+            "name": "LPTIM1",
+            "description": "Low-power timer #1",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "58"
+            },
+            "category": "Timers",
+            "configurationType": "lptim",
+            "associatedPeripherals": [
+                {
+                    "name": "LPTIM1",
+                    "type": "lptim"
+                }
+            ]
+        },
+        {
+            "name": "LPTIM2",
+            "description": "Low-power timer #2",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "58"
+            },
+            "category": "Timers",
+            "configurationType": "lptim",
+            "associatedPeripherals": [
+                {
+                    "name": "LPTIM2",
+                    "type": "lptim"
+                }
+            ]
+        },
+        {
+            "name": "LPTIM3",
+            "description": "Low-power timer #3",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "58"
+            },
+            "category": "Timers",
+            "configurationType": "lptim",
+            "associatedPeripherals": [
+                {
+                    "name": "LPTIM3",
+                    "type": "lptim"
+                }
+            ]
+        },
+        {
+            "name": "LPTIM4",
+            "description": "Low-power timer #4",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "58"
+            },
+            "category": "Timers",
+            "configurationType": "lptim",
+            "associatedPeripherals": [
+                {
+                    "name": "LPTIM4",
+                    "type": "lptim"
+                }
+            ]
+        },
+        {
+            "name": "LPTIM5",
+            "description": "Low-power timer #5",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "55"
+            },
+            "category": "Timers",
+            "configurationType": "lptim",
+            "associatedPeripherals": [
+                {
+                    "name": "LPTIM5",
+                    "type": "lptim"
+                }
+            ]
+        },
+        {
+            "name": "LPUART1",
+            "description": "Low-power Universal asynchronous receiver/transmitter #1",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "67"
+            },
+            "category": "Connectivity",
+            "configurationType": "lpuart",
+            "functions": [
+                {
+                    "label": "Async",
+                    "configurationType": "uart_async",
+                    "protocols": [
+                        "Serial"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "LPUART1",
+                    "type": "lpuart"
+                }
+            ]
+        },
+        {
+            "name": "NPU",
+            "description": "Neural-ART accelerator",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "13"
+            },
+            "category": "System",
+            "configurationType": "cnn",
+            "associatedPeripherals": [
+                {
+                    "name": "NPU",
+                    "type": "cnn"
+                }
+            ]
+        },
+        {
+            "name": "PWR",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "10"
+            },
+            "description": "Power controller",
+            "category": "System",
+            "configurationType": "pwr",
+            "associatedPeripherals": [
+                {
+                    "name": "PWR",
+                    "type": "pwr"
+                }
+            ]
+        },
+        {
+            "name": "RCC",
+            "description": "Reset and clock control",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "11"
+            },
+            "category": "System",
+            "configurationType": "rcc",
+            "associatedPeripherals": [
+                {
+                    "name": "RCC",
+                    "type": "rcc"
+                }
+            ]
+        },
+        {
+            "name": "RNG",
+            "description": "True random number generator",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "48"
+            },
+            "category": "Security",
+            "configurationType": "rng",
+            "associatedPeripherals": [
+                {
+                    "name": "RNG",
+                    "type": "rng"
+                }
+            ]
+        },
+        {
+            "name": "RTC",
+            "description": "Real-time clock",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "63"
+            },
+            "category": "System",
+            "configurationType": "rtc",
+            "associatedPeripherals": [
+                {
+                    "name": "RTC",
+                    "type": "rtc"
+                }
+            ]
+        },
+        {
+            "name": "SBS",
+            "description": "System configuration, boot, and security",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "16"
+            },
+            "category": "System",
+            "configurationType": "sbs",
+            "associatedPeripherals": [
+                {
+                    "name": "SBS",
+                    "type": "sbs"
+                }
+            ]
+        },
+        {
+            "name": "SDMMC1",
+            "description": "Secure digital input/output MultiMediaCard interface #1",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "31"
+            },
+            "category": "Connectivity",
+            "configurationType": "sdmmc",
+            "functions": [
+                {
+                    "label": "SD",
+                    "configurationType": "sdmmc_sd",
+                    "protocols": [
+                        "SD"
+                    ]
+                },
+                {
+                    "label": "SDIO",
+                    "configurationType": "sdmmc_sdio",
+                    "protocols": [
+                        "SDIO"
+                    ]
+                },
+                {
+                    "label": "MMC",
+                    "configurationType": "sdmmc_mmc",
+                    "protocols": [
+                        "MMC"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "SDMMC1",
+                    "type": "sdmmc"
+                },
+                {
+                    "name": "DLYBSD1",
+                    "type": "dlyb",
+                    "optional": true
+                }
+            ]
+        },
+        {
+            "name": "SPI1",
+            "description": "32-bit Serial peripheral interface #1",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "68"
+            },
+            "category": "Connectivity",
+            "configurationType": "spi",
+            "functions": [
+                {
+                    "label": "SPI",
+                    "configurationType": "spi",
+                    "protocols": [
+                        "SPI"
+                    ]
+                },
+                {
+                    "label": "I2S",
+                    "configurationType": "spi_i2s",
+                    "protocols": [
+                        "I2S"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "SPI1",
+                    "type": "spi"
+                }
+            ]
+        },
+        {
+            "name": "SPI2",
+            "description": "32-bit Serial peripheral interface #2",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "68"
+            },
+            "category": "Connectivity",
+            "configurationType": "spi",
+            "functions": [
+                {
+                    "label": "SPI",
+                    "configurationType": "spi",
+                    "protocols": [
+                        "SPI"
+                    ]
+                },
+                {
+                    "label": "I2S",
+                    "configurationType": "spi_i2s",
+                    "protocols": [
+                        "I2S"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "SPI2",
+                    "type": "spi"
+                }
+            ]
+        },
+        {
+            "name": "SPI3",
+            "description": "16-bit Serial peripheral interface #3",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "68"
+            },
+            "category": "Connectivity",
+            "configurationType": "spi",
+            "functions": [
+                {
+                    "label": "SPI",
+                    "configurationType": "spi",
+                    "protocols": [
+                        "SPI"
+                    ]
+                },
+                {
+                    "label": "I2S",
+                    "configurationType": "spi_i2s",
+                    "protocols": [
+                        "I2S"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "SPI3",
+                    "type": "spi"
+                }
+            ]
+        },
+        {
+            "name": "SPI4",
+            "description": "16-bit Serial peripheral interface #4",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "64"
+            },
+            "category": "Connectivity",
+            "configurationType": "spi",
+            "functions": [
+                {
+                    "label": "SPI",
+                    "configurationType": "spi",
+                    "protocols": [
+                        "SPI"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "SPI4",
+                    "type": "spi"
+                }
+            ]
+        },
+        {
+            "name": "SPI5",
+            "description": "16-bit Serial peripheral interface #5",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "64"
+            },
+            "category": "Connectivity",
+            "configurationType": "spi",
+            "functions": [
+                {
+                    "label": "SPI",
+                    "configurationType": "spi",
+                    "protocols": [
+                        "SPI"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "SPI5",
+                    "type": "spi"
+                }
+            ]
+        },
+        {
+            "name": "SPI6",
+            "description": "16-bit Serial peripheral interface #6",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "64"
+            },
+            "category": "Connectivity",
+            "configurationType": "spi",
+            "functions": [
+                {
+                    "label": "SPI",
+                    "configurationType": "spi",
+                    "protocols": [
+                        "SPI"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "SPI6",
+                    "type": "spi"
+                }
+            ]
+        },
+        {
+            "name": "TAMP",
+            "description": "Tamper and backup registers",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "64"
+            },
+            "category": "Security",
+            "configurationType": "tamp",
+            "associatedPeripherals": [
+                {
+                    "name": "TAMP",
+                    "type": "tamp"
+                }
+            ]
+        },
+        {
+            "name": "TIM1",
+            "description": "Advanced-control timer #1",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "54"
+            },
+            "category": "Timers",
+            "configurationType": "tim_adv",
+            "associatedPeripherals": [
+                {
+                    "name": "TIM1",
+                    "type": "tim"
+                }
+            ]
+        },
+        {
+            "name": "TIM10",
+            "description": "General-purpose timers #10",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "53"
+            },
+            "category": "Timers",
+            "configurationType": "tim",
+            "associatedPeripherals": [
+                {
+                    "name": "TIM10",
+                    "type": "tim"
+                }
+            ]
+        },
+        {
+            "name": "TIM11",
+            "description": "General-purpose timers #11",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "53"
+            },
+            "category": "Timers",
+            "configurationType": "tim",
+            "associatedPeripherals": [
+                {
+                    "name": "TIM11",
+                    "type": "tim"
+                }
+            ]
+        },
+        {
+            "name": "TIM12",
+            "description": "General-purpose timers #12",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "53"
+            },
+            "category": "Timers",
+            "configurationType": "tim",
+            "associatedPeripherals": [
+                {
+                    "name": "TIM12",
+                    "type": "tim"
+                }
+            ]
+        },
+        {
+            "name": "TIM13",
+            "description": "General-purpose timers #13",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "53"
+            },
+            "category": "Timers",
+            "configurationType": "tim",
+            "associatedPeripherals": [
+                {
+                    "name": "TIM13",
+                    "type": "tim"
+                }
+            ]
+        },
+        {
+            "name": "TIM14",
+            "description": "General-purpose timers #14",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "53"
+            },
+            "category": "Timers",
+            "configurationType": "tim",
+            "associatedPeripherals": [
+                {
+                    "name": "TIM14",
+                    "type": "tim"
+                }
+            ]
+        },
+        {
+            "name": "TIM15",
+            "description": "General-purpose 16-bit timer #15",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "56"
+            },
+            "category": "Timers",
+            "configurationType": "tim",
+            "associatedPeripherals": [
+                {
+                    "name": "TIM15",
+                    "type": "tim"
+                }
+            ]
+        },
+        {
+            "name": "TIM16",
+            "description": "General-purpose 16-bit timer #16",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "56"
+            },
+            "category": "Timers",
+            "configurationType": "tim",
+            "associatedPeripherals": [
+                {
+                    "name": "TIM16",
+                    "type": "tim"
+                }
+            ]
+        },
+        {
+            "name": "TIM17",
+            "description": "General-purpose 16-bit timer #17",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "56"
+            },
+            "category": "Timers",
+            "configurationType": "tim",
+            "associatedPeripherals": [
+                {
+                    "name": "TIM17",
+                    "type": "tim"
+                }
+            ]
+        },
+        {
+            "name": "TIM2",
+            "description": "General-purpose 32-bit timer #2",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "55"
+            },
+            "category": "Timers",
+            "configurationType": "tim",
+            "associatedPeripherals": [
+                {
+                    "name": "TIM2",
+                    "type": "tim"
+                }
+            ]
+        },
+        {
+            "name": "TIM20",
+            "description": "Advanced-control timer #20",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "50"
+            },
+            "category": "Timers",
+            "configurationType": "tim_adv",
+            "associatedPeripherals": [
+                {
+                    "name": "TIM20",
+                    "type": "tim"
+                }
+            ]
+        },
+        {
+            "name": "TIM3",
+            "description": "General-purpose 32-bit timer #3",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "55"
+            },
+            "category": "Timers",
+            "configurationType": "tim",
+            "associatedPeripherals": [
+                {
+                    "name": "TIM3",
+                    "type": "tim"
+                }
+            ]
+        },
+        {
+            "name": "TIM4",
+            "description": "General-purpose 32-bit timer #4",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "55"
+            },
+            "category": "Timers",
+            "configurationType": "tim",
+            "associatedPeripherals": [
+                {
+                    "name": "TIM4",
+                    "type": "tim"
+                }
+            ]
+        },
+        {
+            "name": "TIM5",
+            "description": "General-purpose 32-bit timer #5",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "55"
+            },
+            "category": "Timers",
+            "configurationType": "tim",
+            "associatedPeripherals": [
+                {
+                    "name": "TIM5",
+                    "type": "tim"
+                }
+            ]
+        },
+        {
+            "name": "TIM6",
+            "description": "Basic timer #6",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "57"
+            },
+            "category": "Timers",
+            "configurationType": "tim",
+            "associatedPeripherals": [
+                {
+                    "name": "TIM6",
+                    "type": "tim"
+                }
+            ]
+        },
+        {
+            "name": "TIM7",
+            "description": "Basic timer #7",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "57"
+            },
+            "category": "Timers",
+            "configurationType": "tim",
+            "associatedPeripherals": [
+                {
+                    "name": "TIM7",
+                    "type": "tim"
+                }
+            ]
+        },
+        {
+            "name": "TIM8",
+            "description": "Advanced-control timer #8",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "54"
+            },
+            "category": "Timers",
+            "configurationType": "tim_adv",
+            "associatedPeripherals": [
+                {
+                    "name": "TIM8",
+                    "type": "tim"
+                }
+            ]
+        },
+        {
+            "name": "TIM9",
+            "description": "General-purpose timers #9",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "53"
+            },
+            "category": "Timers",
+            "configurationType": "tim",
+            "associatedPeripherals": [
+                {
+                    "name": "TIM9",
+                    "type": "tim"
+                }
+            ]
+        },
+        {
+            "name": "UART4",
+            "description": "Universal asynchronous receiver/transmitter #4",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "66"
+            },
+            "category": "Connectivity",
+            "configurationType": "uart",
+            "functions": [
+                {
+                    "label": "Async",
+                    "configurationType": "uart_async",
+                    "protocols": [
+                        "Serial"
+                    ]
+                },
+                {
+                    "label": "IrDA",
+                    "configurationType": "uart_irda",
+                    "protocols": [
+                        "IrDA"
+                    ]
+                },
+                {
+                    "label": "LIN",
+                    "configurationType": "uart_lin",
+                    "protocols": [
+                        "LIN"
+                    ]
+                },
+                {
+                    "label": "MPC",
+                    "configurationType": "uart_mpc",
+                    "protocols": [
+                        "Multiprocessor Communication"
+                    ]
+                },
+                {
+                    "label": "Modbus",
+                    "configurationType": "uart_modbus",
+                    "protocols": [
+                        "Modbus Communication"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "UART4",
+                    "type": "uart"
+                }
+            ]
+        },
+        {
+            "name": "UART5",
+            "description": "Universal asynchronous receiver/transmitter #5",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "66"
+            },
+            "category": "Connectivity",
+            "configurationType": "uart",
+            "functions": [
+                {
+                    "label": "Async",
+                    "configurationType": "uart_async",
+                    "protocols": [
+                        "Serial"
+                    ]
+                },
+                {
+                    "label": "IrDA",
+                    "configurationType": "uart_irda",
+                    "protocols": [
+                        "IrDA"
+                    ]
+                },
+                {
+                    "label": "LIN",
+                    "configurationType": "uart_lin",
+                    "protocols": [
+                        "LIN"
+                    ]
+                },
+                {
+                    "label": "MPC",
+                    "configurationType": "uart_mpc",
+                    "protocols": [
+                        "Multiprocessor Communication"
+                    ]
+                },
+                {
+                    "label": "Modbus",
+                    "configurationType": "uart_modbus",
+                    "protocols": [
+                        "Modbus Communication"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "UART5",
+                    "type": "uart"
+                }
+            ]
+        },
+        {
+            "name": "UART7",
+            "description": "Universal asynchronous receiver/transmitter #7",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "62"
+            },
+            "category": "Connectivity",
+            "configurationType": "uart",
+            "functions": [
+                {
+                    "label": "Async",
+                    "configurationType": "uart_async",
+                    "protocols": [
+                        "Serial"
+                    ]
+                },
+                {
+                    "label": "IrDA",
+                    "configurationType": "uart_irda",
+                    "protocols": [
+                        "IrDA"
+                    ]
+                },
+                {
+                    "label": "LIN",
+                    "configurationType": "uart_lin",
+                    "protocols": [
+                        "LIN"
+                    ]
+                },
+                {
+                    "label": "MPC",
+                    "configurationType": "uart_mpc",
+                    "protocols": [
+                        "Multiprocessor Communication"
+                    ]
+                },
+                {
+                    "label": "Modbus",
+                    "configurationType": "uart_modbus",
+                    "protocols": [
+                        "Modbus Communication"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "UART7",
+                    "type": "uart"
+                }
+            ]
+        },
+        {
+            "name": "UART8",
+            "description": "Universal asynchronous receiver/transmitter #8",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "62"
+            },
+            "category": "Connectivity",
+            "configurationType": "uart",
+            "functions": [
+                {
+                    "label": "Async",
+                    "configurationType": "uart_async",
+                    "protocols": [
+                        "Serial"
+                    ]
+                },
+                {
+                    "label": "IrDA",
+                    "configurationType": "uart_irda",
+                    "protocols": [
+                        "IrDA"
+                    ]
+                },
+                {
+                    "label": "LIN",
+                    "configurationType": "uart_lin",
+                    "protocols": [
+                        "LIN"
+                    ]
+                },
+                {
+                    "label": "MPC",
+                    "configurationType": "uart_mpc",
+                    "protocols": [
+                        "Multiprocessor Communication"
+                    ]
+                },
+                {
+                    "label": "Modbus",
+                    "configurationType": "uart_modbus",
+                    "protocols": [
+                        "Modbus Communication"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "UART8",
+                    "type": "uart"
+                }
+            ]
+        },
+        {
+            "name": "UART9",
+            "description": "Universal asynchronous receiver/transmitter #9",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "62"
+            },
+            "category": "Connectivity",
+            "configurationType": "uart",
+            "functions": [
+                {
+                    "label": "Async",
+                    "configurationType": "uart_async",
+                    "protocols": [
+                        "Serial"
+                    ]
+                },
+                {
+                    "label": "IrDA",
+                    "configurationType": "uart_irda",
+                    "protocols": [
+                        "IrDA"
+                    ]
+                },
+                {
+                    "label": "LIN",
+                    "configurationType": "uart_lin",
+                    "protocols": [
+                        "LIN"
+                    ]
+                },
+                {
+                    "label": "MPC",
+                    "configurationType": "uart_mpc",
+                    "protocols": [
+                        "Multiprocessor Communication"
+                    ]
+                },
+                {
+                    "label": "Modbus",
+                    "configurationType": "uart_modbus",
+                    "protocols": [
+                        "Modbus Communication"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "UART9",
+                    "type": "uart"
+                }
+            ]
+        },
+        {
+            "name": "UCPD1",
+            "description": "USB Type-C/USB Power Delivery interface #1",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "74"
+            },
+            "category": "Connectivity",
+            "configurationType": "usbpd",
+            "associatedPeripherals": [
+                {
+                    "name": "UCPD1",
+                    "type": "usbpd"
+                }
+            ]
+        },
+        {
+            "name": "USART1",
+            "description": "Universal synchronous/asynchronous receiver/transmitter #1",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "66"
+            },
+            "category": "Connectivity",
+            "configurationType": "usart",
+            "functions": [
+                {
+                    "label": "Async",
+                    "configurationType": "uart_async",
+                    "protocols": [
+                        "Serial"
+                    ]
+                },
+                {
+                    "label": "Sync",
+                    "configurationType": "usart_sync",
+                    "protocols": [
+                        "SPI"
+                    ]
+                },
+                {
+                    "label": "IrDA",
+                    "configurationType": "uart_irda",
+                    "protocols": [
+                        "IrDA"
+                    ]
+                },
+                {
+                    "label": "LIN",
+                    "configurationType": "uart_lin",
+                    "protocols": [
+                        "LIN"
+                    ]
+                },
+                {
+                    "label": "MPC",
+                    "configurationType": "uart_mpc",
+                    "protocols": [
+                        "Multiprocessor Communication"
+                    ]
+                },
+                {
+                    "label": "SmartCard",
+                    "configurationType": "uart_smartcard",
+                    "protocols": [
+                        "SmartCard"
+                    ]
+                },
+                {
+                    "label": "Modbus",
+                    "configurationType": "uart_modbus",
+                    "protocols": [
+                        "Modbus Communication"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "USART1",
+                    "type": "usart"
+                }
+            ]
+        },
+        {
+            "name": "USART10",
+            "description": "Universal synchronous/asynchronous receiver/transmitter #10",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "66"
+            },
+            "category": "Connectivity",
+            "configurationType": "usart",
+            "functions": [
+                {
+                    "label": "Async",
+                    "configurationType": "uart_async",
+                    "protocols": [
+                        "Serial"
+                    ]
+                },
+                {
+                    "label": "Sync",
+                    "configurationType": "usart_sync",
+                    "protocols": [
+                        "SPI"
+                    ]
+                },
+                {
+                    "label": "IrDA",
+                    "configurationType": "uart_irda",
+                    "protocols": [
+                        "IrDA"
+                    ]
+                },
+                {
+                    "label": "LIN",
+                    "configurationType": "uart_lin",
+                    "protocols": [
+                        "LIN"
+                    ]
+                },
+                {
+                    "label": "MPC",
+                    "configurationType": "uart_mpc",
+                    "protocols": [
+                        "Multiprocessor Communication"
+                    ]
+                },
+                {
+                    "label": "SmartCard",
+                    "configurationType": "uart_smartcard",
+                    "protocols": [
+                        "SmartCard"
+                    ]
+                },
+                {
+                    "label": "Modbus",
+                    "configurationType": "uart_modbus",
+                    "protocols": [
+                        "Modbus Communication"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "USART10",
+                    "type": "usart"
+                }
+            ]
+        },
+        {
+            "name": "USART2",
+            "description": "Universal synchronous/asynchronous receiver/transmitter #2",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "66"
+            },
+            "category": "Connectivity",
+            "configurationType": "usart",
+            "functions": [
+                {
+                    "label": "Async",
+                    "configurationType": "uart_async",
+                    "protocols": [
+                        "Serial"
+                    ]
+                },
+                {
+                    "label": "Sync",
+                    "configurationType": "usart_sync",
+                    "protocols": [
+                        "SPI"
+                    ]
+                },
+                {
+                    "label": "IrDA",
+                    "configurationType": "uart_irda",
+                    "protocols": [
+                        "IrDA"
+                    ]
+                },
+                {
+                    "label": "LIN",
+                    "configurationType": "uart_lin",
+                    "protocols": [
+                        "LIN"
+                    ]
+                },
+                {
+                    "label": "MPC",
+                    "configurationType": "uart_mpc",
+                    "protocols": [
+                        "Multiprocessor Communication"
+                    ]
+                },
+                {
+                    "label": "SmartCard",
+                    "configurationType": "uart_smartcard",
+                    "protocols": [
+                        "SmartCard"
+                    ]
+                },
+                {
+                    "label": "Modbus",
+                    "configurationType": "uart_modbus",
+                    "protocols": [
+                        "Modbus Communication"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "USART2",
+                    "type": "usart"
+                }
+            ]
+        },
+        {
+            "name": "USART3",
+            "description": "Universal synchronous/asynchronous receiver/transmitter #3",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "66"
+            },
+            "category": "Connectivity",
+            "configurationType": "usart",
+            "functions": [
+                {
+                    "label": "Async",
+                    "configurationType": "uart_async",
+                    "protocols": [
+                        "Serial"
+                    ]
+                },
+                {
+                    "label": "Sync",
+                    "configurationType": "usart_sync",
+                    "protocols": [
+                        "SPI"
+                    ]
+                },
+                {
+                    "label": "IrDA",
+                    "configurationType": "uart_irda",
+                    "protocols": [
+                        "IrDA"
+                    ]
+                },
+                {
+                    "label": "LIN",
+                    "configurationType": "uart_lin",
+                    "protocols": [
+                        "LIN"
+                    ]
+                },
+                {
+                    "label": "MPC",
+                    "configurationType": "uart_mpc",
+                    "protocols": [
+                        "Multiprocessor Communication"
+                    ]
+                },
+                {
+                    "label": "SmartCard",
+                    "configurationType": "uart_smartcard",
+                    "protocols": [
+                        "SmartCard"
+                    ]
+                },
+                {
+                    "label": "Modbus",
+                    "configurationType": "uart_modbus",
+                    "protocols": [
+                        "Modbus Communication"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "USART3",
+                    "type": "usart"
+                }
+            ]
+        },
+        {
+            "name": "USART6",
+            "description": "Universal synchronous/asynchronous receiver/transmitter #6",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "66"
+            },
+            "category": "Connectivity",
+            "configurationType": "usart",
+            "functions": [
+                {
+                    "label": "Async",
+                    "configurationType": "uart_async",
+                    "protocols": [
+                        "Serial"
+                    ]
+                },
+                {
+                    "label": "Sync",
+                    "configurationType": "usart_sync",
+                    "protocols": [
+                        "SPI"
+                    ]
+                },
+                {
+                    "label": "IrDA",
+                    "configurationType": "uart_irda",
+                    "protocols": [
+                        "IrDA"
+                    ]
+                },
+                {
+                    "label": "LIN",
+                    "configurationType": "uart_lin",
+                    "protocols": [
+                        "LIN"
+                    ]
+                },
+                {
+                    "label": "MPC",
+                    "configurationType": "uart_mpc",
+                    "protocols": [
+                        "Multiprocessor Communication"
+                    ]
+                },
+                {
+                    "label": "SmartCard",
+                    "configurationType": "uart_smartcard",
+                    "protocols": [
+                        "SmartCard"
+                    ]
+                },
+                {
+                    "label": "Modbus",
+                    "configurationType": "uart_modbus",
+                    "protocols": [
+                        "Modbus Communication"
+                    ]
+                }
+            ],
+            "associatedPeripherals": [
+                {
+                    "name": "USART6",
+                    "type": "usart"
+                }
+            ]
+        },
+        {
+            "name": "USB_OTG_FS",
+            "description": "USB on-the-go full-speed",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "72"
+            },
+            "category": "Connectivity",
+            "configurationType": "usb_otg_fs",
+            "configurable": false,
+            "associatedPeripherals": [
+                {
+                    "name": "OTG_FS",
+                    "type": "usb_otg_fs"
+                }
+            ],
+            "configurableElements": [
+                {
+                    "name": "OTG_FS_HOST",
+                    "description": "OTG FS Host role",
+                    "configurationType": "usb_otg_fs_host",
+                    "associatedPeripherals": [
+                        {
+                            "name": "OTG_FS",
+                            "type": "usb_otg_fs"
+                        }
+                    ]
+                },
+                {
+                    "name": "OTG_FS_DEVICE",
+                    "description": "OTG FS Device role",
+                    "configurationType": "usb_otg_fs_device",
+                    "associatedPeripherals": [
+                        {
+                            "name": "OTG_FS",
+                            "type": "usb_otg_fs"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "VREFBUF",
+            "description": "Voltage reference buffer",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "36"
+            },
+            "category": "Analog",
+            "configurationType": "vrefbuf",
+            "associatedPeripherals": [
+                {
+                    "name": "VREFBUF",
+                    "type": "vrefbuf"
+                }
+            ]
+        },
+        {
+            "name": "WWDG",
+            "description": "System window watchdog",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "62"
+            },
+            "category": "System",
+            "configurationType": "wwdg",
+            "associatedPeripherals": [
+                {
+                    "name": "WWDG",
+                    "type": "wwdg"
+                }
+            ]
+        },
+        {
+            "name": "XSPI1",
+            "description": "Extended-SPI interface #1",
+            "docLink": {
+                "RM": "RM0533 Rev 0.1a",
+                "Chapter": "28"
+            },
+            "category": "Memory",
+            "configurationType": "xspi",
+            "associatedPeripherals": [
+                {
+                    "name": "XSPI1",
+                    "type": "ospi"
+                },
+                {
+                    "name": "DLYBXS1",
+                    "type": "dlyb",
+                    "optional": true
+                },
+                {
+                    "name": "OTFDEC1",
+                    "type": "otfdec",
+                    "optional": true
+                }
+            ]
+        }
+    ]
+}

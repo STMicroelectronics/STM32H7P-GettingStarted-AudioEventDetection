@@ -1,0 +1,433 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "version": "0.0.1",
+  "componentid": "::Device:STM32CubeMX2 Config:PCD",
+  "grammarVersion": "3.1",
+  "type": "object",
+  "functions": [
+    {
+      "path": ".config/template/helpers/common_helpers.js",
+      "accessor": "com"
+    }
+  ],
+  "properties": {
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "object",
+          "properties": {
+            "labels": {
+              "type": "array",
+              "title": "Label",
+              "$comment": "label associated to the instance of the peripheral, can be overridden at sample level. In this case it becomes read-only",
+              "items": {
+                "type": "string",
+                "pattern": "^([a-zA-Z_][a-zA-Z0-9_]{1,31})?$",
+                "minLength": 0,
+                "maxLength": 32,
+                "default": ""
+              }
+            },
+            "layer": {
+              "type": "string",
+              "title": "Software Layer",
+              "default": "HAL",
+              "actions": [
+                {
+                  "type": "disable",
+                  "condition": "$com.helper_common_display_object($resource)"
+                }
+              ]
+            },
+            "init_type": {
+              "type": "string",
+              "title": "resource initialization code generation",
+              "description": "generate or not the PCD init code, call it or not at boot",
+              "$comment": "generate the init code of your PCD or not (enabled/disabled), call it automatically at startup or not (called/enabled)",
+              "oneOf": [
+                {
+                  "const": "called"
+                },
+                {
+                  "const": "enabled"
+                },
+                {
+                  "const": "disabled"
+                }
+              ],
+              "default": "called"
+            },
+            "function_type": {
+              "type": "string",
+              "title": "Function used by the component",
+              "description": "This component is a standard component which can be used HW instance available on another component. The notion of function is used to distinguish the usage of each HW instance",
+              "actions": [
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ],
+              "default": "PCD"
+            }
+          }
+        },
+        "Basic": {
+          "title": "Main peripheral configuration",
+          "type": "object",
+          "properties": {
+            "core_mode": {
+              "type": "string",
+              "default": "Device",
+              "actions": [
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ]
+            },
+            "core_speed": {
+              "type": "string",
+              "default": "SPEED_FS",
+              "actions": [
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ]
+            },
+            "vbus_sense_state": {
+              "type": "string",
+              "oneOf": [
+                {
+                  "const": "VBUS_SENSE_DISABLED"
+                },
+                {
+                  "const": "VBUS_SENSE_ENABLED"
+                }
+              ],
+              "default": "VBUS_SENSE_DISABLED",
+              "actions": [
+                {
+                  "type": "disable",
+                  "condition": "$resource.name == 'USB'"
+                }
+              ]
+            },
+            "sof_state": {
+              "type": "string",
+              "oneOf": [
+                {
+                  "const": "SOF_DISABLED"
+                },
+                {
+                  "const": "SOF_ENABLED"
+                }
+              ],
+              "default": "SOF_DISABLED"
+            },
+            "phy_interface": {
+              "title": "PHY interface",
+              "type": "string",
+              "oneOf": [
+                {
+                  "actions": [
+                    {
+                      "type": "disable",
+                      "condition": "$resource.name === 'USB'"
+                    }
+                  ],
+                  "const": "PHY_EXTAERNAL_ULPI"
+                },
+                {
+                  "const": "PHY_EMBEDDED_FS"
+                },
+                {
+                  "const": "PHY_EMBEDDED_HS"
+                }
+              ],
+              "default": "PHY_EMBEDDED_FS"
+            },
+            "dma_state": {
+              "type": "string",
+              "oneOf": [
+                {
+                  "const": "DMA_DISABLED"
+                },
+                {
+                  "const": "DMA_ENABLED",
+                  "actions": [
+                    {
+                      "type": "disable",
+                      "message": "USB DMA can't be enabled for OTG FS",
+                      "condition": "$resource.name == 'OTG_FS'"
+                    }
+                  ]
+                }
+              ],
+              "default": "DMA_DISABLED",
+              "actions": [
+                {
+                  "type": "disable",
+                  "condition": "$resource.name == 'USB'"
+                }
+              ]
+            },
+            "endpoint_number": {
+              "type": "integer",
+              "default": 1,
+              "maximum": 16,
+               "display_format": [
+                 "dec"
+               ],
+               "minimum": 1
+             }
+            }
+          },
+          "Additional": {
+            "type": "object",
+            "properties": {
+            "UCPD_for_VBUS_management": {
+            "type": "string",
+            "oneOf": [
+              {
+                "const": "Enable"
+              },
+              {
+                "const": "Disable"
+              }
+            ],
+            "default": "Disable"
+          },
+          "UCPD_Link": {
+            "type": "string",
+            "oneOf": [
+              {
+                "const": "UCPD_Link"
+              }
+            ],
+            "actions": [
+              {
+                "type": "disable",
+                "condition": "$Additional.UCPD_for_VBUS_management === 'Disable'"
+              }
+            ],
+            "default": "UCPD_Link"
+          },
+          "BCD_State": {
+            "type": "string",
+            "oneOf": [
+              {
+                "const": "BCD_DISABLED"
+              },
+              {
+                "const": "BCD_ENABLED"
+              }
+            ],
+            "default": "BCD_DISABLED",
+            "actions": [
+              {
+                "type": "disable",
+                "condition": "($Basic.Core_mode.Host === true) && ($Basic.Core_mode.Dual_Role === false)"
+              }
+            ]
+          },
+          "LPM_State": {
+            "type": "string",
+            "oneOf": [
+              {
+                "const": "Enable"
+              },
+              {
+                "const": "Disable"
+              }
+            ],
+            "actions": [
+              {
+                "type": "disable",
+                "condition": "($Basic.Core_mode.Host === true) && ($Basic.Core_mode.Dual_Role === false)"
+              }
+            ],
+            "default": "Disable",
+            "title": "Low Power management"
+          }
+        }
+      },
+      "System": {
+        "type": "object",
+        "properties": {
+          "GPIOs": {
+            "type": "object",
+            "properties": {
+              "DP": {
+                "type": "object",
+                "objectType": "need.pinout.signals",
+                "owner": "$resource.name",
+                "actions": [
+                  {
+                    "type": "warning",
+                    "message": "This parameter's basic configuration is automatically done",
+                    "condition": "$resource.name === 'OTG_FS'"
+                  }
+                ],
+                "needs": [
+                  {
+                    "selector": "DP",
+                    "constraints": {
+                      "mode": {
+                        "const": "ANALOG"
+                      },
+                      "pull": {
+                        "const": "No"
+                      },
+                      "speed": {
+                        "const": "High"
+                      }
+                    }
+                  }
+                ]
+              },
+              "dm": {
+                "type": "object",
+                "objectType": "need.pinout.signals",
+                "owner": "$resource.name",
+                "actions": [
+                  {
+                    "type": "warning",
+                    "message": "This parameter's basic configuration is automatically done",
+                    "condition": "$resource.name === 'OTG_FS'"
+                  }
+                ],
+                "needs": [
+                  {
+                    "selector": "DM",
+                    "constraints": {
+                      "mode": {
+                        "const": "ANALOG"
+                      },
+                      "pull": {
+                        "const": "No"
+                      },
+                      "speed": {
+                        "const": "High"
+                      }
+                    }
+                  }
+                ]
+              },
+              "vbus": {
+                "type": "object",
+                "objectType": "need.pinout.signals",
+                "owner": "$resource.name",
+                "actions": [
+                  {
+                    "type": "exclude",
+                    "condition": "$resource.name === 'USB'"
+                  },
+                  {
+                    "type": "exclude",
+                    "condition": "$parameters.Basic.vbus_sense_state === 'VBUS_SENSE_DISABLED'"
+                  }
+                ],
+                "needs": [
+                  {
+                    "selector": "VBUS",
+                    "constraints": {
+                      "mode": {
+                        "const": "ALTERNATE"
+                      }
+                    }
+                  }
+                ]
+              },
+              "ID_Pin_required": {
+                "type": "string",
+                "oneOf": [
+                  {
+                    "const": "YES"
+                  },
+                  {
+                    "const": "NO"
+                  }
+                ],
+                "default": "NO",
+                "title": "ID_Pin_required",
+                "actions": [
+                  {
+                    "type": "exclude",
+                    "condition": "$resource.name === 'USB'"
+                  }
+                ]
+              },
+              "id": {
+                "type": "object",
+                "objectType": "need.pinout.signals",
+                "owner": "$resource.name",
+                "actions": [
+                  {
+                    "type": "exclude",
+                    "condition": "$resource.name === 'USB'"
+                  },
+                  {
+                    "type": "exclude",
+                    "condition": "$parameters.System.ID_Pin_required === 'YES'"
+                  }
+                ],
+                "needs": [
+                  {
+                    "selector": "ID",
+                    "constraints": {
+                      "mode": {
+                        "const": "ALTERNATE"
+                      }
+                    }
+                  }
+                ]
+              },
+              "sof": {
+                "type": "object",
+                "objectType": "need.pinout.signals",
+                "owner": "$resource.name",
+                "actions": [
+                  {
+                    "type": "exclude",
+                    "condition": "$resource.name === 'USB'"
+                  },
+                  {
+                    "type": "exclude",
+                    "condition": "$parameters.Basic.sof_state === 'SOF_DISABLED'"
+                  }
+                ],
+                "needs": [
+                  {
+                    "selector": "SOF",
+                    "constraints": {
+                      "mode": {
+                        "const": "ALTERNATE"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+           }
+          }
+        },
+        "Interrupts": {
+          "type": "object",
+          "properties": {
+            "USB Global interrupt": {
+              "type": "object",
+              "objectType": "need.interrupt.lines",
+              "owner": "$resource.name",
+              "needs": [
+                {
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

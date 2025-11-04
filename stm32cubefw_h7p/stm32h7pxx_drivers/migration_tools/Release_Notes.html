@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Release Notes for HAL1 to HAL2 migration material</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="./_htmresc/mini-st_2020.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  <link rel="icon" type="image/x-icon" href="_htmresc/favicon.png" />
+</head>
+<body>
+<div class="row">
+<div class="col-sm-12 col-lg-4">
+<center>
+<h1 id="release-notes-for-hal1-to-hal2-migration-material">Release Notes for <mark>HAL1 to HAL2 migration material</mark></h1>
+<p>Copyright © 2025 STMicroelectronics<br />
+</p>
+<a href="https://www.st.com" class="logo"><img src="_htmresc/st_logo_2020.png" alt="ST logo" /></a>
+</center>
+<h1 id="purpose">Purpose</h1>
+<p>The STM32Cube HAL (hardware abstraction layer) has undergone significant improvements in its latest version, enhancing performance, resource usage, and ease of use. However, these enhancements come with breaking changes that may affect the compatibility of your existing applications. The migration material is designed to assist you in navigating these changes and successfully migrating your application to STM32Cube HAL2.</p>
+<p><img src="_htmresc/HAL1_HA2_migration_journey.png" /></p>
+</div>
+<div class="col-sm-12 col-lg-8">
+<h1 id="update-history">Update History</h1>
+<div class="collapse">
+<input type="checkbox" id="collapse-section3" checked aria-hidden="true"> <label for="collapse-section3" aria-hidden="true">V0.3.0 / 24-October-2025</label>
+<div>
+<h2 id="main-changes">Main Changes</h2>
+<ul>
+<li>Third alpha release of HAL1 to HAL2 migration material with multi-series support included</li>
+<li>Fix known defects and incorporate feedback from alpha1 and alpha2 releases</li>
+<li><strong>HAL1 to HAL2 migration user guides</strong>
+<ul>
+<li>Add support for <strong>19</strong> new drivers: CORDIC, DCACHE, FMAC, GFXMMU, GFXTIM, I2S, IRDA, LPTIM, NOR, OPAMP, OSPI, PKA, QSPI, RAMCFG, SDRAM, SMARTCARD,SMBUS,SRAM and XSPI</li>
+<li>Update previously released documentation to reflect new HAL2 changes introduced since the alpha2 release.</li>
+<li>Rework the migration example and HAL1 automatic script sections to highlight the detection feature as the primary workflow step.
+<ul>
+<li><em>Detection feature</em>: Scans the user’s application files and reports each detected HAL1 API, providing the corresponding section in the HAL1 to HAL2 migration documentation. This process does not modify the user’s code.</li>
+</ul></li>
+<li>Update hal_migration_checklist to reflect new changes applied to the HAL1 detection script and HAL migration documentation.</li>
+<li>Add support for STM32H7 series in HAL migration documentation</li>
+</ul></li>
+<li><strong>HAL1 automatic detection script</strong>
+<ul>
+<li>Add support for STM32H7 series</li>
+<li>Add a full-featured version for HAL1 API detection, including comprehensive handling of preprocessor directives</li>
+<li>Implement an interactive command-line interface for improved user interaction.</li>
+<li>Enhance the stubbing feature to cover all use cases, including:
+<ul>
+<li>Compound statements</li>
+<li>Preprocessor directives</li>
+<li>Aggregates (e.g., structs, unions), Control structures (e.g., loops, conditionals)</li>
+<li>Expressions, function definitions and declarations, header file inclusion</li>
+</ul></li>
+<li>Enhance generated logs. Two types of logs are generated:
+<ul>
+<li><em>Global HTML log file</em>: Contains an exhaustive list of detected HAL1 APIs grouped by applicative files and provides links to relevant documentation.</li>
+<li><em>User Code HTML Log</em>: An HTML log generated for each file processed. These files present the user’s application code with all detected HAL1 API references clearly highlighted and linked to the corresponding section in the HAL migration documentation.</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="contents">Contents</h2>
+<ul>
+<li><strong>HAL1 automatic detection script</strong>
+<ul>
+<li><em>Scan Application Files:</em> scans the user’s application files and detects all encountered HAL1 APIs, including defines, types, functions, and macros.</li>
+<li><em>Log and Report:</em> logs and reports each detected HAL1 API, providing the corresponding section in the HAL1 to HAL2 migration documentation. This documentation explains how to perform the migration of each given API according to its usage and scenario.</li>
+</ul></li>
+<li><strong>HAL1 to HAL2 migration user guide</strong>
+<ul>
+<li><em>HAL2 Architecture Concepts:</em> Explains the architectural concepts behind the changes from HAL1 to HAL2.</li>
+<li><em>Driver-Specific Migration Rules:</em> Lists exhaustively HAL1 APIs per HAL driver and provides rules to migrate them to HAL2</li>
+<li><em>Concrete Applicative Use Cases:</em> Provides a set of concrete applicative use cases per HAL driver highlighting the equivalency between HAL1 and HAL2 APIs</li>
+</ul></li>
+<li><strong>Migration example</strong>
+<ul>
+<li><em>Real project migration:</em> Demonstrates how to use the migration material in practice to migrate a real project from using HAL1 drivers to using HAL2 drivers.</li>
+<li><em>Involving STM32CubeMX2:</em> Demonstrates how to use STM32CubeMX2 to accelerate the IDE settings update and the HAL driver’s initialization sequences migration</li>
+</ul></li>
+<li><strong>Migration checklist</strong>
+<ul>
+<li><em>Migration journey checklist:</em> Enables users to monitor their progress and ensure that all steps of the migration journey are completed successfully</li>
+</ul></li>
+</ul>
+<h2 id="supported-modules">Supported modules</h2>
+<p><small>The components flagged by “<span class="icon-st-update"></span>” have changed since the previous release.<br />
+“<span class="icon-st-add"></span>” are new. “⏳” Documentation not yet ready.</small></p>
+<table>
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 35%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Module</th>
+<th>HAL1 automatic detection and logging script</th>
+<th>HAL1 to HAL2 migration user guides (documentation)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ADC <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>CAN ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>CEC ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>COMP <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td><strong>CORDIC</strong> <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>CORTEX <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>CRC <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>CRS ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>CRYP <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>DAC <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td><strong>DCACHE</strong> <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>DCMI ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>DFSDM ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>DLYB ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>DMA <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>DMA2D ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>DSI ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>DTS ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>ETH ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>EXTI <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>FDCAN ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>FIREWALL ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>FLASH ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td><strong>FMAC</strong> <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>GENERIC/COMMON <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td><strong>GFXMMU</strong> <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td><strong>GFXTIM</strong> <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>GPIO <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>GTZC ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>HASH ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>HCD ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>HRTIM ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>I2C <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td><strong>I2S</strong> <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>I3C ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>ICACHE <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td><strong>IRDA</strong> <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>IWDG <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>JPEG ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>LCD ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td><strong>LPTIM</strong> <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>LPUART <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>LTDC ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>MDF ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>MMC ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>NAND ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td><strong>NOR</strong> <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td><strong>OPAMP</strong> <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td><strong>OSPI</strong> <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>OTFDEC ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>PCCARD ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>PCD ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td><strong>PKA</strong> <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>PSSI ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>PWR <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td><strong>QSPI</strong> <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td><strong>RAMCFG</strong> <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>RCC <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>RNG <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>RTC <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>SAI ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>SD ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>SDIO ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td><strong>SDRAM</strong> <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td><strong>SMARTCARD</strong> <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td><strong>SMBUS</strong> <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>SPDIFRX ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>SPI <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td><strong>SRAM</strong> <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>SWPMI ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>TIM <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>TSC ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>UART <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>USART <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>WWDG <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td><strong>XSPI</strong> <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>As an Alpha release, it does not implement all features and has not been fully validated</li>
+<li>HAL1 automatic detection executable is only compatible with Windows 11 64-bit platforms</li>
+<li>STM32CubeMX2 screenshots in the documentation may differ from those in the latest available version of the tool.</li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">V0.2.0 / 20-June-2025</label>
+<div>
+<h2 id="main-changes-1">Main Changes</h2>
+<ul>
+<li>Second alpha release of HAL1 to HAL2 migration material with multi-series support included</li>
+<li>Fix known defects and implement feedback from alpha1 release</li>
+<li>HAL1 to HAL2 migration user guide
+<ul>
+<li>Add support for <strong>15</strong> new drivers: ICACHE, UART, USART, IWDG, WWDG, RNG, CRYP, CRC, DMA (partial coverage), EXTI, SPI, DAC, PWR, COMP and RTC</li>
+<li>Add missing features for: TIM, I2C and RCC</li>
+<li>Update previously released documentation to reflect new HAL2 changes introduced since the alpha1 release.</li>
+<li>Add LL migration support:
+<ul>
+<li>LL PPP APIs listing for migration</li>
+<li>LL_PPP_Init and LL_PPP_DeInit APIs migration</li>
+</ul></li>
+<li>Update STM32CubeMX2 sections (Initialization and configuration) for all supported drivers</li>
+<li>Update HAL1 automatic detection and stubbing script and migration example user guides:
+<ul>
+<li>Align the migration example against HAL1 automatic detection and stubbing script updates.</li>
+</ul></li>
+<li>Update checklist:
+<ul>
+<li>Rework “Resolve Stubbed HAL References” and “Update Linker and startup files” sections</li>
+<li>Rework “Update Linker and startup files” section</li>
+</ul></li>
+</ul></li>
+<li>HAL1 automatic detection and stubbing script
+<ul>
+<li>Add support for all drivers within H5, G0, F4, G4, L4, C0, U5 devices</li>
+<li>Add support of new features:
+<ul>
+<li>Stubbing per module</li>
+<li>Detection without stubbing of HAL1 APIs (dry-run)</li>
+<li>LL driver detecting and stubbing</li>
+<li>Multi line stubbing</li>
+<li>Constant detecting and stubbing</li>
+<li>Structure filling detecting and stubbing</li>
+</ul></li>
+<li>Enhance existing features
+<ul>
+<li>Script file Log : html format instead of text format</li>
+<li>Script file log configurability : content information configurability</li>
+<li>Warning messages configurability : content information and warning message injection configurability</li>
+<li>Execution performance enhancement : reduced execution time from over one minute to under one second for ADC_SingleConversion_TriggerSW_DMA example</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="contents-1">Contents</h2>
+<ul>
+<li>HAL1 automatic detection and stubbing script
+<ul>
+<li><strong>Scan Application Files:</strong> Detects all encountered HAL1 APIs, including defines, types, functions, and macros</li>
+<li><strong>Stub HAL1 APIs:</strong> Delimits HAL1 APIs with dedicated compilation conditional defines</li>
+<li><strong>Log and Report:</strong> Logs and reports each detected HAL1 API</li>
+</ul></li>
+<li>HAL1 to HAL2 migration user guide
+<ul>
+<li><strong>HAL2 Architecture Concepts:</strong> Explains concepts behind the changes from HAL1 to HAL2</li>
+<li><strong>Driver-Specific Migration Rules:</strong> Lists exhaustively HAL1 APIs per HAL driver and provides rules to migrate them</li>
+<li><strong>Concrete Applicative Use Cases:</strong> Provides a set of concrete applicative use cases per HAL driver highlighting the equivalency between HAL1 and HAL2 APIs</li>
+</ul></li>
+<li>Migration example
+<ul>
+<li><strong>Real project migration:</strong> Demonstrates how to use the migration material in practice</li>
+<li><strong>Involving STM32CubeMX2:</strong> Demonstrates how to use STM32CubeMX2 to accelerate the IDE settings update and the HAL driver’s initialization sequences migration</li>
+</ul></li>
+<li>Migration checklist
+<ul>
+<li><strong>Migration journey checklist:</strong> Enables users to monitor their progress and ensure that all steps of the migration journey are completed successfully</li>
+</ul></li>
+</ul>
+<h2 id="supported-modules-1">Supported modules</h2>
+<p><small>The components flagged by “<span class="icon-st-update"></span>” have changed since the previous release.<br />
+“<span class="icon-st-add"></span>” are new. “⏳” Documentation not yet ready.</small></p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 39%" />
+<col style="width: 34%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Module</th>
+<th>HAL1 automatic detection and stubbing script and logging</th>
+<th>HAL1 to HAL2 migration user guides (documentation)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ADC <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>CAN ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>CEC ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>COMP <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>CORDIC ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>CORTEX <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>CRC <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>CRS ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>CRYP <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>DAC <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>DCACHE ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>DCMI ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>DFSDM ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>DLYB ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>DMA <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>⚠️ Partially supported</td>
+</tr>
+<tr class="even">
+<td>DMA2D ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>DSI ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>DTS ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>ETH ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>EXTI <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>FDCAN ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>FIREWALL ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>FLASH ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>FMAC ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>GENERIC/COMMON <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>GFXMMU ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>GFXTIM ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>GPIO <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>GTZC ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>HASH ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>HCD ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>HRTIM ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>I2C <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>I2S ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>I3C ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>ICACHE <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>IRDA ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>IWDG <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>JPEG ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>LCD ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>LPTIM ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>LPUART ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>LTDC ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>MDF ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>MMC ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>NAND ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>NOR ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>OPAMP ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>OSPI ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>OTFDEC ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>PCCARD ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>PCD ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>PKA ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>PSSI ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>PWR <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>QSPI ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>RAMCFG ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>RCC <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>RNG <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>RTC <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>SAI ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>SD ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>SDIO ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>SDRAM ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>SMARTCARD ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>SMBUS ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>SPDIFRX ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>SPI <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>SRAM ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>SWPMI ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>TIM <span class="icon-st-update"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>TSC ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>UART <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>UCPD ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>USART <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>USB ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>WWDG <span class="icon-st-add"></span></td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>XSPI ⏳</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations-1">Known Limitations</h2>
+<ul>
+<li><p>As an Alpha release, it does not implement all features and has not been fully validated</p></li>
+<li><p>HAL1 automatic detection and stubbing script</p>
+<ul>
+<li>Line numbering within warning messages and log file is incorrect</li>
+<li>Stubbing user macros based on HAL1 APIs in not supported</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section1" aria-hidden="true"> <label for="collapse-section1" aria-hidden="true">V0.1.0 / 28-March-2025</label>
+<div>
+<h2 id="main-changes-2">Main Changes</h2>
+<p>Initial HAL1 to HAL2 migration materials with multi-series support</p>
+<ul>
+<li>HAL1 automatic detection and stubbing script
+<ul>
+<li><strong>Scan Application Files:</strong> Detects all encountered HAL1 APIs, including defines, types, functions, and macros</li>
+<li><strong>Stub HAL1 APIs:</strong> Delimits HAL1 APIs with dedicated compilation conditional defines</li>
+<li><strong>Log and Report:</strong> Logs and reports each detected HAL1 API</li>
+</ul></li>
+<li>HAL1 to HAL2 migration user guide
+<ul>
+<li><strong>HAL2 Architecture Concepts:</strong> Explains concepts behind the changes from HAL1 to HAL2</li>
+<li><strong>Driver-Specific Migration Rules:</strong> Lists exhaustively HAL1 APIs per HAL driver and provides rules to migrate them</li>
+<li><strong>Concrete Applicative Use Cases:</strong> Provides a set of concrete applicative use cases per HAL driver highlighting the equivalency between HAL1 and HAL2 APIs</li>
+</ul></li>
+<li>Migration example
+<ul>
+<li><strong>Real project migration:</strong> Demonstrates how to use the migration material in practice</li>
+<li><strong>Involving STM32CubeMX2:</strong> Demonstrates how to use STM32CubeMX2 to accelerate the IDE settings update and the HAL driver’s initialization sequences migration</li>
+</ul></li>
+<li>Migration checklist
+<ul>
+<li><strong>Migration journey checklist:</strong> Enables users to monitor their progress and ensure that all steps of the migration journey are completed successfully</li>
+</ul></li>
+</ul>
+<h2 id="contents-2">Contents</h2>
+<h4 id="supported-modules-2">Supported modules</h4>
+<table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 31%" />
+<col style="width: 32%" />
+<col style="width: 24%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Module</th>
+<th>HAL automatic detection and stubbing script</th>
+<th>HAL automatic detection and stubbing logging</th>
+<th>HAL1 to HAL2 migration user guide</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ADC</td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>CORTEX</td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>DMA</td>
+<td>⚠️ Partially supported</td>
+<td>❌ Not supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="even">
+<td>GENERIC/COMMON</td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="odd">
+<td>GPIO</td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+</tr>
+<tr class="even">
+<td>ICACHE</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>I2C</td>
+<td>⚠️ Partially supported</td>
+<td>⚠️ Partially supported</td>
+<td>⚠️ Partially supported</td>
+</tr>
+<tr class="even">
+<td>PWR</td>
+<td>⚠️ Partially supported</td>
+<td>❌ Not supported</td>
+<td>❌ Not supported</td>
+</tr>
+<tr class="odd">
+<td>RCC</td>
+<td>✅ Fully supported</td>
+<td>❌ Not supported</td>
+<td>⚠️ Partially supported</td>
+</tr>
+<tr class="even">
+<td>TIM</td>
+<td>✅ Fully supported</td>
+<td>✅ Fully supported</td>
+<td>⚠️ Partially supported</td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations-2">Known Limitations</h2>
+<ul>
+<li><p>As an Alpha release, it does not implement all features and has not been fully validated</p></li>
+<li><p>LL drivers migration not yet supported</p></li>
+<li><p>HAL1 automatic detection and stubbing script</p>
+<ul>
+<li>Running the script twice on the same input, lead to unexpected stubbing behavior.</li>
+<li>In some particular cases, Nested #ifdef stubbing delimitation is injected in the user code</li>
+<li>Multi line stubbing not yet supported</li>
+<li>Constant detection and stubbing not yet supported</li>
+<li>Structure filling detection and stubbing not yet supported</li>
+<li>In some particular cases, the script may miss some API occurrence(s)</li>
+<li>The script stub API references in comments.</li>
+<li>The script can not differentiate between HAL drivers and applicative user files.</li>
+<li>Missing line numbering within warning messages and log file.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<footer class="sticky">
+<p>For complete documentation on STM32,visit: [<a href="http://www.st.com">www.st.com/stm32</a>]</p>
+This release note uses up to date web standards and, for this reason, should not be opened with Internet Explorer but preferably with popular browsers such as Google Chrome, Mozilla Firefox, Opera or Microsoft Edge.
+</footer>
+</body>
+</html>

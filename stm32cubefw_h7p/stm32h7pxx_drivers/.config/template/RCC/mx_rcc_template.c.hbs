@@ -1,0 +1,639 @@
+{{! Retrieving configuration and user settings ~}}
+{{assign "strategy" (@root.SWProjectAPI.getSelectedGenerationStrategy)~}}
+{{#if (eq @root.strategy "SW")}}
+  {{~assign 'current_resource' 'RCC'~}}
+  {{~assign 'instances' (@root.SWConfigurationAPI.getInstances 'STMicroelectronics::Device:STM32CubeMX2 Config:RCC')~}}
+  {{~log 'instances' @root.instances~}}
+  {{~assign 'rcc_cxt'(@root.SWConfigurationAPI.getSwInstanceConfiguration instances.[0])~}}
+{{else}}
+  {{#get_myctx~}}
+    {{#with _myctx~}}
+      {{~assign 'rcc_cxt' instances.[0]~}}
+    {{/with~}}
+  {{/get_myctx~}}
+{{/if}}
+{{~helper_rcc_init_codegen @root}}
+{{~assign 'main_config' @root.rcc_cxt ~}}
+{{~assign 'current_layer' @root.rcc_cxt.info.layer ~}}
+{{~assign 'all_resources' (helper_rcc_get_all_resources) ~}}
+{{~assign 'all_clock_configs' (helper_rcc_get_all_perifs_clock_config @root.all_resources) ~}}
+{{~assign 'system_config' (helper_rcc_get_system_config @root.main_config) ~}}
+{{~assign 'MCU' @root.SWProjectAPI.getMCU ~}}
+{{helper_breakpoint 10 @root}}
+/**
+  ******************************************************************************
+  * @file           : mx_rcc.c
+  * @brief          : STM32 RCC program body
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) {{year}} STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+
+/* Includes ------------------------------------------------------------------*/
+#include "mx_rcc.h"
+
+/* Private typedef -----------------------------------------------------------*/
+
+{{#unless (helper_rcc_is_central @root.main_config)}}
+  {{#with @root.all_clock_configs}}
+typedef struct
+{
+    {{#if (or @root.system_config.clock_source.HSI HSI (and PLL1 (eq @root.system_config.pll_list.[0].config.src 'HSI')) (and PLL2 (eq @root.system_config.pll_list.[1].config.src 'HSI')))}}
+  uint32_t hsi: 4U;
+    {{/if~}}
+
+    {{#if (or @root.system_config.clock_source.HSE HSE (and PLL1 (eq @root.system_config.pll_list.[0].config.src 'HSE')) (and PLL2 (eq @root.system_config.pll_list.[1].config.src 'HSE')))}}
+  uint32_t hse: 4U;
+    {{/if~}}
+
+    {{#if HSI48}}
+  uint32_t hsi48: 4U;
+    {{/if~}}
+
+    {{#if LSI}}
+  uint32_t lsi: 4U;
+    {{/if~}}
+
+    {{#if LSE}}
+  uint32_t lse: 4U;
+    {{/if~}}
+
+    {{#if (or @root.system_config.clock_source.PLL1P PLL1)}}
+  uint32_t pll1: 1U;
+  uint32_t pll1p: 2U; /* clk src of up to 2 peripherals + sys clk */
+  uint32_t pll1q: 4U; /* clk src of up to 15 peripherals */
+  uint32_t pll1r: 5U; /* clk src of up to 18 peripherals */
+    {{/if~}}
+
+    {{#if PLL2}}
+  uint32_t pll2: 1U;
+  uint32_t pll2p: 4U; /* clk src of up to 8 peripherals */
+  uint32_t pll2q: 5U; /* clk src of up to 20 peripherals */
+  uint32_t pll2r: 3U; /* clk src of up to 4 peripherals */
+    {{/if~}}
+} mx_rcc_status_t;
+
+  {{/with}}
+{{/unless~}}
+
+/* Private define ------------------------------------------------------------*/
+/* Private macro -------------------------------------------------------------*/
+{{#unless (helper_rcc_is_central @root.main_config)}}
+#define RCC_CONSUME_RESOURCE(block, nb_resources)     (RCC_Status.block += (nb_resources))
+#define RCC_RELEASE_RESOURCE(block)                   ((RCC_Status.block > 0U) ? (RCC_Status.block--) : \
+                                                       (RCC_Status.block = 0U))
+#define RCC_IS_RESOURCE_FREE(block)                   (RCC_Status.block == 0U)
+#define RCC_IS_RESOURCE_TAKEN(block)                  (RCC_Status.block > 0U)
+
+{{/unless~}}
+
+/* Private variables ---------------------------------------------------------*/
+{{#unless (helper_rcc_is_central @root.main_config)}}
+static mx_rcc_status_t RCC_Status;
+
+{{/unless~}}
+
+{{#if @root.main_config.additional.lse.css_interruption}}
+{{> EXTI fct='exti_variables' layer=@root.current_layer exti_line='23'}}
+
+{{/if~}}
+
+/* Private functions prototype------------------------------------------------*/
+
+/******************************************************************************/
+/* Exported functions for RCC in {{@root.current_layer}} layer */
+/******************************************************************************/
+
+{{~assign 'fct_name' (helper_common_get_generated_function_name 'RCC' @root.current_layer @root.config_index)~}}
+{{~assign 'config_index' (add @root.config_index 1)~}}
+{{#with @root.system_config}}
+/**
+  * Configure the system core clock only and activate it using the {{@root.current_layer}} RCC unitary APIs (footprint optimization)
+  *         The system Clock is configured as follow :
+  *            System Clock source            = {{clock_source.name}}
+  *            SYSCLK(Hz)                     = {{clock_source.frequency}}
+  *            CPUCLK(Hz)                     = {{frequencies.cpu}}
+  *            HCLK(Hz)                       = {{frequencies.ahb}}
+  *            AHB Prescaler                  = {{prescaler.ahb}}
+  *            APB1 Prescaler                 = {{prescaler.apb1}}
+  *            APB2 Prescaler                 = {{prescaler.apb2}}
+  *            APB4 Prescaler                 = {{prescaler.apb4}}
+  {{#if HSI}}
+  *            HSI Frequency(Hz)              = {{frequencies.hsi}}
+  {{/if}}
+  {{#if clock_source.PLLCLK}}
+    {{#with pll_list.[0].config}}
+  *            PLL1M                          = {{m}}
+  *            PLL1N                          = {{n}}
+  *            PLL1P                          = {{p}}
+  *            PLL1Q                          = {{q}}
+  *            PLL1R                          = {{r}}
+  *            PLL1S                          = {{s}}
+  *            PLL1T                          = {{t}}
+  *            PLL1FracN                      = {{fracn}}
+    {{/with}}
+  {{/if}}
+  *            Flash Latency (WS)             = {{flash_latency}}
+  */
+{{/with}}
+system_status_t {{@root.fct_name}}_init(void)
+{{#if (eq @root.current_layer 'HAL')}}
+{{! ************************************************** }}
+{{! Generation of initialization function used in HAL  }}
+{{! **************************************************~}}
+{
+  hal_rcc_bus_clk_config_t config_bus;
+
+{{>PWR_HAL fct='generate_vos_config'}}
+
+   {{#with @root.system_config.clock_source}}
+    {{#if HSI}}
+
+  HAL_RCC_HSI_Enable(HAL_RCC_HSI_DIV_{{@root.system_config.divider.hsi}});{{helper_rcc_set_resource_enabled 'hsi'}}
+      {{#unless (helper_rcc_is_central @root.main_config)}}
+  RCC_CONSUME_RESOURCE(hsi, 1);
+      {{/unless}}
+    {{/if~}}
+
+    {{#if HSE}}
+
+  HAL_RCC_HSE_Enable(HAL_RCC_HSE_{{@root.main_config.additional.hse.state}});{{helper_rcc_set_resource_enabled 'hse'}}
+      {{#unless (helper_rcc_is_central @root.main_config)}}
+  RCC_CONSUME_RESOURCE(hse, 1);
+      {{/unless}}
+    {{/if~}}
+
+    {{#if CSI}}
+
+  HAL_RCC_CSI_Enable();
+      {{#unless (helper_rcc_is_central @root.main_config)}}
+  RCC_CONSUME_RESOURCE(csi, 1);
+      {{/unless}}
+    {{/if~}}
+
+    {{#if PLLCLK}}
+{{>RCC fct='generate_pll_src_enable' pll_src=@root.system_config.pll_list.[0].config.src}}
+{{>RCC fct='generate_pll_config' pll_info=@root.system_config.pll_list.[0]}}
+
+    {{/if}}
+
+
+    {{#if PLLCLK}}
+{{>RCC fct='generate_pll_enable' pll_idx='1'}}
+  HAL_RCC_PLL1_EnableOutput(HAL_RCC_PLL1_SYSCLK);
+      {{#unless (helper_rcc_is_central @root.main_config)}}
+  RCC_CONSUME_RESOURCE(pll1_output_p, 1);
+      {{/unless}}
+    {{/if}}
+
+  {{/with~}}
+
+  {{#with @root.system_config}}
+
+    /** Frequency will be increased */
+  HAL_FLASH_ITF_SetLatency(HAL_FLASH, HAL_FLASH_ITF_LATENCY_4);
+
+  HAL_FLASH_ITF_SetProgrammingDelay(HAL_FLASH, HAL_FLASH_ITF_PROGRAM_DELAY_2);
+
+  /** Initializes the CPU, AHB and APB busses clocks */
+    {{#with prescaler}}
+  config_bus.sys_cpu_clk_prescaler  = HAL_RCC_SYSCPUCLK_PRESCALER{{cpu}};
+  config_bus.hclk_prescaler  = HAL_RCC_HCLK_PRESCALER{{ahb}};
+  config_bus.pclk1_prescaler = HAL_RCC_PCLK_PRESCALER{{apb1}};
+  config_bus.pclk2_prescaler = HAL_RCC_PCLK_PRESCALER{{apb2}};
+  config_bus.pclk4_prescaler = HAL_RCC_PCLK_PRESCALER{{apb4}};
+    {{/with}}
+
+  if (HAL_RCC_SetBusClockConfig(&config_bus) != HAL_OK)
+  {
+    return SYSTEM_CLOCK_ERROR;
+  }
+
+  HAL_RCC_SetSYSCLKSource(HAL_RCC_SYSCLK_SRC_{{clock_source.name}});
+  {{/with~}}
+
+  {{#with @root.main_config}}
+    {{~#if (and additional.clk_outputs.mco1 additional.clk_outputs.mco2)}}
+
+  /* Enable PIN for MCO1 and MCO2 */
+      {{#with system.gpio.mco1}}{{~assign 'rcc_gpio_needs' (helper_common_concatenate_needs needs @root.rcc_gpio_needs)~}}{{/with}}
+      {{#with system.gpio.mco2}}{{~assign 'rcc_gpio_needs' (helper_common_concatenate_needs needs @root.rcc_gpio_needs)~}}{{/with}}
+    {{~else}}
+
+      {{#if additional.clk_outputs.mco1}}
+
+  /* Enable PIN for MCO1 */
+        {{#with system.gpio.mco1}}{{assign 'rcc_gpio_needs' (helper_common_concatenate_needs needs @root.rcc_gpio_needs)~}}{{/with}}
+      {{/if}}
+      {{#if additional.clk_outputs.mco2}}
+
+  /* Enable PIN for MCO2 */
+        {{#with system.gpio.mco2}}{{assign 'rcc_gpio_needs' (helper_common_concatenate_needs needs @root.rcc_gpio_needs)~}}{{/with}}
+      {{/if}}
+    {{/if}}
+{{> GPIO_HAL fct='init' needs=@root.rcc_gpio_needs resource='RCC'}}
+
+    {{#if additional.clk_outputs.mco1}}
+  HAL_RCC_SetConfigMCO(HAL_RCC_MCO1_SRC_{{@root.system_config.clk_outputs.mco1.src}}, HAL_RCC_MCO1_PRESCALER{{@root.system_config.clk_outputs.mco1.div}});
+    {{/if}}
+    {{#if additional.clk_outputs.mco2}}
+  HAL_RCC_SetConfigMCO(HAL_RCC_MCO2_SRC_{{@root.system_config.clk_outputs.mco2.src}}, HAL_RCC_MCO2_PRESCALER{{@root.system_config.clk_outputs.mco2.div}});
+    {{/if}}
+    {{#if additional.hse.enable_css}}
+
+  /*
+   *  Enable the Clock Security System: The CSSI is linked to
+   *  the Cortex-M33 NMI (Non-Maskable Interrupt) exception vector.
+   */
+  HAL_RCC_HSE_EnableCSS();
+    {{/if}}
+    {{#if additional.lse.enable_css}}
+
+  /* Enable the LSE Clock Security System */
+  HAL_RCC_LSE_EnableCSS();
+{{> EXTI fct='exti_init' layer=@root.current_layer needs=additional.lse.css_interruption.needs found_exti=true exti_line='58'}}
+    {{/if}}
+
+    {{#if additional.hsi.enable_in_stop_mode}}
+  HAL_RCC_HSI_EnableInStopMode();
+    {{/if}}
+  {{/with}}
+
+  return SYSTEM_OK;
+}
+{{else}}
+{{! ************************************************** }}
+{{! Generation of initialization function used in LL   }}
+{{! **************************************************~}}
+{
+  /* LL not yet implemented */
+
+  return SYSTEM_OK;
+}
+{{/if}}
+{{#if @root.main_config.additional.hse.enable_css}}
+
+hal_status_t RCC_NMI_IRQHandler(void)
+{
+  return HAL_RCC_NMI_IRQHandler();
+}
+{{/if~}}
+
+{{#if @root.main_config.additional.lse.enable_css}}
+
+hal_status_t LSECSSD_IRQHandler(void)
+{
+  return HAL_RCC_LSECSS_IRQHandler();
+}
+{{/if}}
+
+{{#if (helper_rcc_is_controlled_by_periph @root.main_config)}}
+
+  {{#each @root.all_resources}}
+    {{~assign "current_resource" this~}}
+    {{~assign "clock_config" (helper_rcc_get_one_perif_clock_config this)~}}
+
+/**
+  * configure and enable clock for {{@root.current_resource}}
+  */
+system_status_t mx_rcc_{{lowercase @root.current_resource}}_clock_config(void)
+{
+{{>RCC fct='periph_configs' central=false clock_config=@root.clock_config}}
+{{>RCC fct='generate_kernel_clock_controlled' hw_resource=@root.current_resource}}
+  return SYSTEM_OK;
+}
+
+/**
+  * Deactivate clock for {{@root.current_resource}}
+  */
+system_status_t mx_rcc_{{lowercase @root.current_resource}}_clock_deactivate(void)
+{
+{{>RCC fct='periph_deactivate' clock_config=@root.clock_config}}
+  return SYSTEM_OK;
+}
+
+  {{/each}}
+{{else}}
+
+/**
+  * configures and activate the clocks used by all the peripherals selected within the project
+  */
+system_status_t mx_rcc_peripherals_clock_config(void)
+{
+{{>RCC fct='periph_configs' central=true clock_config=@root.all_clock_configs}}
+
+  return SYSTEM_OK;
+}
+{{/if~}}
+
+{{#if (helper_rcc_is_controlled_by_periph @root.main_config)}}
+  {{#with @root.all_clock_configs}}
+    {{#if (or HSE (and PLL1 (eq @root.system_config.pll_list.[0].config.src 'HSE')) (and PLL2 (eq @root.system_config.pll_list.[1].config.src 'HSE')))}}
+
+/**
+  * configure and enable HSE oscillator
+  */
+system_status_t mx_rcc_hse_clock_config(uint32_t nb_resources)
+{
+  if (RCC_IS_RESOURCE_FREE(hse))
+  {
+    if (HAL_RCC_HSE_Enable(HAL_RCC_HSE_{{@root.main_config.additional.hse.state}}) != HAL_OK)
+    {
+      return SYSTEM_CLOCK_ERROR;
+    }
+  }
+  RCC_CONSUME_RESOURCE(hse, nb_resources);
+
+  return SYSTEM_OK;
+}
+
+/**
+  * Disable HSE oscillator
+  */
+system_status_t mx_rcc_hse_clock_deactivate(void)
+{
+  RCC_RELEASE_RESOURCE(hse);
+
+  if (RCC_IS_RESOURCE_FREE(hse))
+  {
+    if (HAL_RCC_HSE_Disable() != HAL_OK)
+    {
+      return SYSTEM_CLOCK_ERROR;
+    }
+  }
+  return SYSTEM_OK;
+}
+
+    {{/if}}
+
+    {{#if (or HSI (and PLL1 (eq @root.system_config.pll_list.[0].config.src 'HSI')) (and PLL2 (eq @root.system_config.pll_list.[1].config.src 'HSI')))}}
+/**
+  * configure and enable HSI oscillator
+  * @param nb_resources Number of resources which requests to configure the clock
+  */
+system_status_t mx_rcc_hsi_clock_config(uint32_t nb_resources)
+{
+  if (RCC_IS_RESOURCE_FREE(hsi))
+  {
+    if (HAL_RCC_HSI_Enable(HAL_RCC_HSI_DIV_{{@root.system_config.divider.hsi}}) != HAL_OK)
+    {
+      return SYSTEM_CLOCK_ERROR;
+    }
+  }
+  RCC_CONSUME_RESOURCE(hsi, nb_resources);
+
+  return SYSTEM_OK;
+}
+
+/**
+  * Disable HSI oscillator
+  */
+system_status_t mx_rcc_hsi_clock_deactivate(void)
+{
+  RCC_RELEASE_RESOURCE(hsi);
+
+  if (RCC_IS_RESOURCE_FREE(hsi))
+  {
+    if (HAL_RCC_HSI_Disable() != HAL_OK)
+    {
+      return SYSTEM_CLOCK_ERROR;
+    }
+  }
+  return SYSTEM_OK;
+}
+
+    {{/if~}}
+
+    {{#with HSI48}}
+/**
+  * configure and enable HSI48 oscillator
+  * @param nb_resources Number of resources which requests to configure the clock
+  */
+system_status_t mx_rcc_hsi48_clock_config(uint32_t nb_resources)
+{
+  if (RCC_IS_RESOURCE_FREE(hsi48))
+  {
+    if (HAL_RCC_HSI48_Enable() != HAL_OK)
+    {
+      return SYSTEM_CLOCK_ERROR;
+    }
+  }
+  RCC_CONSUME_RESOURCE(hsi48, nb_resources);
+
+  return SYSTEM_OK;
+}
+
+/**
+  * Disable HSI48 oscillator
+  */
+system_status_t mx_rcc_hsi48_clock_deactivate(void)
+{
+  RCC_RELEASE_RESOURCE(hsi48);
+
+  if (RCC_IS_RESOURCE_FREE(hsi48))
+  {
+    if (HAL_RCC_HSI48_Disable() != HAL_OK)
+    {
+      return SYSTEM_CLOCK_ERROR;
+    }
+  }
+  return SYSTEM_OK;
+}
+
+    {{/with~}}
+
+    {{#with LSI}}
+/**
+  * configure and enable LSI oscillator
+  * @param nb_resources Number of resources which requests to configure the clock
+  */
+system_status_t mx_rcc_lsi_clock_config(uint32_t nb_resources)
+{
+  if (RCC_IS_RESOURCE_FREE(lsi))
+  {
+    if (HAL_RCC_LSI_Enable() != HAL_OK)
+    {
+      return SYSTEM_CLOCK_ERROR;
+    }
+  }
+  RCC_CONSUME_RESOURCE(lsi, nb_resources);
+
+  return SYSTEM_OK;
+}
+
+/**
+  * Disable LSI oscillator
+  */
+system_status_t mx_rcc_lsi_clock_deactivate(void)
+{
+  RCC_RELEASE_RESOURCE(lsi);
+
+  if (RCC_IS_RESOURCE_FREE(lsi))
+  {
+    if (HAL_RCC_LSI_Disable() != HAL_OK)
+    {
+      return SYSTEM_CLOCK_ERROR;
+    }
+  }
+  return SYSTEM_OK;
+}
+
+    {{/with~}}
+
+    {{#with LSE}}
+/**
+  * configure and enable LSE oscillator
+  * @param nb_resources Number of resources which requests to configure the clock
+  */
+system_status_t mx_rcc_lse_clock_config(uint32_t nb_resources)
+{
+  if (RCC_IS_RESOURCE_FREE(lse))
+  {
+{{>PWR_HAL fct='generate_write_protection_disable'}}
+    if (HAL_RCC_LSE_Enable(HAL_RCC_LSE_{{@root.main_config.additional.lse.state}}, HAL_RCC_LSE_DRIVE_{{@root.main_config.additional.lse.drive_capability}})!= HAL_OK)
+    {
+{{>PWR_HAL fct='generate_write_protection_enable'}}
+      return SYSTEM_CLOCK_ERROR;
+    }
+{{>PWR_HAL fct='generate_write_protection_enable'}}
+  }
+  RCC_CONSUME_RESOURCE(lse, nb_resources);
+
+  return SYSTEM_OK;
+}
+
+/**
+  * Disable LSE oscillator
+  */
+system_status_t mx_rcc_lse_clock_deactivate(void)
+{
+  RCC_RELEASE_RESOURCE(lse);
+
+  if (RCC_IS_RESOURCE_FREE(lse))
+  {
+{{>PWR_HAL fct='generate_write_protection_disable'}}
+    if (HAL_RCC_LSE_Disable() != HAL_OK)
+    {
+{{>PWR_HAL fct='generate_write_protection_enable'}}
+      return SYSTEM_CLOCK_ERROR;
+    }
+{{>PWR_HAL fct='generate_write_protection_enable'}}
+  }
+  return SYSTEM_OK;
+}
+
+    {{/with~}}
+
+    {{#each @root.system_config.pll_list}}
+      {{#if (include @root.all_clock_configs this.name)}}
+/**
+  * Configure PLL{{this.idx}} (all factors {{#each this.factors}}{{this}}, {{/each}}{{#each this.outputs}}{{this}}{{#if (not @last)}}, {{/if}}{{/each}}) and activate it.
+  * Only PLL{{this.idx}} is enabled, not the PLL{{this.idx}} outputs.
+  */
+system_status_t mx_rcc_pll{{this.idx}}_config(void)
+{
+  if (RCC_IS_RESOURCE_FREE(pll{{this.idx}}))
+  {
+    /* Enable the oscillator used as input of the PLL{{this.idx}} */
+        {{#if (eq this.config.src 'HSI')}}
+    if (mx_rcc_hsi_clock_config(1) != SYSTEM_OK)
+    {
+      return SYSTEM_CLOCK_ERROR;
+    }
+        {{/if}}
+        {{#if (eq this.config.src 'HSE')}}
+    if (mx_rcc_hse_clock_config(1) != SYSTEM_OK)
+    {
+      return SYSTEM_CLOCK_ERROR;
+    }
+        {{/if}}
+
+    /* Configure and enable PLL{{this.idx}} */
+  {{>RCC fct='generate_pll_config' pll_info=this}}
+  {{>RCC fct='generate_pll_enable' pll_idx=this.idx}}
+  }
+
+  return SYSTEM_OK;
+}
+
+/**
+  * Deactivate PLL{{this.idx}}
+  */
+system_status_t mx_rcc_pll{{this.idx}}_deactivate(void)
+{
+  /* Deactivation is possible only on the outputs are free */
+  if (RCC_IS_RESOURCE_FREE(pll{{this.idx}}p)
+      && RCC_IS_RESOURCE_FREE(pll{{this.idx}}q)
+      && RCC_IS_RESOURCE_FREE(pll{{this.idx}}r))
+  {
+    RCC_RELEASE_RESOURCE(pll{{this.idx}});
+    if (HAL_RCC_PLL{{this.idx}}_Disable() != HAL_OK)
+    {
+      return SYSTEM_CLOCK_ERROR;
+    }
+
+    /* Deactivate the oscillator used as input of the PLL{{this.idx}} */
+        {{#if (eq this.src 'HSI')}}
+    if (mx_rcc_hsi_clock_deactivate() != SYSTEM_OK)
+    {
+      return SYSTEM_CLOCK_ERROR;
+    }
+        {{/if}}
+        {{#if (eq this.src 'HSI')}}
+    if (mx_rcc_hse_clock_deactivate() != SYSTEM_OK)
+    {
+      return SYSTEM_CLOCK_ERROR;
+    }
+        {{/if}}
+  }
+
+  return SYSTEM_OK;
+}
+        {{#each this.outputs}}
+/**
+  * Activate PLL{{../this.idx}}{{uppercase this}} output
+  * @param nb_resources Number of resources which requests to configure the output
+  */
+system_status_t mx_rcc_pll{{../this.idx}}_output_{{this}}_config(uint32_t nb_resources)
+{
+  if (RCC_IS_RESOURCE_FREE(pll{{../this.idx}}{{this}}))
+  {
+    if (HAL_RCC_PLL{{../this.idx}}_EnableOutput(HAL_RCC_PLL{{../this.idx}}_OUTPUT_{{uppercase this}}) != HAL_OK)
+    {
+      return SYSTEM_CLOCK_ERROR;
+    }
+  }
+  RCC_CONSUME_RESOURCE(pll{{../this.idx}}{{this}}, nb_resources);
+
+  return SYSTEM_OK;
+}
+
+/**
+  * Deactivate PLL{{../this.idx}}{{uppercase this}} output
+  */
+system_status_t mx_rcc_pll{{../this.idx}}_output_{{this}}_deactivate(void)
+{
+  RCC_RELEASE_RESOURCE(pll{{../this.idx}}{{this}});
+  if (RCC_IS_RESOURCE_FREE(pll{{../this.idx}}{{this}}))
+  {
+    if (HAL_RCC_PLL{{../this.idx}}_DisableOutput(HAL_RCC_PLL{{../this.idx}}_OUTPUT_{{uppercase this}}) != HAL_OK)
+    {
+      return SYSTEM_CLOCK_ERROR;
+    }
+  }
+  return SYSTEM_OK;
+}
+
+        {{/each}}
+      {{/if}}
+    {{/each}}
+  {{/with}}
+{{/if}}

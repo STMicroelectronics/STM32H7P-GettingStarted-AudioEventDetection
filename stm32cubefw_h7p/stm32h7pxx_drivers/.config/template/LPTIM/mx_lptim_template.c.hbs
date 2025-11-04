@@ -1,0 +1,644 @@
+{{assign "strategy" (@root.EnvVarAPI.getVariableValue 'SYSTEM_PROJECT_CODEGEN_STRATEGY')~}}
+{{log "strategy" @root.strategy~}}
+{{#if (eq @root.strategy "SW")}}
+  {{~assign 'current_resource' 'LPTIM'~}}
+  {{~assign 'instances' (@root.SWConfigurationAPI.getInstances 'STMicroelectronics::Device:STM32CubeMX2 Config:LPTIM')~}}
+  {{~assign 'dma_resource' 'STM32CubeMX2 Config:LPTIM'~}}
+{{else}}
+  {{~assign "strategy" 'HW'~}}
+  {{#get_myctx~}}
+    {{#with _myctx~}}
+      {{~log "LPTIM template _myctx:" this~}}
+      {{~assign 'current_resource' resource~}}
+      {{~assign 'dma_resource' resource~}}
+      {{~assign 'instances' instances~}}
+    {{/with~}}
+  {{/get_myctx~}}
+{{/if}}
+{{log "LPTIM template current_resource:" @root.current_resource~}}
+{{> SYSTEM fct='system_check_ll_optim'}}
+/**
+  ******************************************************************************
+  * @file           : mx_{{lowercase @root.current_resource}}.c
+  * @brief          : {{@root.current_resource}} Peripheral initialization
+  *                   File per peripheral instance that is handling the peripheral
+  *                   initialization and the IRQ handlers. Init parameters provided
+  *                   as a set of defines configurable/generated for a given target
+  *                   through the  hal_tim_settings.json and the config tool.
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) {{year}} STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* Includes ------------------------------------------------------------------*/
+#include "mx_{{lowercase @root.current_resource}}.h"
+
+/* Private typedef -----------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+/* Private macro -------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+/* Private functions prototype------------------------------------------------*/
+
+/* Exported variables by reference--------------------------------------------*/
+{{!
+    Generation of handle for each function defined in HAL layer
+    - save a variable to indicate if handle has been already created (only 1 handle by function)
+~}}
+{{assign 'hal_handle_exist' false~}}
+{{#each @root.instances~}}
+  {{#if (eq @root.strategy "SW")}}
+    {{~assign 'lptim_cxt' (@root.SWConfigurationAPI.getSwInstanceConfiguration this)~}}
+    {{~log "LPTIM template lptim_cxt:" (toJSON @root.lptim_cxt)~}}
+    {{~assign 'current_resource' (@root.peripheralsResourceManagerAPI.getPeripheralBoundToSoftwareInstance this)~}}
+    {{~assign 'current_layer' @root.lptim_cxt.info.layer~}}
+    {{~log "LPTIM template current_resource:" @root.current_resource~}}
+  {{else}}
+    {{~assign 'current_layer' info.layer~}}
+  {{/if}}
+  {{#if (eq @root.current_layer 'HAL')}}
+    {{#unless @root.hal_handle_exist}}
+      {{~assign 'hal_handle_exist' true~}}
+static hal_lptim_handle_t h{{@root.current_resource}};
+    {{/unless}}
+  {{/if}}
+{{/each}}
+
+{{> GPIO_HAL fct='gpio_exti_variables' resource=@root.current_resource}}
+{{> DMA_HAL fct='get_dma_handles' resource=@root.current_resource}}
+/* Exported function definition ----------------------------------------------*/
+{{assign 'current_index' 0~}}
+{{assign 'nvic_context' 'undefined'~}}
+{{assign 'hal_handle_lptim_exist' 0~}}
+{{#each instances}}
+{{assign 'current_layer' info.layer~}}
+{{assign 'current_instance_index' index~}}
+{{helper_common_initialize_ll_code @root.optim_enable @root.lut_table @root.current_resource~}}
+/******************************************************************************/
+/* Exported functions for SW instance{{index}} in {{@root.current_layer}} layer */
+/******************************************************************************/
+{{assign 'from_where' 'lptim_fct_exp_def'~}}
+{{assign 'fct_name' (helper_common_get_generated_function_name @root.current_resource @root.current_layer @root.current_index @root.current_function @root.from_where)~}}
+{{assign 'current_index' (add @root.current_index 1)~}}
+{{assign 'IsEnableDithering' false~}}
+{{!
+    Generation of initialization function used in HAL
+~}}
+{{#if (eq @root.current_layer 'HAL')}}
+
+hal_lptim_handle_t *{{@root.fct_name}}_init(void)
+{
+  hal_lptim_config_t  config;
+
+  if (HAL_LPTIM_Init(&h{{@root.current_resource}}, HAL_{{uppercase @root.current_resource}}) != HAL_OK)
+  {
+    return NULL;
+  }
+
+{{> RCC fct='generate_peripheral_clock_activation' hw_resource=@root.current_resource}}
+{{> RCC fct='generate_kernel_clock' hw_resource=@root.current_resource sw_resource='LPTIM'}}
+
+{{#with basic}}
+{{#if time_base.frequency}}
+  /* Timer configuration to reach the output frequency at {{time_base.frequency}} Hz */
+{{else}}
+  /* Timer configuration with external clock */
+{{/if}}
+  config.mode               = HAL_LPTIM_{{counter_mode}};
+{{#with time_base}}
+  config.clock_source       = HAL_LPTIM_CLK_{{clock_source_configuration.clock_source}};
+  {{assign 'period_value_hex' (uppercase (dec2hex clock_source_configuration.period))~}}
+  config.period             = 0x{{#if (eq clock_source_configuration.period 0)}}00000000{{else}}{{@root.period_value_hex}}{{/if}};
+  config.prescaler          = HAL_LPTIM_CLK_SRC_{{clock_source_configuration.prescaler}};
+  config.repetition_counter = {{clock_source_configuration.repetition_counter}};
+{{/with}}{{! time_base}}
+  if (HAL_LPTIM_SetConfig(&h{{@root.current_resource}}, &config) != HAL_OK)
+  {
+    return NULL;
+  }
+{{#if external_trigger_config.use_external_trigger}}
+  hal_lptim_ext_trig_config_t ext_trig_conf;
+  ext_trig_conf.source = HAL_LPTIM_EXT_TRIG_{{helper_lptim_convert_input_src external_trigger_config.source.source}};
+  ext_trig_conf.polarity = HAL_LPTIM_TRIG_{{external_trigger_config.polarity}};
+  ext_trig_conf.filter = HAL_LPTIM_{{external_trigger_config.filter}};
+
+  if (HAL_LPTIM_SetConfigExtTrigInput(&h{{@root.current_resource}}, &ext_trig_conf) != HAL_OK)
+  {
+    return NULL;
+  }
+{{/if}}{{! use_external_trigger ~}}
+{{#with input_output_channels}}
+{{assign 'found_output_channel' false~}}
+{{assign 'found_input_channel' false~}}
+{{assign 'found_IC_SetConfigChannel' false~}}
+{{assign 'found_OC_SetConfigChannel' false~}}
+{{#each channels}}
+ {{assign 'channel_id' (helper_lptim_get_channel_id _foreignKey)~}}
+{{#if (and (eq channel_direction 'Input')(not @root.found_input_channel))}}
+{{assign 'found_input_channel' true~}}
+{{#if use_channel}}
+  {{assign 'found_IC_SetConfigChannel' true~}}
+{{#with input_configuration}}
+
+  hal_lptim_ic_config_t ic_config{{@root.channel_id}};
+  ic_config{{@root.channel_id}}.source = HAL_LPTIM_INPUT_{{helper_lptim_convert_input_src ic_source.source}};
+  ic_config{{@root.channel_id}}.polarity = HAL_LPTIM_IC_{{ic_polarity}};
+  ic_config{{@root.channel_id}}.prescaler = HAL_LPTIM_IC_{{ic_prescaler}};
+  ic_config{{@root.channel_id}}.filter = HAL_LPTIM_{{ic_filter}};
+{{/with}}{{! input_configuration}}
+  if (HAL_LPTIM_IC_SetConfigChannel(&h{{@root.current_resource}}, HAL_LPTIM_CHANNEL_{{@root.channel_id}}, &ic_config{{@root.channel_id}}) != HAL_OK)
+  {
+    return NULL;
+  }
+{{/if}}{{! use_channel ~}}
+{{assign 'found_input_channel' false~}}
+{{/if}}{{! channel_direction input~}}
+{{#if (and (eq channel_direction 'Output')(not @root.found_output_channel))}}
+{{assign 'found_output_channel' true~}}
+{{#if use_channel}}
+
+  hal_lptim_oc_config_t oc_config{{@root.channel_id}};
+  {{assign 'pulse_value_hex' (uppercase (dec2hex output_configuration.oc_pulse))~}}
+  oc_config{{@root.channel_id}}.pulse = 0x{{#if (eq output_configuration.oc_pulse 0)}}00000000{{else}}{{@root.pulse_value_hex}}{{/if}};
+  oc_config{{@root.channel_id}}.polarity = HAL_LPTIM_{{output_configuration.oc_polarity}};
+
+  {{assign 'found_OC_SetConfigChannel' true~}}
+  if (HAL_LPTIM_OC_SetConfigChannel(&h{{@root.current_resource}}, HAL_LPTIM_CHANNEL_{{@root.channel_id}}, &oc_config{{@root.channel_id}}) != HAL_OK)
+  {
+    return NULL;
+  }
+{{/if}}{{! use_channel ~}}
+{{assign 'found_output_channel' false~}}
+{{/if}}{{! channel_direction~}}
+{{/each}}{{! channels ~}}
+{{/with}}{{! input_output_channels ~}}
+{{/with}}{{! basic ~}}
+{{#if (or (eq basic.time_base.clock_source_configuration.clock_source 'ENCODER_SUBMODE_1') (eq basic.time_base.clock_source_configuration.clock_source 'ENCODER_SUBMODE_2') (eq basic.time_base.clock_source_configuration.clock_source 'ENCODER_SUBMODE_3'))}}
+
+  hal_lptim_encoder_config_t p_encoder;
+  p_encoder.input1 = HAL_LPTIM_INPUT1_{{helper_lptim_convert_input_src basic.time_base.clock_source_configuration.input1.source}};
+  p_encoder.input2 = HAL_LPTIM_INPUT2_{{helper_lptim_convert_input_src basic.time_base.clock_source_configuration.input2.source}};
+  p_encoder.filter = HAL_LPTIM_{{basic.time_base.clock_source_configuration.in_filter}};
+  if (HAL_LPTIM_SetConfigEncoder(&h{{@root.current_resource}}, &p_encoder))
+  {
+    return NULL;
+  }
+{{/if}}{{! Encoder_SUBMODE~}}
+{{#if (or (eq basic.time_base.clock_source_configuration.clock_source 'EXTERNAL_SYNCHRONOUS') (eq basic.time_base.clock_source_configuration.clock_source 'EXTERNAL_ASYNCHRONOUS'))}}
+
+  hal_lptim_input1_config_t p_config_external;
+  p_config_external.src = HAL_LPTIM_INPUT1_{{helper_lptim_convert_input_src basic.time_base.clock_source_configuration.input1.source}};
+  p_config_external.polarity = HAL_LPTIM_INPUT1_{{basic.time_base.clock_source_configuration.in1_polarity}};
+  p_config_external.filter = HAL_LPTIM_{{basic.time_base.clock_source_configuration.in_filter}};
+  HAL_LPTIM_SetConfigInput1(&h{{@root.current_resource}}, &p_config_external);
+{{/if}}{{! EXTERNAL_{A}SYNCHRONOUS }}
+{{#with basic}}
+{{#if preload_enable}}
+  if (HAL_LPTIM_EnablePreload(&h{{@root.current_resource}}) != HAL_OK)
+  {
+      return NULL;
+  }
+{{/if}}
+{{/with}}{{! basic ~}}
+{{#with System}}
+{{#with gpio_settings}}
+{{assign 'gpio_needs' 'undefined'~}}
+{{#if etr_gpio}}
+  /* GPIO configuration for external trigger */
+{{assign 'gpio_needs' (helper_common_concatenate_needs etr_gpio.needs @root.gpio_needs)~}}
+{{/if}}
+{{#if in1_gpio_setting}}
+  /* GPIO configuration for input1 */
+{{assign 'gpio_needs' (helper_common_concatenate_needs in1_gpio_setting.in1_gpio.needs @root.gpio_needs)~}}
+{{/if}}
+{{#if in2_gpio_setting}}
+  /* GPIO configuration for input2 */
+{{assign 'gpio_needs' (helper_common_concatenate_needs in2_gpio_setting.in2_gpio.needs @root.gpio_needs)~}}
+{{/if}}
+{{#if channel1_gpio}}
+  /* GPIO configuration for input channel1 */
+{{assign 'gpio_needs' (helper_common_concatenate_needs channel1_gpio.needs @root.gpio_needs)~}}
+{{/if}}
+{{#if channel2_gpio}}
+  /* GPIO configuration for input channel2 */
+{{assign 'gpio_needs' (helper_common_concatenate_needs channel2_gpio.needs @root.gpio_needs)~}}
+{{/if}}
+  /* Init GPIO */
+{{> GPIO_HAL fct='init' needs=@root.gpio_needs resource=@root.current_resource}}
+{{/with}}{{! gpio_settings~}}
+{{!==================== NVIC for LPTIM ====================}}
+{{#if EnableInterruption}}
+  /* Enable the interruption for LPTIM */
+{{assign 'nvic_context' (helper_cortex_nvic_concatenate_irq_context  @root.nvic_context nvicConfig.needs @root.current_resource irq_handler_generation)~}}
+{{#> CORTEX fct='init' layer=@root.current_layer needs=nvicConfig.needs}}
+#warning "Partial HAL CORTEX is not present"
+{{/CORTEX}}
+
+{{/if}}{{! EnableInterruption~}}
+{{#with dma_settings}}
+{{#if enable_dma_ch1}}
+{{> DMA_HAL fct='init' layer=@root.current_layer needs=dma_config_ch1.needs~}}
+  /* Link Channel 1 DMA request handle to the LPTIM handle */
+  if (HAL_LPTIM_SetDMA(&h{{@root.current_resource}}, HAL_LPTIM_DMA_ID_CC1, &h{{@root.dma_channel_instance}}) != HAL_OK)
+  {
+     return NULL;
+  }
+{{/if}}
+{{#if enable_dma_ch2}}
+{{> DMA_HAL fct='init' layer=@root.current_layer needs=dma_config_ch2.needs}}
+  /* Link Channel 2 DMA request handle to the LPTIM handle */
+  if (HAL_LPTIM_SetDMA(&h{{@root.current_resource}}, HAL_LPTIM_DMA_ID_CC2, &h{{@root.dma_channel_instance}}) != HAL_OK)
+  {
+     return NULL;
+  }
+{{/if}}
+{{#if enable_dma_update}}
+{{> DMA_HAL fct='init' layer=@root.current_layer needs=dma_config_update.needs}}
+  /* Link Update DMA request handle to the LPTIM handle */
+  if (HAL_LPTIM_SetDMA(&h{{@root.current_resource}}, HAL_LPTIM_DMA_ID_UPDATE, &h{{@root.dma_channel_instance}}) != HAL_OK)
+  {
+     return NULL;
+  }
+{{/if}}
+{{/with}}{{! dma_settings~}}
+{{/with}}
+
+  return &h{{@root.current_resource}};
+}
+
+void {{@root.fct_name}}_deinit(void)
+{
+  (void)HAL_LPTIM_DeInit(&h{{@root.current_resource}});
+
+{{> RCC fct='generate_peripheral_clock_reset' hw_resource=@root.current_resource}}
+{{> RCC fct='generate_peripheral_clock_deactivation' hw_resource=@root.current_resource}}
+
+{{#with System}}
+{{#with gpio_settings}}
+{{#if etr_gpio}}
+  /* Disable LPTimer global interrupt */
+{{> GPIO_HAL fct='deinit' needs=etr_gpio.needs resource=@root.current_resource}}
+{{/if}}
+{{#if channel1_gpio}}
+  /* GPIO configuration for input channel1 */
+{{> GPIO_HAL fct='deinit' needs=channel1_gpio.needs resource=@root.current_resource}}
+{{/if}}
+{{#if channel2_gpio}}
+  /* GPIO configuration for input channel2 */
+{{> GPIO_HAL fct='deinit' needs=channel2_gpio.needs resource=@root.current_resource}}
+{{/if}}
+{{#if in1_gpio_setting}}
+  /* GPIO deinit configuration for input1 */
+{{> GPIO_HAL fct='deinit' needs=in1_gpio_setting.in1_gpio.needs resource=@root.current_resource}}
+{{/if}}
+{{#if in2_gpio_setting}}
+  /* GPIO deinit configuration for input2 */
+{{> GPIO_HAL fct='deinit' needs=in2_gpio_setting.in2_gpio.needs resource=@root.current_resource}}
+{{/if}}
+{{/with}}{{! gpio_settings~}}
+{{#with dma_settings}}
+{{#if enable_dma_ch1}}
+{{> DMA_HAL fct='deinit' needs=dma_config_ch1.needs~}}
+{{/if}}
+{{#if enable_dma_ch2}}
+{{> DMA_HAL fct='deinit' needs=dma_config_ch2.needs~}}
+{{/if}}
+{{#if enable_dma_update}}
+{{> DMA_HAL fct='deinit' needs=dma_config_update.needs~}}
+{{/if}}
+{{/with}}{{! dma_settings ~}}
+{{#if EnableInterruption}}
+  /* Disable Timer global interrupt */
+{{> CORTEX fct='deinit' layer=@root.current_layer needs=nvic_config_global.needs~}}
+{{/if}}
+{{/with}}{{! System ~}}
+}
+
+
+{{#if (eq @root.current_layer 'HAL')}}
+{{#if (eq @root.hal_handle_lptim_exist 0)}}
+{{assign 'fct_name' (helper_common_get_generated_function_name @root.current_resource @root.current_layer undefined)~}}
+{{assign 'hal_handle_lptim_exist' 1~}}
+hal_lptim_handle_t *{{@root.fct_name}}_gethandle(void)
+{
+  return &h{{@root.current_resource}};
+}
+{{/if}}
+{{/if}}
+
+{{else}}
+{{assign 'nvic_generate_handler' false~}}
+{{!
+    Generation of initialization function used in LL
+~}}
+LPTIM_TypeDef *{{@root.fct_name}}_init(void)
+{
+  uint32_t tickstart;
+
+{{> RCC fct='generate_peripheral_clock_activation' hw_resource=@root.current_resource}}
+
+{{#with basic}}
+{{#with time_base}}
+{{assign 'clock_prescaler' 'LL_LPTIM_PRESCALER_DIV1'~}}
+{{#if (eq clock_source_configuration.clock_source 'INTERNAL')}}
+{{assign 'clock_source' '(LL_LPTIM_CLK_SOURCE_INTERNAL | LL_LPTIM_COUNTER_MODE_INTERNAL)'~}}
+{{/if}}
+{{#if (eq clock_source_configuration.clock_source 'EXTERNAL_SYNCHRONOUS')}}
+{{assign 'clock_source' '(LL_LPTIM_CLK_SOURCE_INTERNAL | LL_LPTIM_COUNTER_MODE_EXTERNAL)'~}}
+{{/if}}
+{{#if (eq clock_source_configuration.clock_source 'EXTERNAL_ASYNCHRONOUS')}}
+{{assign 'clock_source' 'LL_LPTIM_COUNTER_MODE_EXTERNAL'~}}
+{{assign 'clock_prescaler' (concat 'LL_LPTIM_PRESCALER_' clock_source_configuration.prescaler)~}}
+{{/if}}
+{{#if (eq clock_source_configuration.clock_source 'ENCODER_SUBMODE_1')}}
+{{assign 'clock_source' '(LL_LPTIM_CLK_SOURCE_INTERNAL | LL_LPTIM_ENCODER_MODE_RISING | LL_LPTIM_ENCODER_MODE_ENABLE)'~}}
+{{/if}}
+{{#if (eq clock_source_configuration.clock_source 'ENCODER_SUBMODE_2')}}
+{{assign 'clock_source' '(LL_LPTIM_CLK_SOURCE_INTERNAL | LL_LPTIM_ENCODER_MODE_FALLING | LL_LPTIM_ENCODER_MODE_ENABLE)'~}}
+{{/if}}
+{{#if (eq clock_source_configuration.clock_source 'ENCODER_SUBMODE_3')}}
+{{assign 'clock_source' '(LL_LPTIM_CLK_SOURCE_INTERNAL | LL_LPTIM_ENCODER_MODE_RISING_FALLING | LL_LPTIM_ENCODER_MODE_ENABLE)'~}}
+{{/if}}
+{{assign 'repetition_counter_value_hex' (uppercase (dec2hex clock_source_configuration.repetition_counter))~}}
+{{#if (eq clock_source_configuration.repetition_counter 0)}}
+{{assign 'repetition_counter_value_hex' '0000'~}}
+{{/if}}
+{{assign 'period_value_hex' (uppercase (dec2hex clock_source_configuration.period))~}}
+{{#if (eq clock_source_configuration.period 0)}}
+{{assign 'period_value_hex' '0000'~}}
+{{/if}}
+{{assign 'LL_LPTIM_TIMEOUT' '1000UL'~}}
+  /*Configure the low power timer's time-base unit.*/
+  {{helper_common_gen_ll_code 'LL_LPTIM_Enable'}}
+  {{helper_common_gen_ll_code 'LL_LPTIM_WRITE_REG' 'ICR' 'LL_LPTIM_FLAG_ALL'}}
+  {{helper_common_gen_ll_code 'LL_LPTIM_SetRepetition' (concat '0x'@root.repetition_counter_value_hex)}}
+
+  tickstart = HAL_GetTick();
+  while (LL_LPTIM_IsActiveFlag_REPOK({{@root.current_resource}}) == 0)
+  {
+    if ((HAL_GetTick() - tickstart) > {{@root.LL_LPTIM_TIMEOUT}})
+    {
+      break;
+    }
+  }
+  {{helper_common_gen_ll_code 'LL_LPTIM_ClearFlag_REPOK'}}
+  {{helper_common_gen_ll_code 'LL_LPTIM_SetAutoReload' (concat '0x' @root.period_value_hex)}}
+
+  tickstart = HAL_GetTick();
+  while (LL_LPTIM_IsActiveFlag_ARROK({{@root.current_resource}}) == 0)
+  {
+    if ((HAL_GetTick() - tickstart) > {{@root.LL_LPTIM_TIMEOUT}})
+    {
+      break;
+    }
+  }
+  {{helper_common_gen_ll_code 'LL_LPTIM_ClearFlag_ARROK'}}
+  {{helper_common_gen_ll_code 'LL_LPTIM_Disable'}}
+  {{helper_common_gen_ll_code 'LL_LPTIM_SetClockSource' @root.clock_source }}
+  {{helper_common_gen_ll_code 'LL_LPTIM_SetPrescaler' @root.clock_prescaler}}
+{{/with}}{{! time_base}}
+{{#if external_trigger_config.use_external_trigger}}
+{{assign 'filter' 'LL_LPTIM_TRIG_FILTER_NONE'}}
+{{#if (eq external_trigger_config.filter 'FDIV1_N2')}}
+  {{assign 'filter' 'LL_LPTIM_TRIG_FILTER_2'~}}
+{{else}}
+  {{#if (eq external_trigger_config.filter 'FDIV1_N4')}}
+    {{assign 'filter' 'LL_LPTIM_TRIG_FILTER_4'}}
+{{else}}
+    {{#if (eq external_trigger_config.filter 'FDIV1_N8')}}
+      {{assign 'filter' 'LL_LPTIM_TRIG_FILTER_8'}}
+    {{/if}}
+{{/if}}
+{{/if}}
+  /*Configure External Trigger (ETR) input*/
+  {{helper_common_gen_ll_code 'LL_LPTIM_Disable'}}
+  {{helper_common_gen_ll_code 'LL_LPTIM_SetTriggerSource' (concat 'LL_LPTIM_TRIG_SOURCE_' (helper_lptim_convert_input_src external_trigger_config.source.source @root.current_layer) ) }}
+  {{helper_common_gen_ll_code 'LL_LPTIM_SetTriggerFilter' @root.filter}}
+  {{helper_common_gen_ll_code 'LL_LPTIM_SetTriggerPolarity' (concat "LL_LPTIM_TRIG_POLARITY_" external_trigger_config.polarity) }}
+  {{helper_common_gen_ll_code 'LL_LPTIM_Enable'}}
+  {{helper_common_gen_ll_code 'LL_LPTIM_EnableIT_EXTTRIG'}}
+{{/if}}{{! use_external_trigger ~}}
+{{#with input_output_channels}}
+{{assign 'found_output_channel' false~}}
+{{assign 'found_input_channel' false~}}
+{{assign 'found_IC_SetConfigChannel' false~}}
+{{assign 'found_OC_SetConfigChannel' false~}}
+{{#each channels}}
+{{#if (and (eq channel_direction 'Input')(not @root.found_input_channel))}}
+{{assign 'found_input_channel' true~}}
+{{#if use_channel}}
+  {{assign 'found_IC_SetConfigChannel' true~}}
+  {{assign 'channel_id' (helper_lptim_get_channel_id _foreignKey)~}}
+{{#with input_configuration}}
+{{assign 'ic_source' true~}}
+{{assign 'ic_filter' 'LL_LPTIM_ICFLT_CLOCK_DIV1'}}
+{{#if (eq ic_filter 'FDIV1_N2')~}}
+  {{assign 'ic_filter' 'LL_LPTIM_ICFLT_CLOCK_DIV2'}}
+{{else}}
+  {{#if (eq ic_filter 'FDIV1_N4')~}}
+    {{assign 'ic_filter' 'LL_LPTIM_ICFLT_CLOCK_DIV4'}}
+{{else}}
+    {{#if (eq ic_filter 'FDIV1_N8')~}}
+      {{assign 'ic_filter' 'LL_LPTIM_ICFLT_CLOCK_DIV8'}}
+    {{/if}}
+{{/if}}
+{{/if}}
+  /*Configure the Input channel/Input Capture*/
+  {{helper_common_gen_ll_code 'LL_LPTIM_SetRemap' (concat 'LL_LPTIM_' @root.current_resource '_IC' @root.channel_id '_RMP_' (helper_lptim_convert_input_src ic_source.source @root.current_layer))}}
+  {{helper_common_gen_ll_code 'LL_LPTIM_IC_SetPolarity' (concat 'LL_LPTIM_CHANNEL_CH' @root.channel_id ) (concat "LL_LPTIM_TRIG_POLARITY_" ic_polarity) }}
+  {{helper_common_gen_ll_code 'LL_LPTIM_IC_SetFilter' (concat 'LL_LPTIM_CHANNEL_CH' @root.channel_id ) @root.ic_filter }}
+  {{helper_common_gen_ll_code 'LL_LPTIM_IC_SetPrescaler' (concat 'LL_LPTIM_CHANNEL_CH' @root.channel_id ) (concat "LL_LPTIM_ICPSC_" ic_prescaler) }}
+  {{helper_common_gen_ll_code 'LL_LPTIM_CC_SetChannelMode' (concat 'LL_LPTIM_CHANNEL_CH' @root.channel_id ) 'LL_LPTIM_CCMODE_INPUTCAPTURE' }}
+{{/with}}{{! input_configuration}}
+{{/if}}{{! use_channel ~}}
+{{assign 'found_input_channel' false~}}
+{{/if}}{{! channel_direction~}}
+{{#if (and (eq channel_direction 'Output')(not @root.found_output_channel))}}
+{{assign 'found_output_channel' true~}}
+{{#if use_channel}}
+{{assign 'channel_id' (helper_lptim_get_channel_id _foreignKey)~}}
+{{assign 'oc_polarity' 'LL_LPTIM_OCPOLARITY_HIGH '~}}
+{{#if (eq output_configuration.oc_polarity 'OC_LOW')~}}
+{{assign 'oc_polarity' 'LL_LPTIM_OCPOLARITY_LOW  '~}}
+{{/if}}
+{{assign 'LL_LPTIM_IsActiveFlag_CMPxOK' (concat 'LL_LPTIM_IsActiveFlag_CMP' @root.channel_id 'OK') ~}}
+  /*Configure the Output channel/Output Compare*/
+  {{helper_common_gen_ll_code 'LL_LPTIM_OC_SetPolarity' (concat 'LL_LPTIM_CHANNEL_CH' @root.channel_id ) @root.oc_polarity }}
+  {{helper_common_gen_ll_code 'LL_LPTIM_WRITE_REG' 'ICR' (concat 'LL_LPTIM_ISR_CMP' @root.channel_id 'OK')}}
+  {{helper_common_gen_ll_code (concat 'LL_LPTIM_OC_SetCompareCH' @root.channel_id ) output_configuration.oc_pulse }}
+  
+  tickstart = HAL_GetTick();
+  while ({{@root.LL_LPTIM_IsActiveFlag_CMPxOK}}({{@root.current_resource}}) == 0)
+  {
+    if ((HAL_GetTick() - tickstart) > {{@root.LL_LPTIM_TIMEOUT}})
+    {
+      break;
+    }
+  }
+  {{helper_common_gen_ll_code (concat 'LL_LPTIM_ClearFlag_CMP' @root.channel_id 'OK' ) }}
+  {{helper_common_gen_ll_code 'LL_LPTIM_CC_SetChannelMode' (concat 'LL_LPTIM_CHANNEL_CH' @root.channel_id ) 'LL_LPTIM_CCMODE_OUTPUT_PWM' }}
+{{/if}}{{! use_channel ~}}
+{{assign 'found_output_channel' false~}}
+{{/if}}{{! channel_direction~}}
+{{/each}}{{! channels ~}}
+{{/with}}{{! input_output_channels ~}}
+{{/with}}{{! basic ~}}
+{{assign 'in_filter' 'LL_LPTIM_CLK_FILTER_NONE'}}
+{{#if (eq basic.time_base.clock_source_configuration.in_filter 'FDIV1_N2')~}}
+  {{assign 'in_filter' 'LL_LPTIM_CLK_FILTER_2'}}
+{{else}}
+  {{#if (eq basic.time_base.clock_source_configuration.in_filter 'FDIV1_N4')~}}
+    {{assign 'in_filter' 'LL_LPTIM_CLK_FILTER_4'}}
+{{else}}
+    {{#if (eq basic.time_base.clock_source_configuration.in_filter 'FDIV1_N8')~}}
+      {{assign 'in_filter' 'LL_LPTIM_CLK_FILTER_8'}}
+    {{/if}}
+{{/if}}
+{{/if}}
+
+{{#if (or (eq basic.time_base.clock_source_configuration.clock_source 'ENCODER_SUBMODE_1') (eq basic.time_base.clock_source_configuration.clock_source 'ENCODER_SUBMODE_2') (eq basic.time_base.clock_source_configuration.clock_source 'ENCODER_SUBMODE_3'))}}
+  /*Configure the encoder interface.*/
+  {{helper_common_gen_ll_code 'LL_LPTIM_SetInput1Source' (concat 'LL_LPTIM_INPUT1_SRC_' (helper_lptim_convert_input_src basic.time_base.clock_source_configuration.input1.source @root.current_layer) )}}
+  {{helper_common_gen_ll_code 'LL_LPTIM_SetInput2Source' (concat 'LL_LPTIM_INPUT2_SRC_' (helper_lptim_convert_input_src basic.time_base.clock_source_configuration.input2.source @root.current_layer) )}}
+  {{helper_common_gen_ll_code 'LL_LPTIM_SetClockFilter' @root.in_filter}}
+  {{helper_common_gen_ll_code 'LL_LPTIM_Disable'}}
+  {{helper_common_gen_ll_code 'LL_LPTIM_EnableEncoderMode'}}
+{{/if}}{{! Encoder_SUBMODE~}}
+{{#if (or (eq basic.time_base.clock_source_configuration.clock_source 'EXTERNAL_SYNCHRONOUS') (eq basic.time_base.clock_source_configuration.clock_source 'EXTERNAL_ASYNCHRONOUS'))}}
+  /*Configure the encoder interface.*/
+  {{helper_common_gen_ll_code 'LL_LPTIM_SetInput1Source' (concat 'LL_LPTIM_INPUT1_SRC_' (helper_lptim_convert_input_src basic.time_base.clock_source_configuration.input1.source @root.current_layer) )}}
+  {{helper_common_gen_ll_code 'LL_LPTIM_ConfigClock' @root.in_filter (concat 'LL_LPTIM_CLK_POLARITY_' basic.time_base.clock_source_configuration.in1_polarity) }}
+{{/if}}{{! EXTERNAL_{A}SYNCHRONOUS }}
+{{#with basic}}
+{{#if preload_enable}}
+  /*Enable the preload */
+  {{helper_common_gen_ll_code 'LL_LPTIM_Disable'}}
+  {{helper_common_gen_ll_code 'LL_LPTIM_SetUpdateMode' 'LL_LPTIM_PRELOAD_ENABLED'}}
+{{/if}}
+{{/with}}{{! basic ~}}
+{{#with System}}
+{{#with gpio_settings}}
+{{assign 'gpio_needs' 'undefined'~}}
+{{#if etr_gpio}}
+  /* GPIO configuration for external trigger */
+{{assign 'gpio_needs' (helper_common_concatenate_needs etr_gpio.needs @root.gpio_needs)~}}
+{{/if}}
+{{#if in1_gpio_setting}}
+  /* GPIO configuration for input1 */
+{{assign 'gpio_needs' (helper_common_concatenate_needs in1_gpio_setting.in1_gpio.needs @root.gpio_needs)~}}
+{{/if}}
+{{#if in2_gpio_setting}}
+  /* GPIO configuration for input2 */
+{{assign 'gpio_needs' (helper_common_concatenate_needs in2_gpio_setting.in2_gpio.needs @root.gpio_needs)~}}
+{{/if}}
+{{#if channel1_gpio}}
+  /* GPIO configuration for input channel1 */
+{{assign 'gpio_needs' (helper_common_concatenate_needs channel1_gpio.needs @root.gpio_needs)~}}
+{{/if}}
+{{#if channel2_gpio}}
+  /* GPIO configuration for input channel2 */
+{{assign 'gpio_needs' (helper_common_concatenate_needs channel2_gpio.needs @root.gpio_needs)~}}
+{{/if}}
+  /* Init GPIO */
+{{> GPIO_LL fct='init' needs=@root.gpio_needs resource=@root.current_resource}}
+{{/with}}{{! gpio_settings~}}
+{{!==================== NVIC for LPTIM ====================}}
+{{#if EnableInterruption}}
+  /* Enable the interruption for LPTIM */
+{{assign 'nvic_context' (helper_cortex_nvic_concatenate_irq_context  @root.nvic_context nvicConfig.needs @root.current_resource irq_handler_generation)~}}
+{{#> CORTEX fct='init' layer=@root.current_layer needs=nvicConfig.needs}}
+#warning "Partial HAL CORTEX is not present"
+{{/CORTEX}}
+{{/if}}{{! EnableInterruption~}}
+{{#with dma_settings}}
+{{#if enable_dma_ch1}}
+{{> DMA_LL fct='init' needs=dma_config_ch1.needs~}}
+{{/if}}
+{{#if enable_dma_ch2}}
+{{> DMA_LL fct='init' needs=dma_config_ch2.needs}}
+{{/if}}
+{{#if enable_dma_update}}
+{{> DMA_LL fct='init' needs=dma_config_update.needs}}
+{{/if}}
+{{/with}}{{! dma_settings~}}
+{{/with}}{{! System~}}
+
+  return {{@root.current_resource}};
+}
+
+void {{@root.fct_name}}_deinit(void)
+{
+{{> RCC fct='generate_peripheral_clock_reset' hw_resource=@root.current_resource}}
+{{> RCC fct='generate_peripheral_clock_deactivation' hw_resource=@root.current_resource}}
+{{#with System}}
+{{#with gpio_settings}}
+{{assign 'gpio_needs' 'undefined'~}}
+{{#if etr_gpio}}
+{{assign 'gpio_needs' (helper_common_concatenate_needs etr_gpio.needs @root.gpio_needs)~}}
+{{/if}}
+{{#if in1_gpio_setting}}
+{{assign 'gpio_needs' (helper_common_concatenate_needs in1_gpio_setting.in1_gpio.needs @root.gpio_needs)~}}
+{{/if}}
+{{#if in2_gpio_setting}}
+{{assign 'gpio_needs' (helper_common_concatenate_needs in2_gpio_setting.in2_gpio.needs @root.gpio_needs)~}}
+{{/if}}
+{{#if channel1_gpio}}
+{{assign 'gpio_needs' (helper_common_concatenate_needs channel1_gpio.needs @root.gpio_needs)~}}
+{{/if}}
+{{#if channel2_gpio}}
+{{assign 'gpio_needs' (helper_common_concatenate_needs channel2_gpio.needs @root.gpio_needs)~}}
+{{/if}}
+  /* deinit GPIO configuration */
+{{> GPIO_LL fct='deinit' needs=@root.gpio_needs resource=@root.current_resource}}
+{{/with}}{{! gpio_settings~}}
+{{#with dma_settings}}
+{{#if enable_dma_ch1}}
+{{> DMA_LL fct='deinit' needs=dma_config_ch1.needs~}}
+{{/if}}
+{{#if enable_dma_ch2}}
+{{> DMA_LL fct='deinit' needs=dma_config_ch2.needs~}}
+{{/if}}
+{{#if enable_dma_update}}
+{{> DMA_LL fct='deinit' needs=dma_config_update.needs~}}
+{{/if}}
+{{/with}}{{! dma_settings ~}}
+{{#if EnableInterruption}}
+  /* Disable Timer global interrupt */
+{{> CORTEX fct='deinit' layer=@root.current_layer needs=nvic_config_global.needs~}}
+{{/if}}
+{{/with}}{{! System ~}}
+}
+{{/if}}
+{{/each}}{{! instances ~}}
+
+{{#if (not (eq @root.nvic_context 'undefined'))}}
+{{assign 'irq_info_list' (helper_cortex_nvic_get_irqline_info_list @root.NvicAPI @root.nvic_context 'LPTIM')~}}
+{{#each @root.irq_info_list}}
+{{#if generate_handler}}
+/******************************************************************************/
+/* {{description}} */
+/******************************************************************************/
+void {{line}}_IRQHandler(void)
+{
+  HAL_{{component}}{{irq_suffix}}_IRQHandler(&h{{resource_hw}});
+}
+
+{{else}}
+/******************************************************************************/
+/* {{description}} is managed directly in user code. */
+/*
+void {{line}}_IRQHandler(void)
+{
+}
+*/
+/******************************************************************************/
+
+{{/if}}
+{{/each}}
+{{/if}}

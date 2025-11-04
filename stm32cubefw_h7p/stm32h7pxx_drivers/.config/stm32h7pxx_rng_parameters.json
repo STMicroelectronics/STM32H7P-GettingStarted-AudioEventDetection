@@ -1,0 +1,646 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "version": "0.0.1",
+  "componentid": "::Device:STM32CubeMX2 Config:RNG",
+  "grammarVersion": "3.5",
+  "type": "object",
+  "properties": {
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "object",
+          "properties": {
+            "labels": {
+              "type": "array",
+              "title": "Label",
+              "$comment": "label associated to the instance of the peripheral, can be overridden at sample level. In this case it becomes read-only.",
+              "items": {
+                "type": "string",
+                "pattern": "^([a-zA-Z_][a-zA-Z0-9_]{1,31})?$",
+                "minLength": 0,
+                "maxLength": 32,
+                "default": ""
+              }
+            },
+            "layer": {
+              "type": "string",
+              "title": "Software Layer",
+              "oneOf": [
+                {
+                  "const": "HAL"
+                },
+                {
+                  "const": "LL"
+                }
+              ],
+              "variables": [
+                {
+                  "on": "update-value",
+                  "name": "HAL_RNG_PROJECT_USE_HAL",
+                  "condition": "$value === 'HAL'",
+                  "semaphore": true
+                }
+              ],
+              "default": "HAL"
+            },
+            "init_type": {
+              "type": "string",
+              "title": "resource initialization code generation",
+              "description": "generate or not the RNG init code, call it or not at boot",
+              "$comment": "generate the init code of your RNG or not (enabled/disabled), call it automatically at startup or not (called/enabled)",
+              "oneOf": [
+                {
+                  "const": "called"
+                },
+                {
+                  "const": "enabled"
+                },
+                {
+                  "const": "disabled"
+                }
+              ],
+              "default": "called"
+            }
+          }
+        },
+        "Main_configuration": {
+          "type": "object",
+          "title": "Main peripheral configuration",
+          "properties": {
+            "RNG_standard": {
+              "type": "integer",
+              "title": "RNG standard",
+              "oneOf": [
+                {
+                  "const": 0,
+                  "title": "Certified Nist",
+                  "actions": [
+                    {
+                  "type": "exclude",
+                  "condition": "true"
+                    }
+                  ]
+                },
+                {
+                  "const": 1,
+                  "title": "Candidate Nist"
+                },
+                {
+                  "const": 2,
+                  "title": "German BSI"
+                },
+                {
+                  "const": 3,
+                  "title": "Custom"
+                }
+              ],
+              "default": 1
+            },
+            "config_1": {
+              "type": "integer",
+              "description": "Config1 must be a value between 0 and 0x3F",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$Main_configuration.RNG_standard==3"
+                }
+              ],
+              "display_format": [
+                "hex"
+              ],
+              "maximum": 63,
+              "minimum": 0,
+              "default": 8
+            },
+            "config_2": {
+              "type": "integer",
+              "description": "Config2 must be a value between 0 and 0x7",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$Main_configuration.RNG_standard==3"
+                }
+              ],
+              "display_format": [
+                "hex"
+              ],
+              "maximum": 7,
+              "default": 0
+            },
+            "config_3": {
+              "type": "integer",
+              "description": "Config3 must be a value between 0 and 0xF",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$Main_configuration.RNG_standard==3"
+                }
+              ],
+              "display_format": [
+                "hex"
+              ],
+              "maximum": 15,
+              "minimum": 0,
+              "default": 13
+            },
+            "health_test": {
+              "type": "integer",
+              "description": "RNG health test",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$Main_configuration.RNG_standard==3"
+                }
+              ],
+              "maximum": 4294967295,
+              "minimum": 0,
+              "default": 29356
+            },
+            "clock_divider": {
+              "type": "integer",
+              "description": "Number of clock cycles per internal clock.",
+              "default": 1,
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$Main_configuration.RNG_standard==3"
+                }
+              ],
+              "oneOf": [
+                {
+                  "title": "1 clock cycle",
+                  "const": 1
+                },
+                {
+                  "title": "2 clock cycles",
+                  "const": 2
+                },
+                {
+                  "title": "4 clock cycles",
+                  "const": 4
+                },
+                {
+                  "title": "8 clock cycles",
+                  "const": 8
+                },
+                {
+                  "title": "16 clock cycles",
+                  "const": 16
+                },
+                {
+                  "title": "32 clock cycles",
+                  "const": 32
+                },
+                {
+                  "title": "64 clock cycles",
+                  "const": 64
+                },
+                {
+                  "title": "128 clock cycles",
+                  "const": 128
+                },
+                {
+                  "title": "256 clock cycles",
+                  "const": 256
+                },
+                {
+                  "title": "512 clock cycles",
+                  "const": 512
+                },
+                {
+                  "title": "1024 clock cycles",
+                  "const": 1024
+                },
+                {
+                  "title": "2048 clock cycles",
+                  "const": 2048
+                },
+                {
+                  "title": "4096 clock cycles",
+                  "const": 4096
+                },
+                {
+                  "title": "8192 clock cycles",
+                  "const": 8192
+                },
+                {
+                  "title": "16384 clock cycles",
+                  "const": 16384
+                },
+                {
+                  "title": "32768 clock cycles",
+                  "const": 32768
+                }
+              ]
+            },
+            "standard": {
+              "type": "string",
+              "description": "RNG NIST compliance.",
+              "default": "CUSTOM",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$Main_configuration.RNG_standard==3"
+                }
+              ],
+              "oneOf": [
+                {
+                  "title": "RNG custom configuration",
+                  "const": "CUSTOM"
+                },
+                {
+                  "title": "RNG NIST compliant configuration",
+                  "const": "NIST"
+                }
+              ]
+            },
+            "clock_error_detection": {
+              "type": "boolean",
+              "default": true,
+              "title": "RNG clock error detection state",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$Main_configuration.RNG_standard==3"
+                }
+              ]
+            },
+            "noise_source": {
+              "type": "object",
+              "description": "RNG noise source Structure Definition.",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$Main_configuration.RNG_standard==3"
+                }
+              ],
+              "properties": {
+                "osc_1_src": {
+                  "type": "object",
+                  "title": "Oscillator noise source 1",
+                  "description": "This parameter represent the selection of one or a combination of oscillator noise sources.",
+                  "objectType": "polynomial",
+                  "size": [
+                    3
+                  ],
+                  "default": {
+                    "value": 7,
+                    "size": 3
+                  }
+                },
+                "osc_2_src": {
+                  "type": "object",
+                  "title": "Oscillator noise source 2",
+                  "description": "This parameter represent the selection of one or a combination of oscillator noise sources.",
+                  "objectType": "polynomial",
+                  "size": [
+                    3
+                  ],
+                  "default": {
+                    "value": 7,
+                    "size": 3
+                  }
+                },
+                "osc_3_src": {
+                  "type": "object",
+                  "title": "Oscillator noise source 3",
+                  "description": "This parameter represent the selection of one or a combination of oscillator noise sources.",
+                  "objectType": "polynomial",
+                  "size": [
+                    3
+                  ],
+                  "default": {
+                    "value": 7,
+                    "size": 3
+                  }
+                },
+                "osc_4_src": {
+                  "type": "object",
+                  "title": "Oscillator noise source 4",
+                  "description": "This parameter represent the selection of one or a combination of oscillator noise sources.",
+                  "objectType": "polynomial",
+                  "size": [
+                    3
+                  ],
+                  "default": {
+                    "value": 7,
+                    "size": 3
+                  }
+                },
+                "osc_5_src": {
+                  "type": "object",
+                  "title": "Oscillator noise source 5",
+                  "description": "This parameter represent the selection of one or a combination of oscillator noise sources.",
+                  "objectType": "polynomial",
+                  "size": [
+                    3
+                  ],
+                  "default": {
+                    "value": 7,
+                    "size": 3
+                  }
+                },
+                "osc_6_src": {
+                  "type": "object",
+                  "title": "Oscillator noise source 6",
+                  "description": "This parameter represent the selection of one or a combination of oscillator noise sources.",
+                  "objectType": "polynomial",
+                  "size": [
+                    3
+                  ],
+                  "default": {
+                    "value": 7,
+                    "size": 3
+                  }
+                }
+              }
+            },
+            "rng_cert_nist_cr": {
+              "type": "integer",
+              "title": "Certified NIST ",
+              "default": 15731968,
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$Main_configuration.RNG_standard==0"
+                },
+                {
+                  "type": "set",
+                  "condition": "$Main_configuration.RNG_standard==0",
+                  "attributes": {
+                    "const": 15731968
+                  }
+                },
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ],
+              "display_format": [
+                "hex"
+              ]
+            },
+            "rng_cert_nist_nscr": {
+              "type": "integer",
+              "title": "Certified NIST Noise source",
+              "default": 97467,
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$Main_configuration.RNG_standard==0"
+                },
+                {
+                  "type": "set",
+                  "condition": "$Main_configuration.RNG_standard==0",
+                  "attributes": {
+                    "const": 97467
+                  }
+                },
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ],
+              "display_format": [
+                "hex"
+              ]
+            },
+            "rng_cert_nist_htcr": {
+              "type": "integer",
+              "title": "Certified NIST Health test",
+              "default": 41648,
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$Main_configuration.RNG_standard==0"
+                },
+                {
+                  "type": "set",
+                  "condition": "$Main_configuration.RNG_standard==0",
+                  "attributes": {
+                    "const": 41648
+                  }
+                },
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ],
+              "display_format": [
+                "hex"
+              ]
+            },
+            "rng_cand_nist_cr": {
+              "type": "integer",
+              "title": "Candidate NIST",
+              "default":1048832,
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$Main_configuration.RNG_standard==1"
+                },
+                {
+                  "type": "set",
+                  "condition": "$Main_configuration.RNG_standard==1",
+                  "attributes": {
+                    "const":1048832
+                  }
+                },
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ],
+              "display_format": [
+                "hex"
+              ]
+            },
+            "rng_cand_nist_nscr": {
+              "type": "integer",
+              "title": "Candidate NIST Noise source",
+              "default":511,
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$Main_configuration.RNG_standard==1"
+                },
+                {
+                  "type": "set",
+                  "condition": "$Main_configuration.RNG_standard==1",
+                  "attributes": {
+                    "const":511
+                  }
+                },
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ],
+              "display_format": [
+                "hex"
+              ]
+            },
+            "rng_cand_nist_htcr": {
+              "type": "integer",
+              "title": "Candidate NIST Health test",
+              "default":43719,
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$Main_configuration.RNG_standard==1"
+                },
+                {
+                  "type": "set",
+                  "condition": "$Main_configuration.RNG_standard==1",
+                  "attributes": {
+                    "const":43719
+                  }
+                },
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ],
+              "display_format": [
+                "hex"
+              ]
+            },
+            "rng_cand_GermanBSI_cr": {
+              "type": "integer",
+              "title": "Candidate German BSI",
+              "default":136318720,
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$Main_configuration.RNG_standard==2"
+                },
+                {
+                  "type": "set",
+                  "condition": "$Main_configuration.RNG_standard==2",
+                  "attributes": {
+                    "const":136318720
+                  }
+                },
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ],
+              "display_format": [
+                "hex"
+              ]
+            },
+            "rng_cand_GermanBSI_nscr": {
+              "type": "integer",
+              "title": "Candidate German BSI Noise source",
+              "default":511,
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$Main_configuration.RNG_standard==2"
+                },
+                {
+                  "type": "set",
+                  "condition": "$Main_configuration.RNG_standard==2",
+                  "attributes": {
+                    "const":511
+                  }
+                },
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ],
+              "display_format": [
+                "hex"
+              ]
+            },
+            "rng_cand_GermanBSI_htcr": {
+              "type": "integer",
+              "title": "Candidate German BSI Health test",
+              "default":43719,
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$Main_configuration.RNG_standard==2"
+                },
+                {
+                  "type": "set",
+                  "condition": "$Main_configuration.RNG_standard==2",
+                  "attributes": {
+                    "const":43719
+                  }
+                },
+                {
+                  "type": "disable",
+                  "condition": "true"
+                }
+              ],
+              "display_format": [
+                "hex"
+              ]
+            }
+          }
+        },
+        "Additional_configuration": {
+          "type": "object",
+          "description": "All Functions Configuration",
+          "title": "Additional features configuration",
+          "properties": {
+            "EnableClockErrorDetection": {
+              "type": "boolean",
+              "title": "Clock error detection",
+              "default": false
+            },
+            "EnableAutoReset": {
+              "type": "boolean",
+              "title": "Automatic reset",
+              "default": false
+            }
+          }
+        },
+        "System_configuration": {
+          "type": "object",
+          "title": "System configuration",
+          "properties": {
+            "EnableInterruption": {
+              "type": "boolean",
+              "title": "Interruption",
+              "description": "Enable interruption mode for the peripheral.",
+              "default": false
+            },
+            "irq_handler_generation": {
+              "type": "boolean",
+              "title": "IRQ Handler generation",
+              "default": true,
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$System_configuration.EnableInterruption && $info.layer === 'HAL'"
+                }
+              ]
+            },
+            "nvicConfig": {
+              "title": "NVIC  configuration",
+              "actions": [
+                {
+                  "type": "include",
+                  "condition": "$System_configuration.EnableInterruption"
+                }
+              ],
+              "type": "object",
+              "objectType": "need.interrupt.lines",
+              "owner": "$resource.id",
+              "needs": [
+                {
+                  "selector": "*"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

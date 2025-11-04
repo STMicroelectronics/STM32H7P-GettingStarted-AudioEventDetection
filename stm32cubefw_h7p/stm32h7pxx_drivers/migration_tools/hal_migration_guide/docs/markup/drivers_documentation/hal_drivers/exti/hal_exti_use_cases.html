@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html data-content_root="../../../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, HAL1, EXTI, STM32H5, STM32G0, STM32F4, STM32L4, STM32C0, STM32H7" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     HAL EXTI Typical use cases for migration — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/tabs.css?v=a5c4661c" rel="stylesheet" type="text/css"/>
+    <script src="../../../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <script src="../../../../../_static/tabs.js?v=3030b3cb">
+    </script>
+    <link href="../../../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../../../search.html" rel="search" title="Search"/>
+    <link href="hal_exti_exported_constants.html" rel="next" title="HAL EXTI constants migration"/>
+    <link href="hal_exti_concepts_list.html" rel="prev" title="HAL EXTI migration: List of applicable concepts"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/drivers_documentation/hal_drivers/exti/hal_exti_use_cases" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_script/migration_script_toc.html">
+            HAL1 detection
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../breaking_concepts/breaking_concepts_toc.html">
+              Breaking changes in concepts
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../hal_drivers_toc.html">
+              HAL drivers migration
+             </a>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../adc/hal_adc_toc.html">
+                ADC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../comp/hal_comp_toc.html">
+                COMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cortex/hal_cortex_toc.html">
+                CORTEX
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cordic/hal_cordic_toc.html">
+                CORDIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../crc/hal_crc_toc.html">
+                CRC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cryp/hal_cryp_toc.html">
+                CRYP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dac/hal_dac_toc.html">
+                DAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dcache/hal_dcache_toc.html">
+                DCACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dma/hal_dma_toc.html">
+                DMA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="hal_exti_toc.html">
+                EXTI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../fmac/hal_fmac_toc.html">
+                FMAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../generic/hal_generic_toc.html">
+                GENERIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxmmu/hal_gfxmmu_toc.html">
+                GFXMMU
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxtim/hal_gfxtim_toc.html">
+                GFXTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gpio/hal_gpio_toc.html">
+                GPIO
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2c/hal_i2c_toc.html">
+                I2C
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2s/hal_i2s_toc.html">
+                I2S
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../icache/hal_icache_toc.html">
+                ICACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../irda/hal_irda_toc.html">
+                IRDA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../iwdg/hal_iwdg_toc.html">
+                IWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../lptim/hal_lptim_toc.html">
+                LPTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../nor/hal_nor_toc.html">
+                NOR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../opamp/hal_opamp_toc.html">
+                OPAMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ospi/hal_ospi_toc.html">
+                OSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pka/hal_pka_toc.html">
+                PKA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pwr/hal_pwr_toc.html">
+                PWR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../qspi/hal_qspi_toc.html">
+                QSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ramcfg/hal_ramcfg_toc.html">
+                RAMCFG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rcc/hal_rcc_toc.html">
+                RCC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rng/hal_rng_toc.html">
+                RNG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rtc/hal_rtc_toc.html">
+                RTC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sdram/hal_sdram_toc.html">
+                SDRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smartcard/hal_smartcard_toc.html">
+                SMARTCARD
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smbus/hal_smbus_toc.html">
+                SMBUS
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../spi/hal_spi_toc.html">
+                SPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sram/hal_sram_toc.html">
+                SRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../tim/hal_tim_toc.html">
+                TIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../uart/hal_uart_toc.html">
+                UART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../usart/hal_usart_toc.html">
+                USART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../wwdg/hal_wwdg_toc.html">
+                WWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../xspi/hal_xspi_toc.html">
+                XSPI
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../ll_drivers/ll_drivers_toc.html">
+              LL drivers migration
+             </a>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-drivers-documentation-hal-drivers-exti-hal-exti-use-cases--page-root">
+            HAL EXTI Typical use cases for migration
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#interrupt-service-routine">
+               Interrupt service routine
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#wake-up-from-stop-mode-with-exti-interrupt-wfi">
+               Wake-up from stop mode with EXTI interrupt (WFI)
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#code-snippets">
+                  Code snippets
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#generate-a-software-interrupt">
+               Generate a software interrupt
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#id1">
+                  Code snippets
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="hal-exti-typical-use-cases-for-migration">
+        <span id="hal-exti-use-cases">
+        </span>
+        <h1 id="docs-markup-drivers-documentation-hal-drivers-exti-hal-exti-use-cases--page-root">
+         HAL EXTI Typical use cases for migration
+         <a class="headerlink" href="#docs-markup-drivers-documentation-hal-drivers-exti-hal-exti-use-cases--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <p>
+         This section provides information about the HAL EXTI Typical use cases for migration.
+        </p>
+        <section id="interrupt-service-routine">
+         <span id="hal-exti-use-case-interrupt-service-routine">
+         </span>
+         <h2 id="interrupt-service-routine">
+          Interrupt service routine
+          <a class="headerlink" href="#interrupt-service-routine" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              Sequence diagram
+             </p>
+            </td>
+            <td>
+             <p class="plantuml">
+              <img alt='@startuml
+participant "Application" as App
+participant "GPIO" as GPIO
+participant "EXTI" as EXTI
+participant "NVIC" as NVIC
+
+App -&gt; GPIO: HAL_GPIO_Init()
+App -&gt; EXTI: HAL_EXTI_GetHandle()
+App -&gt; EXTI: HAL_EXTI_RegisterCallback()
+App -&gt; NVIC: HAL_NVIC_SetPriority()
+App -&gt; NVIC: HAL_NVIC_EnableIRQ()
+EXTI -&gt; App: GPIOx_Exti_FallingCb()
+@enduml' src="../../../../../_images/plantuml-ea645b122a028e833124376bf5fc54d23f52f838.png">
+              </img>
+             </p>
+            </td>
+            <td>
+             <p class="plantuml">
+              <img alt='@startuml
+participant "Application" as App
+participant "GPIO" as GPIO
+participant "EXTI" as EXTI
+participant "NVIC" as NVIC
+
+App -&gt; GPIO: HAL_GPIO_Init()
+App -&gt; EXTI: HAL_EXTI_Init()
+App -&gt; EXTI: HAL_EXTI_SetConfig()
+App -&gt; EXTI: HAL_EXTI_RegisterCallback()
+App -&gt; NVIC: HAL_NVIC_SetPriority()
+App -&gt; NVIC: HAL_NVIC_EnableIRQ()
+App -&gt; EXTI: HAL_EXTI_Enable()
+EXTI -&gt; App: p_trigger_cb()
+@enduml' src="../../../../../_images/plantuml-ba19bdf0505c23160a529dbb58b05b1cef635f8a.png"/>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              Usage
+             </p>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">GPIO_Init_TypeDef</span><span class="w"> </span><span class="n">GPIO_InitStructure</span><span class="p">;</span>
+<span class="n">EXTI_HandleTypeDef</span><span class="w"> </span><span class="n">EXTI_HandleStructure</span><span class="p">;</span>
+
+
+<span class="n">GPIO_InitStructure</span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_MODE_IT_FALLING</span><span class="p">;</span>
+<span class="n">GPIO_InitStructure</span><span class="p">.</span><span class="n">Pull</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_NOPULL</span><span class="p">;</span>
+<span class="n">GPIO_InitStructure</span><span class="p">.</span><span class="n">Pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_PIN_13</span><span class="p">;</span>
+
+<span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">GPIOC</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">GPIO_InitStructure</span><span class="p">);</span>
+
+<span class="n">HAL_EXTI_GetHandle</span><span class="p">(</span><span class="o">&amp;</span><span class="n">EXTI_HandleStructure</span><span class="p">,</span><span class="w"> </span><span class="n">EXTI_LINE_13</span><span class="p">);</span>
+
+
+
+
+
+
+<span class="n">HAL_EXTI_RegisterCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">EXTI_HandleStructure</span><span class="p">,</span>
+<span class="w">                          </span><span class="n">HAL_EXTI_FALLING_CB_ID</span><span class="p">,</span>
+<span class="w">                          </span><span class="n">GPIOC_Exti_FallingCb</span><span class="p">);</span>
+
+<span class="n">HAL_NVIC_SetPriority</span><span class="p">(</span><span class="n">EXTI13_IRQn</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="n">HAL_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">EXTI13_IRQn</span><span class="p">);</span>
+<span class="n">HAL_EXTI_Enable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hexti</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_EXTI_MODE_INTERRUPT</span><span class="p">);</span>
+
+
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">GPIOx_Exti_FallingCb</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="p">(...)</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_gpio_config_t</span><span class="w"> </span><span class="n">GPIO_ConfigStructure</span><span class="p">;</span>
+<span class="n">hal_exti_handle_t</span><span class="w"> </span><span class="n">hexti</span><span class="p">;</span>
+<span class="n">hal_exti_config_t</span><span class="w"> </span><span class="n">EXTI_ConfigStructure</span><span class="p">;</span>
+
+<span class="n">GPIO_ConfigStructure</span><span class="p">.</span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_MODE_INPUT</span><span class="p">;</span>
+<span class="n">GPIO_ConfigStructure</span><span class="p">.</span><span class="n">pull</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_PULL_NO</span><span class="p">;</span>
+
+
+<span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">HAL_GPIOC</span><span class="p">,</span><span class="w"> </span><span class="n">GPIO_PIN_13</span><span class="p">,</span>
+<span class="w">              </span><span class="o">&amp;</span><span class="n">GPIO_ConfigStructure</span><span class="p">);</span>
+
+<span class="n">HAL_EXTI_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hexti</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_EXTI_LINE_13</span><span class="p">);</span>
+
+<span class="n">EXTI_ConfigStructure</span><span class="p">.</span><span class="n">trigger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_EXTI_TRIGGER_FALLING</span><span class="p">;</span>
+<span class="n">EXTI_ConfigStructure</span><span class="p">.</span><span class="n">gpio_port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_EXTI_GPIOC</span><span class="p">;</span>
+<span class="n">HAL_EXTI_SetConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hexti</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">EXTI_ConfigStructure</span><span class="p">);</span>
+
+<span class="n">HAL_EXTI_RegisterTriggerCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hexti</span><span class="p">,</span>
+<span class="w">                                 </span><span class="n">GPIOC_Exti_FallingCb</span><span class="p">);</span>
+
+
+<span class="n">HAL_NVIC_SetPriority</span><span class="p">(</span><span class="n">EXTI13_IRQn</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="n">HAL_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">EXTI13_IRQn</span><span class="p">);</span>
+
+<span class="n">HAL_EXTI_Enable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hexti</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_EXTI_MODE_INTERRUPT</span><span class="p">);</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">GPIOx_Exti_FallingCb</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="p">(...)</span>
+<span class="p">}</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="wake-up-from-stop-mode-with-exti-interrupt-wfi">
+         <span id="hal-exti-use-case-wake-up-from-strop-mode-with-exti-interrupt">
+         </span>
+         <h2 id="wake-up-from-stop-mode-with-exti-interrupt-wfi">
+          Wake-up from stop mode with EXTI interrupt (WFI)
+          <a class="headerlink" href="#wake-up-from-stop-mode-with-exti-interrupt-wfi" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <div class="sphinx-tabs docutils container">
+          <div aria-label="Tabbed content" class="closeable" role="tablist">
+           <button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">
+            HAL1 Sequence diagram
+           </button>
+           <button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">
+            HAL2 Sequence diagram
+           </button>
+          </div>
+          <div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0">
+           <p class="plantuml">
+            <img alt='@startuml
+
+ !pragma teoz true
+
+ == Prerequisites ==
+
+ "Application" -&gt; GPIO: HAL_GPIO_Init()
+ "Application" -&gt; EXTI: HAL_EXTI_GetHandle()
+ "Application" -&gt; EXTI: HAL_EXTI_RegisterCallback()
+ "Application" -&gt; NVIC: HAL_NVIC_SetPriority()
+ "Application" -&gt; NVIC: HAL_NVIC_EnableIRQ()
+
+ == Enter STOP Mode ==
+
+ "Application" -&gt; "PWR":  **HAL_PWR_EnterSTOP0Mode( PWR_STOPENTRY_WFI);**
+ "PWR" --&gt; "Application": MCU enters Stop Mode
+ {start} "Application" &lt;- "Application"
+ ...
+ ...
+ ...
+ {end} "Application" -&gt; "Application"
+ {start} &lt;-&gt; {end}: &lt;i&gt;MCU in Stop Mode
+ == System wake-up from stop mode ==
+
+ "EXTI IRQHandler" &lt;- :  Interrupt
+
+ "EXTI IRQHandler" --&gt; "EXTI": "**HAL_EXTI IRQHandler(&amp;hexti)**"
+ "EXTI" -&gt; "PWR": Wake-up the CPU from Stop Mode
+ "EXTI" -&gt; "Application": "**FallingCallback()** / **RisingCallback()**"
+
+ @enduml' src="../../../../../_images/plantuml-d73452927ae741c8157cfa29020567d4028ab7e3.png"/>
+           </p>
+          </div>
+          <div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0">
+           <p class="plantuml">
+            <img alt='@startuml
+
+!pragma teoz true
+
+== Prerequisites ==
+
+"Application" -&gt; GPIO: HAL_GPIO_Init()
+"Application" -&gt; EXTI: HAL_EXTI_Init()
+"Application" -&gt; EXTI: HAL_EXTI_SetConfig()
+"Application" -&gt; EXTI: HAL_EXTI_RegisterCallback()
+"Application" -&gt; NVIC: HAL_NVIC_SetPriority()
+"Application" -&gt; NVIC: HAL_NVIC_EnableIRQ()
+"Application" -&gt; EXTI: HAL_EXTI_Enable()
+== Enter STOP Mode ==
+
+"Application" -&gt; "PWR":  **HAL_PWR_EnterSTOP0Mode( PWR_STOPENTRY_WFI);**
+"PWR" --&gt; "Application": MCU enters Stop Mode
+{start} "Application" &lt;- "Application"
+...
+...
+...
+{end} "Application" -&gt; "Application"
+{start} &lt;-&gt; {end}: &lt;i&gt;MCU in Stop Mode
+
+== System wake-up from stop mode ==
+
+"EXTI IRQHandler" &lt;- :  Interrupt
+
+"EXTI IRQHandler" --&gt; "EXTI": "**HAL_EXTI IRQHandler(&amp;hexti)**"
+"EXTI" -&gt; "PWR": Wake-up the CPU from Stop Mode
+"EXTI" -&gt; "Application": "**p_trigger_cb()**"
+
+@enduml' src="../../../../../_images/plantuml-54254d8b79b3bd8f7794004abb7432d36cbdc36a.png"/>
+           </p>
+          </div>
+         </div>
+         <section id="code-snippets">
+          <h3 id="code-snippets">
+           Code snippets
+           <a class="headerlink" href="#code-snippets" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="cm">/* */</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">MX_GPIO_Init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">GPIO_InitTypeDef</span><span class="w"> </span><span class="n">GPIO_InitStruct</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+<span class="w">    </span><span class="cm">/* GPIO Ports Clock Enable */</span>
+<span class="w">    </span><span class="n">__HAL_RCC_GPIOC_CLK_ENABLE</span><span class="p">();</span>
+
+
+<span class="w">    </span><span class="cm">/*Configure GPIO pin : GPIO_PIN_13 */</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_PIN_13</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_MODE_IT_RISING</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Pull</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_NOPULL</span><span class="p">;</span>
+<span class="w">    </span><span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">GPIOC</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">GPIO_InitStruct</span><span class="p">);</span>
+
+
+<span class="w">    </span><span class="n">HAL_EXTI_GetHandle</span><span class="p">(</span><span class="o">&amp;</span><span class="n">EXTI_HandleStructure</span><span class="p">,</span><span class="w"> </span><span class="n">EXTI_LINE_13</span><span class="p">);</span>
+
+
+
+
+
+
+
+
+
+<span class="w">    </span><span class="n">HAL_EXTI_RegisterCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">EXTI_HandleStructure</span><span class="p">,</span>
+<span class="w">                              </span><span class="n">HAL_EXTI_FALLING_CB_ID</span><span class="p">,</span>
+<span class="w">                              </span><span class="n">GPIOC_Exti_FallingCb</span><span class="p">);</span>
+<span class="w">  </span><span class="cm">/* EXTI interrupt init*/</span>
+<span class="w">  </span><span class="n">HAL_NVIC_SetPriority</span><span class="p">(</span><span class="n">EXTI15_10_IRQn</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+
+
+<span class="w">  </span><span class="n">HAL_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">EXTI15_10_IRQn</span><span class="p">);</span>
+<span class="p">}</span>
+
+
+
+
+
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">EXTI13_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_GPIO_EXTI_IRQHandler</span><span class="p">(</span><span class="n">GPIO_PIN_13</span><span class="p">);</span>
+<span class="p">}</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="cm">/* Enter STOP 0 mode */</span>
+<span class="n">HAL_PWREx_EnterSTOPMode</span><span class="p">(</span><span class="n">PWR_STOPENTRY_WFI</span><span class="p">);</span>
+
+
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">GPIOx_Exti_FallingCb</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="p">(...)</span>
+<span class="p">}</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="k">static</span><span class="w"> </span><span class="n">hal_exti_handle_t</span><span class="w"> </span><span class="n">exti_line13_handle</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="nf">exti_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="cm">/* GPIOC GPIO_PIN_13 Clock activation */</span>
+<span class="w">    </span><span class="n">hal_gpio_config_t</span><span class="w"> </span><span class="n">config_gpio</span><span class="p">;</span>
+<span class="w">    </span><span class="n">hal_exti_config_t</span><span class="w"> </span><span class="n">exti_config</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">MX_EXAMPLE_GPIO_TRIGGER_CLK_ENABLE</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">config_gpio</span><span class="p">.</span><span class="n">mode</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_MODE_INPUT</span><span class="p">;</span>
+<span class="w">    </span><span class="n">config_gpio</span><span class="p">.</span><span class="n">pull</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_PULL_NO</span><span class="p">;</span>
+<span class="w">    </span><span class="n">config_gpio</span><span class="p">.</span><span class="n">output_type</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_OUTPUT_OPENDRAIN</span><span class="p">;</span>
+<span class="w">    </span><span class="n">config_gpio</span><span class="p">.</span><span class="n">speed</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_SPEED_FREQ_VERY_HIGH</span><span class="p">;</span>
+<span class="w">    </span><span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">HAL_GPIOC</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_GPIO_PIN_13</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">config_gpio</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_EXTI_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">exti_line13_handle</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_EXTI_LINE_13</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">exti_config</span><span class="p">.</span><span class="n">trigger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_EXTI_TRIGGER_FALLING</span><span class="p">;</span>
+<span class="w">    </span><span class="n">exti_config</span><span class="p">.</span><span class="n">gpio_port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_EXTI_GPIOC</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">HAL_EXTI_SetConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">exti_line13_handle</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">exti_config</span><span class="p">);</span>
+
+
+<span class="w">    </span><span class="n">HAL_EXTI_RegisterTriggerCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hexti</span><span class="p">,</span>
+<span class="w">                                     </span><span class="n">GPIOC_Exti_FallingCb</span><span class="p">);</span>
+
+
+<span class="w">    </span><span class="n">HAL_CORTEX_NVIC_SetPriority</span><span class="p">(</span><span class="n">MX_EXAMPLE_EXTI_TRIGGER_EXTI_IRQ_N</span><span class="p">,</span>
+<span class="w">                                </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_0</span><span class="p">,</span>
+<span class="w">                                </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">HAL_CORTEX_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">MX_EXAMPLE_EXTI_TRIGGER_EXTI_IRQ_N</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">HAL_EXTI_Enable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hexti</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_EXTI_MODE_INTERRUPT</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">exti_line13_handle</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">EXTI13_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_EXTI_IRQHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">exti_line13_handle</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">uint32_t</span><span class="w"> </span><span class="nf">mx_power_config</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">config_status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">config_status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_PWR_SetMainRegulatorSupply</span><span class="p">(</span><span class="n">HAL_PWR_MAIN_REGULATOR_SMPS_SUPPLY</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">HAL_PWR_SetMainRegulatorStartupMode</span><span class="p">(</span><span class="n">HAL_PWR_MAIN_REGULATOR_FAST_STARTUP</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">HAL_PWR_SetCoreSleepMode</span><span class="p">(</span><span class="n">HAL_PWR_CORE_DEEP_SLEEP</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">config_status</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="w">    </span><span class="cm">/* Enter STOP0 Mode */</span>
+<span class="w">    </span><span class="n">HAL_PWR_EnterStopMode</span><span class="p">(</span><span class="n">HAL_PWR_LOW_PWR_MODE_WFI</span><span class="p">,</span>
+<span class="w">                          </span><span class="n">HAL_PWR_STOP0_MODE</span><span class="p">);</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">GPIOx_Exti_FallingCb</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="p">(...)</span>
+<span class="p">}</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+        </section>
+        <section id="generate-a-software-interrupt">
+         <span id="hal-exti-use-case-generate-a-software-interrupt">
+         </span>
+         <h2 id="generate-a-software-interrupt">
+          Generate a software interrupt
+          <a class="headerlink" href="#generate-a-software-interrupt" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              Sequence diagram
+             </p>
+            </td>
+            <td>
+             <p class="plantuml">
+              <img alt='@startuml
+
+== Initialization ==
+
+"Application" -&gt; GPIO: HAL_GPIO_Init()
+"Application" -&gt; EXTI: HAL_EXTI_GetHandle()
+"Application" -&gt; EXTI: HAL_EXTI_RegisterCallback()
+"Application" -&gt; NVIC: HAL_NVIC_SetPriority()
+"Application" -&gt; NVIC: HAL_NVIC_EnableIRQ()
+"Application" -&gt; EXTI: HAL_EXTI_SetConfigLine()
+
+
+== Register Callback ==
+
+"Application" -&gt; "EXTI": **HAL_EXTI_RegisterCallback(&amp;hexti, &amp;user_cb)**
+"EXTI" --&gt; "Application": hal status: HAL_OK
+
+== Generate a software interrupt ==
+
+"Application" -&gt; "EXTI": **HAL_EXTI_GenerateSW(&amp;hexti)**
+"EXTI" --&gt; "Application": hal status: HAL_OK
+
+@enduml' src="../../../../../_images/plantuml-7f89da279c84d9ee14b994c7bfb1954b6bf6a8c7.png"/>
+             </p>
+            </td>
+            <td>
+             <p class="plantuml">
+              <img alt='@startuml
+
+== Initialization ==
+
+"Application" -&gt; EXTI: HAL_EXTI_Init()
+"Application" -&gt; EXTI: HAL_EXTI_SetConfig()
+"Application" -&gt; EXTI: HAL_EXTI_RegisterCallback()
+"Application" -&gt; NVIC: HAL_NVIC_SetPriority()
+"Application" -&gt; NVIC: HAL_NVIC_EnableIRQ()
+"Application" -&gt; EXTI: HAL_EXTI_Enable()
+
+== Register Callback ==
+
+"Application" -&gt; "EXTI": **HAL_EXTI_RegisterTriggerCallback(&amp;hexti, &amp;user_cb)**
+"EXTI" --&gt; "Application": hal status: HAL_OK
+
+== Generate a software interrupt ==
+
+"Application" -&gt; "EXTI": **HAL_EXTI_GenerateSW(&amp;hexti)**
+"EXTI" --&gt; "Application": hal status: HAL_OK
+
+@enduml' src="../../../../../_images/plantuml-00fd149f7be838dad89bebb285f7e30e108622c6.png"/>
+             </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <section id="id1">
+          <h3 id="id1">
+           Code snippets
+           <a class="headerlink" href="#id1" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                HAL1
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                HAL2
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="n">GPIO_InitTypeDef</span><span class="w"> </span><span class="n">GPIO_InitStruct</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<span class="cm">/* EXTI handle instantiation */</span>
+<span class="n">EXTI_HandleTypeDef</span><span class="w">    </span><span class="o">*</span><span class="n">hexti</span><span class="p">;</span>
+<span class="cm">/* EXTI Global Configuration structure */</span>
+<span class="n">EXTI_ConfigTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">pExtiConfig</span><span class="p">;</span>
+<span class="cm">/* GPIO Ports Clock Enable */</span>
+<span class="n">__HAL_RCC_GPIOC_CLK_ENABLE</span><span class="p">();</span>
+
+
+<span class="cm">/*Configure GPIO pin : GPIO_PIN_13 */</span>
+<span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_PIN_13</span><span class="p">;</span>
+<span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_MODE_IT_FALLING</span><span class="p">;</span>
+<span class="n">GPIO_InitStruct</span><span class="p">.</span><span class="n">Pull</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_NOPULL</span><span class="p">;</span>
+<span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">GPIOC</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">GPIO_InitStruct</span><span class="p">);</span>
+
+<span class="n">HAL_EXTI_GetHandle</span><span class="p">(</span><span class="o">&amp;</span><span class="n">EXTI_HandleStructure</span><span class="p">,</span><span class="w"> </span><span class="n">EXTI_LINE_13</span><span class="p">);</span>
+
+<span class="cm">/* Setting the EXTI configuration structure */</span>
+<span class="n">pExtiConfig</span><span class="o">-&gt;</span><span class="n">Line</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">EXTI_LINE_13</span><span class="p">;</span>
+<span class="n">pExtiConfig</span><span class="o">-&gt;</span><span class="n">Mode</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="n">EXTI_MODE_INTERRUPT</span><span class="p">;</span>
+
+<span class="cm">/* Setting new values to the EXTI configuration structure */</span>
+<span class="n">HAL_EXTI_SetConfigLine</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hexti</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">pExtiConfig</span><span class="p">);</span>
+
+<span class="n">HAL_EXTI_RegisterCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">EXTI_HandleStructure</span><span class="p">,</span>
+<span class="w">                          </span><span class="n">HAL_EXTI_FALLING_CB_ID</span><span class="p">,</span>
+<span class="w">                          </span><span class="n">GPIOC_Exti_FallingCb</span><span class="p">);</span>
+<span class="cm">/* EXTI interrupt init*/</span>
+<span class="n">HAL_NVIC_SetPriority</span><span class="p">(</span><span class="n">EXTI15_10_IRQn</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+
+
+<span class="n">HAL_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">EXTI15_10_IRQn</span><span class="p">);</span>
+
+
+
+
+
+
+<span class="cm">/* Generate the software interrupt signal */</span>
+<span class="n">HAL_EXTI_GenerateSWI</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hexti</span><span class="p">);</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">GPIOx_Exti_FallingCb</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="p">(...)</span>
+<span class="p">}</span>
+</pre>
+               </div>
+              </div>
+             </td>
+             <td>
+              <div class="highlight-c notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="nf">exti_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="cm">/* GPIOC GPIO_PIN_13 Clock activation */</span>
+<span class="w">    </span><span class="n">hal_gpio_config_t</span><span class="w"> </span><span class="n">config_gpio</span><span class="p">;</span>
+<span class="w">    </span><span class="n">hal_exti_config_t</span><span class="w"> </span><span class="n">exti_config</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">MX_EXAMPLE_GPIO_TRIGGER_CLK_ENABLE</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">config_gpio</span><span class="p">.</span><span class="n">mode</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_MODE_INPUT</span><span class="p">;</span>
+<span class="w">    </span><span class="n">config_gpio</span><span class="p">.</span><span class="n">pull</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_PULL_NO</span><span class="p">;</span>
+<span class="w">    </span><span class="n">config_gpio</span><span class="p">.</span><span class="n">output_type</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_OUTPUT_OPENDRAIN</span><span class="p">;</span>
+<span class="w">    </span><span class="n">config_gpio</span><span class="p">.</span><span class="n">speed</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_GPIO_SPEED_FREQ_VERY_HIGH</span><span class="p">;</span>
+<span class="w">    </span><span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">HAL_GPIOC</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_GPIO_PIN_13</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">config_gpio</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_EXTI_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">exti_line13_handle</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_EXTI_LINE_13</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">exti_config</span><span class="p">.</span><span class="n">trigger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_EXTI_TRIGGER_FALLING</span><span class="p">;</span>
+<span class="w">    </span><span class="n">exti_config</span><span class="p">.</span><span class="n">gpio_port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_EXTI_GPIOC</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">HAL_EXTI_SetConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">exti_line13_handle</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">exti_config</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">HAL_EXTI_RegisterTriggerCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hexti</span><span class="p">,</span>
+<span class="w">                                    </span><span class="n">GPIOC_Exti_FallingCb</span><span class="p">);</span>
+
+
+<span class="w">    </span><span class="n">HAL_CORTEX_NVIC_SetPriority</span><span class="p">(</span><span class="n">MX_EXAMPLE_EXTI_TRIGGER_EXTI_IRQ_N</span><span class="p">,</span>
+<span class="w">                                </span><span class="n">HAL_CORTEX_NVIC_PREEMP_PRIORITY_0</span><span class="p">,</span>
+<span class="w">                                </span><span class="n">HAL_CORTEX_NVIC_SUB_PRIORITY_0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">HAL_CORTEX_NVIC_EnableIRQ</span><span class="p">(</span><span class="n">MX_EXAMPLE_EXTI_TRIGGER_EXTI_IRQ_N</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">HAL_EXTI_Enable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hexti</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_EXTI_MODE_INTERRUPT</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">exti_line13_handle</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/* Generate the software interrupt signal on the selected EXTI line */</span>
+<span class="n">HAL_EXTI_GenerateSWI</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hexti</span><span class="p">);</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">GPIOx_Exti_FallingCb</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="p">(...)</span>
+<span class="p">}</span>
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

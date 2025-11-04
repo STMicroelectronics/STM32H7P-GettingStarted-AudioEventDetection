@@ -1,0 +1,238 @@
+{{assign "strategy" (@root.EnvVarAPI.getVariableValue 'SYSTEM_PROJECT_CODEGEN_STRATEGY')~}}
+{{log "strategy" @root.strategy~}}
+{{#if (eq @root.strategy "SW")}}
+  {{~assign 'current_resource' 'COMP'~}}
+  {{~assign 'instances' (@root.SWConfigurationAPI.getInstances 'STMicroelectronics::Device:STM32CubeMX2 Config:COMP')~}}
+  {{~assign 'dma_resource' 'STM32CubeMX2 Config:COMP'~}}
+{{else}}
+  {{~assign "strategy" 'HW'~}}
+  {{#get_myctx~}}
+    {{#with _myctx~}}
+      {{~log "COMP template _myctx:" this~}}
+      {{~assign 'current_resource' resource~}}
+      {{~assign 'dma_resource' resource~}}
+      {{~assign 'instances' instances~}}
+    {{/with~}}
+  {{/get_myctx~}}
+{{/if}}
+{{log "COMP template current_resource:" @root.current_resource~}}
+{{log "COMP template instances:" (toJSON @root.instances)~}}
+{{> SYSTEM fct='system_check_ll_optim'}}
+/**
+  ******************************************************************************
+  * @file           : mx_{{lowercase @root.current_resource}}.c
+  * @brief          : {{@root.current_resource}} Peripheral initialization
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) {{year}} STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* Includes ------------------------------------------------------------------*/
+#include "mx_{{lowercase @root.current_resource}}.h"
+{{> RCC fct='include_rcc'}}
+{{#each instances~}}
+{{#if (eq info.layer 'HAL')}}
+{{#if (eq comp_mode "mode_window")}}
+{{#if (eq (helper_comp_is_window_instance_main @root.current_resource) true)}}
+#include "mx_comp{{helper_comp_get_window_other_instance_nb @root.current_resource~}}.h" /* Include other comparator instance configuration to link HAL handles */
+{{/if}}{{!comp_mode~}}
+{{/if}}{{!helper_comp_is_window_instance_main}}
+{{/if}}{{! info.layer}}
+{{/each~}}{{!instances~}}
+/* Private typedef -----------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+/* Private macro -------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+/* Private functions prototype------------------------------------------------*/
+/* Exported variables by reference--------------------------------------------*/
+{{#each @root.instances~}}
+  {{#if (eq @root.strategy "SW")}}
+    {{~assign 'comp_cxt' (@root.SWConfigurationAPI.getSwInstanceConfiguration this)~}}
+    {{~log "COMP template comp_cxt:" (toJSON @root.comp_cxt)~}}
+    {{~assign 'current_resource' (@root.peripheralsResourceManagerAPI.getPeripheralBoundToSoftwareInstance this)~}}
+    {{~assign 'current_layer' @root.comp_cxt.info.layer~}}
+    {{~log "COMP template current_resource:" @root.current_resource~}}
+  {{else}}
+    {{~assign 'current_layer' info.layer~}}
+  {{/if}}
+  {{#if (eq @root.current_layer 'HAL')}}
+static hal_comp_handle_t h{{@root.current_resource}};
+{{> GPIO_HAL fct='gpio_exti_variables' resource=@root.current_resource~}}
+  {{/if}}
+{{/each}}
+{{helper_common_initialize_index~}}
+{{assign 'current_index' (helper_common_get_index @root.current_resource)~}}
+{{assign 'nvic_context' 'undefined'~}}
+{{assign 'nvic_generate_handler' true~}}
+{{#each @root.instances}}
+  {{#if (eq @root.strategy "HW")}}
+    {{~assign 'name' name~}}
+    {{~assign 'current_layer' info.layer~}}
+    {{~assign 'comp_cxt' this}}
+  {{else}}
+    {{~assign 'comp_cxt' (@root.SWConfigurationAPI.getSwInstanceConfiguration this)~}}
+    {{~assign 'current_resource' (@root.peripheralsResourceManagerAPI.getPeripheralBoundToSoftwareInstance this)~}}
+    {{~assign 'name' @root.comp_cxt.name~}}
+    {{~assign 'current_layer' @root.comp_cxt.info.layer~}}
+    {{~assign 'current_index' (helper_common_get_index @root.current_resource)~}}
+  {{/if}}
+  {{~log "COMP template instance:" (toJSON this)~}}
+{{! Initialize the context for LL code optimization ~}}
+{{assign 'lut_table'   (helper_comp_get_lut_table 'COMP_V1')~}}
+{{helper_common_initialize_ll_code @root.optim_enable @root.lut_table @root.current_resource~}}
+/******************************************************************************/
+/* Exported functions for {{@root.current_resource}} in {{@root.current_layer}} layer (SW instance {{@root.name}}) */
+/******************************************************************************/
+{{assign 'fct_name' (helper_common_get_generated_function_name @root.current_resource @root.current_layer @root.current_index)~}}
+{{assign 'current_index' (helper_common_inc_index @root.current_resource)~}}
+{{!
+    Generation of initialization function used in HAL
+~}}
+{{#with @root.comp_cxt}}
+{{#if (eq @root.current_layer 'HAL')~}}
+hal_comp_handle_t *{{@root.fct_name~}}_init(void)
+{
+{{> RCC fct='generate_peripheral_clock_activation' hw_resource=@root.current_resource}}
+{{> RCC fct='generate_kernel_clock' hw_resource=@root.current_resource sw_resource='COMP'}}
+
+{{> COMP_HAL fct='init'}}
+{{#with System}}
+{{!==================== GPIO ====================}}
+{{#with comp_gpio}}
+{{assign 'comp_gpio_needs' 'undefined'~}}
+{{#if comp_input_plus_gpio_inp1}}
+{{assign 'comp_gpio_needs' (helper_common_concatenate_needs comp_input_plus_gpio_inp1.needs @root.comp_gpio_needs)~}}
+{{/if}}
+{{#if comp_input_plus_gpio_inp2}}
+{{assign 'comp_gpio_needs' (helper_common_concatenate_needs comp_input_plus_gpio_inp2.needs @root.comp_gpio_needs)~}}
+{{/if}}
+{{#if comp_input_plus_gpio_inp3}}
+{{assign 'comp_gpio_needs' (helper_common_concatenate_needs comp_input_plus_gpio_inp3.needs @root.comp_gpio_needs)~}}
+{{/if}}
+{{#if comp_input_minus_gpio_inm1}}
+{{assign 'comp_gpio_needs' (helper_common_concatenate_needs comp_input_minus_gpio_inm1.needs @root.comp_gpio_needs)~}}
+{{/if}}
+{{#if comp_input_minus_gpio_inm2}}
+{{assign 'comp_gpio_needs' (helper_common_concatenate_needs comp_input_minus_gpio_inm2.needs @root.comp_gpio_needs)~}}
+{{/if}}
+{{#if comp_input_minus_gpio_inm3}}
+{{assign 'comp_gpio_needs' (helper_common_concatenate_needs comp_input_minus_gpio_inm3.needs @root.comp_gpio_needs)~}}
+{{/if}}
+{{#if comp_output_gpio}}
+{{assign 'comp_gpio_needs' (helper_common_concatenate_needs comp_output_gpio.needs @root.comp_gpio_needs)~}}
+{{/if}}
+{{> GPIO_HAL fct='init' needs=@root.comp_gpio_needs resource=@root.current_resource}}
+{{/with~}}{{!comp_gpio}}
+{{!==================== NVIC ====================}}
+{{#if EnableInterruption}}
+  {{assign 'found_comp_interrupt' true~}}
+  /* Enable the interruption for COMP */
+{{assign 'nvic_context' (helper_cortex_nvic_concatenate_irq_context  @root.nvic_context nvicConfig.needs @root.current_resource irq_handler_generation)~}}
+{{#> CORTEX fct='init' layer=@root.current_layer needs=nvicConfig.needs}}
+#warning "Partial HAL CORTEX is not present"
+{{/CORTEX}}
+{{/if}}{{! EnableInterruption~}}
+{{/with~}}{{!System}}
+  return &h{{@root.current_resource~}};
+}
+
+void {{@root.fct_name~}}_deinit(void)
+{
+{{> COMP_HAL fct='deinit'}}
+}
+
+{{assign 'fct_name' (helper_common_get_generated_function_name @root.current_resource @root.current_layer undefined)~}}
+{{!
+    Generation of getHandle functions used in HAL
+~}}
+hal_comp_handle_t *{{@root.fct_name~}}_gethandle(void)
+{
+  return &h{{@root.current_resource~}};
+}
+{{!==================== layer: LL ====================~}}
+{{else}}{{! eq @root.current_layer 'LL' ~}}
+
+COMP_TypeDef *{{@root.fct_name}}_init(void)
+{
+{{> RCC fct='generate_peripheral_clock_activation' hw_resource=@root.current_resource}}
+{{> RCC fct='generate_kernel_clock' hw_resource=@root.current_resource sw_resource='COMP'}}
+
+{{> COMP_LL fct='init'}}
+{{#with System}}
+{{!==================== GPIO ====================}}
+{{#with comp_gpio}}
+{{assign 'comp_gpio_needs' 'undefined'~}}
+{{#if comp_input_plus_gpio_inp1}}
+{{assign 'comp_gpio_needs' (helper_common_concatenate_needs comp_input_plus_gpio_inp1.needs @root.comp_gpio_needs)~}}
+{{/if}}
+{{#if comp_input_plus_gpio_inp2}}
+{{assign 'comp_gpio_needs' (helper_common_concatenate_needs comp_input_plus_gpio_inp2.needs @root.comp_gpio_needs)~}}
+{{/if}}
+{{#if comp_input_plus_gpio_inp3}}
+{{assign 'comp_gpio_needs' (helper_common_concatenate_needs comp_input_plus_gpio_inp3.needs @root.comp_gpio_needs)~}}
+{{/if}}
+{{#if comp_input_minus_gpio_inm1}}
+{{assign 'comp_gpio_needs' (helper_common_concatenate_needs comp_input_minus_gpio_inm1.needs @root.comp_gpio_needs)~}}
+{{/if}}
+{{#if comp_input_minus_gpio_inm2}}
+{{assign 'comp_gpio_needs' (helper_common_concatenate_needs comp_input_minus_gpio_inm2.needs @root.comp_gpio_needs)~}}
+{{/if}}
+{{#if comp_input_minus_gpio_inm3}}
+{{assign 'comp_gpio_needs' (helper_common_concatenate_needs comp_input_minus_gpio_inm3.needs @root.comp_gpio_needs)~}}
+{{/if}}
+{{> GPIO_LL fct='init' needs=@root.comp_gpio_needs resource=@root.current_resource}}
+{{/with~}}{{!comp_gpio}}
+{{!==================== NVIC ====================}}
+{{#if EnableInterruption}}
+  {{assign 'found_comp_interrupt' true~}}
+  /* Enable the interruption for COMP */
+{{assign 'nvic_context' (helper_cortex_nvic_concatenate_irq_context @root.nvic_context nvicConfig.needs @root.current_resource irq_handler_generation)~}}
+{{#> CORTEX fct='init' layer=@root.current_layer needs=nvicConfig.needs}}
+#warning "Partial LL CORTEX is not present"
+{{/CORTEX}}
+{{/if}}{{! EnableInterruption~}}
+{{/with~}}{{!System}}
+  return {{@root.current_resource}};
+}
+
+void {{@root.fct_name}}_deinit(void)
+{
+}
+{{/if~}}{{! eq @root.current_layer 'HAL' ~}}
+
+{{#if (eq @root.current_layer 'HAL')}}
+{{#if (not (eq @root.nvic_context 'undefined'))}}
+{{assign 'irq_info_list' (helper_cortex_nvic_get_irqline_info_list @root.NvicAPI @root.nvic_context 'COMP')~}}
+{{#each @root.irq_info_list}}
+{{#if generate_handler}}
+/******************************************************************************/
+/*                     {{description}}                    */
+/******************************************************************************/
+void {{line}}_IRQHandler(void)
+{
+  HAL_{{component}}{{irq_suffix}}_IRQHandler(&h{{resource_hw}});
+}
+
+{{else}}
+/******************************************************************************/
+/*    {{description}} is managed directly in user code.   */
+/******************************************************************************/
+/*
+void {{line}}_IRQHandler(void)
+{
+}
+  */
+{{/if}}
+{{/each}}
+{{/if}}
+
+{{/if}}{{! eq @root.current_layer 'HAL' ~}}
+{{/with}}
+{{/each~}}{{!instance~}}

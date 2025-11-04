@@ -1,0 +1,3682 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "version": "0.0.1",
+  "componentid": "USBX system:STM32 MX Config:USBX Init",
+  "type": "object",
+  "grammarVersion": "3.1",
+  "properties": {
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "object",
+          "properties": {
+            "USBX_version": {
+              "title": "USBX version",
+              "$comment": "label associated to the instance, can be overridden at sample level. In this case it becomes read-only.",
+              "type": "string",
+              "default": "6.4.1",
+              "oneOf": [
+                {
+                  "const": "6.4.1"
+                }
+              ]
+            }
+          }
+        },
+        "Profile": {
+          "title": "Profile configuration",
+          "type": "object",
+          "properties": {
+            "Profile_type": {
+              "title": "Profile selection",
+              "type": "string",
+              "oneOf": [
+                {
+                  "title": "Default",
+                  "const": "Default"
+                },
+                {
+                  "title": "Low Footprint",
+                  "const": "Low_Footprint",
+                  "actions": [
+                    {
+                      "type": "disable",
+                      "condition": "true"
+                    }
+                  ]
+                },
+                {
+                  "title": "High performance",
+                  "const": "High_performance",
+                  "actions": [
+                    {
+                      "type": "disable",
+                      "condition": "true"
+                    }
+                  ]
+                }
+              ],
+              "default": "Default"
+            }
+          }
+        },
+        "core_config": {
+          "type": "object",
+          "title": "Core configuration",
+          "properties": {
+            "basic": {
+              "type": "object",
+              "title": "Main middleware configuration",
+              "properties": {
+                "USB_Core_System": {
+                  "type": "object",
+                  "properties": {
+                    "UX_STANDALONE": {
+                      "type": "string",
+                      "description": "When defined, this macro will enable the standalone mode of USBX. If this is disabled, you should add the RTOS pack.",
+                      "title": "Select Operating System :",
+                      "default": "No_OS",
+                      "oneOf": [
+                        {
+                          "const": "No_OS"
+                        },
+                        {
+                          "const": "FreeRTOS"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "warning",
+                          "condition": "$core_config.basic.USB_Core_System.UX_STANDALONE != 'No_OS' && !$get('swproject.hasRTOSenabled')",
+                          "message": "Please make sure to disable RTOS mode in USBX, or alternatively, enable RTOS."
+                        }
+                      ]
+                    },
+                    "UX_THREAD_PRIORITY_ENUM": {
+                      "title": "Enumeration Thread Priority",
+                      "description": "This is the thread priority value for the USBX enumeration threads that monitor the bus topology.",
+                      "type": "integer",
+                      "default": 5,
+                      "minimum": 0,
+                      "maximum": 31,
+                      "display_format": [
+                        "dec",
+                        "hex"
+                      ],
+                      "actions": [
+                        {
+                          "type": "enable",
+                          "condition": "$core_config.basic.USB_Core_System.UX_STANDALONE != 'No_OS'"
+                        }
+                      ]
+                    },
+                    "UX_THREAD_PRIORITY_CLASS": {
+                      "title": "Class Thread Priority",
+                      "description": "This is the thread priority value for the USBX class threads that monitor the bus topology.",
+                      "type": "integer",
+                      "default": 5,
+                      "minimum": 0,
+                      "maximum": 31,
+                      "display_format": [
+                        "dec",
+                        "hex"
+                      ],
+                      "actions": [
+                        {
+                          "type": "enable",
+                          "condition": "$core_config.basic.USB_Core_System.UX_STANDALONE != 'No_OS'"
+                        }
+                      ]
+                    },
+                    "UX_THREAD_STACK_SIZE": {
+                      "description": "This value is the size of the stack in bytes for the USBX threads.It can be typically 1024 or 2048 bytes depending on the processor used and the host controller.",
+                      "title": "Thread Stack Size",
+                      "type": "integer",
+                      "default": 2048,
+                      "minimum": 64,
+                      "maximum": 63999,
+                      "display_format": [
+                        "dec",
+                        "hex"
+                      ],
+                      "actions": [
+                        {
+                          "type": "enable",
+                          "condition": "$core_config.basic.USB_Core_System.UX_STANDALONE != 'No_OS'"
+                        }
+                      ]
+                    },
+                    "More": {
+                      "type": "object",
+                      "properties": {
+                        "UX_NO_TIME_SLICE": {
+                          "title": "No Time Slice",
+                          "description": "This value actually defines the time slice that will be used for threads.",
+                          "type": "integer",
+                          "default": 0,
+                          "minimum": 0,
+                          "maximum": 255,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "actions": [
+                            {
+                              "type": "enable",
+                              "condition": "$core_config.basic.USB_Core_System.UX_STANDALONE != 'No_OS'"
+                            }
+                          ]
+                        },
+                        "UX_ENFORCE_SAFE_ALIGNMENT": {
+                          "title": "Enforce Safe Alignment",
+                          "description": "This value forces the memory allocation scheme to enforce alignment of memory with the UX_SAFE_ALIGN field.",
+                          "type": "boolean",
+                          "oneOf": [
+                            {
+                              "title": "Disabled",
+                              "const": false
+                            },
+                            {
+                              "title": "Enabled",
+                              "const": true
+                            }
+                          ],
+                          "default": false
+                        },
+                        "UX_DEBUG_LOG_SIZE": {
+                          "description": "This value represents the size of the log pool.",
+                          "type": "integer",
+                          "default": 16384,
+                          "minimum": 0,
+                          "maximum": 65535,
+                          "title": "Debug Log Size",
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ]
+                        },
+                        "UX_PERIODIC_RATE": {
+                          "title": "Periodic Rate",
+                          "description": "This value represents how many ticks per seconds for a specific hardware platform.",
+                          "type": "integer",
+                          "default": 100,
+                          "minimum": 0,
+                          "maximum": 65535,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "actions": [
+                            {
+                              "type": "enable",
+                              "condition": "$core_config.basic.USB_Core_System.UX_STANDALONE != 'No_OS'"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "Device_Class": {
+                  "title": "Device Class",
+                  "type": "object",
+                  "properties": {
+                    "HID_Class": {
+                      "title": "HID Class",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "HID_Device_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false
+                    },
+                    "HID_Core_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.HID_Class"
+                        }
+                      ],
+                      "properties": {
+                        "UX_DEVICE_CLASS_HID_EVENT_BUFFER_LENGTH": {
+                          "title": "Event Buffer Length",
+                          "type": "integer",
+                          "default": 64,
+                          "maximum": 255,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "description": "This value represents the maximum length of HID reports on the device."
+                        },
+                        "UX_DEVICE_CLASS_HID_MAX_EVENTS_QUEUE": {
+                          "title": "Max Events Queue",
+                          "type": "integer",
+                          "default": 8,
+                          "minimum": 0,
+                          "maximum": 255,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "description": "This value represents the maximum number of HID events/reports that can be queued at once."
+                        }
+                      }
+                    },
+                    "Device_Mouse": {
+                      "title": "Device Mouse",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "HID_Mouse_Device_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.HID_Class"
+                        }
+                      ]
+                    },
+                    "Mouse_Interface_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.Device_Mouse"
+                        }
+                      ],
+                      "properties": {
+                        "USBD_HID_MOUSE_ENDPOINT_IN_ADDRESS": {
+                          "title": "Endpoint IN Address",
+                          "description": "This is the device HID endpoint IN address. Make sure to have a unique address when used alongside other device classes.",
+                          "type": "integer",
+                          "default": 1,
+                          "minimum": 0,
+                          "maximum": 9,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ]
+                        },
+                        "USBD_HID_MOUSE_ENDPOINT_IN_FS_MPS": {
+                          "description": "Device HID class endpoint IN_FS Max Packet Size",
+                          "type": "integer",
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "title": "Endpoint IN FS Max Packet Size",
+                          "default": 4,
+                          "minimum": 1,
+                          "maximum": 1024
+                        },
+                        "USBD_HID_MOUSE_ENDPOINT_IN_HS_MPS": {
+                          "description": "Device HID class endpoint IN_HS Max Packet Size",
+                          "type": "integer",
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "title": "Endpoint IN HS Max Packet Size",
+                          "default": 1,
+                          "maximum": 1024
+                        },
+                        "More": {
+                          "type": "object",
+                          "properties": {
+                            "USBD_HID_MOUSE_ENDPOINT_IN_FS_BINTERVAL": {
+                              "title": "Endpoint IN FS BInterval",
+                              "description": "Device HID class endpoint IN_FS BInterval",
+                              "type": "integer",
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "default": 5,
+                              "minimum": 1,
+                              "maximum": 255
+                            },
+                            "USBD_HID_MOUSE_ENDPOINT_IN_HS_BINTERVAL": {
+                              "description": "Device HID class endpoint IN_HS BInterval.",
+                              "type": "integer",
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "title": "Endpoint IN HS BInterval",
+                              "default": 2,
+                              "minimum": 1,
+                              "maximum": 13
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "Device_Keyboard": {
+                      "title": "Device Keyboard",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "HID_Keyboard_Device_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.HID_Class"
+                        }
+                      ]
+                    },
+                    "Keyboard_Interface_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.Device_Keyboard"
+                        }
+                      ],
+                      "properties": {
+                        "USBD_HID_KEYBOARD_ENDPOINT_IN_ADDRESS": {
+                          "description": "This is the device HID endpoint IN address. Make sure to have a unique address when used alongside other device classes.",
+                          "type": "integer",
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "title": "Endpoint IN Address",
+                          "default": 2,
+                          "minimum": 0,
+                          "maximum": 6
+                        },
+                        "USBD_HID_KEYBOARD_ENDPOINT_IN_FS_MPS": {
+                          "description": "Device HID class endpoint IN_FS Max Packet Size",
+                          "type": "integer",
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "title": "Endpoint IN FS Max Packet Size",
+                          "default": 4,
+                          "maximum": 1024
+                        },
+                        "USBD_HID_KEYBOARD_ENDPOINT_IN_HS_MPS": {
+                          "description": "Device HID class endpoint IN_HS Max Packet Size",
+                          "type": "integer",
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "title": "Endpoint IN HS Max Packet Size",
+                          "default": 4,
+                          "maximum": 1024
+                        },
+                        "More": {
+                          "type": "object",
+                          "properties": {
+                            "USBD_HID_KEYBOARD_ENDPOINT_IN_FS_BINTERVAL": {
+                              "description": "Device HID class endpoint IN_FS BInterval",
+                              "type": "integer",
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "title": "Endpoint IN FS BInterval",
+                              "maximum": 255,
+                              "default": 5,
+                              "minimum": 1
+                            },
+                            "USBD_HID_KEYBOARD_ENDPOINT_IN_HS_BINTERVAL": {
+                              "description": "Device HID class endpoint IN_HS BInterval",
+                              "type": "integer",
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "title": "Endpoint IN HS BInterval",
+                              "default": 5,
+                              "minimum": 1,
+                              "maximum": 16
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "Device_Custom": {
+                      "title": "Device Custom",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "HID_Custom_Device_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.HID_Class"
+                        }
+                      ]
+                    },
+                    "Custom_Interface_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.Device_Custom"
+                        }
+                      ],
+                      "properties": {
+                        "USBD_HID_CUSTOM_ENDPOINT_IN_ADDRESS": {
+                          "description": "This is the device HID endpoint IN address. Make sure to have a unique address when used alongside other device classes.",
+                          "type": "integer",
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "title": "Endpoint IN Address",
+                          "default": 2,
+                          "minimum": 0,
+                          "maximum": 6
+                        },
+                        "USBD_HID_CUSTOM_ENDPOINT_IN_FS_MPS": {
+                          "description": "Device HID class endpoint IN_FS Max Packet Size",
+                          "type": "integer",
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "title": "Endpoint IN FS Max Packet Size",
+                          "default": 4,
+                          "maximum": 1024
+                        },
+                        "USBD_HID_CUSTOM_ENDPOINT_IN_HS_MPS": {
+                          "description": "Device HID class endpoint IN_HS Max Packet Size",
+                          "type": "integer",
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "title": "Endpoint IN HS Max Packet Size",
+                          "default": 4,
+                          "maximum": 1024
+                        },
+                        "More": {
+                          "type": "object",
+                          "properties": {
+                            "USBD_HID_CUSTOM_ENDPOINT_IN_FS_BINTERVAL": {
+                              "description": "Device HID class endpoint IN_FS BInterval",
+                              "type": "integer",
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "title": "Endpoint IN FS BInterval",
+                              "maximum": 255,
+                              "default": 5,
+                              "minimum": 1
+                            },
+                            "USBD_HID_CUSTOM_ENDPOINT_IN_HS_BINTERVAL": {
+                              "description": "Device HID class endpoint IN_HS BInterval",
+                              "type": "integer",
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "title": "Endpoint IN HS BInterval",
+                              "default": 5,
+                              "minimum": 1,
+                              "maximum": 16
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "CDC_ACM_Class": {
+                      "title": "CDC_ACM Class",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "CDC_ACM_Device_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false
+                    },
+                    "CDC_ACM_Core_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.CDC_ACM_Class"
+                        }
+                      ],
+                      "properties": {
+                        "UX_DEVICE_CLASS_CDC_ACM_TRANSMISSION_DISABLE": {
+                          "title": "Disable CDC ACM Transmission",
+                          "description": "Disable CDC ACM non-blocking transmission support.",
+                          "type": "boolean",
+                          "oneOf": [
+                            {
+                              "title": "Disabled",
+                              "const": false
+                            },
+                            {
+                              "title": "Enabled",
+                              "const": true
+                            }
+                          ],
+                          "default": true
+                        },
+                        "UX_DEVICE_CLASS_CDC_ACM_WRITE_AUTO_ZLP": {
+                          "title": "Enable CDC ACM Write Auto ZLP",
+                          "description": "Enable automatic pending ZLP (complete transfer) after buffer is sent.",
+                          "type": "boolean",
+                          "oneOf": [
+                            {
+                              "title": "Disabled",
+                              "const": false
+                            },
+                            {
+                              "title": "Enabled",
+                              "const": true
+                            }
+                          ],
+                          "default": false
+                        }
+                      }
+                    },
+                    "CDC_ACM_Interface_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.CDC_ACM_Class"
+                        }
+                      ],
+                      "properties": {
+                        "USBD_CDC_ACM_ENDPOINT_IN_CMD_ADDR": {
+                          "title": "Endpoint Command IN Address",
+                          "description": "Device CDC ACM class Endpoint Command IN Address. Make sure to have a unique address when used alongside other device classes.",
+                          "type": "integer",
+                          "default": 1,
+                          "minimum": 0,
+                          "maximum": 5,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ]
+                        },
+                        "USBD_CDC_ACM_ENDPOINT_IN_ADDR": {
+                          "title": "Endpoint IN Address",
+                          "description": "Device CDC-ACM endpoint IN address. Make sure to have a unique address when used alongside other device classes.",
+                          "type": "integer",
+                          "default": 2,
+                          "minimum": 0,
+                          "maximum": 5,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ]
+                        },
+                        "USBD_CDC_ACM_ENDPOINT_OUT_ADDR": {
+                          "title": "Endpoint OUT Address",
+                          "description": "Device CDC-ACM endpoint OUT address. Make sure to have a unique address when used alongside other device classes.",
+                          "type": "integer",
+                          "default": 3,
+                          "minimum": 0,
+                          "maximum": 5,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ]
+                        },
+                        "More": {
+                          "type": "object",
+                          "properties": {
+                            "USBD_CDC_ACM_ENDPOINT_IN_CMD_FS_MPS": {
+                              "title": "Endpoint Command IN FS Max Packet Size",
+                              "description": "Device CDC ACM class Endpoint Command IN max packet size.",
+                              "type": "integer",
+                              "default": 8,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CDC_ACM_ENDPOINT_IN_CMD_FS_BINTERVAL": {
+                              "title": "Endpoint Command IN FS BInterval",
+                              "description": "Device CDC ACM class Endpoint Command IN BInterval.",
+                              "type": "integer",
+                              "default": 5,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CDC_ACM_ENDPOINT_IN_FS_MPS": {
+                              "title": "Endpoint IN FS Max Packet Size",
+                              "description": "Device CDC ACM class endpoint IN max packet size.",
+                              "type": "integer",
+                              "default": 64,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CDC_ACM_ENDPOINT_IN_FS_BINTERVAL": {
+                              "title": "Endpoint IN FS BInterval",
+                              "description": "Device CDC ACM class endpoint IN BInterval.",
+                              "type": "integer",
+                              "default": 5,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CDC_ACM_ENDPOINT_OUT_FS_MPS": {
+                              "title": "Endpoint OUT FS Max Packet Size",
+                              "description": "Device CDC ACM class endpoint OUT max packet size.",
+                              "type": "integer",
+                              "default": 64,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CDC_ACM_ENDPOINT_OUT_FS_BINTERVAL": {
+                              "title": "Endpoint OUT FS BInterval",
+                              "description": "Device CDC ACM class endpoint OUT BInterval.",
+                              "type": "integer",
+                              "default": 5,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CDC_ACM_ENDPOINT_IN_CMD_HS_MPS": {
+                              "title": "Endpoint Command IN HS Max Packet Size",
+                              "description": "Device CDC ACM class Endpoint Command IN max packet size.",
+                              "type": "integer",
+                              "default": 8,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CDC_ACM_ENDPOINT_IN_CMD_HS_BINTERVAL": {
+                              "title": "Endpoint Command IN HS BInterval",
+                              "description": "Device CDC ACM class Endpoint Command IN BInterval.",
+                              "type": "integer",
+                              "default": 5,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CDC_ACM_ENDPOINT_IN_HS_MPS": {
+                              "title": "Endpoint IN HS Max Packet Size",
+                              "description": "Device CDC ACM class endpoint IN max packet size.",
+                              "type": "integer",
+                              "default": 64,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CDC_ACM_ENDPOINT_IN_HS_BINTERVAL": {
+                              "title": "Endpoint IN HS BInterval",
+                              "description": "Device CDC ACM class endpoint IN BInterval.",
+                              "type": "integer",
+                              "default": 5,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CDC_ACM_ENDPOINT_OUT_HS_MPS": {
+                              "title": "Endpoint OUT HS Max Packet Size",
+                              "description": "Device CDC ACM class endpoint OUT max packet size.",
+                              "type": "integer",
+                              "default": 64,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CDC_ACM_ENDPOINT_OUT_HS_BINTERVAL": {
+                              "title": "Endpoint OUT HS BInterval",
+                              "description": "Device CDC ACM class endpoint OUT BInterval.",
+                              "type": "integer",
+                              "default": 5,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "MSC_Class": {
+                      "title": "MSC Class",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "MSC_Device_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false
+                    },
+                    "MSC_Core_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.MSC_Class"
+                        }
+                      ],
+                      "properties": {
+                        "UX_SLAVE_CLASS_STORAGE_INCLUDE_MMC": {
+                          "title": "Include MMC Support",
+                          "description": "This value includes code to handle storage Multi-Media Commands (MMC), e.g., DVD-ROM.",
+                          "type": "boolean",
+                          "oneOf": [
+                            {
+                              "title": "Disabled",
+                              "const": false
+                            },
+                            {
+                              "title": "Enabled",
+                              "const": true
+                            }
+                          ],
+                          "default": false
+                        }
+                      }
+                    },
+                    "MSC_Interface_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.MSC_Class"
+                        }
+                      ],
+                      "properties": {
+                        "USBD_MSC_ENDPOINT_IN_ADDR": {
+                          "title": "Endpoint IN Address",
+                          "description": "This is the device storage endpoint IN address. Make sure to have a unique address when used alongside other device classes.",
+                          "type": "integer",
+                          "default": 1,
+                          "minimum": 0,
+                          "maximum": 5,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ]
+                        },
+                        "USBD_MSC_ENDPOINT_OUT_ADDR": {
+                          "title": "Endpoint OUT Address",
+                          "description": "This is the device storage endpoint OUT address. Make sure to have a unique address when used alongside other device classes.",
+                          "type": "integer",
+                          "default": 2,
+                          "minimum": 0,
+                          "maximum": 5,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ]
+                        },
+                        "More": {
+                          "type": "object",
+                          "properties": {
+                            "USBD_MSC_ENDPOINT_IN_FS_MPS": {
+                              "title": "Endpoint IN FS Max Packet Size",
+                              "description": "Device storage class endpoint IN max packet size.",
+                              "type": "integer",
+                              "default": 64,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_MSC_ENDPOINT_OUT_FS_MPS": {
+                              "title": "Endpoint OUT FS Max Packet Size",
+                              "description": "Device storage class endpoint OUT max packet size.",
+                              "type": "integer",
+                              "default": 64,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_MSC_ENDPOINT_IN_FS_BINTERVAL": {
+                              "description": "Device MSC class endpoint IN FS BInterval.",
+                              "type": "integer",
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "title": "Endpoint IN FS BInterval",
+                              "default": 2,
+                              "minimum": 1,
+                              "maximum": 13
+                            },
+                            "USBD_MSC_ENDPOINT_OUT_FS_BINTERVAL": {
+                              "description": "Device MSC class endpoint OUT FS BInterval.",
+                              "type": "integer",
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "title": "Endpoint OUT FS BInterval",
+                              "default": 2,
+                              "minimum": 1,
+                              "maximum": 13
+                            },
+                            "USBD_MSC_ENDPOINT_IN_HS_MPS": {
+                              "title": "Endpoint IN HS Max Packet Size",
+                              "description": "Device storage class endpoint IN max packet size.",
+                              "type": "integer",
+                              "default": 512,
+                              "minimum": 0,
+                              "maximum": 512,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_MSC_ENDPOINT_OUT_HS_MPS": {
+                              "title": "Endpoint OUT HS Max Packet Size",
+                              "description": "Device storage class endpoint OUT max packet size.",
+                              "type": "integer",
+                              "default": 512,
+                              "minimum": 0,
+                              "maximum": 512,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_MSC_ENDPOINT_IN_HS_BINTERVAL": {
+                              "description": "Device MSC class endpoint IN HS BInterval.",
+                              "type": "integer",
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "title": "Endpoint IN HS BInterval",
+                              "default": 2,
+                              "minimum": 1,
+                              "maximum": 13
+                            },
+                            "USBD_MSC_ENDPOINT_OUT_HS_BINTERVAL": {
+                              "description": "Device MSC class endpoint OUT HS BInterval.",
+                              "type": "integer",
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "title": "Endpoint OUT HS BInterval",
+                              "default": 2,
+                              "minimum": 1,
+                              "maximum": 13
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "DFU_Class": {
+                      "title": "DFU Class",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "DFU_Device_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false
+                    },
+                    "DFU_Core_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.DFU_Class"
+                        }
+                      ],
+                      "properties": {
+                        "DFU_UPLOAD_DISABLE": {
+                          "title": "Disable DFU Upload",
+                          "description": "Disable DFU Upload support.",
+                          "type": "boolean",
+                          "default": false
+                        },
+                        "DFU_ERROR_GET_ENABLE": {
+                          "title": "Enable DFU Error Get",
+                          "description": "Enable DFU_GETSTATUS and DFU_GETSTATE in error.",
+                          "type": "boolean",
+                          "default": false
+                        },
+                        "More": {
+                          "type": "object",
+                          "properties": {
+                            "DFU_STATUS_MODE": {
+                              "title": "DFU Status Mode",
+                              "description": "Enable simple mode for status query.",
+                              "type": "boolean",
+                              "default": false
+                            },
+                            "DFU_CUSTOM_REQUEST_ENABLE": {
+                              "title": "Enable Custom Request",
+                              "description": "Enable custom request process callback.",
+                              "type": "boolean",
+                              "default": true
+                            },
+                            "DFU_STATUS_POLLTIMEOUT": {
+                              "title": "DFU Status Poll Timeout",
+                              "description": "Default DFU status poll timeout.",
+                              "type": "integer",
+                              "default": 1,
+                              "minimum": 0,
+                              "maximum": 3,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "DFU_MEDIA_ERASE_TIME": {
+                              "title": "Media Erase Time",
+                              "description": "Time to erase media.",
+                              "type": "integer",
+                              "default": 1,
+                              "minimum": 0,
+                              "maximum": 3,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "DFU_MEDIA_PROGRAM_TIME": {
+                              "title": "Media Program Time",
+                              "description": "Time to program media.",
+                              "type": "integer",
+                              "default": 5,
+                              "minimum": 0,
+                              "maximum": 9,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "DFU_Interface_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.DFU_Class"
+                        }
+                      ],
+                      "properties": {
+                        "DFU_XFER_SIZE": {
+                          "title": "DFU Transfer Size",
+                          "description": "Max bytes per control-write operation.",
+                          "type": "integer",
+                          "default": 1024
+                        },
+                        "More": {
+                          "type": "object",
+                          "properties": {
+                            "DFU_MEDIA": {
+                              "title": "DFU Media",
+                              "description": "Flash description for PC tool.",
+                              "type": "string",
+                              "default": "@Internal Flash /0x08000000/03*016Ka,01*016Kg,01*064Kg,07*128Kg,04*016Kg,01*064Kg,07*128Kg"
+                            },
+                            "DFU_BM_ATTRIBUTES": {
+                              "title": "DFU BM Attributes",
+                              "description": "Device capabilities and attributes.",
+                              "type": "integer",
+                              "default": 11
+                            },
+                            "DFU_DetachTimeout": {
+                              "title": "DFU Detach Timeout",
+                              "description": "Time to wait after DFU_DETACH request.",
+                              "type": "integer",
+                              "default": 255
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "Audio_Class": {
+                      "title": "Audio Class",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "Audio_Device_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false
+                    },
+                    "Audio_Core_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.Audio_Class"
+                        }
+                      ],
+                      "properties": {
+                        "Audio_Feedback_Support": {
+                          "title": "Enable the device audio Feedback support",
+                          "type": "boolean",
+                          "oneOf": [
+                            {
+                              "title": "Disabled",
+                              "const": false
+                            },
+                            {
+                              "title": "Enabled",
+                              "const": true
+                            }
+                          ],
+                          "default": false,
+                          "description": "Enable the device audio Feedback support."
+                        },
+                        "More": {
+                          "type": "object",
+                          "properties": {
+                            "Audio_Interrupt_Support": {
+                              "title": "Enable the device audio interrupt endpoint support",
+                              "type": "boolean",
+                              "oneOf": [
+                                {
+                                  "title": "Disabled",
+                                  "const": false
+                                },
+                                {
+                                  "title": "Enabled",
+                                  "const": true
+                                }
+                              ],
+                              "default": false,
+                              "description": "Enable the device audio interrupt endpoint support."
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "Audio_Interface_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.Audio_Class"
+                        }
+                      ],
+                      "properties": {
+                        "USBD_AUDIO_ENDPOINT_IN_ADDR": {
+                          "title": "Endpoint IN Address",
+                          "description": "Unique address for AUDIO endpoint IN.",
+                          "type": "integer",
+                          "default": 2,
+                          "minimum": 0,
+                          "maximum": 9,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ]
+                        },
+                        "USBD_AUDIO_ENDPOINT_OUT_ADDR": {
+                          "title": "Endpoint OUT Address",
+                          "description": "Unique address for AUDIO endpoint OUT.",
+                          "type": "integer",
+                          "default": 2,
+                          "minimum": 0,
+                          "maximum": 9,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ]
+                        },
+                        "More": {
+                          "type": "object",
+                          "properties": {
+                            "USBD_AUDIO_ENDPOINT_IN_FS_MPS": {
+                              "title": "Endpoint IN FS Max Packet Size",
+                              "description": "Max packet size for FS endpoint IN.",
+                              "type": "integer",
+                              "default": 256,
+                              "minimum": 0,
+                              "maximum": 1023,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_AUDIO_ENDPOINT_IN_FS_BINTERVAL": {
+                              "title": "Endpoint IN FS BInterval",
+                              "description": "BInterval for FS endpoint.",
+                              "type": "integer",
+                              "default": 16,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_AUDIO_ENDPOINT_OUT_FS_MPS": {
+                              "title": "Endpoint OUT FS Max Packet Size",
+                              "description": "Max packet size for FS endpoint OUT.",
+                              "type": "integer",
+                              "default": 256,
+                              "minimum": 0,
+                              "maximum": 1023,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_AUDIO_ENDPOINT_OUT_FS_BINTERVAL": {
+                              "title": "Endpoint OUT FS BInterval",
+                              "description": "BInterval for FS endpoint.",
+                              "type": "integer",
+                              "default": 16,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_AUDIO_ENDPOINT_IN_HS_MPS": {
+                              "title": "Endpoint IN HS Max Packet Size",
+                              "description": "Max packet size for HS endpoint.",
+                              "type": "integer",
+                              "default": 512,
+                              "minimum": 0,
+                              "maximum": 3072,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_AUDIO_ENDPOINT_IN_HS_BINTERVAL": {
+                              "title": "Endpoint IN HS BInterval",
+                              "description": "BInterval for HS endpoint.",
+                              "type": "integer",
+                              "default": 16,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_AUDIO_ENDPOINT_OUT_HS_MPS": {
+                              "title": "Endpoint OUT HS Max Packet Size",
+                              "description": "Max packet size for HS endpoint.",
+                              "type": "integer",
+                              "default": 512,
+                              "minimum": 0,
+                              "maximum": 3072,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_AUDIO_ENDPOINT_OUT_HS_BINTERVAL": {
+                              "title": "Endpoint OUT HS BInterval",
+                              "description": "BInterval for HS endpoint.",
+                              "type": "integer",
+                              "default": 16,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "Video_Class": {
+                      "title": "Video Class",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "Video_Device_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false
+                    },
+                    "Video_Core_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.Video_Class"
+                        }
+                      ],
+                      "properties": {
+                        "VIDEO_STREAMING_FORMAT_SUBTYPE": {
+                          "title": "Video Streaming Format",
+                          "type": "integer",
+                          "oneOf": [
+                            {
+                              "title": "MJPEG",
+                              "const": 0
+                            },
+                            {
+                              "title": "Uncompressed",
+                              "const": 1
+                            }
+                          ],
+                          "default": 0,
+                          "description": "Defines the video stream format."
+                        },
+                        "More": {
+                          "type": "object",
+                          "properties": {
+                            "UVC_FRAME_WIDTH": {
+                              "title": "Frame Width",
+                              "description": "Width of the image in pixels.",
+                              "type": "integer",
+                              "default": 400,
+                              "minimum": 0,
+                              "maximum": 65535,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "UVC_FRAME_HEIGHT": {
+                              "title": "Frame Height",
+                              "description": "Height of the image in pixels.",
+                              "type": "integer",
+                              "default": 240,
+                              "minimum": 0,
+                              "maximum": 65535,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "UVC_CAM_FPS_FS": {
+                              "title": "Frame Rate (FS)",
+                              "description": "Frame rate at full speed.",
+                              "type": "integer",
+                              "default": 10,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "UVC_CAM_FPS_HS": {
+                              "title": "Frame Rate (HS)",
+                              "description": "Frame rate at high speed.",
+                              "type": "integer",
+                              "default": 5,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "UVC_UNCOMPRESSED_GUID": {
+                              "title": "Stream Encoding Format",
+                              "type": "integer",
+                              "oneOf": [
+                                {
+                                  "title": "YUY2",
+                                  "const": 0
+                                },
+                                {
+                                  "title": "NUY2",
+                                  "const": 1
+                                }
+                              ],
+                              "default": 0,
+                              "description": "Identifier for stream encoding format.",
+                              "actions": [
+                                {
+                                  "type": "include",
+                                  "condition": "$core_config.basic.Device_Class.Video_Core_Config.VIDEO_STREAMING_FORMAT_SUBTYPE"
+                                }
+                              ]
+                            },
+                            "UVC_BITS_PER_PIXEL": {
+                              "title": "Bits Per Pixel",
+                              "description": "Bits per pixel for color specification.",
+                              "type": "integer",
+                              "default": 12,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "actions": [
+                                {
+                                  "type": "include",
+                                  "condition": "$core_config.basic.Device_Class.Video_Core_Config.VIDEO_STREAMING_FORMAT_SUBTYPE"
+                                }
+                              ]
+                            },
+                            "UVC_COLOR_PRIMARIE": {
+                              "title": "Color Primaries",
+                              "description": "Defines color primaries and reference white.",
+                              "type": "integer",
+                              "default": 1,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "actions": [
+                                {
+                                  "type": "include",
+                                  "condition": "$core_config.basic.Device_Class.Video_Core_Config.VIDEO_STREAMING_FORMAT_SUBTYPE"
+                                }
+                              ]
+                            },
+                            "UVC_TFR_CHARACTERISTICS": {
+                              "title": "Transfer Characteristics",
+                              "description": "Defines the gamma function of the source picture.",
+                              "type": "integer",
+                              "default": 1,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "actions": [
+                                {
+                                  "type": "include",
+                                  "condition": "$core_config.basic.Device_Class.Video_Core_Config.VIDEO_STREAMING_FORMAT_SUBTYPE"
+                                }
+                              ]
+                            },
+                            "UVC_MATRIX_COEFFICIENTS": {
+                              "title": "Matrix Coefficients",
+                              "description": "Matrix for computing luma and chroma values.",
+                              "type": "integer",
+                              "default": 4,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "actions": [
+                                {
+                                  "type": "include",
+                                  "condition": "$core_config.basic.Device_Class.Video_Core_Config.VIDEO_STREAMING_FORMAT_SUBTYPE"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "Video_Interface_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.Video_Class"
+                        }
+                      ],
+                      "properties": {
+                        "USBD_VIDEO_ENDPOINT_IN_ADDR": {
+                          "title": "IN Endpoint Address",
+                          "description": "Unique address for VIDEO endpoint IN.",
+                          "type": "integer",
+                          "default": 2,
+                          "minimum": 0,
+                          "maximum": 9,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ]
+                        },
+                        "More": {
+                          "type": "object",
+                          "properties": {
+                            "USBD_VIDEO_ENDPOINT_IN_FS_MPS": {
+                              "title": "FS Max Packet Size",
+                              "description": "Max packet size for FS endpoint.",
+                              "type": "integer",
+                              "default": 256,
+                              "minimum": 0,
+                              "maximum": 1023,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_VIDEO_ENDPOINT_IN_FS_BINTERVAL": {
+                              "title": "FS BInterval",
+                              "description": "BInterval for FS endpoint.",
+                              "type": "integer",
+                              "default": 16,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_VIDEO_ENDPOINT_IN_HS_MPS": {
+                              "title": "HS Max Packet Size",
+                              "description": "Max packet size for HS endpoint.",
+                              "type": "integer",
+                              "default": 512,
+                              "minimum": 0,
+                              "maximum": 3072,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_VIDEO_ENDPOINT_IN_HS_BINTERVAL": {
+                              "title": "HS BInterval",
+                              "description": "BInterval for HS endpoint.",
+                              "type": "integer",
+                              "default": 16,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "Printer_Class": {
+                      "title": "Printer Class",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "Printer_Device_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false
+                    },
+                    "Printer_Core_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.Printer_Class"
+                        }
+                      ],
+                      "properties": {
+                        "USBD_PRINTER_INTERFACE_PROTOCOL": {
+                          "title": "Printer Interface Protocol",
+                          "description": "Device Printer Class Interface Type",
+                          "type": "integer",
+                          "default": 2,
+                          "minimum": 0,
+                          "maximum": 255,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ]
+                        },
+                        "More": {
+                          "type": "object",
+                          "properties": {
+                            "UX_DEVICE_CLASS_PRINTER_WRITE_AUTO_ZLP": {
+                              "title": "Auto Zero-Length Packet for Printer Write",
+                              "type": "boolean",
+                              "oneOf": [
+                                {
+                                  "title": "Disabled",
+                                  "const": false
+                                },
+                                {
+                                  "title": "Enabled",
+                                  "const": true
+                                }
+                              ],
+                              "default": true,
+                              "description": "Defined, ZLP packet is sent automatically to complete printer write transfer."
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "Printer_Interface_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.Printer_Class"
+                        }
+                      ],
+                      "properties": {
+                        "USBD_PRINTER_ENDPOINT_IN_ADDR": {
+                          "title": "Endpoint IN Address",
+                          "description": "This is the device storage endpoint IN address. Make sure to have a unique address when used alongside other device classes.",
+                          "type": "integer",
+                          "default": 1,
+                          "minimum": 0,
+                          "maximum": 5,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ]
+                        },
+                        "USBD_PRINTER_ENDPOINT_OUT_ADDR": {
+                          "title": "Endpoint OUT Address",
+                          "description": "This is the device storage endpoint OUT address. Make sure to have a unique address when used alongside other device classes.",
+                          "type": "integer",
+                          "default": 2,
+                          "minimum": 0,
+                          "maximum": 5,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ]
+                        },
+                        "More": {
+                          "type": "object",
+                          "properties": {
+                            "USBD_PRINTER_ENDPOINT_IN_FS_MPS": {
+                              "title": "Endpoint IN FS Max Packet Size",
+                              "description": "Device storage class endpoint IN max packet size.",
+                              "type": "integer",
+                              "default": 64,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_PRINTER_ENDPOINT_OUT_FS_MPS": {
+                              "title": "Endpoint OUT FS Max Packet Size",
+                              "description": "Device storage class endpoint OUT max packet size.",
+                              "type": "integer",
+                              "default": 64,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_PRINTER_ENDPOINT_IN_FS_BINTERVAL": {
+                              "description": "Device Printer class endpoint IN FS BInterval.",
+                              "type": "integer",
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "title": "Endpoint IN FS BInterval",
+                              "default": 2,
+                              "minimum": 1,
+                              "maximum": 13
+                            },
+                            "USBD_PRINTER_ENDPOINT_OUT_FS_BINTERVAL": {
+                              "description": "Device Printer class endpoint OUT FS BInterval.",
+                              "type": "integer",
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "title": "Endpoint OUT FS BInterval",
+                              "default": 2,
+                              "minimum": 1,
+                              "maximum": 13
+                            },
+                            "USBD_PRINTER_ENDPOINT_IN_HS_MPS": {
+                              "title": "Endpoint IN HS Max Packet Size",
+                              "description": "Device storage class endpoint IN max packet size.",
+                              "type": "integer",
+                              "default": 512,
+                              "minimum": 0,
+                              "maximum": 512,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_PRINTER_ENDPOINT_OUT_HS_MPS": {
+                              "title": "Endpoint OUT HS Max Packet Size",
+                              "description": "Device storage class endpoint OUT max packet size.",
+                              "type": "integer",
+                              "default": 512,
+                              "minimum": 0,
+                              "maximum": 512,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_PRINTER_ENDPOINT_IN_HS_BINTERVAL": {
+                              "description": "Device Printer class endpoint IN HS BInterval.",
+                              "type": "integer",
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "title": "Endpoint IN HS BInterval",
+                              "default": 2,
+                              "minimum": 1,
+                              "maximum": 13
+                            },
+                            "USBD_PRINTER_ENDPOINT_OUT_HS_BINTERVAL": {
+                              "description": "Device Printer class endpoint OUT HS BInterval.",
+                              "type": "integer",
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "title": "Endpoint OUT HS BInterval",
+                              "default": 2,
+                              "minimum": 1,
+                              "maximum": 13
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "CCID_Class": {
+                      "title": "CCID Class",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "CCID_Device_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false
+                    },
+                    "CCID_Core_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.CCID_Class"
+                        }
+                      ],
+                      "properties": {
+                        "USBD_CCID_NUMBER_CLOCK_SUPPORTED": {
+                          "description": "The number of clock frequencies that are supported by the CCID.",
+                          "title": "USBD_CCID_NUMBER_CLOCK_SUPPORTED",
+                          "type": "integer",
+                          "default": 1,
+                          "minimum": 0,
+                          "maximum": 255
+                        },
+                        "USBD_CCID_NUMBER_DATA_RATES_SUPPORTED": {
+                          "description": "The number of data rates that are supported by the CCID device.",
+                          "title": "USBD_CCID_NUMBER_DATA_RATES_SUPPORTED",
+                          "type": "integer",
+                          "default": 1,
+                          "minimum": 0,
+                          "maximum": 255
+                        },
+                        "USBD_CCID_DEFAULT_DATA_RATE": {
+                          "description": "The CCID max message length.",
+                          "title": "USBD_CCID_DEFAULT_DATA_RATE",
+                          "type": "integer",
+                          "default": 10752,
+                          "minimum": 0,
+                          "maximum": 115200
+                        },
+                        "USBD_CCID_MAX_DATA_RATE": {
+                          "description": "Maximum supported ICC I/O data rate in bps.",
+                          "title": "USBD_CCID_MAX_DATA_RATE",
+                          "type": "integer",
+                          "default": 10752,
+                          "minimum": 0,
+                          "maximum": 115200
+                        },
+                        "USBD_CCID_DEFAULT_CLOCK_FREQ": {
+                          "description": "Default ICC clock frequency in KHz.",
+                          "title": "USBD_CCID_DEFAULT_CLOCK_FREQ",
+                          "type": "integer",
+                          "default": 4800,
+                          "minimum": 0,
+                          "maximum": 5000
+                        },
+                        "USBD_CCID_MAX_CLOCK_FREQ": {
+                          "description": "Maximum supported ICC clock frequency in KHz.",
+                          "title": "USBD_CCID_MAX_CLOCK_FREQ",
+                          "type": "integer",
+                          "default": 4800,
+                          "minimum": 0,
+                          "maximum": 5000
+                        },
+                        "More": {
+                          "type": "object",
+                          "properties": {
+                            "USBD_CCID_MAX_SLOT_INDEX": {
+                              "description": "The index of the highest available slot on this ccid device.",
+                              "title": "USBD_CCID_MAX_SLOT_INDEX",
+                              "type": "integer",
+                              "default": 1,
+                              "minimum": 0,
+                              "maximum": 16
+                            },
+                            "USBD_CCID_MAX_BUSY_SLOTS": {
+                              "description": "Maximum number of slots which can be simultaneously busy in the CCID device.",
+                              "title": "USBD_CCID_MAX_BUSY_SLOTS",
+                              "type": "integer",
+                              "default": 1,
+                              "minimum": 0,
+                              "maximum": 255
+                            },
+                            "USBD_CCID_MAX_BLOCK_SIZE_HEADER": {
+                              "description": "The CCID max message length.",
+                              "title": "USBD_CCID_MAX_BLOCK_SIZE_HEADER",
+                              "type": "integer",
+                              "default": 271,
+                              "minimum": 0,
+                              "maximum": 65554
+                            },
+                            "USBD_CCID_PROTOCOL": {
+                              "description": "This value indicates support for the associated ISO protocol T=0 & T=1.",
+                              "title": "USBD_CCID_PROTOCOL",
+                              "type": "integer",
+                              "default": 3,
+                              "minimum": 1,
+                              "maximum": 3
+                            },
+                            "USBD_CCID_VOLTAGE_SUPPLY": {
+                              "description": "This value indicates what voltages the CCID can supply to its slots.",
+                              "title": "USBD_CCID_VOLTAGE_SUPPLY",
+                              "type": "integer",
+                              "default": 7,
+                              "minimum": 1,
+                              "maximum": 7
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "CCID_Interface_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.CCID_Class"
+                        }
+                      ],
+                      "properties": {
+                        "USBD_CCID_ENDPOINT_IN_CMD_ADDR": {
+                          "title": "Endpoint Command IN Address",
+                          "description": "Device CCID class Endpoint Command IN Address. Make sure to have a unique address when used alongside other device classes.",
+                          "type": "integer",
+                          "default": 1,
+                          "minimum": 0,
+                          "maximum": 5,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ]
+                        },
+                        "USBD_CCID_ENDPOINT_IN_ADDR": {
+                          "title": "Endpoint IN Address",
+                          "description": "Device CCID endpoint IN address. Make sure to have a unique address when used alongside other device classes.",
+                          "type": "integer",
+                          "default": 2,
+                          "minimum": 0,
+                          "maximum": 5,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ]
+                        },
+                        "USBD_CCID_ENDPOINT_OUT_ADDR": {
+                          "title": "Endpoint OUT Address",
+                          "description": "Device CCID endpoint OUT address. Make sure to have a unique address when used alongside other device classes.",
+                          "type": "integer",
+                          "default": 3,
+                          "minimum": 0,
+                          "maximum": 5,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ]
+                        },
+                        "More": {
+                          "type": "object",
+                          "properties": {
+                            "USBD_CCID_ENDPOINT_IN_CMD_FS_MPS": {
+                              "title": "Endpoint Command IN FS Max Packet Size",
+                              "description": "Device CCID class Endpoint Command IN max packet size.",
+                              "type": "integer",
+                              "default": 8,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CCID_ENDPOINT_IN_CMD_FS_BINTERVAL": {
+                              "title": "Endpoint Command IN FS BInterval",
+                              "description": "Device CCID class Endpoint Command IN BInterval.",
+                              "type": "integer",
+                              "default": 5,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CCID_ENDPOINT_IN_FS_MPS": {
+                              "title": "Endpoint IN FS Max Packet Size",
+                              "description": "Device CCID class endpoint IN max packet size.",
+                              "type": "integer",
+                              "default": 64,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CCID_ENDPOINT_IN_FS_BINTERVAL": {
+                              "title": "Endpoint IN FS BInterval",
+                              "description": "Device CCID class endpoint IN BInterval.",
+                              "type": "integer",
+                              "default": 5,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CCID_ENDPOINT_OUT_FS_MPS": {
+                              "title": "Endpoint OUT FS Max Packet Size",
+                              "description": "Device CCID class endpoint OUT max packet size.",
+                              "type": "integer",
+                              "default": 64,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CCID_ENDPOINT_OUT_FS_BINTERVAL": {
+                              "title": "Endpoint OUT FS BInterval",
+                              "description": "Device CCID class endpoint OUT BInterval.",
+                              "type": "integer",
+                              "default": 5,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CCID_ENDPOINT_IN_CMD_HS_MPS": {
+                              "title": "Endpoint Command IN HS Max Packet Size",
+                              "description": "Device CCID class Endpoint Command IN max packet size.",
+                              "type": "integer",
+                              "default": 8,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CCID_ENDPOINT_IN_CMD_HS_BINTERVAL": {
+                              "title": "Endpoint Command IN HS BInterval",
+                              "description": "Device CCID class Endpoint Command IN BInterval.",
+                              "type": "integer",
+                              "default": 5,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CCID_ENDPOINT_IN_HS_MPS": {
+                              "title": "Endpoint IN HS Max Packet Size",
+                              "description": "Device CCID class endpoint IN max packet size.",
+                              "type": "integer",
+                              "default": 64,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CCID_ENDPOINT_IN_HS_BINTERVAL": {
+                              "title": "Endpoint IN HS BInterval",
+                              "description": "Device CCID class endpoint IN BInterval.",
+                              "type": "integer",
+                              "default": 5,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CCID_ENDPOINT_OUT_HS_MPS": {
+                              "title": "Endpoint OUT HS Max Packet Size",
+                              "description": "Device CCID class endpoint OUT max packet size.",
+                              "type": "integer",
+                              "default": 64,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_CCID_ENDPOINT_OUT_HS_BINTERVAL": {
+                              "title": "Endpoint OUT HS BInterval",
+                              "description": "Device CCID class endpoint OUT BInterval.",
+                              "type": "integer",
+                              "default": 5,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "PIMA_MTP_Class": {
+                      "title": "PIMA MTP Class",
+                      "type": "boolean",
+                      "actions": [
+                        {
+                          "type": "warning",
+                          "condition": "(($core_config.basic.Device_Class.PIMA_MTP_Class == true) && ($core_config.basic.USB_Core_System.UX_STANDALONE == 'No_OS' || !$get('swproject.hasRTOSenabled')))",
+                          "message": "PIMA MTP Class works only in RTOS mode. Please select RTOS to continue."
+                        }
+                      ],
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "PIMA_MTP_Device_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false
+                    },
+                    "PIMA_MTP_Core_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.PIMA_MTP_Class"
+                        }
+                      ],
+                      "properties": {
+                        "UX_PIMA_WITH_MTP_SUPPORT": {
+                          "title": "Enable MTP Support",
+                          "description": "Enables device/host PIMA MTP support.",
+                          "type": "boolean",
+                          "oneOf": [
+                            {
+                              "title": "Disabled",
+                              "const": false
+                            },
+                            {
+                              "title": "Enabled",
+                              "const": true
+                            }
+                          ],
+                          "default": true
+                        }
+                      }
+                    },
+                    "PIMA_MTP_Interface_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.PIMA_MTP_Class"
+                        }
+                      ],
+                      "properties": {
+                        "USBD_PIMA_ENDPOINT_IN_ADDR": {
+                          "title": "Endpoint IN Address",
+                          "description": "Device PIMA/MTP endpoint IN address. Make sure to have a unique address when used alongside other device classes.",
+                          "type": "integer",
+                          "default": 2,
+                          "minimum": 0,
+                          "maximum": 9,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ]
+                        },
+                        "USBD_PIMA_ENDPOINT_OUT_ADDR": {
+                          "title": "Endpoint OUT Address",
+                          "description": "Device PIMA/MTP endpoint OUT address. Make sure to have a unique address when used alongside other device classes.",
+                          "type": "integer",
+                          "default": 1,
+                          "minimum": 0,
+                          "maximum": 9,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ]
+                        },
+                        "USBD_PIMA_ENDPOINT_CMD_ADDR": {
+                          "title": "Endpoint Command Address",
+                          "description": "Device PIMA class Endpoint Command address. Make sure to have a unique value when used alongside other device classes.",
+                          "type": "integer",
+                          "default": 3,
+                          "minimum": 0,
+                          "maximum": 9,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ]
+                        },
+                        "More": {
+                          "type": "object",
+                          "properties": {
+                            "USBD_PIMA_ENDPOINT_IN_FS_MPS": {
+                              "title": "Endpoint IN FS Max Packet Size",
+                              "description": "Device PIMA/MTP class endpoint IN FS max packet size.",
+                              "type": "integer",
+                              "default": 64,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_PIMA_ENDPOINT_IN_FS_BINTERVAL": {
+                              "title": "Endpoint IN FS BInterval",
+                              "description": "Device PIMA/MTP class endpoint IN BInterval.",
+                              "type": "integer",
+                              "default": 16,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_PIMA_ENDPOINT_OUT_FS_MPS": {
+                              "title": "Endpoint OUT FS Max Packet Size",
+                              "description": "Device PIMA/MTP class endpoint OUT FS max packet size.",
+                              "type": "integer",
+                              "default": 64,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_PIMA_ENDPOINT_OUT_FS_BINTERVAL": {
+                              "title": "Endpoint OUT FS BInterval",
+                              "description": "Device PIMA/MTP class endpoint OUT BInterval.",
+                              "type": "integer",
+                              "default": 16,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_PIMA_ENDPOINT_CMD_FS_MPS": {
+                              "title": "Endpoint Command FS Max Packet Size",
+                              "description": "Device PIMA/MTP class Endpoint Command FS max packet size.",
+                              "type": "integer",
+                              "default": 8,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_PIMA_ENDPOINT_CMD_FS_BINTERVAL": {
+                              "title": "Endpoint Command FS BInterval",
+                              "description": "Device PIMA/MTP class Endpoint Command FS BInterval.",
+                              "type": "integer",
+                              "default": 16,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_PIMA_ENDPOINT_IN_HS_MPS": {
+                              "title": "Endpoint IN HS Max Packet Size",
+                              "description": "Device PIMA/MTP class endpoint IN HS max packet size.",
+                              "type": "integer",
+                              "default": 64,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_PIMA_ENDPOINT_IN_HS_BINTERVAL": {
+                              "title": "Endpoint IN HS BInterval",
+                              "description": "Device PIMA/MTP class endpoint IN BInterval.",
+                              "type": "integer",
+                              "default": 16,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_PIMA_ENDPOINT_OUT_HS_MPS": {
+                              "title": "Endpoint OUT HS Max Packet Size",
+                              "description": "Device PIMA/MTP class endpoint OUT HS max packet size.",
+                              "type": "integer",
+                              "default": 64,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_PIMA_ENDPOINT_OUT_HS_BINTERVAL": {
+                              "title": "Endpoint OUT HS BInterval",
+                              "description": "Device PIMA/MTP class endpoint OUT BInterval.",
+                              "type": "integer",
+                              "default": 16,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_PIMA_ENDPOINT_CMD_HS_MPS": {
+                              "title": "Endpoint Command HS Max Packet Size",
+                              "description": "Device PIMA/MTP class Endpoint Command HS max packet size.",
+                              "type": "integer",
+                              "default": 8,
+                              "minimum": 0,
+                              "maximum": 64,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_PIMA_ENDPOINT_CMD_HS_BINTERVAL": {
+                              "title": "Endpoint Command HS BInterval",
+                              "description": "Device PIMA/MTP class Endpoint Command HS BInterval.",
+                              "type": "integer",
+                              "default": 16,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "Device_Core_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.HID_Class || $core_config.basic.Device_Class.CDC_ACM_Class || $core_config.basic.Device_Class.MSC_Class || $core_config.basic.Device_Class.PIMA_MTP_Class || $core_config.basic.Device_Class.DFU_Class || $core_config.basic.Device_Class.CCID_Class || $core_config.basic.Device_Class.Printer_Class || $core_config.basic.Device_Class.Video_Class || $core_config.basic.Device_Class.Audio_Class"
+                        }
+                      ],
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "name": "Device_Core_Config",
+                          "value": true
+                        }
+                      ],
+                      "properties": {
+                        "UX_MAX_SLAVE_CLASS_DRIVER": {
+                          "description": "This value is the maximum number of classes in the device stack that can be loaded by USBX.",
+                          "title": "Max Slave Class Driver",
+                          "type": "integer",
+                          "default": 2,
+                          "minimum": 0,
+                          "maximum": 255
+                        },
+                        "UX_MAX_SLAVE_INTERFACES": {
+                          "description": "This value is the maximum number of interfaces in the device framework.",
+                          "title": "Max Slave Interfaces",
+                          "type": "integer",
+                          "default": 16,
+                          "minimum": 0,
+                          "maximum": 255
+                        },
+                        "More": {
+                          "type": "object",
+                          "properties": {
+                            "UX_MAX_SLAVE_LUN": {
+                              "description": "This value represents the current number of SCSI logical units represented in the device storage class driver.",
+                              "title": "Max Slave LUN",
+                              "type": "integer",
+                              "default": 1,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "UX_SLAVE_REQUEST_CONTROL_MAX_LENGTH": {
+                              "description": "This value represents the maximum number of bytes received on a control endpoint in the device stack.",
+                              "title": "Slave Request Control Max Length",
+                              "type": "integer",
+                              "default": 256,
+                              "minimum": 64,
+                              "maximum": 65535,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "UX_SLAVE_REQUEST_DATA_MAX_LENGTH": {
+                              "description": "This value represents the maximum number of bytes that can be received or transmitted on any endpoint. This value cannot be less than the maximum packet size of any endpoint.",
+                              "title": "Slave Request Data Max Length",
+                              "type": "integer",
+                              "default": 2048,
+                              "minimum": 64,
+                              "maximum": 65535,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "UX_DEVICE_SIDE_ONLY": {
+                              "title": "Device Side Only",
+                              "type": "boolean",
+                              "oneOf": [
+                                {
+                                  "title": "Disabled",
+                                  "const": false
+                                },
+                                {
+                                  "title": "Enabled",
+                                  "const": true
+                                }
+                              ],
+                              "default": true,
+                              "description": "This value will only enable the device side of USBX."
+                            },
+                            "UX_THREAD_PRIORITY_DCD": {
+                              "description": "This is the ThreadX priority value for the device controller thread.",
+                              "title": "Thread Priority DCD",
+                              "type": "integer",
+                              "default": 20,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "actions": [
+                                {
+                                  "type": "include",
+                                  "condition": "$core_config.basic.USB_Core_System.UX_STANDALONE != 'No_OS'"
+                                }
+                              ]
+                            },
+                            "UX_MAX_DEVICE_ENDPOINTS": {
+                              "description": "Defines the maximum number of endpoints for the USBX device. It must be greater than or equal to the number of endpoints used.",
+                              "title": "Max Device Endpoints",
+                              "type": "integer",
+                              "default": 6,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "UX_MAX_DEVICE_INTERFACES": {
+                              "description": "Defines the maximum number of interfaces for the USBX device.",
+                              "title": "Max Device Interfaces",
+                              "type": "integer",
+                              "default": 6,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "UX_DEVICE_BIDIRECTIONAL_ENDPOINT_SUPPORT": {
+                              "title": "Bidirectional Endpoint Support",
+                              "type": "boolean",
+                              "oneOf": [
+                                {
+                                  "title": "Disabled",
+                                  "const": false
+                                },
+                                {
+                                  "title": "Enabled",
+                                  "const": true
+                                }
+                              ],
+                              "default": true,
+                              "description": "Enable device bidirectional endpoint support."
+                            },
+                            "USBX_Device_Register_Connection_Callback": {
+                              "title": "Register Connection Callback",
+                              "type": "boolean",
+                              "description": "Register USBX Device Connection Callback invoked when: - USB Device Connected. - USB Device Disconnected. - USB SOF Received. - USB Device Suspended. - USB Device Resumed. - USB Device Removed. - USB Device Attached.",
+                              "default": false
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "Device_Descriptor_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Device_Class.HID_Class || $core_config.basic.Device_Class.CDC_ACM_Class || $core_config.basic.Device_Class.MSC_Class || $core_config.basic.Device_Class.PIMA_MTP_Class || $core_config.basic.Device_Class.DFU_Class || $core_config.basic.Device_Class.CCID_Class || $core_config.basic.Device_Class.Printer_Class || $core_config.basic.Device_Class.Video_Class || $core_config.basic.Device_Class.Audio_Class"
+                        }
+                      ],
+                      "properties": {
+                        "USBD_DEVICE_FRAMEWORK_BUILDER_ENABLED": {
+                          "title": "Device Framework Builder Enabled",
+                          "type": "boolean",
+                          "oneOf": [
+                            {
+                              "title": "Disabled",
+                              "const": true
+                            },
+                            {
+                              "title": "Enabled",
+                              "const": false
+                            }
+                          ],
+                          "default": true,
+                          "description": "Set to 1 to enable dynamic device descriptors builder."
+                        },
+                        "USBD_COMPOSITE_USE_IAD": {
+                          "title": "Composite Use IAD",
+                          "type": "boolean",
+                          "oneOf": [
+                            {
+                              "title": "Disabled",
+                              "const": true
+                            },
+                            {
+                              "title": "Enabled",
+                              "const": false
+                            }
+                          ],
+                          "default": true,
+                          "description": "Use IAD Composite."
+                        },
+                        "More": {
+                          "type": "object",
+                          "properties": {
+                            "USBD_FRAMEWORK_MAX_DESC_SZ": {
+                              "description": "USBD Device Builder Framework size.",
+                              "title": "Framework Max Descriptor Size",
+                              "type": "integer",
+                              "default": 200,
+                              "minimum": 45,
+                              "maximum": 2048,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_VID": {
+                              "description": "Vendor Identifier.",
+                              "title": "Vendor ID",
+                              "type": "integer",
+                              "default": 1155,
+                              "minimum": 0,
+                              "maximum": 65535,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_PID": {
+                              "description": "Product Identifier.",
+                              "title": "Product ID",
+                              "type": "integer",
+                              "default": 22288,
+                              "minimum": 0,
+                              "maximum": 65535,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "USBD_MANUFACTURER_STRING": {
+                              "description": "Manufacturer string.",
+                              "title": "Manufacturer String",
+                              "type": "string",
+                              "default": "STMicroelectronics"
+                            },
+                            "USBD_PRODUCT_STRING": {
+                              "description": "Product string.",
+                              "title": "Product String",
+                              "type": "string",
+                              "default": "STM32 USBD Device"
+                            },
+                            "USBD_LANGID_STRING": {
+                              "type": "string",
+                              "oneOf": [
+                                {
+                                  "title": "English (United States)",
+                                  "const": "1033"
+                                },
+                                {
+                                  "title": "French (Standard)",
+                                  "const": "1036"
+                                },
+                                {
+                                  "title": "German (Standard)",
+                                  "const": "1031"
+                                },
+                                {
+                                  "const": "1040",
+                                  "title": "Italian (Standard)"
+                                },
+                                {
+                                  "title": "Japanese",
+                                  "const": "1041"
+                                },
+                                {
+                                  "const": "1042",
+                                  "title": "Korean"
+                                }
+                              ],
+                              "title": "Language ID String",
+                              "default": "1033"
+                            },
+                            "USBD_SERIAL_NUMBER": {
+                              "description": "Product serial number.",
+                              "title": "Serial Number",
+                              "type": "string",
+                              "default": "000000000001"
+                            },
+                            "USBD_MAX_POWER": {
+                              "description": "Max power in milli-amperes.",
+                              "title": "Max Power (mA)",
+                              "type": "integer",
+                              "default": 50,
+                              "minimum": 0,
+                              "maximum": 500,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "Host_Class": {
+                  "title": "Host Class",
+                  "type": "object",
+                  "properties": {
+                    "HID_Class": {
+                      "title": "HID Class",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "HID_Host_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false
+                    },
+                    "HID_Core_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Host_Class.HID_Class"
+                        }
+                      ],
+                      "properties": {
+                        "UX_HOST_CLASS_HID_DECOMPRESSION_BUFFER": {
+                          "title": "HID Decompression Buffer",
+                          "type": "integer",
+                          "default": 4096,
+                          "minimum": 0,
+                          "maximum": 65535,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "description": "This value represents the maximum size of the HID decompressed buffer. This cannot be determined in advance so we allocate a big block, usually 4K but for simple HID devices like keyboard and mouse it can be reduced a lot."
+                        },
+                        "UX_HOST_CLASS_HID_USAGES": {
+                          "title": "HID Class Usages",
+                          "type": "integer",
+                          "default": 2048,
+                          "minimum": 0,
+                          "maximum": 65535,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "description": "This value represents the maximum number of HID usages for a HID device."
+                        },
+                        "UX_HOST_CLASS_HID_REPORT_TRANSFER_TIMEOUT": {
+                          "title": "HID Report Transfer Timeout",
+                          "type": "integer",
+                          "default": 10000,
+                          "minimum": 0,
+                          "maximum": 65535,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "description": "Define HID report transfer timeout value in milliseconds. The default is 10000 milliseconds."
+                        },
+                        "UX_HOST_CLASS_HID_INTERRUPT_OUT_SUPPORT": {
+                          "title": "HID Interrupt OUT Support",
+                          "description": "Add support for Host HID OUT interrupt.",
+                          "type": "boolean",
+                          "oneOf": [
+                            {
+                              "title": "Enabled",
+                              "const": true
+                            },
+                            {
+                              "title": "Disabled",
+                              "const": false
+                            }
+                          ],
+                          "default": false
+                        }
+                      }
+                    },
+                    "Host_Mouse": {
+                      "title": "Host Mouse",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "HID_Mouse_Host_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Host_Class.HID_Class"
+                        }
+                      ]
+                    },
+                    "Host_Keyboard": {
+                      "title": "Host Keyboard",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "HID_Keyboard_Host_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Host_Class.HID_Class"
+                        }
+                      ]
+                    },
+                    "Keyboard_Core_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Host_Class.Host_Keyboard"
+                        }
+                      ],
+                      "properties": {
+                        "UX_HOST_CLASS_HID_KEYBOARD_EVENTS_KEY_CHANGES_MODE": {
+                          "title": "Keyboard Events Key Changes Mode",
+                          "description": "If defined, this value causes ux_host_class_hid_keyboard_key_get to only report key changes i.e. key presses and key releases. By default, it only reports when a key is down.",
+                          "type": "boolean",
+                          "default": false
+                        },
+                        "UX_HOST_CLASS_HID_KEYBOARD_EVENTS_KEY_CHANGES_MODE_REPORT_KEY_DOWN_ONLY": {
+                          "title": "Keyboard Report Key Down Only",
+                          "description": "This value causes ux_host_class_hid_keyboard_key_get to only report key changes i.e. key presses and key releases. By default, it only reports when a key is down.",
+                          "type": "boolean",
+                          "oneOf": [
+                            {
+                              "title": "Enabled",
+                              "const": true
+                            },
+                            {
+                              "title": "Disabled",
+                              "const": false
+                            }
+                          ],
+                          "default": false,
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$core_config.basic.Host_Class.Keyboard_Core_Config.UX_HOST_CLASS_HID_KEYBOARD_EVENTS_KEY_CHANGES_MODE"
+                            }
+                          ]
+                        },
+                        "UX_HOST_CLASS_HID_KEYBOARD_EVENTS_KEY_CHANGES_MODE_REPORT_LOCK_KEYS": {
+                          "title": "Keyboard Report Lock Keys",
+                          "description": "This value causes ux_host_class_hid_keyboard_key_get to report lock key (CapsLock/NumLock/ScrollLock) changes.",
+                          "type": "boolean",
+                          "oneOf": [
+                            {
+                              "title": "Enabled",
+                              "const": true
+                            },
+                            {
+                              "title": "Disabled",
+                              "const": false
+                            }
+                          ],
+                          "default": false,
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$core_config.basic.Host_Class.Keyboard_Core_Config.UX_HOST_CLASS_HID_KEYBOARD_EVENTS_KEY_CHANGES_MODE"
+                            }
+                          ]
+                        },
+                        "UX_HOST_CLASS_HID_KEYBOARD_EVENTS_KEY_CHANGES_MODE_REPORT_MODIFIER_KEYS": {
+                          "title": "Keyboard Report Modifier Keys",
+                          "description": "This value causes ux_host_class_hid_keyboard_key_get to report modifier key (Ctrl/Alt/Shift/GUI) changes.",
+                          "type": "boolean",
+                          "oneOf": [
+                            {
+                              "title": "Enabled",
+                              "const": true
+                            },
+                            {
+                              "title": "Disabled",
+                              "const": false
+                            }
+                          ],
+                          "default": false,
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$core_config.basic.Host_Class.Keyboard_Core_Config.UX_HOST_CLASS_HID_KEYBOARD_EVENTS_KEY_CHANGES_MODE"
+                            }
+                          ]
+                        },
+                        "UX_THREAD_PRIORITY_KEYBOARD": {
+                          "description": "Thread priority of Keyboard host.",
+                          "type": "integer",
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "title": "Keyboard Thread Priority",
+                          "default": 5,
+                          "minimum": 0,
+                          "maximum": 30,
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$core_config.basic.USB_Core_System.UX_STANDALONE != 'No_OS'"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "Host_RCU": {
+                      "title": "Host RCU",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "HID_RCU_Host_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false,
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Host_Class.HID_Class"
+                        }
+                      ]
+                    },
+                    "CDC_ACM_Class": {
+                      "title": "CDC_ACM Class",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "CDC_ACM_Host_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false
+                    },
+                    "MSC_Class": {
+                      "title": "MSC Class",
+                      "type": "boolean",
+                      "actions": [
+                        {
+                          "type": "warning",
+                          "condition": "$core_config.basic.Host_Class.MSC_Class) && (!$get('swproject.hasComponent', 'STM32CubeMX2 Config:FileX'))",
+                          "message": "Please ensure that FileX is enabled."
+                        }
+                      ],
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "MSC_Host_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false
+                    },
+                    "MSC_Core_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Host_Class.MSC_Class"
+                        }
+                      ],
+                      "properties": {
+                        "UX_HOST_CLASS_STORAGE_MEMORY_BUFFER_SIZE": {
+                          "title": "Storage Memory Buffer Size",
+                          "type": "integer",
+                          "default": 8192,
+                          "minimum": 0,
+                          "maximum": 65535,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "description": "This value represents the maximum number of bytes that a storage payload can send/receive."
+                        },
+                        "UX_HOST_CLASS_STORAGE_THREAD_STACK_SIZE": {
+                          "title": "Storage Thread Stack Size",
+                          "type": "integer",
+                          "default": 2048,
+                          "minimum": 0,
+                          "maximum": 63999,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "description": "USBX Mass Storage Thread Stack Size.",
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$core_config.basic.USB_Core_System.UX_STANDALONE != 'No_OS'"
+                            }
+                          ]
+                        },
+                        "UX_HOST_CLASS_STORAGE_THREAD_PRIORITY_CLASS": {
+                          "title": "Storage Priority Thread",
+                          "type": "integer",
+                          "default": 5,
+                          "minimum": 0,
+                          "maximum": 50,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "description": "This value represents the priority of storage class thread"
+                        },
+                        "More": {
+                          "type": "object",
+                          "properties": {
+                            "UX_MAX_HOST_LUN": {
+                              "title": "Max Host LUN",
+                              "type": "integer",
+                              "default": 1,
+                              "minimum": 1,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "description": "This value represents the maximum number of SCSI logical units represented in the host storage class driver."
+                            },
+                            "UX_HOST_CLASS_STORAGE_MAX_MEDIA": {
+                              "title": "Max Storage Media",
+                              "type": "integer",
+                              "default": 2,
+                              "minimum": 1,
+                              "maximum": 8,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "description": "This value represents the maximum number of media for the host storage class."
+                            },
+                            "UX_HOST_CLASS_STORAGE_INCLUDE_LEGACY_PROTOCOL_SUPPORT": {
+                              "title": "Include Legacy Protocol Support",
+                              "description": "This value includes code to handle storage devices that use the CB or CBI protocol (such as floppy disks).",
+                              "type": "boolean",
+                              "oneOf": [
+                                {
+                                  "title": "Enabled",
+                                  "const": true
+                                },
+                                {
+                                  "title": "Disabled",
+                                  "const": false
+                                }
+                              ],
+                              "default": false
+                            },
+                            "UX_HOST_CLASS_STORAGE_MAX_TRANSFER_SIZE": {
+                              "title": "Max Transfer Size",
+                              "type": "integer",
+                              "default": 1024,
+                              "minimum": 0,
+                              "maximum": 65535,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "description": "This value represents the maximum size of single transfers for the SCSI data phase."
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "HUB_Class": {
+                      "title": "HUB Class",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "HUB_Host_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false
+                    },
+                    "HUB_Core_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Host_Class.HUB_Class"
+                        }
+                      ],
+                      "properties": {
+                        "UX_MAX_ROOTHUB_PORT": {
+                          "title": "Max Root Hub Port",
+                          "type": "integer",
+                          "default": 4,
+                          "minimum": 1,
+                          "maximum": 255,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "description": "Define USBX max root hub port (1 ~ n)."
+                        }
+                      }
+                    },
+                    "Printer_Class": {
+                      "title": "Printer Class",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "Printer_Host_Class",
+                          "value": true
+                        }
+                      ],
+                      "default": false
+                    },
+                    "PIMA_MTP_Class": {
+                      "title": "PIMA_MTP Class",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "PIMA_MTP_Host_Class",
+                          "value": true
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "warning",
+                          "condition": "$core_config.basic.Host_Class.PIMA_MTP_Class == true && $core_config.basic.USB_Core_System.UX_STANDALONE == 'No_OS'",
+                          "message": "PIMA MTP Class works only in RTOS mode. Please select RTOS to continue."
+                        }
+                      ],
+                      "default": false
+                    },
+                    "Audio_Class": {
+                      "title": "Audio Class",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "Audio_Host_Class",
+                          "value": true
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "warning",
+                          "condition": "$core_config.basic.Host_Class.Audio_Class == true && $core_config.basic.USB_Core_System.UX_STANDALONE == 'No_OS'",
+                          "message": "Audio Class works only in RTOS mode. Please select RTOS to continue."
+                        }
+                      ],
+                      "default": false
+                    },
+                    "Audio_Core_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Host_Class.Audio_Class"
+                        }
+                      ],
+                      "properties": {
+                        "UX_HOST_CLASS_AUDIO_2_SUPPORT": {
+                          "title": "Audio 2.0 Support",
+                          "description": "Enable the host audio UAC 2.0 supported.",
+                          "type": "boolean",
+                          "oneOf": [
+                            {
+                              "title": "Enabled",
+                              "const": true
+                            },
+                            {
+                              "title": "Disabled",
+                              "const": false
+                            }
+                          ],
+                          "default": false
+                        },
+                        "More": {
+                          "type": "object",
+                          "properties": {
+                            "UX_HOST_CLASS_AUDIO_FEEDBACK_SUPPORT": {
+                              "title": "Audio Feedback Support",
+                              "description": "Enable the host audio Feedback support.",
+                              "type": "boolean",
+                              "oneOf": [
+                                {
+                                  "title": "Enabled",
+                                  "const": true
+                                },
+                                {
+                                  "title": "Disabled",
+                                  "const": false
+                                }
+                              ],
+                              "default": false
+                            },
+                            "UX_HOST_CLASS_AUDIO_INTERRUPT_SUPPORT": {
+                              "title": "Interrupt endpoint Support",
+                              "description": "Enable the host audio interrupt endpoint support.",
+                              "type": "boolean",
+                              "oneOf": [
+                                {
+                                  "title": "Enabled",
+                                  "const": true
+                                },
+                                {
+                                  "title": "Disabled",
+                                  "const": false
+                                }
+                              ],
+                              "default": false
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "Video_Class": {
+                      "title": "Video Class",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "Video_Host_Class",
+                          "value": true
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "warning",
+                          "condition": "$core_config.basic.Host_Class.Video_Class == true && $core_config.basic.USB_Core_System.UX_STANDALONE == 'No_OS'",
+                          "message": "Video Class works only in RTOS mode. Please select RTOS to continue."
+                        }
+                      ],
+                      "default": false
+                    },
+                    "GSER_Class": {
+                      "title": "GSER Class",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "GSER_Host_Class",
+                          "value": true
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "warning",
+                          "condition": "$core_config.basic.Host_Class.GSER_Class == true && $core_config.basic.USB_Core_System.UX_STANDALONE == 'No_OS'",
+                          "message": "GSER Class works only in RTOS mode. Please select RTOS to continue."
+                        }
+                      ],
+                      "default": false
+                    },
+                    "PROLIFIC_Class": {
+                      "title": "PROLIFIC Class",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "Prolific_Host_Class",
+                          "value": true
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "warning",
+                          "condition": "$core_config.basic.Host_Class.PROLIFIC_Class == true && $core_config.basic.USB_Core_System.UX_STANDALONE == 'No_OS'",
+                          "message": "PROLIFIC Class works only in RTOS mode. Please select RTOS to continue."
+                        }
+                      ],
+                      "default": false
+                    },
+                    "SWAR_Class": {
+                      "title": "SWAR Class",
+                      "type": "boolean",
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "condition": "$value == true",
+                          "name": "SWAR_Host_Class",
+                          "value": true
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "warning",
+                          "condition": "$core_config.basic.Host_Class.SWAR_Class == true && $core_config.basic.USB_Core_System.UX_STANDALONE == 'No_OS'",
+                          "message": "SWAR Class works only in RTOS mode. Please select RTOS to continue."
+                        }
+                      ],
+                      "default": false
+                    },
+                    "Host_Core_Config": {
+                      "type": "object",
+                      "actions": [
+                        {
+                          "type": "include",
+                          "condition": "$core_config.basic.Host_Class.HID_Class || $core_config.basic.Host_Class.CDC_ACM_Class || $core_config.basic.Host_Class.MSC_Class || $core_config.basic.Host_Class.MSC_Class || $core_config.basic.Host_Class.HUB_Class || $core_config.basic.Host_Class.Audio_Class || $core_config.basic.Host_Class.Video_Class || $core_config.basic.Host_Class.Printer_Class || $core_config.basic.Host_Class.GSER_Class || $core_config.basic.Host_Class.PIMA_MTP_Class || $core_config.basic.Host_Class.PROLIFIC_Class || $core_config.basic.Host_Class.SWAR_Class"
+                        }
+                      ],
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "name": "Host_Core_Config",
+                          "value": true
+                        }
+                      ],
+                      "properties": {
+                        "UX_HOST_ENUM_THREAD_STACK_SIZE": {
+                          "description": "Value of the memory allocated for a thread's enum in the USBX system.",
+                          "title": "Enum Thread Stack Size",
+                          "type": "integer",
+                          "default": 2048,
+                          "minimum": 0,
+                          "maximum": 63999,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$core_config.basic.USB_Core_System.UX_STANDALONE != 'No_OS'"
+                            }
+                          ]
+                        },
+                        "UX_HOST_HCD_THREAD_STACK_SIZE": {
+                          "description": "Value of the memory allocated for the Host Controller Driver (HCD) thread's stack in the USBX system.",
+                          "title": "HCD Thread Stack Size",
+                          "type": "integer",
+                          "default": 2048,
+                          "minimum": 0,
+                          "maximum": 63999,
+                          "display_format": [
+                            "dec",
+                            "hex"
+                          ],
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$core_config.basic.USB_Core_System.UX_STANDALONE != 'No_OS'"
+                            }
+                          ]
+                        },
+                        "More": {
+                          "type": "object",
+                          "properties": {
+                            "UX_HOST_HNP_POLLING_THREAD_STACK": {
+                              "description": "Value of the memory allocated for the stack of the Host Negotiation Protocol (HNP) polling thread in the USBX system.",
+                              "title": "HNP Polling Thread Stack",
+                              "type": "integer",
+                              "default": 2048,
+                              "minimum": 0,
+                              "maximum": 63999,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "actions": [
+                                {
+                                  "type": "include",
+                                  "condition": "$core_config.basic.USB_Core_System.UX_STANDALONE != 'No_OS'"
+                                }
+                              ]
+                            },
+                            "UX_MAX_HCD": {
+                              "description": "This value represents the number of different host controllers available in the system. For USB 1.1 support, this value will usually be 1. For USB 2.0 support, this value can be more than 1. This value represents the number of concurrent host controllers running at the same time. If for instance there are two instances of OHCI running, or one EHCI and one OHCI controller running, the UX_MAX_HCD should be set to 2.",
+                              "type": "string",
+                              "oneOf": [
+                                {
+                                  "title": "USB 1.1",
+                                  "const": "1"
+                                },
+                                {
+                                  "title": "USB 2.0",
+                                  "const": "2"
+                                }
+                              ],
+                              "default": "2",
+                              "title": "Max Host Controllers"
+                            },
+                            "UX_HOST_SIDE_ONLY": {
+                              "title": "Host Side Only",
+                              "description": "This value will only enable the host side of USBX.",
+                              "type": "boolean",
+                              "oneOf": [
+                                {
+                                  "title": "Disabled",
+                                  "const": false
+                                },
+                                {
+                                  "title": "Enabled",
+                                  "const": true
+                                }
+                              ],
+                              "default": true
+                            },
+                            "UX_ENABLE_ASSERT": {
+                              "title": "Enable Assert",
+                              "description": "Defined, this enables the assert checks inside USBX.",
+                              "type": "boolean",
+                              "oneOf": [
+                                {
+                                  "title": "Disabled",
+                                  "const": false
+                                },
+                                {
+                                  "title": "Enabled",
+                                  "const": true
+                                }
+                              ],
+                              "default": true
+                            },
+                            "UX_THREAD_PRIORITY_HCD": {
+                              "title": "HCD Thread Priority",
+                              "description": "This is the Thread priority value for the host controller thread.",
+                              "type": "integer",
+                              "default": 20,
+                              "minimum": 0,
+                              "maximum": 31,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ],
+                              "actions": [
+                                {
+                                  "type": "include",
+                                  "condition": "$core_config.basic.USB_Core_System.UX_STANDALONE != 'No_OS'"
+                                }
+                              ]
+                            },
+                            "UX_MAX_CLASSES": {
+                              "title": "Max Classes",
+                              "description": "This value is the maximum number of classes that can be loaded by USBX. This value represents the class container and not the number of instances of a class.",
+                              "type": "integer",
+                              "default": 2,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "UX_MAX_TT": {
+                              "title": "Max Transaction Translators",
+                              "description": "Defines the maximum number of Transaction Translators (TT) supported in USBX, managing data transfers in USB hubs.",
+                              "type": "integer",
+                              "default": 8,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "UX_HOST_DEVICE_CLASS_CODE_VALIDATION_ENABLE": {
+                              "title": "Host Device Class Code Validation Enable",
+                              "description": "Enables host device class code validation.",
+                              "type": "boolean",
+                              "oneOf": [
+                                {
+                                  "title": "Disabled",
+                                  "const": false
+                                },
+                                {
+                                  "title": "Enabled",
+                                  "const": true
+                                }
+                              ],
+                              "default": false
+                            },
+                            "UX_MAX_DEVICES": {
+                              "title": "Max Devices",
+                              "description": "This value represents the maximum number of devices that can be attached to the USB. Normally, the theoretical maximum number on a single USB is 127 devices. This value can be scaled down to conserve memory. Note that this value represents the total number of devices regardless of the number of USB buses in the system.",
+                              "type": "integer",
+                              "default": 127,
+                              "minimum": 0,
+                              "maximum": 127,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            }
+                          }
+                        },
+                        "Host_Controllers": {
+                          "type": "object",
+                          "actions": [
+                            {
+                              "type": "enable",
+                              "condition": "$interface_config.logical_config.Host_Controllers_Enable"
+                            }
+                          ],
+                          "properties": {
+                            "UX_MAX_ED": {
+                              "description": "This value represents the maximum number of EDs in the controller pool. This number is assigned to one controller only. If multiple instances of controllers are present, this value is used by each individual controller.",
+                              "title": "Max Endpoint Descriptors",
+                              "type": "integer",
+                              "default": 80,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "UX_MAX_TD": {
+                              "description": "This value represents the maximum number of regular and isochronous TDs in the controller pool. This number is assigned to one controller only. If multiple instances of controllers are present, this value is used by each individual controller.",
+                              "title": "Max Transfer Descriptors",
+                              "type": "integer",
+                              "default": 128,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            },
+                            "UX_MAX_ISO_TD": {
+                              "description": "This value represents the maximum number of regular and isochronous TDs in the controller pool. This number is assigned to one controller only. If multiple instances of controllers are present, this value is used by each individual controller.",
+                              "title": "Max Isochronous Transfer Descriptors",
+                              "type": "integer",
+                              "default": 1,
+                              "minimum": 0,
+                              "maximum": 255,
+                              "display_format": [
+                                "dec",
+                                "hex"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "applicative": {
+              "title": "Applicative Configuration",
+              "type": "object",
+              "properties": {
+                "USBX_System_Stack_Size": {
+                  "description": "Default pool size for USBX stack.",
+                  "title": "USBX System Stack Size",
+                  "type": "integer",
+                  "default": 512,
+                  "minimum": 512,
+                  "maximum": 63999,
+                  "display_format": [
+                    "dec",
+                    "hex"
+                  ]
+                },
+                "USBX_Device_Generate_Init_Code": {
+                  "title": "USBX Device Generate Init Code",
+                  "type": "boolean",
+                  "default": false,
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "($core_config.basic.USB_Core_System.UX_STANDALONE != 'No_OS')&&($core_config.basic.Device_Class.HID_Class || $core_config.basic.Device_Class.CDC_ACM_Class || $core_config.basic.Device_Class.MSC_Class || $core_config.basic.Device_Class.PIMA_MTP_Class || $core_config.basic.Device_Class.DFU_Class || $core_config.basic.Device_Class.CCID_Class || $core_config.basic.Device_Class.Printer_Class || $core_config.basic.Device_Class.Video_Class || $core_config.basic.Device_Class.Audio_Class)"
+                    }
+                  ]
+                },
+                "USBX_Device_Application_Thread_Name": {
+                  "type": "string",
+                  "title": "USBX Device Application Thread Name",
+                  "description": "name of USBX Device Application Thread Entry",
+                  "minLength": 0,
+                  "maxLength": 40,
+                  "default": "app_ux_device_thread_entry",
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "($core_config.applicative.USBX_Device_Generate_Init_Code)&&($core_config.basic.USB_Core_System.UX_STANDALONE != 'No_OS')&&($core_config.basic.Device_Class.HID_Class || $core_config.basic.Device_Class.CDC_ACM_Class || $core_config.basic.Device_Class.MSC_Class || $core_config.basic.Device_Class.PIMA_MTP_Class || $core_config.basic.Device_Class.DFU_Class || $core_config.basic.Device_Class.CCID_Class || $core_config.basic.Device_Class.Printer_Class || $core_config.basic.Device_Class.Video_Class || $core_config.basic.Device_Class.Audio_Class)"
+                    }
+                  ]
+                },
+                "USBX_Device_Application_Thread_Size": {
+                  "description": "Size stack of the applicative USBX Device thread.",
+                  "title": "USBX Device Application Thread Size",
+                  "type": "integer",
+                  "default": 1024,
+                  "minimum": 0,
+                  "maximum": 63999,
+                  "display_format": [
+                    "dec",
+                    "hex"
+                  ],
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "($core_config.applicative.USBX_Device_Generate_Init_Code)&&($core_config.basic.USB_Core_System.UX_STANDALONE != 'No_OS')&&($core_config.basic.Device_Class.HID_Class || $core_config.basic.Device_Class.CDC_ACM_Class || $core_config.basic.Device_Class.MSC_Class || $core_config.basic.Device_Class.PIMA_MTP_Class || $core_config.basic.Device_Class.DFU_Class || $core_config.basic.Device_Class.CCID_Class || $core_config.basic.Device_Class.Printer_Class || $core_config.basic.Device_Class.Video_Class || $core_config.basic.Device_Class.Audio_Class)"
+                    }
+                  ]
+                },
+                "USBX_Device_Application_Thread_priority": {
+                  "description": "Application Thread Priority",
+                  "title": "USBX Device Application Thread priority",
+                  "type": "integer",
+                  "default": 10,
+                  "minimum": 0,
+                  "maximum": 30,
+                  "display_format": [
+                    "dec",
+                    "hex"
+                  ],
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "($core_config.applicative.USBX_Device_Generate_Init_Code)&&($core_config.basic.USB_Core_System.UX_STANDALONE != 'No_OS')&&($core_config.basic.Device_Class.HID_Class || $core_config.basic.Device_Class.CDC_ACM_Class || $core_config.basic.Device_Class.MSC_Class || $core_config.basic.Device_Class.PIMA_MTP_Class || $core_config.basic.Device_Class.DFU_Class || $core_config.basic.Device_Class.CCID_Class || $core_config.basic.Device_Class.Printer_Class || $core_config.basic.Device_Class.Video_Class || $core_config.basic.Device_Class.Audio_Class)"
+                    }
+                  ]
+                },
+                "USBX_Host_Generate_Init_Code": {
+                  "title": "USBX Host Generate Init Code",
+                  "type": "boolean",
+                  "default": false,
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "($core_config.basic.USB_Core_System.UX_STANDALONE != 'No_OS')&&($core_config.basic.Host_Class.HID_Class || $core_config.basic.Host_Class.CDC_ACM_Class || $core_config.basic.Host_Class.MSC_Class || $core_config.basic.Host_Class.MSC_Class || $core_config.basic.Host_Class.HUB_Class || $core_config.basic.Host_Class.Audio_Class || $core_config.basic.Host_Class.Video_Class || $core_config.basic.Host_Class.Printer_Class || $core_config.basic.Host_Class.GSER_Class || $core_config.basic.Host_Class.PIMA_MTP_Class || $core_config.basic.Host_Class.PROLIFIC_Class || $core_config.basic.Host_Class.SWAR_Class)"
+                    }
+                  ]
+                },
+                "USBX_Host_Application_Thread_Name": {
+                  "type": "string",
+                  "title": "USBX Host Application Thread Name",
+                  "description": "name of USBX Host Application Thread Entry",
+                  "minLength": 0,
+                  "maxLength": 40,
+                  "default": "app_ux_host_thread_entry",
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "($core_config.applicative.USBX_Host_Generate_Init_Code)&&($core_config.basic.USB_Core_System.UX_STANDALONE != 'No_OS')&&($core_config.basic.Host_Class.HID_Class || $core_config.basic.Host_Class.CDC_ACM_Class || $core_config.basic.Host_Class.MSC_Class || $core_config.basic.Host_Class.MSC_Class || $core_config.basic.Host_Class.HUB_Class || $core_config.basic.Host_Class.Audio_Class || $core_config.basic.Host_Class.Video_Class || $core_config.basic.Host_Class.Printer_Class || $core_config.basic.Host_Class.GSER_Class || $core_config.basic.Host_Class.PIMA_MTP_Class || $core_config.basic.Host_Class.PROLIFIC_Class || $core_config.basic.Host_Class.SWAR_Class)"
+                    }
+                  ]
+                },
+                "USBX_Host_Application_Thread_Size": {
+                  "description": "Size stack of the applicative USBX Host thread.",
+                  "title": "USBX Host Application Thread Size",
+                  "type": "integer",
+                  "default": 1024,
+                  "minimum": 0,
+                  "maximum": 63999,
+                  "display_format": [
+                    "dec",
+                    "hex"
+                  ],
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "($core_config.applicative.USBX_Host_Generate_Init_Code)&&($core_config.basic.USB_Core_System.UX_STANDALONE != 'No_OS')&&($core_config.basic.Host_Class.HID_Class || $core_config.basic.Host_Class.CDC_ACM_Class || $core_config.basic.Host_Class.MSC_Class || $core_config.basic.Host_Class.MSC_Class || $core_config.basic.Host_Class.HUB_Class || $core_config.basic.Host_Class.Audio_Class || $core_config.basic.Host_Class.Video_Class || $core_config.basic.Host_Class.Printer_Class || $core_config.basic.Host_Class.GSER_Class || $core_config.basic.Host_Class.PIMA_MTP_Class || $core_config.basic.Host_Class.PROLIFIC_Class || $core_config.basic.Host_Class.SWAR_Class)"
+                    }
+                  ]
+                },
+                "USBX_Host_Application_Thread_priority": {
+                  "description": "Application Thread Priority",
+                  "title": "USBX Host Application Thread priority",
+                  "type": "integer",
+                  "default": 10,
+                  "minimum": 0,
+                  "maximum": 30,
+                  "display_format": [
+                    "dec",
+                    "hex"
+                  ],
+                  "actions": [
+                    {
+                      "type": "enable",
+                      "condition": "($core_config.applicative.USBX_Host_Generate_Init_Code)&&($core_config.basic.USB_Core_System.UX_STANDALONE != 'No_OS')&&($core_config.basic.Host_Class.HID_Class || $core_config.basic.Host_Class.CDC_ACM_Class || $core_config.basic.Host_Class.MSC_Class || $core_config.basic.Host_Class.MSC_Class || $core_config.basic.Host_Class.HUB_Class || $core_config.basic.Host_Class.Audio_Class || $core_config.basic.Host_Class.Video_Class || $core_config.basic.Host_Class.Printer_Class || $core_config.basic.Host_Class.GSER_Class || $core_config.basic.Host_Class.PIMA_MTP_Class || $core_config.basic.Host_Class.PROLIFIC_Class || $core_config.basic.Host_Class.SWAR_Class)"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "interface_config": {
+          "title": "Interfaces configuration",
+          "type": "object",
+          "properties": {
+            "logical_config": {
+              "title": "Interface logical configuration",
+              "type": "object",
+              "properties": {
+                "Device_Controllers_Enable": {
+                  "title": "Device Controllers Enable",
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "warning",
+                      "condition": "$interface_config.logical_config.Device_Controllers_Enable && !$get('swproject.hasComponent', 'STM32CubeMX2 Config:PCD')",
+                      "message": "Please make sure to disable Device Controllers in USBX, or alternatively, enable Device HAL."
+                    }
+                  ],
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "condition": "$value == true",
+                      "name": "Device_Controllers_Enable",
+                      "value": true
+                    }
+                  ],
+                  "default": false
+                },
+                "Host_Controllers_Enable": {
+                  "title": "Host Controllers Enable",
+                  "type": "boolean",
+                  "actions": [
+                    {
+                      "type": "warning",
+                      "condition": "$interface_config.logical_config.Host_Controllers_Enable && !$get('swproject.hasComponent', 'STM32CubeMX2 Config:PCD')",
+                      "message": "Please make sure to disable Host Controllers in USBX, or alternatively, enable Host HAL."
+                    }
+                  ],
+                  "variables": [
+                    {
+                      "on": "update-value",
+                      "condition": "$value == true",
+                      "name": "Host_Controllers_Enable",
+                      "value": true
+                    }
+                  ],
+                  "default": false
+                }
+              }
+            },
+            "resources_allocation": {
+              "title": "HW Resources allocation",
+              "type": "object",
+              "properties": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}

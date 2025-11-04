@@ -1,0 +1,399 @@
+{{~assign "strategy" (@root.EnvVarAPI.getVariableValue 'SYSTEM_PROJECT_CODEGEN_STRATEGY')~}}
+{{~log "strategy" @root.strategy~}}
+{{#if (eq @root.strategy "SW")}}
+  {{~assign 'current_resource' 'PWR'~}}
+  {{~assign 'instances' (@root.SWConfigurationAPI.getInstances 'STMicroelectronics::Device:STM32CubeMX2 Config:PWR')~}}
+{{else}}
+  {{~assign "strategy" 'HW'~}}
+  {{#get_myctx}}
+    {{#with _myctx}}
+      {{~log "PWR template _myctx:" this~}}
+      {{~assign 'current_resource' resource~}}
+      {{~assign 'instances' instances~}}
+    {{/with}}
+  {{/get_myctx}}
+{{/if}}
+{{~log "PWR template current_resource:" @root.current_resource~}}
+{{~log "PWR template instances:" (toJSON @root.instances)~}}
+{{> SYSTEM fct='system_check_ll_optim'}}
+/**
+  ******************************************************************************
+  * @file           : mx_{{lowercase @root.current_resource}}.c
+  * @brief          : {{@root.current_resource}} Peripheral initialization
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2024-2025 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* Includes ------------------------------------------------------------------*/
+#include "mx_{{lowercase @root.current_resource}}.h"
+{{#> RCC fct='include_rcc'}}
+{{/RCC}}
+/* Private typedef -----------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+/* Private macros ------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+/* Private functions prototype------------------------------------------------*/
+{{!
+    GLOBAL ASSIGNMENT for HAL & LL
+~}}
+{{#each @root.instances}}
+  {{#if (eq @root.strategy "SW")}}
+    {{~assign 'PWR_cxt' (@root.SWConfigurationAPI.getSwInstanceConfiguration this)~}}
+    {{~log "RTC template PWR_cxt:" (toJSON @root.PWR_cxt)~}}
+    {{~assign 'current_resource' (@root.peripheralsResourceManagerAPI.getPeripheralBoundToSoftwareInstance this)~}}
+    {{~assign 'current_layer' @root.PWR_cxt.info.layer~}}
+    {{~log "RTC template current_resource:" @root.current_resource~}}
+  {{else}}
+    {{~assign 'current_layer' info.layer~}}
+  {{/if}}
+  {{#if (eq @root.current_layer 'HAL')}}
+    {{#> GPIO_HAL fct='gpio_exti_variables' resource=@root.current_resource}}
+    {{/GPIO_HAL}}
+  {{/if}}
+  {{#if (and Additional_configuration.Voltage_detection_configuration.Pvd_configuration.enableEXTI Additional_configuration.Voltage_detection_configuration.Pvd_configuration.enable)~}}
+    {{~assign 'pvd_exti_needs' System_configuration.EXTI.PVD_EXTI_Config.needs~}}
+    {{#> EXTI fct='exti_get_variables' layer=@root.current_layer needs=@root.pvd_exti_needs~}}
+    {{/EXTI}}
+  {{/if}}
+  {{#if (and Additional_configuration.Voltage_detection_configuration.Avd_configuration.enableEXTI Additional_configuration.Voltage_detection_configuration.Avd_configuration.enable)}}
+    {{~assign 'avd_exti_needs' System_configuration.EXTI.AVD_EXTI_Config.needs~}}
+    {{#> EXTI fct='exti_get_variables' layer=@root.current_layer needs=@root.avd_exti_needs~}}
+    {{/EXTI}}
+  {{/if}}
+  {{#if (and Additional_configuration.Voltage_detection_configuration.enableEXTI (or Additional_configuration.Voltage_detection_configuration.Pvd_configuration.enable Additional_configuration.Voltage_detection_configuration.Avd_configuration.enable))}}
+    {{~assign 'pvd_avd_exti_needs' System_configuration.EXTI.PVD_AVD_EXTI_Config.needs~}}
+    {{#> EXTI fct='exti_get_variables' layer=@root.current_layer needs=@root.pvd_avd_exti_needs~}}
+    {{/EXTI}}
+  {{/if}}
+
+/******************************************************************************/
+/* Exported functions for {{@root.current_resource}} in {{@root.current_layer}} layer (SW instance PWR) */
+/******************************************************************************/
+  {{~assign 'pwr_root_fct_name' (helper_common_get_generated_function_name 'PWR' @root.current_layer)~}}
+  {{~assign 'current_config' this}}
+  {{~assign 'gpio_needs' 'undefined'}}
+  {{~assign 'enabled_pins' ''}}
+  {{~assign 'pins_configs' (helper_pwr_get_wakeup_settings Additional_configuration.Wakeup_pins_configuration @root.current_layer)}}
+  {{#if additional.ram_configuration}}
+    {{~assign 'sram_configs' (helper_pwr_sram_retention_config additional.ram_configuration @root.current_layer)~}}
+  {{/if}}
+  {{~assign 'found_exti' false}}
+  {{#with Additional_configuration}}
+    {{#with Voltage_detection_configuration}}
+      {{#if Pvd_configuration.level_selection}}
+      {{/if}}
+    {{/with}}
+  {{/with}}
+  {{#with System_configuration}}
+    {{#with GPIO}}
+      {{#if CSLEEP_gpio}}
+        {{~assign 'gpio_needs' (helper_common_concatenate_needs CSLEEP_gpio.needs @root.gpio_needs)~}}
+      {{/if}}
+      {{#if CSTOP_gpio}}
+        {{~assign 'gpio_needs' (helper_common_concatenate_needs CSTOP_gpio.needs @root.gpio_needs)~}}
+      {{/if}}
+      {{#if SRDSTOP_gpio}}
+        {{~assign 'gpio_needs' (helper_common_concatenate_needs SRDSTOP_gpio.needs @root.gpio_needs)~}}
+      {{/if}}
+      {{#if PVD_IN_gpio}}
+        {{~assign 'gpio_needs' (helper_common_concatenate_needs PVD_IN_gpio.needs @root.gpio_needs)~}}
+      {{/if}}
+    {{/with}}
+  {{/with}}
+  {{#if (eq @root.current_layer 'HAL')}}
+{{!
+    Generation of initialization function used in HAL
+~}}
+system_status_t {{@root.pwr_root_fct_name}}_init(void)
+{
+    {{#if (length @root.pins_configs)}}
+  hal_pwr_wakeup_pin_config_t wkup_config;
+
+    {{/if}}
+    {{#if (eq clock_activation 0)}}
+  /* Enable PWR IP Clock */
+
+    {{/if}}
+    {{#with Additional_configuration}}
+      {{#unless (eq @root.gpio_needs 'undefined')}}
+  /****************************************************************************/
+  /* GPIO Configuration                                                       */
+  /****************************************************************************/
+        {{#> GPIO_HAL fct='init' needs=@root.gpio_needs resource=@root.current_resource}}
+        {{/GPIO_HAL}}
+      {{/unless}}
+      {{#with Main_supply_configuration}}
+        {{#if Stop_Voltage_scaling}}
+  /****************************************************************************/
+  /* Main supply configuration                                                */
+  /****************************************************************************/
+  /* Stop Voltage scaling configuration */
+  HAL_PWR_LP_SetMainRegulatorStopVoltageScalingRange(HAL_PWR_STOP_{{Stop_Voltage_scaling}});
+
+        {{/if}}
+      {{/with}}
+      {{#with Voltage_detection_configuration}}
+        {{#if Pvd_configuration.enable}}
+  /****************************************************************************/
+  /* Configuration of PVD (Programmable Voltage Detector)                     */
+  /****************************************************************************/
+          {{#with Pvd_configuration}}
+            {{#if level_selection}}
+  /* Configure PVD Level */
+  HAL_PWR_SetProgrammableVoltageDetectorLevel(HAL_PWR_PVD_{{level_selection}});
+
+            {{/if}}
+  /* Enable PVD */
+  HAL_PWR_EnableProgrammableVoltageDetector();
+            {{#if (eq enableEXTI true)}}
+
+  /* Configure PVD EXTI Line */
+              {{#> EXTI fct='exti_get_init' layer=@root.current_layer needs=@root.pvd_exti_needs found_exti=@root.found_exti~}}
+              {{/EXTI}}
+              {{~assign 'found_exti' true~}}
+
+            {{/if}}
+          {{/with}}
+        {{/if}}
+        {{#if Avd_configuration.enable}}
+  /****************************************************************************/
+  /* Configuration of AVD (Analog Voltage Detector)                           */
+  /****************************************************************************/
+          {{#with Avd_configuration}}
+            {{#if level_selection}}
+  /* Configure AVD Level */
+  HAL_PWR_SetAnalogVoltageDetectorLevel(HAL_PWR_AVD_{{level_selection}});
+
+            {{/if}}
+  /* Enable AVD */
+  HAL_PWR_EnableAnalogVoltageDetector();
+
+            {{#if (eq enableEXTI true)}}
+  /* Configure AVD EXTI Line */
+              {{#> EXTI fct='exti_get_init' layer=@root.current_layer needs=@root.avd_exti_needs found_exti=@root.found_exti~}}
+              {{/EXTI}}
+              {{~assign 'found_exti' true~}}
+
+            {{/if}}
+          {{/with}}
+        {{/if}}
+        {{#if (eq enableEXTI true)}}
+  /* Configure PVD/AVD EXTI Line */
+          {{#> EXTI fct='exti_get_init' layer=@root.current_layer needs=@root.avd_exti_needs found_exti=@root.found_exti~}}
+          {{/EXTI}}
+          {{~assign 'found_exti' true~}}
+
+        {{/if}}
+        {{#if Temperature_vbat_monitoring.enable}}
+  /****************************************************************************/
+  /* Configuration of VBAT/Temp monitor                                       */
+  /****************************************************************************/
+  /* Disable RTC Domain Write protection to enable VBAT/Temp monitor */
+  HAL_PWR_DisableRTCDomainWriteProtection();
+
+  /* Enable VBAT/Temp monitoring */
+  HAL_PWR_EnableTemperatureVbatMonitor();
+
+  /* Enable RTC Domain Write protection to avoid undesired access */
+  HAL_PWR_EnableRTCDomainWriteProtection();
+
+        {{/if}}
+        {{#if Temperature_vdd_monitoring.enable}}
+  /****************************************************************************/
+  /* Configuration of VDD/Temp monitor                                        */
+  /****************************************************************************/
+  /* Disable RTC Domain Write protection to enable VDD/Temp monitor */
+  HAL_PWR_DisableRTCDomainWriteProtection();
+
+  /* Enable VDD/Temp monitoring */
+  HAL_PWR_EnableTemperatureVddMonitor();
+
+  /* Enable RTC Domain Write protection to avoid undesired access */
+  HAL_PWR_EnableRTCDomainWriteProtection();
+
+        {{/if}}
+      {{/with}}
+      {{#with Ram_configuration}}
+        {{#if (length @root.sram_configs)}}
+  /****************************************************************************/
+  /* Configuration of RAM retention                                           */
+  /****************************************************************************/
+  /* By default, all RAM retention is enabled */
+          {{#each @root.sram_configs}}
+            {{#unless pageStatus}}
+              {{#if fullretention}}
+  /* For {{sram}} in {{mode}} mode, retention is disabled */
+  HAL_PWR_LP_DisableMemoryRetention(HAL_PWR_MEMORY_RETENTION_{{sram}}_{{mode}});
+
+              {{else}}
+                {{#if isFirstOfGroup}}
+                  {{#if enabledPagesStr}}
+  /* For {{sram}} in {{mode}} mode, retention is enabled only for pages {{enabledPagesStr}} */
+                  {{else}}
+  /* For {{sram}} in {{mode}} mode, memory retention is disabled on all pages */
+                  {{/if}}
+                {{/if}}
+  HAL_PWR_LP_DisableMemoryPageRetention(HAL_PWR_MEMORY_RETENTION_{{sram}}_{{mode}}, {{page_idx}}, {{page_nbr}});
+
+              {{/if}}
+            {{/unless}}
+          {{/each}}
+        {{/if}}
+      {{/with}}
+      {{#if Flash_lowpower_configuration.enableFLASHLowPowerMode}}
+  /****************************************************************************/
+  /* Configuration of FLASH low power mode                                    */
+  /****************************************************************************/
+  HAL_PWR_LP_EnableFlashLowPWRMode();
+
+      {{/if}}
+      {{#if NVM_lowpower_configuration.enableNVMLowPowerMode}}
+  /****************************************************************************/
+  /* Configuration of NVM low power mode                                      */
+  /****************************************************************************/
+  HAL_PWR_LP_EnableNVMLowPWRMode();
+
+      {{/if}}
+      {{#if (or (eq Battery_configuration.batteryChargingResistorSelection '1_5K') (eq Battery_configuration.enableBatteryCharging true))}}
+  /****************************************************************************/
+  /* Configuration of the Battery Charging management                         */
+  /****************************************************************************/
+        {{#unless (eq Battery_configuration.batteryChargingResistorSelection '5K')}}
+  /* Configure Battery charging resistor value */
+  HAL_PWR_SetConfigBatteryCharging(HAL_PWR_BATTERY_CHARGING_RES_{{Battery_configuration.batteryChargingResistorSelection}});
+
+        {{/unless}}
+        {{#if Battery_configuration.enableBatteryCharging}}
+  /* Enable Battery charging */
+  HAL_PWR_EnableBatteryCharging();
+
+        {{/if}}
+      {{/if}}
+      {{#if (or (eq UCPD_configuration.enableDeadBatteryMode true) (eq UCPD_configuration.enableUCPDConfigRetention true))}}
+        {{#with UCPD_configuration}}
+  /****************************************************************************/
+  /* Configuration of the UCPD (USB Type-C and Power Delivery) PWR features   */
+  /****************************************************************************/
+          {{#if enableDeadBatteryMode}}
+  /* Enable Dead Battery mode */
+  HAL_PWR_LP_EnableUCPDDeadBattery();
+
+          {{/if}}
+          {{#if enableUCPDConfigRetention}}
+  /* Enable UCPD configuration retention in Standby Mode */
+  HAL_PWR_LP_EnableUCPDRetention();
+
+          {{/if}}
+        {{/with}}
+      {{/if}}
+      {{~assign 'enabled_pins' ''~}}
+      {{#with Wakeup_pins_configuration}}
+        {{~assign 'pull_availability' (helper_pwr_pull_or_source @root.pins_configs)~}}
+        {{~helper_pwr_breakpoint (length @root.pins_configs) @root~}}
+        {{#if (length @root.pins_configs)}}
+  /****************************************************************************/
+  /* Wakeup Pins Configurations                                               */
+  /****************************************************************************/
+          {{~helper_pwr_breakpoint @root.pull_availability @root}}
+          {{#each @root.pins_configs}}
+            {{#if @root.pull_availability}}
+  /* Configuration of selected Wakeup pins with pull {{pull}} and {{polarity}} polarity */
+  wkup_config.polarity = HAL_PWR_WAKEUP_PIN_POLARITY_{{polarity}};
+  wkup_config.pull     = HAL_PWR_WAKEUP_PIN_PULL_{{pull}};
+
+            {{else}}
+  /* Configuration of selected Wakeup pins with {{source}} and {{polarity}} polarity    */
+  wkup_config.polarity = HAL_PWR_WAKEUP_PIN_POLARITY_{{polarity}};
+  wkup_config.source   = HAL_PWR_WAKEUP_PIN_{{source}};
+
+            {{/if}}
+  if (HAL_PWR_LP_SetConfigWakeupPin({{pins}}, &wkup_config) != HAL_OK)
+  {
+    return SYSTEM_POWER_ERROR;
+  }
+            {{~assign 'enabled_pins' (helper_pwr_concatenate_pins pins @root.enabled_pins)}}
+
+          {{/each}}
+          {{~assign 'enabled_pins' (helper_pwr_reorder_pins @root.enabled_pins)~}}
+        {{/if}}
+        {{#unless (eq @root.enabled_pins '')}}
+  /****************************************************************************/
+  /* Enable all configured Wakeup Pins                                        */
+  /****************************************************************************/
+  HAL_PWR_LP_EnableWakeupPin({{@root.enabled_pins}});
+
+        {{/unless}}
+  return SYSTEM_OK;
+      {{/with}}
+    {{/with}}
+}
+  {{else}}
+    {{#> PWR_LL fct='exported_functions_init'}}
+    {{/PWR_LL}}
+  {{/if}}
+{{!
+    GENERATION OF DEINIT FUNCTION DEPENDING ON LAYER
+}}
+  {{#if (eq @root.current_layer 'HAL')}}
+
+system_status_t {{@root.pwr_root_fct_name}}_deinit(void)
+{
+    {{#unless (eq clock_activation 0)}}
+    {{/unless}}
+    {{#with Additional_configuration}}
+      {{#with Status_pins_configuration}}
+        {{#unless (eq @root.gpio_needs 'undefined')}}
+  /****************************************************************************/
+  /* Status pin GPIO Deinitialization                                         */
+  /****************************************************************************/
+          {{#> GPIO_HAL fct='deinit' needs=@root.gpio_needs resource=@root.current_resource}}
+          {{/GPIO_HAL}}
+        {{/unless}}
+      {{/with}}
+      {{#unless (eq @root.enabled_pins '')}}
+  /****************************************************************************/
+  /* Disable all configured Wakeup Pins                                       */
+  /****************************************************************************/
+  HAL_PWR_LP_DisableWakeupPin({{@root.enabled_pins}});
+
+      {{/unless}}
+      {{#with Voltage_detection_configuration}}
+        {{#if Pvd_configuration.enable}}
+          {{#if (eq Pvd_configuration.enableEXTI true)}}
+  /* Deinit PVD EXTI Line */
+            {{#> EXTI fct='exti_deinit' layer=@root.current_layer needs=@root.pvd_exti_needs exti_line=0}}
+            {{/EXTI}}
+          {{/if}}
+        {{/if}}
+        {{#if Avd_configuration.enable}}
+          {{#if (eq Avd_configuration.enableEXTI true)}}
+  /* Deinit AVD EXTI Line */
+            {{#> EXTI fct='exti_deinit' layer=@root.current_layer needs=@root.avd_exti_needs exti_line=0}}
+            {{/EXTI}}
+
+          {{/if}}
+        {{/if}}
+        {{#if (eq enableEXTI true)}}
+  /* Deinit PVD/AVD EXTI Line */
+          {{#> EXTI fct='exti_deinit' layer=@root.current_layer needs=@root.pvd_avd_exti_needs exti_line=16}}
+          {{/EXTI}}
+
+        {{/if}}
+      {{/with}}
+    {{/with}}
+  return SYSTEM_OK;
+}
+
+  {{else}}
+    {{#> PWR_LL fct='exported_functions_deinit'}}
+    {{/PWR_LL}}
+  {{/if}}
+{{/each}}

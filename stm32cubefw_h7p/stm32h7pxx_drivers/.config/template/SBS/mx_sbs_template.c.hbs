@@ -1,0 +1,130 @@
+{{assign "strategy" (@root.EnvVarAPI.getVariableValue 'SYSTEM_PROJECT_CODEGEN_STRATEGY')~}}
+{{log "strategy" @root.strategy~}}
+{{#if (eq @root.strategy "SW")}}
+  {{! ~}}
+  {{assign 'current_resource' 'SBS'~}}
+  {{assign 'instances' (@root.SWConfigurationAPI.getInstances 'STMicroelectronics::Device:STM32CubeMX2 Config:SBS')~}}
+{{else}}
+  {{! ~}}
+  {{assign "strategy" "HW"~}}
+  {{#get_myctx~}}
+    {{#with _myctx~}}
+      {{assign 'current_resource' resource~}}
+      {{assign 'instances' instances~}}
+    {{/with~}}
+  {{/get_myctx~}}
+{{/if}}
+{{log "current_resource = " @root.current_resource~}}
+{{log "instances = " @root.instances~}}
+/**
+  **********************************************************************************************************************
+  * @file           : mx_{{lowercase @root.current_resource}}.c
+  * @brief          : {{@root.current_resource}} Peripheral initialization
+  **********************************************************************************************************************
+  * @attention
+  *
+  * Copyright (c) {{year}} STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  **********************************************************************************************************************
+  */
+/* Includes ----------------------------------------------------------------------------------------------------------*/
+#include "mx_{{lowercase @root.current_resource}}.h"
+
+/* Private typedef ---------------------------------------------------------------------------------------------------*/
+/* Private define ----------------------------------------------------------------------------------------------------*/
+/* Private macro -----------------------------------------------------------------------------------------------------*/
+/* Private variables -------------------------------------------------------------------------------------------------*/
+/* Private functions prototype----------------------------------------------------------------------------------------*/
+/* Exported variables by reference------------------------------------------------------------------------------------*/
+/* Exported function definition --------------------------------------------------------------------------------------*/
+{{!
+    Generation of handle for each function defined in HAL layer
+    - save a variable to indicate if handle has been already created (only 1 handle by function)
+~}}
+{{#each @root.instances}}
+  {{! ~}}
+  {{assign 'current_layer' info.layer~}}
+  {{assign 'nvic_needs' 'undefined'~}}
+  {{assign 'nvic_generate_handler' false~}}
+/******************************************************************************/
+/* Exported functions for SBS in {{@root.current_layer}} layer */
+/******************************************************************************/
+{{assign 'fct_name' (helper_common_get_generated_function_name @root.current_resource @root.current_layer '0')~}}
+system_status_t {{@root.fct_name}}_init(void)
+{
+{{> RCC fct='generate_peripheral_clock_activation' hw_resource=@root.current_resource}}
+{{> SBS fct='set_analog_io_switch_supply' layer=@root.current_layer}}
+{{> SBS fct='fast_mode_plus_driving_capability' layer=@root.current_layer}}
+{{> SBS fct='i2c_smbus_selection' layer=@root.current_layer}}
+{{> SBS fct='enable_timer_connections' layer=@root.current_layer}}
+{{> SBS fct='configure_compensation_cells'}}
+{{> SBS fct='flash_eccnmi' layer=@root.current_layer}}
+{{> SBS fct='set_epoch_value' layer=@root.current_layer}}
+{{> SBS fct='set_ethernet_polarity' layer=@root.current_layer}}
+{{> SBS fct='set_ethernet_interface' layer=@root.current_layer}}
+{{> SBS fct='channel_pin_remap' layer=@root.current_layer}}
+{{#with System}}
+  {{#if BridgeErrorInterruption}}
+
+  {{assign 'nvic_generate_handler' true~}}
+  {{assign 'BridgeErrorInterruption' BridgeErrorInterruption~}}
+  /* Set SBS Interrupt priority*/
+{{assign 'nvic_needs' (helper_common_concatenate_needs nvicConfigEvent.needs @root.nvic_needs)~}}
+{{#> CORTEX fct='init' layer=@root.current_layer needs=nvicConfigEvent.needs}}
+#warning "Partial CORTEX is not present"
+{{/CORTEX}}
+  {{/if}}
+{{/with}}
+
+  return SYSTEM_OK;
+}
+
+system_status_t {{@root.fct_name}}_deinit(void)
+{
+{{#if @root.BridgeErrorInterruption}}
+  /* Disable the SBS bridge interrupt */
+{{> CORTEX fct='deinit' layer=@root.current_layer needs=System.nvicConfigEvent.needs}}
+
+{{/if}}
+{{> RCC fct='generate_peripheral_clock_reset' hw_resource=@root.current_resource}}
+{{> RCC fct='generate_peripheral_clock_deactivation' hw_resource=@root.current_resource}}
+
+  return SYSTEM_OK;
+}
+{{/each}}
+
+{{#if @root.BridgeErrorInterruption}}
+{{assign 'nvic_context' (helper_cortex_nvic_get_irqline_info_list_legacy @root.NvicAPI @root.nvic_needs @root.current_resource 'SBS_NS_BusErrorBridge' @root.function)~}}
+{{#each @root.nvic_context.list_irq}}
+{{#if @root.nvic_generate_handler}}
+/******************************************************************************/
+/*                     {{description}}                    */
+/******************************************************************************/
+{{#if (eq @root.current_layer 'HAL')}}
+void {{line}}_IRQHandler(void)
+{
+  HAL_{{component}}_IRQHandler();
+}
+{{else}}
+void {{line}}_IRQHandler(void)
+{
+
+}
+{{/if}}
+{{else}}
+/******************************************************************************/
+/*    {{description}} is managed directly in user code.   */
+/*
+void {{line}}_IRQHandler(void)
+{
+}
+  */
+/******************************************************************************/
+{{/if}}{{!nvic_generate_handler~}}
+{{/each}}
+{{/if}}

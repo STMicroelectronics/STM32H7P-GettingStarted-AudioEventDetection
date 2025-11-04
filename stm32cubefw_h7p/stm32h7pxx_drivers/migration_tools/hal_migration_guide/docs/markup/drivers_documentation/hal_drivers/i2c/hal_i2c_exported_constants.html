@@ -1,0 +1,2134 @@
+<!DOCTYPE html>
+<html data-content_root="../../../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, HAL1, I2C, STM32H5, STM32G0, STM32F4, STM32L4, STM32C0, STM32H7" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     HAL I2C constants migration — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <script src="../../../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <link href="../../../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../../../search.html" rel="search" title="Search"/>
+    <link href="hal_i2c_exported_macros.html" rel="next" title="HAL I2C macros migration"/>
+    <link href="hal_i2c_typical_use_cases_migration.html" rel="prev" title="HAL I2C Typical use cases for migration"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/drivers_documentation/hal_drivers/i2c/hal_i2c_exported_constants" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_script/migration_script_toc.html">
+            HAL1 detection
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../breaking_concepts/breaking_concepts_toc.html">
+              Breaking changes in concepts
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../hal_drivers_toc.html">
+              HAL drivers migration
+             </a>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../adc/hal_adc_toc.html">
+                ADC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../comp/hal_comp_toc.html">
+                COMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cortex/hal_cortex_toc.html">
+                CORTEX
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cordic/hal_cordic_toc.html">
+                CORDIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../crc/hal_crc_toc.html">
+                CRC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cryp/hal_cryp_toc.html">
+                CRYP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dac/hal_dac_toc.html">
+                DAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dcache/hal_dcache_toc.html">
+                DCACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dma/hal_dma_toc.html">
+                DMA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../exti/hal_exti_toc.html">
+                EXTI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../fmac/hal_fmac_toc.html">
+                FMAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../generic/hal_generic_toc.html">
+                GENERIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxmmu/hal_gfxmmu_toc.html">
+                GFXMMU
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxtim/hal_gfxtim_toc.html">
+                GFXTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gpio/hal_gpio_toc.html">
+                GPIO
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="hal_i2c_toc.html">
+                I2C
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2s/hal_i2s_toc.html">
+                I2S
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../icache/hal_icache_toc.html">
+                ICACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../irda/hal_irda_toc.html">
+                IRDA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../iwdg/hal_iwdg_toc.html">
+                IWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../lptim/hal_lptim_toc.html">
+                LPTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../nor/hal_nor_toc.html">
+                NOR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../opamp/hal_opamp_toc.html">
+                OPAMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ospi/hal_ospi_toc.html">
+                OSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pka/hal_pka_toc.html">
+                PKA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pwr/hal_pwr_toc.html">
+                PWR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../qspi/hal_qspi_toc.html">
+                QSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ramcfg/hal_ramcfg_toc.html">
+                RAMCFG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rcc/hal_rcc_toc.html">
+                RCC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rng/hal_rng_toc.html">
+                RNG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rtc/hal_rtc_toc.html">
+                RTC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sdram/hal_sdram_toc.html">
+                SDRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smartcard/hal_smartcard_toc.html">
+                SMARTCARD
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smbus/hal_smbus_toc.html">
+                SMBUS
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../spi/hal_spi_toc.html">
+                SPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sram/hal_sram_toc.html">
+                SRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../tim/hal_tim_toc.html">
+                TIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../uart/hal_uart_toc.html">
+                UART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../usart/hal_usart_toc.html">
+                USART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../wwdg/hal_wwdg_toc.html">
+                WWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../xspi/hal_xspi_toc.html">
+                XSPI
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../ll_drivers/ll_drivers_toc.html">
+              LL drivers migration
+             </a>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-drivers-documentation-hal-drivers-i2c-hal-i2c-exported-constants--page-root">
+            HAL I2C constants migration
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-i2c-error-code-constants">
+               HAL I2C error code constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-i2c-sequential-transfer-options-constants">
+               HAL I2C sequential transfer options constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-i2c-addressing-mode-constants">
+               HAL I2C addressing mode constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-i2c-own-address2-masks-constants">
+               HAL I2C own address2 masks constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-i2c-memory-address-size-constants">
+               HAL I2C memory address size constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-i2c-xferdirection-constants">
+               HAL I2C xferDirection constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-i2c-fast-mode-plus-status-constants">
+               HAL I2C fast mode plus status constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-i2c-start-or-stop-mode-constants">
+               HAL I2C Start or Stop Mode constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-i2c-autonomous-mode-trigger-selection-constants">
+               HAL I2C autonomous mode trigger selection constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-i2c-autonomous-mode-trigger-polarity-constants">
+               HAL I2C autonomous mode trigger polarity constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-i2c-dual-addressing-mode-constants">
+               HAL I2C dual addressing mode constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-i2c-general-call-addressing-mode-constants">
+               HAL I2C general call addressing mode constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-i2c-no-stretch-mode-constants">
+               HAL I2C no-stretch mode constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-i2c-autonomous-mode-state">
+               HAL I2C autonomous mode state
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-i2c-analog-filter-constants">
+               HAL I2C analog filter constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-i2c-reload-end-mode-constants">
+               HAL I2C reload end mode constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-i2c-interrupt-configuration-constants">
+               HAL I2C interrupt configuration constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-i2c-flag-constants">
+               HAL I2C flag constants
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-i2c-fast-mode-plus-constants">
+               HAL I2C fast mode plus constants
+              </a>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="hal-i2c-constants-migration">
+        <span id="hal-i2c-exported-constants">
+        </span>
+        <h1 id="docs-markup-drivers-documentation-hal-drivers-i2c-hal-i2c-exported-constants--page-root">
+         HAL I2C constants migration
+         <a class="headerlink" href="#docs-markup-drivers-documentation-hal-drivers-i2c-hal-i2c-exported-constants--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <p>
+         This section provides information about the HAL I2C constants migration.
+        </p>
+        <section id="hal-i2c-error-code-constants">
+         <span id="hal-i2c-exported-constants-i2c-error-code">
+         </span>
+         <h2 id="hal-i2c-error-code-constants">
+          HAL I2C error code constants
+          <a class="headerlink" href="#hal-i2c-error-code-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define HAL_I2C_ERROR_NONE</span>
+<span class="cp">#define HAL_I2C_ERROR_BERR</span>
+<span class="cp">#define HAL_I2C_ERROR_ARLO</span>
+<span class="cp">#define HAL_I2C_ERROR_AF</span>
+<span class="cp">#define HAL_I2C_ERROR_OVR</span>
+<span class="cp">#define HAL_I2C_ERROR_SIZE</span>
+<span class="cp">#define HAL_I2C_ERROR_DMA</span>
+<span class="cp">#define HAL_I2C_ERROR_TIMEOUT</span>
+<span class="cp">#define HAL_I2C_ERROR_DMA_PARAM</span>
+<span class="cp">#define HAL_I2C_WRONG_START</span>
+<span class="cp">#define HAL_I2C_ERROR_INVALID_CALLBACK</span>
+<span class="cp">#define HAL_I2C_ERROR_INVALID_PARAM</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define  HAL_I2C_ERROR_NONE</span>
+<span class="cp">#define  HAL_I2C_ERROR_BERR</span>
+<span class="cp">#define  HAL_I2C_ERROR_ARLO</span>
+<span class="cp">#define  HAL_I2C_ERROR_AF</span>
+<span class="cp">#define  HAL_I2C_ERROR_OVR</span>
+<span class="cp">#define  HAL_I2C_ERROR_SIZE</span>
+<span class="cp">#define  HAL_I2C_ERROR_DMA</span>
+<span class="cm">/* */</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">These</span><span class="w"> </span><span class="n">kinds</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">logical</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">reported</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">direct</span><span class="w"> </span><span class="n">function</span><span class="w"> </span><span class="k">return</span><span class="p">.</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related  concept
+          </strong>
+          :
+          <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_F.html#breaking-concepts-concept-f3">
+           <span class="std std-ref">
+            Revise and optimize HAL error management.
+           </span>
+          </a>
+         </p>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-i2c-sequential-transfer-options-constants">
+         <span id="hal-i2c-exported-constants-i2c-transfer-option">
+         </span>
+         <h2 id="hal-i2c-sequential-transfer-options-constants">
+          HAL I2C sequential transfer options constants
+          <a class="headerlink" href="#hal-i2c-sequential-transfer-options-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define I2C_FIRST_FRAME</span>
+<span class="cp">#define I2C_FIRST_AND_NEXT_FRAME</span>
+<span class="cp">#define I2C_NEXT_FRAME</span>
+<span class="cp">#define I2C_FIRST_AND_LAST_FRAME</span>
+<span class="cp">#define I2C_LAST_FRAME</span>
+<span class="cp">#define I2C_LAST_FRAME_NO_STOP</span>
+<span class="cp">#define I2C_OTHER_FRAME</span>
+<span class="cp">#define I2C_OTHER_AND_LAST_FRAME</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">HAL_I2C_XFER_FIRST_FRAME</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_I2C_XFER_FIRST_AND_NEXT_FRAME</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_I2C_XFER_NEXT_FRAME</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_I2C_XFER_FIRST_AND_LAST_FRAME</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_I2C_XFER_LAST_FRAME</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_I2C_XFER_LAST_FRAME_NO_STOP</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_I2C_XFER_OTHER_FRAME</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_I2C_XFER_OTHER_AND_LAST_FRAME</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_i2c_xfer_opt_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-i2c-addressing-mode-constants">
+         <span id="hal-i2c-exported-constants-i2c-adressing-mode">
+         </span>
+         <h2 id="hal-i2c-addressing-mode-constants">
+          HAL I2C addressing mode constants
+          <a class="headerlink" href="#hal-i2c-addressing-mode-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define I2C_ADDRESSINGMODE_7BIT</span>
+<span class="cp">#define I2C_ADDRESSINGMODE_10BIT</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">HAL_I2C_ADDRESSING_7BIT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_I2C_ADDRESSING_10BIT</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_i2c_addressing_mode_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-i2c-own-address2-masks-constants">
+         <span id="hal-i2c-exported-constants-i2c-own-adress2-masks">
+         </span>
+         <h2 id="hal-i2c-own-address2-masks-constants">
+          HAL I2C own address2 masks constants
+          <a class="headerlink" href="#hal-i2c-own-address2-masks-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define I2C_OA2_NOMASK</span>
+<span class="cp">#define I2C_OA2_MASK01</span>
+<span class="cp">#define I2C_OA2_MASK02</span>
+<span class="cp">#define I2C_OA2_MASK03</span>
+<span class="cp">#define I2C_OA2_MASK04</span>
+<span class="cp">#define I2C_OA2_MASK05</span>
+<span class="cp">#define I2C_OA2_MASK06</span>
+<span class="cp">#define I2C_OA2_MASK07</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">HAL_I2C_OWN_ADDR2_NOMASK</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_I2C_OWN_ADDR2_MASK01</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_I2C_OWN_ADDR2_MASK02</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_I2C_OWN_ADDR2_MASK03</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_I2C_OWN_ADDR2_MASK04</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_I2C_OWN_ADDR2_MASK05</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_I2C_OWN_ADDR2_MASK06</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_I2C_OWN_ADDR2_MASK07</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_i2c_own_addr2_mask_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-i2c-memory-address-size-constants">
+         <span id="hal-i2c-exported-constants-i2c-mem-address-size">
+         </span>
+         <h2 id="hal-i2c-memory-address-size-constants">
+          HAL I2C memory address size constants
+          <a class="headerlink" href="#hal-i2c-memory-address-size-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define I2C_MEMADD_SIZE_8BIT</span>
+<span class="cp">#define I2C_MEMADD_SIZE_16BIT</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">HAL_I2C_MEM_ADDR_8BIT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_I2C_MEM_ADDR_16BIT</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_i2c_mem_addr_size_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-i2c-xferdirection-constants">
+         <span id="hal-i2c-exported-constants-i2c-xferdirection">
+         </span>
+         <h2 id="hal-i2c-xferdirection-constants">
+          HAL I2C xferDirection constants
+          <a class="headerlink" href="#hal-i2c-xferdirection-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define I2C_DIRECTION_TRANSMIT</span>
+<span class="cp">#define I2C_DIRECTION_RECEIVE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">HAL_I2C_SLAVE_DIRECTION_TRANSMIT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">HAL_I2C_SLAVE_DIRECTION_RECEIVE</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_i2c_slave_xfer_direction_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-i2c-fast-mode-plus-status-constants">
+         <span id="hal-i2c-exported-constants-i2c-fastmode-plus-status">
+         </span>
+         <h2 id="hal-i2c-fast-mode-plus-status-constants">
+          HAL I2C fast mode plus status constants
+          <a class="headerlink" href="#hal-i2c-fast-mode-plus-status-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define I2C_FASTMODEPLUS_DISABLE</span>
+<span class="cp">#define I2C_FASTMODEPLUS_ENABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">HAL_I2C_FAST_MODE_PLUS_DISABLED</span>
+<span class="w">    </span><span class="n">HAL_I2C_FAST_MODE_PLUS_ENABLED</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_i2c_fast_mode_plus_status_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-i2c-start-or-stop-mode-constants">
+         <span id="hal-i2c-exported-constants-start-stop-mode">
+         </span>
+         <h2 id="hal-i2c-start-or-stop-mode-constants">
+          HAL I2C Start or Stop Mode constants
+          <a class="headerlink" href="#hal-i2c-start-or-stop-mode-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <ul class="simple">
+          <li>
+           <p>
+            In HAL2, the constants
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              I2C_GENERATE_NO_START_READ
+             </span>
+            </code>
+            and
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              I2C_GENERATE_NO_START_WRITE
+             </span>
+            </code>
+            from HAL1 have been replaced by the corresponding constants
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              I2C_GENERATE_START_READ
+             </span>
+            </code>
+            and
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              I2C_GENERATE_START_WRITE
+             </span>
+            </code>
+            .
+           </p>
+          </li>
+         </ul>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define  I2C_NO_STARTSTOP</span>
+<span class="cp">#define  I2C_GENERATE_STOP</span>
+<span class="cp">#define  I2C_GENERATE_START_READ</span>
+<span class="cp">#define  I2C_GENERATE_START_WRITE</span>
+<span class="cp">#define  I2C_GENERATE_NO_START_READ</span>
+<span class="cp">#define  I2C_GENERATE_NO_START_WRITE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">I2C_NO_STARTSTOP</span>
+<span class="w">  </span><span class="n">I2C_GENERATE_STOP</span>
+<span class="w">  </span><span class="n">I2C_GENERATE_START_READ</span>
+<span class="w">  </span><span class="n">I2C_GENERATE_START_WRITE</span>
+<span class="p">}</span><span class="w"> </span><span class="n">i2c_start_stop_mode_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-i2c-autonomous-mode-trigger-selection-constants">
+         <span id="hal-i2c-exported-constants-i2c-am-trigger-selection">
+         </span>
+         <h2 id="hal-i2c-autonomous-mode-trigger-selection-constants">
+          HAL I2C autonomous mode trigger selection constants
+          <a class="headerlink" href="#hal-i2c-autonomous-mode-trigger-selection-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define I2C_TRIG_GRP1</span>
+<span class="cp">#define I2C_TRIG_GRP2</span>
+<span class="cp">#define I2C_GRP1_GPDMA_CH0_TCF_TRG</span>
+<span class="cp">#define I2C_GRP1_GPDMA_CH1_TCF_TRG</span>
+<span class="cp">#define I2C_GRP1_GPDMA_CH2_TCF_TRG</span>
+<span class="cp">#define I2C_GRP1_GPDMA_CH3_TCF_TRG</span>
+<span class="cp">#define I2C_GRP1_EXTI5_TRG</span>
+<span class="cp">#define I2C_GRP1_EXTI9_TRG</span>
+<span class="cp">#define I2C_GRP1_LPTIM1_CH1_TRG</span>
+<span class="cp">#define I2C_GRP1_LPTIM2_CH1_TRG</span>
+<span class="cp">#define I2C_GRP1_COMP1_TRG</span>
+<span class="cp">#define I2C_GRP1_COMP2_TRG</span>
+<span class="cp">#define I2C_GRP1_RTC_ALRA_TRG</span>
+<span class="cp">#define I2C_GRP1_RTC_WUT_TRG</span>
+<span class="cp">#define I2C_GRP2_LPDMA_CH0_TCF_TRG</span>
+<span class="cp">#define I2C_GRP2_LPDMA_CH1_TCF_TRG</span>
+<span class="cp">#define I2C_GRP2_LPDMA_CH2_TCF_TRG</span>
+<span class="cp">#define I2C_GRP2_LPDMA_CH3_TCF_TRG</span>
+<span class="cp">#define I2C_GRP2_EXTI5_TRG</span>
+<span class="cp">#define I2C_GRP2_EXTI8_TRG</span>
+<span class="cp">#define I2C_GRP2_LPTIM1_CH1_TRG</span>
+<span class="cp">#define I2C_GRP2_LPTIM3_CH1_TRG</span>
+<span class="cp">#define I2C_GRP2_COMP1_TRG</span>
+<span class="cp">#define I2C_GRP2_COMP2_TRG</span>
+<span class="cp">#define I2C_GRP2_RTC_ALRA_TRG</span>
+<span class="cp">#define I2C_GRP2_RTC_WUT_TRG</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP1_GPDMA_CH0_TCF</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP1_GPDMA_CH1_TCF</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP1_GPDMA_CH2_TCF</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP1_GPDMA_CH3_TCF</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP1_EXTI5</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP1_EXTI9</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP1_LPTIM1_CH1</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP1_LPTIM2_CH1</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP1_COMP1</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP1_COMP2</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP1_RTC_ALRA</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP1_RTC_WUT</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP2_LPDMA_CH0_TCF</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP2_LPDMA_CH1_TCF</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP2_LPDMA_CH2_TCF</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP2_LPDMA_CH3_TCF</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP2_EXTI5</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP2_EXTI8</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP2_LPTIM1_CH1</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP2_LPTIM3_CH1</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP2_COMP1</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP2_COMP2</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP2_RTC_ALRA</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_GRP2_RTC_WUT</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_i2c_am_trigger_source_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-i2c-autonomous-mode-trigger-polarity-constants">
+         <span id="hal-i2c-exported-constants-i2c-am-trigger-polarity">
+         </span>
+         <h2 id="hal-i2c-autonomous-mode-trigger-polarity-constants">
+          HAL I2C autonomous mode trigger polarity constants
+          <a class="headerlink" href="#hal-i2c-autonomous-mode-trigger-polarity-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define I2C_TRIG_POLARITY_RISING</span>
+<span class="cp">#define I2C_TRIG_POLARITY_FALLING</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_RISING</span>
+<span class="w">    </span><span class="n">HAL_I2C_AM_TRIGGER_FALLING</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_i2c_am_trigger_polarity_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related  concept
+          </strong>
+          :
+          <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_P.html#breaking-concepts-concept-p10">
+           <span class="std std-ref">
+            Replace Finite Parameter Defines (Including PPP Instances) with Enum Types at HAL Levels.
+           </span>
+          </a>
+         </p>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-i2c-dual-addressing-mode-constants">
+         <span id="hal-i2c-exported-constants-i2c-dual-adressing-mode">
+         </span>
+         <h2 id="hal-i2c-dual-addressing-mode-constants">
+          HAL I2C dual addressing mode constants
+          <a class="headerlink" href="#hal-i2c-dual-addressing-mode-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              In HAL1, the I2C dual addressing mode is a member of the I2C_InitTypeDef structure.
+             </p>
+            </td>
+            <td>
+             <p>
+              Removed: In HAL2, the I2C dual addressing mode is managed by unitary functions in the HAL layer.
+             </p>
+             <p>
+              For more details, refer to
+              <a class="reference internal" href="hal_i2c_exported_types.html#hal-i2c-exported-types-i2c-structure-configuration">
+               <span class="std std-ref">
+                HAL I2C configuration structure
+               </span>
+              </a>
+              .
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define I2C_DUALADDRESS_DISABLE</span>
+<span class="cp">#define I2C_DUALADDRESS_ENABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="n">HAL_I2C_DisableOwnAddress2</span><span class="p">(</span><span class="n">hal_i2c_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hi2c</span><span class="p">)</span>
+<span class="n">hal_status_t</span><span class="w"> </span><span class="n">HAL_I2C_EnableOwnAddress2</span><span class="p">(</span><span class="n">hal_i2c_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hi2c</span><span class="p">)</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-i2c-general-call-addressing-mode-constants">
+         <span id="hal-i2c-exported-constants-i2c-call-adressing-mode">
+         </span>
+         <h2 id="hal-i2c-general-call-addressing-mode-constants">
+          HAL I2C general call addressing mode constants
+          <a class="headerlink" href="#hal-i2c-general-call-addressing-mode-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              In HAL1, the I2C general call addressing mode is a member of the I2C_InitTypeDef structure.
+             </p>
+            </td>
+            <td>
+             <p>
+              Removed: In HAL2, the I2C general call addressing mode is managed by unitary functions in the HAL layer.
+             </p>
+             <p>
+              For more details, refer to
+              <a class="reference internal" href="hal_i2c_exported_types.html#hal-i2c-exported-types-i2c-structure-configuration">
+               <span class="std std-ref">
+                HAL I2C configuration structure
+               </span>
+              </a>
+              .
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define I2C_GENERALCALL_DISABLE</span>
+<span class="cp">#define I2C_GENERALCALL_ENABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="n">HAL_I2C_SLAVE_DisableAckGeneralCall</span><span class="p">(</span><span class="n">hal_i2c_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hi2c</span><span class="p">)</span>
+<span class="n">hal_status_t</span><span class="w"> </span><span class="n">HAL_I2C_SLAVE_EnableAckGeneralCall</span><span class="p">(</span><span class="n">hal_i2c_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hi2c</span><span class="p">)</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-i2c-no-stretch-mode-constants">
+         <span id="hal-i2c-exported-constants-i2c-nostretch-mode">
+         </span>
+         <h2 id="hal-i2c-no-stretch-mode-constants">
+          HAL I2C no-stretch mode constants
+          <a class="headerlink" href="#hal-i2c-no-stretch-mode-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              In HAL1, the I2C no-stretch mode is a member of the I2C_InitTypeDef structure.
+             </p>
+            </td>
+            <td>
+             <p>
+              Removed: In HAL2, the I2C no-stretch mode is managed by unitary functions in the HAL layer.
+             </p>
+             <p>
+              For more details, refer to
+              <a class="reference internal" href="hal_i2c_exported_types.html#hal-i2c-exported-types-i2c-structure-configuration">
+               <span class="std std-ref">
+                HAL I2C configuration structure
+               </span>
+              </a>
+              .
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define I2C_NOSTRETCH_DISABLE</span>
+<span class="cp">#define I2C_NOSTRETCH_ENABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="n">HAL_I2C_SLAVE_DisableClockStretching</span><span class="p">(</span><span class="n">hal_i2c_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hi2c</span><span class="p">)</span>
+<span class="n">hal_status_t</span><span class="w"> </span><span class="n">HAL_I2C_SLAVE_EnableClockStretching</span><span class="p">(</span><span class="n">hal_i2c_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hi2c</span><span class="p">)</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-i2c-autonomous-mode-state">
+         <span id="hal-i2c-exported-constants-i2c-autonomous-mode-state">
+         </span>
+         <h2 id="hal-i2c-autonomous-mode-state">
+          HAL I2C autonomous mode state
+          <a class="headerlink" href="#hal-i2c-autonomous-mode-state" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              In HAL1, the I2C autonomous mode is a member of the I2C_AutonomousModeConfTypeDef structure.
+             </p>
+            </td>
+            <td>
+             <p>
+              Removed: In HAL2, the I2C autonomous mode is managed by unitary functions in the HAL layer.
+             </p>
+             <p>
+              For more details, refer to
+              <a class="reference internal" href="hal_i2c_exported_types.html#hal-i2c-exported-types-i2c-autonomousmode-structure">
+               <span class="std std-ref">
+                HAL I2C configuration autonomous mode structure
+               </span>
+              </a>
+              .
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define I2C_AUTO_MODE_DISABLE</span>
+<span class="cp">#define I2C_AUTO_MODE_ENABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="n">HAL_I2C_AM_EnableTrigger</span><span class="p">(</span><span class="n">hal_i2c_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hi2c</span><span class="p">)</span>
+<span class="n">hal_status_t</span><span class="w"> </span><span class="n">HAL_I2C_AM_DisableTrigger</span><span class="p">(</span><span class="n">hal_i2c_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hi2c</span><span class="p">)</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-i2c-analog-filter-constants">
+         <span id="hal-i2c-exported-constants-i2c-analogfilter-status">
+         </span>
+         <h2 id="hal-i2c-analog-filter-constants">
+          HAL I2C analog filter constants
+          <a class="headerlink" href="#hal-i2c-analog-filter-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+            </td>
+            <td>
+             <p>
+              Removed : In HAL2, the I2C analog filter is managed by unitary functions in the HAL layer.
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define I2C_ANALOGFILTER_ENABLE</span>
+<span class="cp">#define I2C_ANALOGFILTER_DISABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_status_t</span><span class="w"> </span><span class="n">HAL_I2C_EnableAnalogFilter</span><span class="p">(</span><span class="n">hal_i2c_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hi2c</span><span class="p">)</span>
+<span class="n">hal_status_t</span><span class="w"> </span><span class="n">HAL_I2C_DisableAnalogFilter</span><span class="p">(</span><span class="n">hal_i2c_handle_t</span><span class="w"> </span><span class="o">*</span><span class="n">hi2c</span><span class="p">)</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-i2c-reload-end-mode-constants">
+         <span id="hal-i2c-exported-constants-i2c-reload-end-mode">
+         </span>
+         <h2 id="hal-i2c-reload-end-mode-constants">
+          HAL I2C reload end mode constants
+          <a class="headerlink" href="#hal-i2c-reload-end-mode-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define I2C_RELOAD_MODE</span>
+<span class="cp">#define I2C_AUTOEND_MODE</span>
+<span class="cp">#define I2C_SOFTEND_MODE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <p>
+              These constants are used internally and do not impact user-level operations.
+             </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-i2c-interrupt-configuration-constants">
+         <span id="hal-i2c-exported-constants-i2c-interrupt-configuration">
+         </span>
+         <h2 id="hal-i2c-interrupt-configuration-constants">
+          HAL I2C interrupt configuration constants
+          <a class="headerlink" href="#hal-i2c-interrupt-configuration-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <ul class="simple">
+          <li>
+           <p>
+            The listed defines in HAL1 are used by:
+            <a class="reference internal" href="hal_i2c_exported_macros.html#hal-i2c-exported-macros-i2c-enable-interrupt">
+             <span class="std std-ref">
+              HAL I2C enable interrupt
+             </span>
+            </a>
+            ,
+            <a class="reference internal" href="hal_i2c_exported_macros.html#hal-i2c-exported-macros-i2c-disable-interrupt">
+             <span class="std std-ref">
+              HAL I2C disable interrupt
+             </span>
+            </a>
+            , and
+            <a class="reference internal" href="hal_i2c_exported_macros.html#hal-i2c-exported-macros-i2c-interrupt-source">
+             <span class="std std-ref">
+              HAL I2C get IT source
+             </span>
+            </a>
+            .
+           </p>
+          </li>
+         </ul>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+<span class="cp">#define I2C_IT_ERRI</span>
+<span class="cp">#define I2C_IT_TCI</span>
+<span class="cp">#define I2C_IT_STOPI</span>
+<span class="cp">#define I2C_IT_NACKI</span>
+<span class="cp">#define I2C_IT_ADDRI</span>
+<span class="cp">#define I2C_IT_RXI</span>
+<span class="cp">#define I2C_IT_TXI</span>
+<span class="cp">#define I2C_IT_BUF</span>
+<span class="cp">#define I2C_IT_EVT</span>
+<span class="cp">#define I2C_IT_ERR</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <p>
+              All I2C interrupt flag definitions and macros are removed from HAL2.
+             </p>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_EnableIT_ERR</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_DisableIT_ERR</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_IsEnabledIT_ERR</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_EnableIT_TC</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_DisableIT_TC</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_IsEnabledIT_TC</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_EnableIT_STOP</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_DisableIT_STOP</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_IsEnabledIT_STOP</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_EnableIT_NACK</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_DisableIT_NACK</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_IsEnabledIT_NACK</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_EnableIT_ADDR</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_DisableIT_ADDR</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_IsEnabledIT_ADDR</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_EnableIT_RX</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_DisableIT_RX</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_IsEnabledIT_RX</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_EnableIT_TX</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_DisableIT_TX</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_IsEnabledIT_TX</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_EnableIT_BUF</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_DisableIT_BUF</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_IsEnabledIT_BUF</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_EnableIT_EVT</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_DisableIT_EVT</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_IsEnabledIT_EVT</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_EnableIT_ERR</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_DisableIT_ERR</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_IsEnabledIT_ERR</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="hal-i2c-flag-constants">
+         <span id="hal-i2c-exported-constants-i2c-flag">
+         </span>
+         <h2 id="hal-i2c-flag-constants">
+          HAL I2C flag constants
+          <a class="headerlink" href="#hal-i2c-flag-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <ul class="simple">
+          <li>
+           <p>
+            The listed defines in HAL1 are used by :
+            <a class="reference internal" href="hal_i2c_exported_macros.html#hal-i2c-exported-macros-i2c-set-flag">
+             <span class="std std-ref">
+              HAL I2C get flag
+             </span>
+            </a>
+            , and
+            <a class="reference internal" href="hal_i2c_exported_macros.html#hal-i2c-exported-macros-i2c-clear-flag">
+             <span class="std std-ref">
+              HAL I2C clear Flag
+             </span>
+            </a>
+            .
+           </p>
+          </li>
+         </ul>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+<span class="cp">#define I2C_FLAG_TXE</span>
+<span class="cp">#define I2C_FLAG_TXIS</span>
+<span class="cp">#define I2C_FLAG_RXNE</span>
+<span class="cp">#define I2C_FLAG_ADDR</span>
+<span class="cp">#define I2C_FLAG_AF</span>
+<span class="cp">#define I2C_FLAG_STOPF</span>
+<span class="cp">#define I2C_FLAG_TC</span>
+<span class="cp">#define I2C_FLAG_TCR</span>
+<span class="cp">#define I2C_FLAG_BERR</span>
+<span class="cp">#define I2C_FLAG_ARLO</span>
+<span class="cp">#define I2C_FLAG_OVR</span>
+<span class="cp">#define I2C_FLAG_PECERR</span>
+<span class="cp">#define I2C_FLAG_TIMEOUT</span>
+<span class="cp">#define I2C_FLAG_ALERT</span>
+<span class="cp">#define I2C_FLAG_BUSY</span>
+<span class="cp">#define I2C_FLAG_DIR</span>
+<span class="cp">#define I2C_FLAG_ADD10</span>
+<span class="cp">#define I2C_FLAG_BTF</span>
+<span class="cp">#define I2C_FLAG_SB</span>
+<span class="cp">#define I2C_FLAG_DUALF</span>
+<span class="cp">#define I2C_FLAG_GENCALL</span>
+<span class="cp">#define I2C_FLAG_TRA</span>
+<span class="cp">#define I2C_FLAG_MSL</span>
+<span class="cp">#define I2C_FLAG_MASK</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <p>
+              All I2C flag definitions and macros are removed from HAL2.
+             </p>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_IsActiveFlag</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_ClearFlag_TXE</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_IsActiveFlag</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_IsActiveFlag</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_IsActiveFlag</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_ClearFlag_ADDR</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_IsActiveFlag</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_ClearFlag_NACK</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_IsActiveFlag</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_ClearFlag_STOP</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_IsActiveFlag</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_IsActiveFlag</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_IsActiveFlag</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_ClearFlag_BERR</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_IsActiveFlag</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_ClearFlag_ARLO</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_IsActiveFlag</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">LL_I2C_ClearFlag_OVR</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_IsActiveFlag</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_IsActiveFlag</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_IsActiveFlag</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_IsActiveFlag</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="nl">Removed</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">LL_I2C_IsActiveFlag</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span>
+<span class="n">Not</span><span class="w"> </span><span class="n">implemented</span><span class="w"> </span><span class="n">yet</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">HAL2</span><span class="p">.</span>
+<span class="n">Not</span><span class="w"> </span><span class="n">implemented</span><span class="w"> </span><span class="n">yet</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">HAL2</span><span class="p">.</span>
+<span class="n">Not</span><span class="w"> </span><span class="n">implemented</span><span class="w"> </span><span class="n">yet</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">HAL2</span><span class="p">.</span>
+<span class="n">Not</span><span class="w"> </span><span class="n">implemented</span><span class="w"> </span><span class="n">yet</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">HAL2</span><span class="p">.</span>
+<span class="n">Not</span><span class="w"> </span><span class="n">implemented</span><span class="w"> </span><span class="n">yet</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">HAL2</span><span class="p">.</span>
+<span class="n">Not</span><span class="w"> </span><span class="n">implemented</span><span class="w"> </span><span class="n">yet</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">HAL2</span><span class="p">.</span>
+<span class="n">Not</span><span class="w"> </span><span class="n">implemented</span><span class="w"> </span><span class="n">yet</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">HAL2</span><span class="p">.</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <p>
+          <strong>
+           Related  concept
+          </strong>
+          :
+          <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_E.html#breaking-concepts-concept-e2">
+           <span class="std std-ref">
+            HAL defines and enum(those used for HW registers) are redirected to the equivalent LL ones.
+           </span>
+          </a>
+         </p>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-i2c-fast-mode-plus-constants">
+         <span id="hal-i2c-exported-constants-i2c-fast-mode-plus">
+         </span>
+         <h2 id="hal-i2c-fast-mode-plus-constants">
+          HAL I2C fast mode plus constants
+          <a class="headerlink" href="#hal-i2c-fast-mode-plus-constants" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                In HAL1 the I2C enable fast mode plus and disable are managed by APIs
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  void
+                 </span>
+                 <span class="pre">
+                  HAL_I2CEx_EnableFastModePlus(uint32_t
+                 </span>
+                 <span class="pre">
+                  ConfigFastModePlus)
+                 </span>
+                </code>
+                ,
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  void
+                 </span>
+                 <span class="pre">
+                  HAL_I2CEx_DisableFastModePlus(uint32_t
+                 </span>
+                 <span class="pre">
+                  ConfigFastModePlus)
+                 </span>
+                </code>
+               </p>
+              </li>
+              <li>
+               <p>
+                The parameter
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  ConfigFastModePlus
+                 </span>
+                </code>
+                Selects the pin and can be one this defines.
+               </p>
+              </li>
+             </ul>
+            </td>
+            <td>
+             <ul class="simple">
+              <li>
+               <p>
+                In HAL2 the I2C enable fast mode plus and disable are managed by APIs
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_I2C_EnableFastModePlus()
+                 </span>
+                </code>
+                ,
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  HAL_I2C_DisableFastModePlus()
+                 </span>
+                </code>
+                and the selection of pin is managed by
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  void
+                 </span>
+                 <span class="pre">
+                  HAL_SYSCFG_EnableI2CFastModePlus(uint32_t
+                 </span>
+                 <span class="pre">
+                  fast_mode_plus)
+                 </span>
+                </code>
+                .
+               </p>
+              </li>
+              <li>
+               <p>
+                The parameter
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  fast_mode_plus
+                 </span>
+                </code>
+                can be one of this HAL defines.
+               </p>
+              </li>
+             </ul>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#define I2C_FMP_NOT_SUPPORTED</span>
+<span class="cp">#define I2C_FASTMODEPLUS_PA9</span>
+<span class="cp">#define I2C_FASTMODEPLUS_PA10</span>
+<span class="cp">#define I2C_FASTMODEPLUS_PB6</span>
+<span class="cp">#define I2C_FASTMODEPLUS_PB7</span>
+<span class="cp">#define I2C_FASTMODEPLUS_PB8</span>
+<span class="cp">#define I2C_FASTMODEPLUS_PB9</span>
+<span class="cp">#define I2C_FASTMODEPLUS_PC14</span>
+<span class="cp">#define I2C_FASTMODEPLUS_I2C1</span>
+<span class="cp">#define I2C_FASTMODEPLUS_I2C2</span>
+<span class="cp">#define I2C_FASTMODEPLUS_I2C3</span>
+<span class="cp">#define I2C_FASTMODEPLUS_I2C4</span>
+<span class="cp">#define I2C_FASTMODEPLUS_I2C5</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+<span class="cp">#define HAL_SYSCFG_I2C_PA9_FAST_MODE_PLUS</span>
+<span class="cp">#define HAL_SYSCFG_I2C_PA10_FAST_MODE_PLUS</span>
+<span class="cp">#define HAL_SYSCFG_I2C_PB6_FAST_MODE_PLUS</span>
+<span class="cp">#define HAL_SYSCFG_I2C_PB7_FAST_MODE_PLUS</span>
+<span class="cp">#define HAL_SYSCFG_I2C_PB8_FAST_MODE_PLUS</span>
+<span class="cp">#define HAL_SYSCFG_I2C_PB9_FAST_MODE_PLUS</span>
+<span class="cp">#define HAL_SYSCFG_I2C_PC14_FAST_MODE_PLUS</span>
+<span class="cp">#define HAL_SYSCFG_I2C_I2C1_FAST_MODE_PLUS</span>
+<span class="cp">#define HAL_SYSCFG_I2C_ALL_FAST_MODE_PLUS</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

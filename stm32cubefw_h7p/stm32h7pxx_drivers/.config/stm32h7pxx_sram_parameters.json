@@ -1,0 +1,2201 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "version": "0.0.1",
+  "componentid": "::Device:STM32CubeMX2 Config:SRAM",
+  "grammarVersion": "3.1",
+  "type": "object",
+  "functions": [
+    {
+      "path": ".config/template/helpers/common_helpers.js",
+      "accessor": "com"
+    }
+  ],
+  "properties": {
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "object",
+          "properties": {
+            "labels": {
+              "type": "array",
+              "title": "Label",
+              "items": {
+                "type": "string",
+                "pattern": "^([a-zA-Z_][a-zA-Z0-9_]{1,31})?$",
+                "$comment": "[a-zA-Z_][a-zA-Z0-9_]+",
+                "minLength": 0,
+                "maxLength": 32,
+                "default": ""
+              }
+            },
+            "layer": {
+              "type": "string",
+              "title": "Software Layer",
+              "actions": [
+                {
+                  "type": "disable",
+                  "condition": "$com.helper_common_display_object($resource)"
+                }
+              ],
+              "default": "HAL"
+            },
+            "init_type": {
+              "type": "string",
+              "title": "Resource initialization code generation",
+              "description": "Generate or not the SRAM init code, call it or not at boot",
+              "$comment": "generate the init code of your SRAM or not (enabled/disabled), call it automatically at startup or not (called/enabled)",
+              "oneOf": [
+                {
+                  "const": "called"
+                },
+                {
+                  "const": "enabled"
+                },
+                {
+                  "const": "disabled"
+                }
+              ],
+              "default": "called"
+            }
+          }
+        },
+        "Main": {
+          "type": "object",
+          "title": "Main peripheral configuration",
+          "properties": {
+            "chip_select": {
+              "type": "integer",
+              "title": "Chip Select",
+              "default": 1,
+              "oneOf": [
+                {
+                  "title": "NE1",
+                  "const": 1
+                },
+                {
+                  "title": "NE2",
+                  "const": 2
+                },
+                {
+                  "title": "NE3",
+                  "const": 3
+                },
+                {
+                  "title": "NE4",
+                  "const": 4
+                }
+              ]
+            },
+            "mode": {
+              "type": "integer",
+              "title": "Mode",
+              "default": 0,
+              "oneOf": [
+                {
+                  "title": "Asynchronous read and write with identical timing for both operation",
+                  "const": 0
+                },
+                {
+                  "title": "Asynchronous read and write with distinct timing for each operation",
+                  "const": 1
+                },
+                {
+                  "title": "Synchronous read and write",
+                  "const": 2,
+                  "actions": [
+                    {
+                      "type": "disable",
+                      "condition": "true"
+                    }
+                  ]
+                },
+                {
+                  "title": "Synchronous read and asynchronous write",
+                  "const": 3,
+                  "actions": [
+                    {
+                      "type": "disable",
+                      "condition": "true"
+                    }
+                  ]
+                },
+                {
+                  "title": "Asynchronous read and synchronous write",
+                  "const": 4,
+                  "actions": [
+                    {
+                      "type": "disable",
+                      "condition": "true"
+                    }
+                  ]
+                }
+              ]
+            },
+            "static_config": {
+              "type": "object",
+              "title": "Static configuration",
+              "properties": {
+                "write_fifo": {
+                  "type": "boolean",
+                  "title": "Write FIFO",
+                  "description": "Enable write FIFO",
+                  "default": false
+                },
+                "wait_signal_polarity": {
+                  "type": "string",
+                  "title": "Wait signal polarity.",
+                  "default": "LOW",
+                  "oneOf": [
+                    {
+                      "title": "Low",
+                      "const": "LOW"
+                    },
+                    {
+                      "title": "High",
+                      "const": "HIGH"
+                    }
+                  ]
+                }
+              }
+            },
+            "memory_config": {
+              "type": "object",
+              "title": "Memory configuration",
+              "properties": {
+                "rd_wr_async_identical": {
+                  "type": "object",
+                  "title": "Asynchronous read and write with identical timing for both operations",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Main.mode === 0"
+                    }
+                  ],
+                  "properties": {
+                    "rd_wr_async_memory": {
+                      "title": "Memory configuration",
+                      "type": "object",
+                      "properties": {
+                        "data_width": {
+                          "type": "integer",
+                          "title": "Data width",
+                          "default": 8,
+                          "oneOf": [
+                            {
+                              "title": "8 bits",
+                              "const": 8
+                            },
+                            {
+                              "title": "16 bits",
+                              "const": 16
+                            }
+                          ]
+                        },
+                        "mux_mode": {
+                          "type": "boolean",
+                          "title": "Address bus multiplexing",
+                          "description": " Enable address bus multiplexing.",
+                          "actions": [
+                            {
+                              "type": "disable",
+                              "condition": "true"
+                            }
+                          ],
+                          "default": false
+                        },
+                        "byte_lane_setup_cycle": {
+                          "type": "integer",
+                          "title": "Byte lane (NBL) setup cycle.",
+                          "default": 0,
+                          "oneOf": [
+                            {
+                              "title": "Byte lane 0 AHB clock cycle",
+                              "const": 0
+                            },
+                            {
+                              "title": "Byte lane 1 AHB clock cycle",
+                              "const": 1
+                            },
+                            {
+                              "title": "Byte lane 2 AHB clock cycle",
+                              "const": 2
+                            },
+                            {
+                              "title": "Byte lane 3 AHB clock cycle",
+                              "const": 3
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "rd_wr_async_timings": {
+                      "title": "Timings configuration",
+                      "type": "object",
+                      "properties": {
+                        "async_wait": {
+                          "type": "boolean",
+                          "title": "Asynchronous wait signal",
+                          "default": false
+                        },
+                        "access_timings": {
+                          "type": "object",
+                          "title": "Access timings",
+                          "properties": {
+                            "addr_setup_nsec": {
+                              "type": "integer",
+                              "title": "Address setup in nanoseconds",
+                              "description": "Duration of the address setup timing in nanoseconds",
+                              "minimum": 0,
+                              "default": 0
+                            },
+                            "addr_hold_nsec": {
+                              "type": "integer",
+                              "title": "Address hold in nanoseconds",
+                              "description": "Duration of the address hold timing in nanoseconds",
+                              "minimum": 0,
+                              "default": 0
+                            },
+                            "data_setup_nsec": {
+                              "type": "integer",
+                              "title": "Data setup in nanoseconds",
+                              "description": "Duration of the data setup timing in nanoseconds",
+                              "minimum": 0,
+                              "default": 0
+                            },
+                            "data_hold_nsec": {
+                              "type": "integer",
+                              "title": "Data hold in nanoseconds",
+                              "description": "Duration of the data hold timing in nanoseconds",
+                              "minimum": 0,
+                              "default": 0
+                            }
+                          }
+                        },
+                        "bus_turnaround_nsec": {
+                          "type": "integer",
+                          "title": "Bus turnaround in nanoseconds",
+                          "description": "Duration of the bus turnaround phase to configure in nanoseconds",
+                          "minimum": 0,
+                          "default": 0
+                        }
+                      }
+                    }
+                  }
+                },
+                "rd_wr_async_distinct": {
+                  "type": "object",
+                  "title": "Asynchronous read and write with distinct timing for both operations",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Main.mode === 1"
+                    }
+                  ],
+                  "properties": {
+                    "rd_wr_async_memory": {
+                      "title": "Memory configuration",
+                      "type": "object",
+                      "properties": {
+                        "data_width": {
+                          "type": "integer",
+                          "title": "Data width",
+                          "default": 8,
+                          "oneOf": [
+                            {
+                              "title": "8 bits",
+                              "const": 8
+                            },
+                            {
+                              "title": "16 bits",
+                              "const": 16
+                            }
+                          ]
+                        },
+                        "mux_mode": {
+                          "type": "boolean",
+                          "title": "Address bus multiplexing",
+                          "description": " Enable address bus multiplexing.",
+                          "actions": [
+                            {
+                              "type": "disable",
+                              "condition": "true"
+                            }
+                          ],
+                          "default": false
+                        },
+                        "byte_lane_setup_cycle": {
+                          "type": "integer",
+                          "title": "Byte lane (NBL) setup cycle.",
+                          "default": 0,
+                          "oneOf": [
+                            {
+                              "title": "Byte lane 0 AHB clock cycle",
+                              "const": 0
+                            },
+                            {
+                              "title": "Byte lane 1 AHB clock cycle",
+                              "const": 1
+                            },
+                            {
+                              "title": "Byte lane 2 AHB clock cycle",
+                              "const": 2
+                            },
+                            {
+                              "title": "Byte lane 3 AHB clock cycle",
+                              "const": 3
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "read": {
+                      "type": "object",
+                      "properties": {
+                        "rd_wr_async_timings": {
+                          "title": "Timings Configuration",
+                          "type": "object",
+                          "properties": {
+                            "async_wait": {
+                              "type": "boolean",
+                              "title": "Asynchronous wait signal",
+                              "default": false
+                            },
+                            "access_timings": {
+                              "type": "object",
+                              "title": "Access timings",
+                              "properties": {
+                                "addr_setup_nsec": {
+                                  "type": "integer",
+                                  "title": "Address setup in nanoseconds",
+                                  "description": "Duration of the address setup timing in nanoseconds",
+                                  "minimum": 0,
+                                  "default": 0
+                                },
+                                "addr_hold_nsec": {
+                                  "type": "integer",
+                                  "title": "Address hold in nanoseconds",
+                                  "description": "Duration of the address hold timing in nanoseconds",
+                                  "minimum": 0,
+                                  "default": 0
+                                },
+                                "data_setup_nsec": {
+                                  "type": "integer",
+                                  "title": "Data setup in nanoseconds",
+                                  "description": "Duration of the data setup timing in nanoseconds",
+                                  "minimum": 0,
+                                  "default": 0
+                                },
+                                "data_hold_nsec": {
+                                  "type": "integer",
+                                  "title": "Data hold in nanoseconds",
+                                  "description": "Duration of the data hold timing in nanoseconds",
+                                  "minimum": 0,
+                                  "default": 0
+                                }
+                              }
+                            },
+                            "bus_turnaround_nsec": {
+                              "type": "integer",
+                              "title": "Bus turnaround in nanoseconds",
+                              "description": "Duration of the bus turnaround phase to configure in nanoseconds",
+                              "minimum": 0,
+                              "default": 0
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "write": {
+                      "type": "object",
+                      "properties": {
+                        "rd_wr_async_timings": {
+                          "title": "Timings Configuration",
+                          "type": "object",
+                          "properties": {
+                            "access_timings": {
+                              "type": "object",
+                              "title": "Access timings",
+                              "properties": {
+                                "addr_setup_nsec": {
+                                  "type": "integer",
+                                  "title": "Address setup in nanoseconds",
+                                  "description": "Duration of the address setup timing in nanoseconds",
+                                  "minimum": 0,
+                                  "default": 0
+                                },
+                                "addr_hold_nsec": {
+                                  "type": "integer",
+                                  "title": "Address hold in nanoseconds",
+                                  "description": "Duration of the address hold timing in nanoseconds",
+                                  "minimum": 0,
+                                  "default": 0
+                                },
+                                "data_setup_nsec": {
+                                  "type": "integer",
+                                  "title": "Data setup in nanoseconds",
+                                  "description": "Duration of the data setup timing in nanoseconds",
+                                  "minimum": 0,
+                                  "default": 0
+                                },
+                                "data_hold_nsec": {
+                                  "type": "integer",
+                                  "title": "Data hold in nanoseconds",
+                                  "description": "Duration of the data hold timing in nanoseconds",
+                                  "minimum": 0,
+                                  "default": 0
+                                }
+                              }
+                            },
+                            "bus_turnaround_nsec": {
+                              "type": "integer",
+                              "title": "Bus turnaround in nanoseconds",
+                              "description": "Duration of the bus turnaround phase to configure in nanoseconds",
+                              "minimum": 0,
+                              "default": 0
+                            },
+                            "wr_access_mode": {
+                              "type": "string",
+                              "description": "Write access mode.",
+                              "default": "A",
+                              "oneOf": [
+                                {
+                                  "title": "Access mode A",
+                                  "const": "A"
+                                },
+                                {
+                                  "title": "Access mode D",
+                                  "const": "D"
+                                }
+                              ]
+                            },
+                            "rd_access_mode": {
+                              "type": "string",
+                              "description": "Read access Mode.",
+                              "default": "A",
+                              "oneOf": [
+                                {
+                                  "title": "Access mode A",
+                                  "const": "A"
+                                },
+                                {
+                                  "title": "Access mode D",
+                                  "const": "D"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "rd_wr_sync": {
+                  "type": "object",
+                  "title": "Synchronous read and synchronous write",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Main.mode === 2"
+                    }
+                  ],
+                  "properties": {
+                    "rd_wr_sync_memory": {
+                      "title": "Memory configuration",
+                      "type": "object",
+                      "properties": {
+                        "data_width": {
+                          "type": "integer",
+                          "title": "Data width",
+                          "default": 8,
+                          "oneOf": [
+                            {
+                              "title": "8 bits",
+                              "const": 8
+                            },
+                            {
+                              "title": "16 bits",
+                              "const": 16
+                            }
+                          ]
+                        },
+                        "mux_mode": {
+                          "type": "boolean",
+                          "title": "Address bus multiplexing",
+                          "description": " Enable address bus multiplexing.",
+                          "actions": [
+                            {
+                              "type": "disable",
+                              "condition": "true"
+                            }
+                          ],
+                          "default": false
+                        },
+                        "byte_lane_setup_cycle": {
+                          "type": "integer",
+                          "title": "Byte lane (NBL) setup cycle.",
+                          "default": 0,
+                          "oneOf": [
+                            {
+                              "title": "Byte lane 0 AHB clock cycle",
+                              "const": 0
+                            },
+                            {
+                              "title": "Byte lane 1 AHB clock cycle",
+                              "const": 1
+                            },
+                            {
+                              "title": "Byte lane 2 AHB clock cycle",
+                              "const": 2
+                            },
+                            {
+                              "title": "Byte lane 3 AHB clock cycle",
+                              "const": 3
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "rd_wr_sync_timings": {
+                      "title": "Timings configuration",
+                      "type": "object",
+                      "properties": {
+                        "sync_protocol": {
+                          "type": "object",
+                          "title": "Synchronous protocol",
+                          "properties": {
+                            "wait_signal_state": {
+                              "type": "boolean",
+                              "title": "Synchronous wait signal state",
+                              "description": "Enable synchronous wait signal state.",
+                              "default": false
+                            },
+                            "continuous_clock": {
+                              "type": "string",
+                              "title": "Continuous clock.",
+                              "default": "ONLY",
+                              "oneOf": [
+                                {
+                                  "title": "SRAM clock only in sync access",
+                                  "const": "ONLY"
+                                },
+                                {
+                                  "title": "SRAM clock in async and sync access",
+                                  "const": "ASYNC"
+                                }
+                              ]
+                            },
+                            "clk_period_nsec": {
+                              "type": "integer",
+                              "title": "Clock period in nanoseconds",
+                              "description": "Clock period of the output signal expressed in nanoseconds. If the continuous clock bit is set, the synchronous memories connected to other banks than SRAM Bank 1 are clocked by the same clock",
+                              "minimum": 0,
+                              "default": 0
+                            }
+                          }
+                        },
+                        "bus_turnaround_nsec": {
+                          "type": "integer",
+                          "title": "Bus turnaround in nanoseconds",
+                          "description": "Duration of the bus turnaround phase to configure in nanoseconds",
+                          "minimum": 0,
+                          "default": 0
+                        }
+                      }
+                    }
+                  }
+                },
+                "rd_sync_wr_async": {
+                  "type": "object",
+                  "title": "Synchronous read and asynchronous write",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Main.mode === 3"
+                    }
+                  ],
+                  "properties": {
+                    "rd_sync_wr_async_memory": {
+                      "title": "Memory configuration",
+                      "type": "object",
+                      "properties": {
+                        "data_width": {
+                          "type": "integer",
+                          "title": "Data width",
+                          "default": 8,
+                          "oneOf": [
+                            {
+                              "title": "8 bits",
+                              "const": 8
+                            },
+                            {
+                              "title": "16 bits",
+                              "const": 16
+                            }
+                          ]
+                        },
+                        "mux_mode": {
+                          "type": "boolean",
+                          "title": "Address bus multiplexing",
+                          "description": " Enable address bus multiplexing.",
+                          "actions": [
+                            {
+                              "type": "disable",
+                              "condition": "true"
+                            }
+                          ],
+                          "default": false
+                        },
+                        "byte_lane_setup_cycle": {
+                          "type": "integer",
+                          "title": "Byte lane (NBL) setup cycle.",
+                          "default": 0,
+                          "oneOf": [
+                            {
+                              "title": "Byte lane 0 AHB clock cycle",
+                              "const": 0
+                            },
+                            {
+                              "title": "Byte lane 1 AHB clock cycle",
+                              "const": 1
+                            },
+                            {
+                              "title": "Byte lane 2 AHB clock cycle",
+                              "const": 2
+                            },
+                            {
+                              "title": "Byte lane 3 AHB clock cycle",
+                              "const": 3
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "rd_sync_wr_async_timings": {
+                      "title": "Timings Configuration",
+                      "type": "object",
+                      "properties": {
+                        "sync_protocol": {
+                          "type": "object",
+                          "title": "Synchronous protocol",
+                          "properties": {
+                            "wait_signal_state": {
+                              "type": "boolean",
+                              "title": "Synchronous wait signal state",
+                              "description": "Enable synchronous wait signal state.",
+                              "default": false
+                            },
+                            "continuous_clock": {
+                              "type": "string",
+                              "title": "Continuous clock.",
+                              "default": "ONLY",
+                              "oneOf": [
+                                {
+                                  "title": "SRAM clock only in sync access",
+                                  "const": "ONLY"
+                                },
+                                {
+                                  "title": "SRAM clock in async and sync access",
+                                  "const": "ASYNC"
+                                }
+                              ]
+                            },
+                            "clk_period_nsec": {
+                              "type": "integer",
+                              "title": "Clock period in nanoseconds",
+                              "description": "Clock period of the output signal expressed in nanoseconds. If the continuous clock bit is set, the synchronous memories connected to other banks than SRAM Bank 1 are clocked by the same clock",
+                              "minimum": 0,
+                              "default": 0
+                            }
+                          }
+                        },
+                        "async_wait": {
+                          "type": "boolean",
+                          "title": "Asynchronous wait signal",
+                          "default": false
+                        },
+                        "access_timings": {
+                          "type": "object",
+                          "title": "Access timings",
+                          "properties": {
+                            "addr_setup_nsec": {
+                              "type": "integer",
+                              "title": "Address setup in nanoseconds",
+                              "description": "Duration of the address setup timing in nanoseconds",
+                              "minimum": 0,
+                              "default": 0
+                            },
+                            "addr_hold_nsec": {
+                              "type": "integer",
+                              "title": "Address hold in nanoseconds",
+                              "description": "Duration of the address hold timing in nanoseconds",
+                              "minimum": 0,
+                              "default": 0
+                            },
+                            "data_setup_nsec": {
+                              "type": "integer",
+                              "title": "Data setup in nanoseconds",
+                              "description": "Duration of the data setup timing in nanoseconds",
+                              "minimum": 0,
+                              "default": 0
+                            },
+                            "data_hold_nsec": {
+                              "type": "integer",
+                              "title": "Data hold in nanoseconds",
+                              "description": "Duration of the data hold timing in nanoseconds",
+                              "minimum": 0,
+                              "default": 0
+                            }
+                          }
+                        },
+                        "bus_turnaround_nsec": {
+                          "type": "integer",
+                          "title": "Bus turnaround in nanoseconds",
+                          "description": "Duration of the bus turnaround phase to configure in nanoseconds",
+                          "minimum": 0,
+                          "default": 0
+                        }
+                      }
+                    }
+                  }
+                },
+                "rd_async_wr_sync": {
+                  "type": "object",
+                  "title": "Synchronous read and synchronous write",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Main.mode === 4"
+                    }
+                  ],
+                  "properties": {
+                    "rd_async_wr_sync_memory": {
+                      "title": "Memory configuration",
+                      "type": "object",
+                      "properties": {
+                        "data_width": {
+                          "type": "integer",
+                          "title": "Data width",
+                          "default": 8,
+                          "oneOf": [
+                            {
+                              "title": "8 bits",
+                              "const": 8
+                            },
+                            {
+                              "title": "16 bits",
+                              "const": 16
+                            }
+                          ]
+                        },
+                        "mux_mode": {
+                          "type": "boolean",
+                          "title": "Address bus multiplexing",
+                          "description": " Enable address bus multiplexing.",
+                          "actions": [
+                            {
+                              "type": "disable",
+                              "condition": "true"
+                            }
+                          ],
+                          "default": false
+                        },
+                        "byte_lane_setup_cycle": {
+                          "type": "integer",
+                          "title": "Byte lane (NBL) setup cycle.",
+                          "default": 0,
+                          "oneOf": [
+                            {
+                              "title": "Byte lane 0 AHB clock cycle",
+                              "const": 0
+                            },
+                            {
+                              "title": "Byte lane 1 AHB clock cycle",
+                              "const": 1
+                            },
+                            {
+                              "title": "Byte lane 2 AHB clock cycle",
+                              "const": 2
+                            },
+                            {
+                              "title": "Byte lane 3 AHB clock cycle",
+                              "const": 3
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "rd_async_wr_sync_timings": {
+                      "title": "Timings Configuration",
+                      "type": "object",
+                      "properties": {
+                        "sync_protocol": {
+                          "type": "object",
+                          "properties": {
+                            "wait_signal_state": {
+                              "type": "boolean",
+                              "description": "Synchronous Wait Signal State.",
+                              "default": false
+                            },
+                            "continuous_clock": {
+                              "type": "string",
+                              "description": "Continuous clock.",
+                              "default": "ONLY",
+                              "oneOf": [
+                                {
+                                  "title": "SRAM clock only in sync access",
+                                  "const": "ONLY"
+                                },
+                                {
+                                  "title": "SRAM clock in async and sync access",
+                                  "const": "ASYNC"
+                                }
+                              ]
+                            },
+                            "clk_period_nsec": {
+                              "type": "integer",
+                              "title": "Clock period in nanoseconds",
+                              "description": "Clock period of the output signal expressed in nanoseconds. If the continuous clock bit is set, the synchronous memories connected to other banks than SRAM Bank 1 are clocked by the same clock",
+                              "minimum": 0,
+                              "default": 0
+                            }
+                          }
+                        },
+                        "async_wait": {
+                          "type": "boolean",
+                          "title": "Asynchronous wait signal",
+                          "default": false
+                        },
+                        "access_timings": {
+                          "type": "object",
+                          "title": "Access timings",
+                          "properties": {
+                            "addr_setup_nsec": {
+                              "type": "integer",
+                              "title": "Address setup in nanoseconds",
+                              "description": "Duration of the address setup timing in nanoseconds",
+                              "minimum": 0,
+                              "default": 0
+                            },
+                            "addr_hold_nsec": {
+                              "type": "integer",
+                              "title": "Address hold in nanoseconds",
+                              "description": "Duration of the address hold timing in nanoseconds",
+                              "minimum": 0,
+                              "default": 0
+                            },
+                            "data_setup_nsec": {
+                              "type": "integer",
+                              "title": "Data setup in nanoseconds",
+                              "description": "Duration of the data setup timing in nanoseconds",
+                              "minimum": 0,
+                              "default": 0
+                            },
+                            "data_hold_nsec": {
+                              "type": "integer",
+                              "title": "Data hold in nanoseconds",
+                              "description": "Duration of the data hold timing in nanoseconds",
+                              "minimum": 0,
+                              "default": 0
+                            }
+                          }
+                        },
+                        "bus_turnaround_nsec": {
+                          "type": "integer",
+                          "title": "Bus turnaround in nanoseconds",
+                          "description": "Duration of the bus turnaround phase to configure in nanoseconds",
+                          "minimum": 0,
+                          "default": 0
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "Additional": {
+          "type": "object",
+          "title": "Additional features configuration",
+          "properties": {
+            "EnableWriteProtection": {
+              "type": "boolean",
+              "title": "Write protection",
+              "description": "Enable the corresponding SRAM device write protection.",
+              "default": false
+            }
+          }
+        },
+        "System": {
+          "type": "object",
+          "title": "System configuration",
+          "properties": {
+            "GPIO_Settings": {
+              "type": "object",
+              "description": "GPIO settings",
+              "properties": {
+                "gpio_ne1": {
+                  "title": "GPIOs NE1 configuration",
+                  "type": "object",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Main.chip_select === 1"
+                    }
+                  ],
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "NE1",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_ne2": {
+                  "title": "GPIOs NE2 configuration",
+                  "type": "object",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Main.chip_select === 2"
+                    }
+                  ],
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "NE2",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_ne3": {
+                  "title": "GPIOs NE3 configuration",
+                  "type": "object",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Main.chip_select === 3"
+                    }
+                  ],
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "NE3",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_ne4": {
+                  "title": "GPIOs NE4 configuration",
+                  "type": "object",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$Main.chip_select === 4"
+                    }
+                  ],
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "NE4",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a0": {
+                  "title": "GPIOs A0 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A0",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a1": {
+                  "title": "GPIOs A1 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A1",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a2": {
+                  "title": "GPIOs A2 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A2",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a3": {
+                  "title": "GPIOs A3 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A3",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a4": {
+                  "title": "GPIOs A4 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A4",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a5": {
+                  "title": "GPIOs A5 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A5",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a6": {
+                  "title": "GPIOs A6 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A6",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a7": {
+                  "title": "GPIOs A7 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A7",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a8": {
+                  "title": "GPIOs A8 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A8",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a9": {
+                  "title": "GPIOs A9 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A9",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a10": {
+                  "title": "GPIOs A10 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A10",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a11": {
+                  "title": "GPIOs A11 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A11",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a12": {
+                  "title": "GPIOs A12 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A12",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a13": {
+                  "title": "GPIOs A13 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A13",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a14": {
+                  "title": "GPIOs A14 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A14",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a15": {
+                  "title": "GPIOs A15 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A15",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a16": {
+                  "title": "GPIOs A16 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A16",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a17": {
+                  "title": "GPIOs A17 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A17",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a18": {
+                  "title": "GPIOs A18 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A18",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a19": {
+                  "title": "GPIOs A19 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A19",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a20": {
+                  "title": "GPIOs A20 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A20",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a21": {
+                  "title": "GPIOs A21 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A21",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a22": {
+                  "title": "GPIOs A22 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A22",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a23": {
+                  "title": "GPIOs A23 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "A23",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a24": {
+                  "title": "GPIOs A24 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$get('pinout.peripheralCanBeMapped', $resource.name, 'A24') == true",
+                      "message": "This feature is not available on that package."
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "A24",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_a25": {
+                  "title": "GPIOs A25 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$get('pinout.peripheralCanBeMapped', $resource.name, 'A25') == true",
+                      "message": "This feature is not available on that package."
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "A25",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_clk": {
+                  "title": "GPIOs CLK configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "CLK",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_d0": {
+                  "title": "GPIOs D0 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "D0",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_d1": {
+                  "title": "GPIOs D1 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "D1",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_d2": {
+                  "title": "GPIOs D2 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "D2",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_d3": {
+                  "title": "GPIOs D3 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "D3",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_d4": {
+                  "title": "GPIOs D4 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "D4",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_d5": {
+                  "title": "GPIOs D5 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "D5",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_d6": {
+                  "title": "GPIOs D6 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "D6",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_d7": {
+                  "title": "GPIOs D7 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "D7",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_d8": {
+                  "title": "GPIOs D8 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($Main.memory_config.rd_wr_async_identical.rd_wr_async_memory.data_width == 16) || ($Main.memory_config.rd_wr_async_distinct.rd_wr_async_memory.data_width == 16)"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "D8",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_d9": {
+                  "title": "GPIOs D9 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($Main.memory_config.rd_wr_async_identical.rd_wr_async_memory.data_width == 16) || ($Main.memory_config.rd_wr_async_distinct.rd_wr_async_memory.data_width == 16)"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "D9",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_d10": {
+                  "title": "GPIOs D10 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($Main.memory_config.rd_wr_async_identical.rd_wr_async_memory.data_width == 16) || ($Main.memory_config.rd_wr_async_distinct.rd_wr_async_memory.data_width == 16)"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "D10",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_d11": {
+                  "title": "GPIOs D11 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($Main.memory_config.rd_wr_async_identical.rd_wr_async_memory.data_width == 16) || ($Main.memory_config.rd_wr_async_distinct.rd_wr_async_memory.data_width == 16)"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "D11",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_d12": {
+                  "title": "GPIOs D12 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($Main.memory_config.rd_wr_async_identical.rd_wr_async_memory.data_width == 16) || ($Main.memory_config.rd_wr_async_distinct.rd_wr_async_memory.data_width == 16)"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "D12",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_d13": {
+                  "title": "GPIOs D13 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($Main.memory_config.rd_wr_async_identical.rd_wr_async_memory.data_width == 16) || ($Main.memory_config.rd_wr_async_distinct.rd_wr_async_memory.data_width == 16)"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "D13",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_d14": {
+                  "title": "GPIOs D14 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($Main.memory_config.rd_wr_async_identical.rd_wr_async_memory.data_width == 16) || ($Main.memory_config.rd_wr_async_distinct.rd_wr_async_memory.data_width == 16)"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "D14",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_d15": {
+                  "title": "GPIOs D15 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "($Main.memory_config.rd_wr_async_identical.rd_wr_async_memory.data_width == 16) || ($Main.memory_config.rd_wr_async_distinct.rd_wr_async_memory.data_width == 16)"
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "D15",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_nbl0": {
+                  "title": "GPIOs NBL0 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "NBL0",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_nbl1": {
+                  "title": "GPIOs NBL1 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "NBL1",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_nbl2": {
+                  "title": "GPIOs NBL2 configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$get('pinout.peripheralCanBeMapped', $resource.name, 'NBL2') == true",
+                      "message": "This feature is not available on that package."
+                    }
+                  ],
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "NBL2",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_nbl3": {
+                  "title": "GPIOs NBL3 configuration",
+                  "type": "object",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "$get('pinout.peripheralCanBeMapped', $resource.name, 'NBL3') == true",
+                      "message": "This feature is not available on that package."
+                    }
+                  ],
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "NBL3",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_noe": {
+                  "title": "GPIOs NOE configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "NOE",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_nwait": {
+                  "title": "GPIOs NWAIT configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "NWAIT",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_nwe": {
+                  "title": "GPIOs NWE configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "NWE",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_ale": {
+                  "title": "GPIOs ALE configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "actions": [
+                    {
+                      "type": "exclude",
+                      "condition": "true",
+                      "message": "This feature is not available for SRAM memory."
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "ALE",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_cle": {
+                  "title": "GPIOs CLE configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "actions": [
+                    {
+                      "type": "exclude",
+                      "condition": "true",
+                      "message": "This feature is not available for SRAM memory."
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "CLE",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_int": {
+                  "title": "GPIOs INT configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "actions": [
+                    {
+                      "type": "exclude",
+                      "condition": "true",
+                      "message": "This feature is not available for SRAM memory."
+                    }
+                  ],
+                  "owner": "$resource.name",
+                  "needs": [
+                    {
+                      "selector": "INT",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_nce": {
+                  "title": "GPIOs NCE configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "actions": [
+                    {
+                      "type": "exclude",
+                      "condition": "true",
+                      "message": "This feature is not available for SRAM memory."
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "NCE",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "gpio_nl": {
+                  "title": "GPIOs NL configuration",
+                  "type": "object",
+                  "objectType": "need.pinout.signals",
+                  "owner": "$resource.name",
+                  "actions": [
+                    {
+                      "type": "exclude",
+                      "condition": "true",
+                      "message": "This feature is not available for SRAM memory."
+                    }
+                  ],
+                  "needs": [
+                    {
+                      "selector": "NL",
+                      "constraints": {
+                        "mode": {
+                          "const": "ALTERNATE"
+                        },
+                        "output_type": {
+                          "const": "PUSHPULL"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

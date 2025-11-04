@@ -1,0 +1,2362 @@
+<!DOCTYPE html>
+<html data-content_root="../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, automatic migration, CLI, command line interface, usage" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     Script stubbing features — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <script src="../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <link href="../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../search.html" rel="search" title="Search"/>
+    <link href="../drivers_documentation/drivers_toc.html" rel="next" title="HAL1 to HAL2 details"/>
+    <link href="migration_script_setup.html" rel="prev" title="Script setup and usage"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/migration_script/migration_script_features" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="migration_script_toc.html">
+            HAL1 detection
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="migration_script_welcome.html">
+              HAL1 automatic detection script
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="migration_script_scope.html">
+              Script Scope
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="migration_script_setup.html">
+              Script setup and usage
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <input class="md-toggle md-nav__toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+             <label class="md-nav__link md-nav__link--active" for="__toc">
+              Script stubbing features
+             </label>
+             <a class="md-nav__link md-nav__link--active" href="#">
+              Script stubbing features
+             </a>
+             <link href="../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+             <nav class="md-nav md-nav--secondary">
+              <label class="md-nav__title" for="__toc">
+               "Contents"
+              </label>
+              <ul class="md-nav__list2" data-md-scrollfix="">
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="#docs-markup-migration-script-migration-script-features--page-root">
+                 Script stubbing features
+                </a>
+                <nav class="md-nav">
+                 <ul class="md-nav__list2">
+                  <li class="md-nav__item">
+                   <a class="md-nav__link" href="#overview">
+                    1. Overview
+                   </a>
+                  </li>
+                  <li class="md-nav__item">
+                   <a class="md-nav__link" href="#stubbing-and-warning-message-configurability">
+                    2. Stubbing and Warning message configurability
+                   </a>
+                   <nav class="md-nav">
+                    <ul class="md-nav__list2">
+                     <li class="md-nav__item">
+                      <a class="md-nav__link" href="#stubbing-configurability">
+                       2.1 Stubbing configurability
+                      </a>
+                     </li>
+                     <li class="md-nav__item">
+                      <a class="md-nav__link" href="#warning-message-configurability">
+                       2.2 Warning message configurability
+                      </a>
+                     </li>
+                     <li class="md-nav__item">
+                      <a class="md-nav__link" href="#examples">
+                       2.3 Examples
+                      </a>
+                     </li>
+                    </ul>
+                   </nav>
+                  </li>
+                  <li class="md-nav__item">
+                   <a class="md-nav__link" href="#usage">
+                    3. Usage
+                   </a>
+                   <nav class="md-nav">
+                    <ul class="md-nav__list2">
+                     <li class="md-nav__item">
+                      <a class="md-nav__link" href="#detection-and-stubbing-usage">
+                       3.1 Detection and stubbing usage
+                      </a>
+                     </li>
+                     <li class="md-nav__item">
+                      <a class="md-nav__link" href="#id1">
+                       3.2 Examples
+                      </a>
+                     </li>
+                    </ul>
+                   </nav>
+                  </li>
+                  <li class="md-nav__item">
+                   <a class="md-nav__link" href="#hal1-apis-detection-and-stubbing-feature">
+                    4. HAL1 APIs detection and stubbing  feature
+                   </a>
+                   <nav class="md-nav">
+                    <ul class="md-nav__list2">
+                     <li class="md-nav__item">
+                      <a class="md-nav__link" href="#stubbing-patterns">
+                       4.1 Stubbing patterns
+                      </a>
+                      <nav class="md-nav">
+                       <ul class="md-nav__list2">
+                        <li class="md-nav__item">
+                         <a class="md-nav__link" href="#function-and-macros-stubbing-patterns">
+                          4.1.1 Function and macros stubbing patterns
+                         </a>
+                        </li>
+                        <li class="md-nav__item">
+                         <a class="md-nav__link" href="#constant-and-enumerator-stubbing-patterns">
+                          4.1.2 Constant and enumerator stubbing patterns
+                         </a>
+                        </li>
+                        <li class="md-nav__item">
+                         <a class="md-nav__link" href="#structure-and-enumeration-types-stubbing-patterns">
+                          4.1.3 Structure and enumeration types stubbing patterns
+                         </a>
+                        </li>
+                       </ul>
+                      </nav>
+                     </li>
+                     <li class="md-nav__item">
+                      <a class="md-nav__link" href="#resolve-stubbing-patterns">
+                       4.2 Resolve stubbing patterns
+                      </a>
+                      <nav class="md-nav">
+                       <ul class="md-nav__list2">
+                        <li class="md-nav__item">
+                         <a class="md-nav__link" href="#tricky-cases">
+                          Tricky cases :
+                         </a>
+                         <nav class="md-nav">
+                          <ul class="md-nav__list2">
+                           <li class="md-nav__item">
+                            <a class="md-nav__link" href="#do-while">
+                             <strong>
+                              do..while
+                             </strong>
+                            </a>
+                           </li>
+                           <li class="md-nav__item">
+                            <a class="md-nav__link" href="#switch-case">
+                             <strong>
+                              switch..case
+                             </strong>
+                            </a>
+                           </li>
+                          </ul>
+                         </nav>
+                        </li>
+                       </ul>
+                      </nav>
+                     </li>
+                    </ul>
+                   </nav>
+                  </li>
+                 </ul>
+                </nav>
+               </li>
+              </ul>
+             </nav>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#overview">
+                1. Overview
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#stubbing-and-warning-message-configurability">
+                2. Stubbing and Warning message configurability
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#usage">
+                3. Usage
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#hal1-apis-detection-and-stubbing-feature">
+                4. HAL1 APIs detection and stubbing  feature
+               </a>
+              </li>
+             </ul>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../drivers_documentation/drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-migration-script-migration-script-features--page-root">
+            Script stubbing features
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#overview">
+               1. Overview
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#stubbing-and-warning-message-configurability">
+               2. Stubbing and Warning message configurability
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#stubbing-configurability">
+                  2.1 Stubbing configurability
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#warning-message-configurability">
+                  2.2 Warning message configurability
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#examples">
+                  2.3 Examples
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#usage">
+               3. Usage
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#detection-and-stubbing-usage">
+                  3.1 Detection and stubbing usage
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#id1">
+                  3.2 Examples
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal1-apis-detection-and-stubbing-feature">
+               4. HAL1 APIs detection and stubbing  feature
+              </a>
+              <nav class="md-nav">
+               <ul class="md-nav__list2">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#stubbing-patterns">
+                  4.1 Stubbing patterns
+                 </a>
+                 <nav class="md-nav">
+                  <ul class="md-nav__list2">
+                   <li class="md-nav__item">
+                    <a class="md-nav__link" href="#function-and-macros-stubbing-patterns">
+                     4.1.1 Function and macros stubbing patterns
+                    </a>
+                   </li>
+                   <li class="md-nav__item">
+                    <a class="md-nav__link" href="#constant-and-enumerator-stubbing-patterns">
+                     4.1.2 Constant and enumerator stubbing patterns
+                    </a>
+                   </li>
+                   <li class="md-nav__item">
+                    <a class="md-nav__link" href="#structure-and-enumeration-types-stubbing-patterns">
+                     4.1.3 Structure and enumeration types stubbing patterns
+                    </a>
+                   </li>
+                  </ul>
+                 </nav>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#resolve-stubbing-patterns">
+                  4.2 Resolve stubbing patterns
+                 </a>
+                 <nav class="md-nav">
+                  <ul class="md-nav__list2">
+                   <li class="md-nav__item">
+                    <a class="md-nav__link" href="#tricky-cases">
+                     Tricky cases :
+                    </a>
+                    <nav class="md-nav">
+                     <ul class="md-nav__list2">
+                      <li class="md-nav__item">
+                       <a class="md-nav__link" href="#do-while">
+                        <strong>
+                         do..while
+                        </strong>
+                       </a>
+                      </li>
+                      <li class="md-nav__item">
+                       <a class="md-nav__link" href="#switch-case">
+                        <strong>
+                         switch..case
+                        </strong>
+                       </a>
+                      </li>
+                     </ul>
+                    </nav>
+                   </li>
+                  </ul>
+                 </nav>
+                </li>
+               </ul>
+              </nav>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="script-stubbing-features">
+        <span id="migration-script-features">
+        </span>
+        <h1 id="docs-markup-migration-script-migration-script-features--page-root">
+         Script stubbing features
+         <a class="headerlink" href="#docs-markup-migration-script-migration-script-features--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <section id="overview">
+         <h2 id="overview">
+          1. Overview
+          <a class="headerlink" href="#overview" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          In addition to its detection capabilities, the
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            hal1_detection
+           </span>
+          </code>
+          script offers a robust stubbing mechanism for HAL1 elements within user code.
+The stubbing feature encompasses a wide range of constructs, including function calls (direct, nested, or conditional),
+structures (such as typedefs, function arguments, or initializations), enumerations (user-defined or used within function calls),
+constants (as arguments or in variable assignments), and macros.
+The following sections will provide a comprehensive overview of stubbing configuration , supported patterns and  corresponding resolution techniques.
+         </p>
+         <div class="admonition note">
+          <p class="admonition-title">
+           Note
+          </p>
+          <p>
+           By stubbing, we refer to the isolation and exclusion of code segments related to HAL1 API,
+such as function calls, variable declarations, and other related components.
+          </p>
+         </div>
+         <p>
+          Example
+         </p>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               Original Code
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               Stubbed Code
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">HAL_ADC_Start</span><span class="p">();</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="n">HAL_ADC_Start</span><span class="p">();</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="stubbing-and-warning-message-configurability">
+         <h2 id="stubbing-and-warning-message-configurability">
+          2. Stubbing and Warning message configurability
+          <a class="headerlink" href="#stubbing-and-warning-message-configurability" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <section id="stubbing-configurability">
+          <h3 id="stubbing-configurability">
+           2.1 Stubbing configurability
+           <a class="headerlink" href="#stubbing-configurability" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <p id="migration-script-setup-stub-conf">
+           Users have the flexibility to customize the stubbing compilation flag to suit their specific requirements.
+This can be achieved by overriding the default value of
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             StubbingCompilationFlag
+            </span>
+           </code>
+           in the
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             hal1_detection_config.py
+            </span>
+           </code>
+           file,
+or by modifying it directly through the interactive menu.
+          </p>
+          <table id="id2">
+           <caption>
+            <span class="caption-text">
+             stubbing configurability
+            </span>
+            <a class="headerlink" href="#id2" title="Link to this table">
+             ¶
+            </a>
+           </caption>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                Field
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                Default value
+               </strong>
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                Description
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               StubbingCompilationFlag
+              </p>
+             </td>
+             <td>
+              <p>
+               TO_DO_RESOLVE_STUB
+              </p>
+             </td>
+             <td>
+              <p>
+               Flag used for HAL1 stubbing .
+              </p>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+         <section id="warning-message-configurability">
+          <span id="migration-script-setup-log-conf">
+          </span>
+          <h3 id="warning-message-configurability">
+           2.2 Warning message configurability
+           <a class="headerlink" href="#warning-message-configurability" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           Users have the ability to customize the injected warning log messages according to their preferences.
+To achieve this, modifications can be made to the
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             hal1_detection_config.py
+            </span>
+           </code>
+           file.
+          </p>
+          <p>
+           Note that the
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             UseWarningMessage
+            </span>
+           </code>
+           must be set to
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             True
+            </span>
+           </code>
+           to enable customization of the configuration,
+otherwise, the customized settings will be ignored.
+          </p>
+          <table id="id3">
+           <caption>
+            <span class="caption-text">
+             UseWarningMessage configurability
+            </span>
+            <a class="headerlink" href="#id3" title="Link to this table">
+             ¶
+            </a>
+           </caption>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               Field
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               Default value
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               Possible Configuration
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               UseWarningMessage
+              </p>
+             </td>
+             <td>
+              <p>
+               True
+              </p>
+             </td>
+             <td>
+              <p>
+               True / False
+              </p>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <p>
+           Field configurations are listed in the table below.
+          </p>
+          <table id="id4">
+           <caption>
+            <span class="caption-text">
+             Warning message configurability
+            </span>
+            <a class="headerlink" href="#id4" title="Link to this table">
+             ¶
+            </a>
+           </caption>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               Field
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               Default value
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               Possible Configuration
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               StubbingWarningMessageSeparator
+              </p>
+             </td>
+             <td>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 **
+                </span>
+               </code>
+              </p>
+             </td>
+             <td>
+              <p>
+               User can override with his own defined separator
+              </p>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               StubbingWarningMessageGenericMessage
+              </p>
+             </td>
+             <td>
+              <p>
+               STUB TO RESOLVE
+              </p>
+             </td>
+             <td>
+              <p>
+               User can override with his own message
+              </p>
+             </td>
+            </tr>
+            <tr class="row-even">
+             <td>
+              <p>
+               UseWarningMessageGenericMessage
+              </p>
+             </td>
+             <td>
+              <p>
+               True
+              </p>
+             </td>
+             <td>
+              <p>
+               True / False
+              </p>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               UseWarningMessageLineNumber
+              </p>
+             </td>
+             <td>
+              <p>
+               True
+              </p>
+             </td>
+             <td>
+              <p>
+               True / False
+              </p>
+             </td>
+            </tr>
+            <tr class="row-even">
+             <td>
+              <p>
+               UseWarningMessageAPIName
+              </p>
+             </td>
+             <td>
+              <p>
+               True
+              </p>
+             </td>
+             <td>
+              <p>
+               True / False
+              </p>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               UseWarningMessageAPIType
+              </p>
+             </td>
+             <td>
+              <p>
+               True
+              </p>
+             </td>
+             <td>
+              <p>
+               True / False
+              </p>
+             </td>
+            </tr>
+            <tr class="row-even">
+             <td>
+              <p>
+               UseWarningMessageAPILayer
+              </p>
+             </td>
+             <td>
+              <p>
+               True
+              </p>
+             </td>
+             <td>
+              <p>
+               True / False
+              </p>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               UseWarningMessageAPIDriverFile
+              </p>
+             </td>
+             <td>
+              <p>
+               True
+              </p>
+             </td>
+             <td>
+              <p>
+               True / False
+              </p>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+         <section id="examples">
+          <h3 id="examples">
+           2.3 Examples
+           <a class="headerlink" href="#examples" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table id="id5">
+           <caption>
+            <span class="caption-text">
+             Custom warning
+            </span>
+            <a class="headerlink" href="#id5" title="Link to this table">
+             ¶
+            </a>
+           </caption>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               Example
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               Edit the
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 hal1_detection_config.py
+                </span>
+               </code>
+               as follow (you can also use the interactive menu)
+              </p>
+              <a class="reference internal image-reference" href="../../../_images/customize_config_exemple.png">
+               <img alt="Reset configuration example" src="../../../_images/customize_config_exemple.png" style="width: 1000px;">
+               </img>
+              </a>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               Configuration 1
+              </p>
+              <a class="reference internal image-reference" href="../../../_images/conf1_output.png">
+               <img alt="Reset configuration example" src="../../../_images/conf1_output.png" style="width: 1000px;"/>
+              </a>
+             </td>
+            </tr>
+            <tr class="row-even">
+             <td>
+              <p>
+               Configuration 2
+              </p>
+              <a class="reference internal image-reference" href="../../../_images/conf2_output.png">
+               <img alt="Reset configuration example" src="../../../_images/conf2_output.png" style="width: 1000px;"/>
+              </a>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               Configuration 3 : Let’s edit Configuration 2 by setting the
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 UseWarningMessage
+                </span>
+               </code>
+               to
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 False
+                </span>
+               </code>
+              </p>
+              <a class="reference internal image-reference" href="../../../_images/conf3_output.png">
+               <img alt="Reset configuration example" src="../../../_images/conf3_output.png" style="width: 1000px;"/>
+              </a>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+        </section>
+        <section id="usage">
+         <h2 id="usage">
+          3. Usage
+          <a class="headerlink" href="#usage" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <section id="detection-and-stubbing-usage">
+          <h3 id="detection-and-stubbing-usage">
+           3.1 Detection and stubbing usage
+           <a class="headerlink" href="#detection-and-stubbing-usage" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table id="id6">
+           <caption>
+            <span class="caption-text">
+             script usage [stubbing mode]
+            </span>
+            <a class="headerlink" href="#id6" title="Link to this table">
+             ¶
+            </a>
+           </caption>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+             </th>
+             <th class="head">
+              <p>
+               <strong>
+                Description
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               Purpose
+              </p>
+             </td>
+             <td>
+              <p>
+               Analyze the source files to identify and, eventually, modify them by stubbing the selected modules.
+              </p>
+              <p>
+               A detailed log file will be generated
+              </p>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               Syntax
+              </p>
+             </td>
+             <td>
+              <p>
+               One of the following commands can be used
+              </p>
+              <div class="highlight-bash notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="c1"># Using the Python script</span>
+<span class="c1"># Compatible with bash and Windows console</span>
+python<span class="w"> </span>hal1_detection.py<span class="w"> </span>-d<span class="w"> </span>stub<span class="w"> </span>-psrc<span class="w"> </span>PATH<span class="w"> </span>-m<span class="w"> </span>all<span class="p">|</span>module1<span class="w"> </span>module2<span class="w"> </span>...
+</pre>
+               </div>
+              </div>
+              <div class="highlight-bash notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="c1"># Using the executable on bash</span>
+./hal1_detection.exe<span class="w"> </span>-d<span class="w"> </span>stub<span class="w"> </span>-psrc<span class="w"> </span>PATH<span class="w"> </span>-m<span class="w"> </span>all<span class="p">|</span>module1<span class="w"> </span>module2<span class="w"> </span>...
+</pre>
+               </div>
+              </div>
+              <div class="highlight-bash notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="c1"># Using the executable on Windows console</span>
+hal1_detection.exe<span class="w"> </span>-d<span class="w"> </span>stub<span class="w"> </span>-psrc<span class="w"> </span>PATH<span class="w"> </span>-m<span class="w"> </span>all<span class="p">|</span>module1<span class="w"> </span>module2<span class="w"> </span>...
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr class="row-even">
+             <td>
+              <p>
+               Required Arguments
+              </p>
+             </td>
+             <td>
+              <ul class="simple">
+               <li>
+                <p>
+                 <code class="docutils literal notranslate">
+                  <span class="pre">
+                   -psrc
+                  </span>
+                  <span class="pre">
+                   PATH
+                  </span>
+                 </code>
+                 : Path to the source file or directory.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <code class="docutils literal notranslate">
+                  <span class="pre">
+                   -m
+                  </span>
+                 </code>
+                 : Specify modules (
+                 <code class="docutils literal notranslate">
+                  <span class="pre">
+                   all
+                  </span>
+                 </code>
+                 or space-separated list).
+                </p>
+               </li>
+               <li>
+                <p>
+                 <code class="docutils literal notranslate">
+                  <span class="pre">
+                   -d
+                  </span>
+                  <span class="pre">
+                   stub
+                  </span>
+                 </code>
+                 : Detects, stubs, and may modify user source files, generating a log file.
+                </p>
+               </li>
+              </ul>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+         <section id="id1">
+          <h3 id="id1">
+           3.2 Examples
+           <a class="headerlink" href="#id1" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               <strong>
+                Examples
+               </strong>
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-bash notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="c1"># On windows console</span>
+<span class="c1"># Detect and stub all HAL1 APIs in .\src</span>
+hal1_detection.exe<span class="w"> </span>-d<span class="w"> </span>stub<span class="w">  </span>-psrc<span class="w"> </span>.<span class="se">\s</span>rc<span class="w"> </span>-m<span class="w"> </span>all
+
+<span class="c1"># On bash env use</span>
+./hal1_detection.exe<span class="w"> </span>-d<span class="w"> </span>stub<span class="w">  </span>-psrc<span class="w"> </span>./src<span class="w"> </span>-m<span class="w"> </span>all
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <div class="highlight-bash notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="c1"># On windows console</span>
+<span class="c1"># Detect and stub only 'gpio' and 'uart' APIs in .\src</span>
+hal1_detection.exe<span class="w"> </span>-d<span class="w"> </span>stub<span class="w"> </span>-psrc<span class="w"> </span>.<span class="se">\s</span>rc<span class="w"> </span>-m<span class="w"> </span>gpio<span class="w"> </span>uart
+
+<span class="c1"># On bash env use</span>
+./hal1_detection.exe<span class="w"> </span>-d<span class="w"> </span>stub<span class="w"> </span>-psrc<span class="w"> </span>./src<span class="w"> </span>-m<span class="w"> </span>gpio<span class="w"> </span>uart
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr class="row-even">
+             <td>
+              <div class="highlight-bash notranslate">
+               <div class="highlight">
+                <pre><span></span><span class="c1"># On windows console</span>
+<span class="c1"># Detect and stub specific HAL1 APIs in a single file</span>
+hal1_detection.exe<span class="w"> </span>-d<span class="w"> </span>stub<span class="w"> </span>-psrc<span class="w"> </span>.<span class="se">\s</span>rc<span class="se">\m</span>ain.c<span class="w"> </span>-m<span class="w"> </span>spi<span class="w"> </span>i2c
+
+<span class="c1"># On bash env use</span>
+./hal1_detection.exe<span class="w"> </span>-d<span class="w"> </span>stub<span class="w"> </span>-psrc<span class="w"> </span>./src/main.c<span class="w"> </span>-m<span class="w"> </span>spi<span class="w"> </span>i2c
+</pre>
+               </div>
+              </div>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+          <hr class="docutils"/>
+         </section>
+        </section>
+        <section id="hal1-apis-detection-and-stubbing-feature">
+         <span id="migration-script-features-stubbing">
+         </span>
+         <h2 id="hal1-apis-detection-and-stubbing-feature">
+          4. HAL1 APIs detection and stubbing  feature
+          <a class="headerlink" href="#hal1-apis-detection-and-stubbing-feature" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <section id="stubbing-patterns">
+          <h3 id="stubbing-patterns">
+           4.1 Stubbing patterns
+           <a class="headerlink" href="#stubbing-patterns" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <section id="function-and-macros-stubbing-patterns">
+           <h4 id="function-and-macros-stubbing-patterns">
+            4.1.1 Function and macros stubbing patterns
+            <a class="headerlink" href="#function-and-macros-stubbing-patterns" title="Link to this heading">
+             ¶
+            </a>
+           </h4>
+           <p>
+            The script isolates each detected HAL1 function and macro using the stubbing flag.
+The table below outlines the various function and macro stubbing patterns implemented within the script .
+           </p>
+           <table id="id7">
+            <caption>
+             <span class="caption-text">
+              Supported patterns for function and macro stubbing
+             </span>
+             <a class="headerlink" href="#id7" title="Link to this table">
+              ¶
+             </a>
+            </caption>
+            <thead>
+             <tr class="row-odd">
+              <th class="head">
+               <p>
+                General pattern
+               </p>
+              </th>
+              <th class="head">
+               <p>
+                Example
+               </p>
+              </th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr class="row-even">
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="n">HAL_PPP_Function</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="n">param1</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+</pre>
+                </div>
+               </div>
+              </td>
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">HAL_PPP_Function</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="n">param1</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+</pre>
+                </div>
+               </div>
+              </td>
+             </tr>
+             <tr class="row-odd">
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_PPP_Function</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="n">param1</span><span class="p">,...)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">Condition</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">HAL_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="n">param1</span><span class="p">,...);</span>
+<span class="p">}</span>
+</pre>
+                </div>
+               </div>
+              </td>
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_PPP_Function</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="n">param1</span><span class="p">,...)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">Condition</span><span class="p">)</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="p">{</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">HAL_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="n">param1</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="p">}</span>
+</pre>
+                </div>
+               </div>
+              </td>
+             </tr>
+             <tr class="row-even">
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_PPP_Function</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="n">param1</span><span class="p">,...)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">Condition</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">HAL_PPP_Function</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="n">param1</span><span class="p">,...);</span>
+<span class="p">}</span>
+<span class="k">else</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">HAL_PPP_OtherFunction</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="n">param1</span><span class="p">,...);</span>
+<span class="p">}</span>
+</pre>
+                </div>
+               </div>
+              </td>
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_PPP_Function</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="n">param1</span><span class="p">,...)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">Condition</span><span class="p">)</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="p">{</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">HAL_PPP_Function</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="n">param1</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="p">}</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="k">else</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="p">{</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">HAL_PPP_OtherFunction</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="n">param1</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="p">}</span>
+</pre>
+                </div>
+               </div>
+              </td>
+             </tr>
+             <tr class="row-odd">
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_PPP_Function</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="n">param</span><span class="p">,...);</span>
+</pre>
+                </div>
+               </div>
+              </td>
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL_PPP_Function</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="n">param</span><span class="p">,...);</span>
+<span class="cp">#else</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="p">;</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+</pre>
+                </div>
+               </div>
+              </td>
+             </tr>
+             <tr class="row-even">
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">Condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL1_func_return_value</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">HAL_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="w">    </span><span class="n">HAL_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="p">}</span>
+</pre>
+                </div>
+               </div>
+              </td>
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">Condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL1_func_return_value</span><span class="p">)</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="p">{</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">HAL_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">   </span><span class="n">HAL_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="p">}</span>
+</pre>
+                </div>
+               </div>
+              </td>
+             </tr>
+             <tr class="row-odd">
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">defined</span><span class="w"> </span><span class="n">condition</span><span class="w"> </span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">HAL_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="w">    </span><span class="n">HAL_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="p">}</span>
+</pre>
+                </div>
+               </div>
+              </td>
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">Condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">defined</span><span class="w"> </span><span class="n">condition</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">   </span><span class="n">HAL_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">   </span><span class="n">HAL_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="p">}</span>
+</pre>
+                </div>
+               </div>
+              </td>
+             </tr>
+             <tr class="row-even">
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL1_func_return_value</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">HAL_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="w">    </span><span class="n">HAL_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="p">}</span>
+</pre>
+                </div>
+               </div>
+              </td>
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL1_func_return_value</span><span class="p">)</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="p">{</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">HAL_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">HAL_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="p">}</span>
+</pre>
+                </div>
+               </div>
+              </td>
+             </tr>
+             <tr class="row-odd">
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">defined</span><span class="w"> </span><span class="n">condition</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">HAL_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="w">    </span><span class="n">HAL_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="p">}</span>
+</pre>
+                </div>
+               </div>
+              </td>
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">defined</span><span class="w"> </span><span class="n">condition</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">HAL_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">HAL_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="p">}</span>
+</pre>
+                </div>
+               </div>
+              </td>
+             </tr>
+             <tr class="row-even">
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="k">do</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="w">  </span><span class="n">HAL_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">Condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">defined</span><span class="w"> </span><span class="n">condition</span><span class="p">);</span>
+</pre>
+                </div>
+               </div>
+              </td>
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="k">do</span>
+<span class="p">{</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">HAL_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">HAL_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">Condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">defined</span><span class="w"> </span><span class="n">condition</span><span class="p">);</span>
+</pre>
+                </div>
+               </div>
+              </td>
+             </tr>
+             <tr class="row-odd">
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="k">do</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="w">  </span><span class="n">HAL_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">Condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL1_func_return_value</span><span class="p">);</span>
+</pre>
+                </div>
+               </div>
+              </td>
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="k">do</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="p">{</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">HAL_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+
+<span class="cp">#ifdef  TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">HAL_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="p">}</span>
+<span class="cp">#ifdef  TO_DO_RESOLVE_STUB</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">Condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL1_func_return_value</span><span class="p">);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+</pre>
+                </div>
+               </div>
+              </td>
+             </tr>
+             <tr class="row-even">
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">Selector</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">defined</span><span class="w"> </span><span class="n">selector</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="no">X</span><span class="p">:</span>
+<span class="w">        </span><span class="n">HAL_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="w">        </span><span class="n">HAL_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="no">Y</span><span class="p">:</span>
+<span class="w">        </span><span class="n">HAL_PPP_Function3</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="w">        </span><span class="n">HAL_PPP_Function4</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="k">default</span><span class="o">:</span>
+<span class="w">        </span><span class="n">HAL_PPP_Other_Function3</span><span class="p">();</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+                </div>
+               </div>
+              </td>
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">Selector</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">defined</span><span class="w"> </span><span class="n">selector</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="no">X</span><span class="p">:</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">     </span><span class="n">HAL_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">     </span><span class="n">HAL_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="w">     </span><span class="k">break</span><span class="p">;</span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="no">Y</span><span class="p">:</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">     </span><span class="n">HAL_PPP_Function3</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">     </span><span class="n">HAL_PPP_Function4</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="w">     </span><span class="k">break</span><span class="p">;</span>
+<span class="w">   </span><span class="k">default</span><span class="o">:</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">     </span><span class="n">HAL_PPP_Other_Function3</span><span class="p">();</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="w">     </span><span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+                </div>
+               </div>
+              </td>
+             </tr>
+             <tr class="row-odd">
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">Selector</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL1_func_return_value</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="no">X</span><span class="p">:</span>
+<span class="w">        </span><span class="n">HAL_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="w">        </span><span class="n">HAL_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="no">Y</span><span class="p">:</span>
+<span class="w">        </span><span class="n">HAL_PPP_Function3</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="w">        </span><span class="n">HAL_PPP_Function4</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="k">default</span><span class="o">:</span>
+<span class="w">        </span><span class="n">HAL_PPP_Other_Function3</span><span class="p">();</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+                </div>
+               </div>
+              </td>
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">Selector</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL1_func_return_value</span><span class="p">)</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="p">{</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">X</span><span class="p">:</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">     </span><span class="n">HAL_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">     </span><span class="n">HAL_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="w">     </span><span class="k">break</span><span class="p">;</span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="no">Y</span><span class="p">:</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">     </span><span class="n">HAL_PPP_Function3</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">     </span><span class="n">HAL_PPP_Function4</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="w">     </span><span class="k">break</span><span class="p">;</span>
+<span class="w">   </span><span class="k">default</span><span class="o">:</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">     </span><span class="n">HAL_PPP_Other_Function3</span><span class="p">();</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="w">     </span><span class="k">break</span><span class="p">;</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="p">}</span>
+</pre>
+                </div>
+               </div>
+              </td>
+             </tr>
+            </tbody>
+           </table>
+           <div class="admonition note">
+            <p class="admonition-title">
+             Note
+            </p>
+            <p>
+             Macros  are stubbed following the same methodology applied to Functions.
+            </p>
+           </div>
+          </section>
+          <section id="constant-and-enumerator-stubbing-patterns">
+           <h4 id="constant-and-enumerator-stubbing-patterns">
+            4.1.2 Constant and enumerator stubbing patterns
+            <a class="headerlink" href="#constant-and-enumerator-stubbing-patterns" title="Link to this heading">
+             ¶
+            </a>
+           </h4>
+           <p>
+            The table below outlines the various constant and enumerator stubbing patterns implemented within the script.
+           </p>
+           <table id="id8">
+            <caption>
+             <span class="caption-text">
+              Supported patterns for constant and enumerator stubbing
+             </span>
+             <a class="headerlink" href="#id8" title="Link to this table">
+              ¶
+             </a>
+            </caption>
+            <thead>
+             <tr class="row-odd">
+              <th class="head">
+               <p>
+                General Pattern
+               </p>
+              </th>
+              <th class="head">
+               <p>
+                Example
+               </p>
+              </th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr class="row-even">
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="n">var</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PPP_CONSTANT</span><span class="p">;</span>
+</pre>
+                </div>
+               </div>
+              </td>
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">var</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PPP_CONSTANT</span><span class="p">;</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+</pre>
+                </div>
+               </div>
+              </td>
+             </tr>
+             <tr class="row-odd">
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="n">var</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PPP_CONSTANT_1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">PPP_CONSTANT_2</span>
+<span class="w">      </span><span class="n">PPP_CONSTANT_3</span><span class="p">;</span>
+</pre>
+                </div>
+               </div>
+              </td>
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">var</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PPP_CONSTANT_1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">PPP_CONSTANT_2</span>
+<span class="w">        </span><span class="n">PPP_CONSTANT_3</span><span class="p">;</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+</pre>
+                </div>
+               </div>
+              </td>
+             </tr>
+             <tr class="row-even">
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="n">User_Function</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_PPP_CONSTANT</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+</pre>
+                </div>
+               </div>
+              </td>
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">User_Function</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="n">HAL_PPP_CONSTANT</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+</pre>
+                </div>
+               </div>
+              </td>
+             </tr>
+            </tbody>
+           </table>
+           <div class="admonition note">
+            <p class="admonition-title">
+             Note
+            </p>
+            <p>
+             Enumerators are stubbed following the same methodology applied to Constants.
+            </p>
+           </div>
+          </section>
+          <section id="structure-and-enumeration-types-stubbing-patterns">
+           <h4 id="structure-and-enumeration-types-stubbing-patterns">
+            4.1.3 Structure and enumeration types stubbing patterns
+            <a class="headerlink" href="#structure-and-enumeration-types-stubbing-patterns" title="Link to this heading">
+             ¶
+            </a>
+           </h4>
+           <p>
+            The table below outlines the various structure and enumeration stubbing patterns implemented within the script.
+           </p>
+           <table id="id9">
+            <caption>
+             <span class="caption-text">
+              Supported patterns for structure and enumeration stubbing
+             </span>
+             <a class="headerlink" href="#id9" title="Link to this table">
+              ¶
+             </a>
+            </caption>
+            <thead>
+             <tr class="row-odd">
+              <th class="head">
+               <p>
+                General Pattern
+               </p>
+              </th>
+              <th class="head">
+               <p>
+                Example
+               </p>
+              </th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr class="row-even">
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="n">PPP_StructTypeDef</span><span class="w"> </span><span class="k">struct</span><span class="p">;</span>
+</pre>
+                </div>
+               </div>
+              </td>
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">PPP_StructTypeDef</span><span class="w"> </span><span class="k">struct</span><span class="p">;</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+</pre>
+                </div>
+               </div>
+              </td>
+             </tr>
+             <tr class="row-odd">
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="n">User_Function</span><span class="p">(</span><span class="o">&amp;</span><span class="n">HAL_struct</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+</pre>
+                </div>
+               </div>
+              </td>
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">User_Function</span><span class="p">(</span><span class="o">&amp;</span><span class="n">HAL_struct</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+</pre>
+                </div>
+               </div>
+              </td>
+             </tr>
+             <tr class="row-even">
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="k">struct</span><span class="p">.</span><span class="n">Instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PPPx</span><span class="p">;</span>
+<span class="k">struct</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">field1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value1</span><span class="p">;</span>
+<span class="k">struct</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">field2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value2</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="k">struct</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">field_n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value_n</span><span class="p">;</span>
+</pre>
+                </div>
+               </div>
+              </td>
+              <td>
+               <div class="highlight-c notranslate">
+                <div class="highlight">
+                 <pre><span></span><span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="k">struct</span><span class="p">.</span><span class="n">Instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PPPx</span><span class="p">;</span>
+<span class="w">  </span><span class="k">struct</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">field1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value1</span><span class="p">;</span>
+<span class="w">  </span><span class="k">struct</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">field2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value2</span><span class="p">;</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="w">  </span><span class="k">struct</span><span class="p">.</span><span class="n">Init</span><span class="p">.</span><span class="n">field_n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value_n</span><span class="p">;</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+</pre>
+                </div>
+               </div>
+              </td>
+             </tr>
+            </tbody>
+           </table>
+          </section>
+         </section>
+         <section id="resolve-stubbing-patterns">
+          <h3 id="resolve-stubbing-patterns">
+           4.2 Resolve stubbing patterns
+           <a class="headerlink" href="#resolve-stubbing-patterns" title="Link to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           Once HAL1 Code have been stubbed , we recommend the following sequence to resolve pattern .
+          </p>
+          <ol class="arabic simple">
+           <li>
+            <p>
+             Replace HAL1 API by HAL2 equivalent according to file log links .
+            </p>
+           </li>
+           <li>
+            <p>
+             Comment the
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               #warning
+              </span>
+             </code>
+             ,
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               #ifdef
+              </span>
+             </code>
+             and
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               #endif
+              </span>
+             </code>
+             compilation directives .
+            </p>
+           </li>
+           <li>
+            <p>
+             Carry on with this approach until  the whole applicative file is solved .
+            </p>
+           </li>
+           <li>
+            <p>
+             Delete the commented-out compilation directives.
+            </p>
+           </li>
+          </ol>
+          <section id="tricky-cases">
+           <h4 id="tricky-cases">
+            Tricky cases :
+            <a class="headerlink" href="#tricky-cases" title="Link to this heading">
+             ¶
+            </a>
+           </h4>
+           <section id="do-while">
+            <h5 id="do-while">
+             <strong>
+              do..while
+             </strong>
+             <a class="headerlink" href="#do-while" title="Link to this heading">
+              ¶
+             </a>
+            </h5>
+            <p>
+             Initial user code :
+            </p>
+            <div class="highlight-c notranslate">
+             <div class="highlight">
+              <pre><span></span><span class="k">do</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL1_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="w">  </span><span class="n">HAL1_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">Condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL1_func_return_value</span><span class="p">);</span>
+</pre>
+             </div>
+            </div>
+            <p>
+             Stubbed user code :
+            </p>
+            <div class="highlight-c notranslate">
+             <div class="highlight">
+              <pre><span></span><span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="k">do</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="p">{</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">HAL1_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">HAL1_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="p">}</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">Condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL1_func_return_value</span><span class="p">);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+</pre>
+             </div>
+            </div>
+            <p>
+             Resolve the
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               do..while
+              </span>
+             </code>
+             statement and
+comment  the
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               #ifdef
+              </span>
+              <span class="pre">
+               TO_DO_RESOLVE_STUB
+              </span>
+             </code>
+             and the
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               #endif
+              </span>
+              <span class="pre">
+               TO_DO_RESOLVE_STUB
+              </span>
+             </code>
+             .
+            </p>
+            <div class="highlight-c notranslate">
+             <div class="highlight">
+              <pre><span></span><span class="c1">//#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="k">do</span>
+<span class="c1">//#endif /* TO_DO_RESOLVE_STUB */</span>
+<span class="p">{</span>
+<span class="w"> </span><span class="p">....</span>
+<span class="p">}</span>
+<span class="c1">//#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">Condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL2_func_return_value</span><span class="p">);</span>
+<span class="c1">//#endif /* TO_DO_RESOLVE_STUB */</span>
+</pre>
+             </div>
+            </div>
+            <p>
+             You can carry now with solving the APIs inside the
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               do..while
+              </span>
+             </code>
+             .
+            </p>
+            <div class="highlight-c notranslate">
+             <div class="highlight">
+              <pre><span></span><span class="p">{</span>
+<span class="c1">//#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">HAL2_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="c1">//#endif /* TO_DO_RESOLVE_STUB */</span>
+<span class="c1">//#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">  </span><span class="n">HAL2_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="c1">//#endif /* TO_DO_RESOLVE_STUB */</span>
+<span class="p">}</span>
+</pre>
+             </div>
+            </div>
+            <p>
+             Finally remove the comments  when completing the whole applicative file .
+            </p>
+            <div class="highlight-c notranslate">
+             <div class="highlight">
+              <pre><span></span><span class="k">do</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL2_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="w">  </span><span class="n">HAL2_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="p">}</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">Condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL2_func_return_value</span><span class="p">);</span>
+</pre>
+             </div>
+            </div>
+           </section>
+           <section id="switch-case">
+            <h5 id="switch-case">
+             <strong>
+              switch..case
+             </strong>
+             <a class="headerlink" href="#switch-case" title="Link to this heading">
+              ¶
+             </a>
+            </h5>
+            <p>
+             Initial user code :
+            </p>
+            <div class="highlight-c notranslate">
+             <div class="highlight">
+              <pre><span></span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">Selector</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL1</span><span class="w"> </span><span class="n">func</span><span class="w"> </span><span class="n">ret</span><span class="w"> </span><span class="n">value</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="no">X</span><span class="p">:</span>
+<span class="w">        </span><span class="n">HAL_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="w">        </span><span class="n">HAL_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="no">Y</span><span class="p">:</span>
+<span class="w">        </span><span class="n">HAL_PPP_Function3</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="w">        </span><span class="n">HAL_PPP_Function4</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="k">default</span><span class="o">:</span>
+<span class="w">        </span><span class="n">HAL_PPP_Other_Function3</span><span class="p">();</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+             </div>
+            </div>
+            <p>
+             Stubbed user code :
+            </p>
+            <div class="highlight-c notranslate">
+             <div class="highlight">
+              <pre><span></span><span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">Selector</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL1</span><span class="w"> </span><span class="n">func</span><span class="w"> </span><span class="n">ret</span><span class="w"> </span><span class="n">value</span><span class="p">)</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="p">{</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="no">X</span><span class="p">:</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">       </span><span class="n">HAL_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">       </span><span class="n">HAL_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="w">       </span><span class="k">break</span><span class="p">;</span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="no">Y</span><span class="p">:</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">       </span><span class="n">HAL_PPP_Function3</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">       </span><span class="n">HAL_PPP_Function4</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="w">       </span><span class="k">break</span><span class="p">;</span>
+<span class="w">   </span><span class="k">default</span><span class="o">:</span>
+<span class="cp">#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">       </span><span class="n">HAL_PPP_Other_Function3</span><span class="p">();</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="w">       </span><span class="k">break</span><span class="p">;</span>
+<span class="cp">#endif </span><span class="cm">/* TO_DO_RESOLVE_STUB */</span>
+<span class="p">}</span>
+</pre>
+             </div>
+            </div>
+            <p>
+             Resolve the
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               switch
+              </span>
+             </code>
+             statement and
+comment  the
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               #ifdef
+              </span>
+              <span class="pre">
+               TO_DO_RESOLVE_STUB
+              </span>
+             </code>
+             and the
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               #endif
+              </span>
+              <span class="pre">
+               TO_DO_RESOLVE_STUB
+              </span>
+             </code>
+             .
+            </p>
+            <div class="highlight-c notranslate">
+             <div class="highlight">
+              <pre><span></span><span class="c1">//#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">Selector</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL2_func_return_value</span><span class="p">)</span>
+<span class="c1">//#endif /* TO_DO_RESOLVE_STUB */</span>
+</pre>
+             </div>
+            </div>
+            <p>
+             You can carry now with solving the APIs inside the
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               switch..case
+              </span>
+             </code>
+             .
+            </p>
+            <div class="highlight-c notranslate">
+             <div class="highlight">
+              <pre><span></span><span class="p">{</span>
+<span class="w"> </span><span class="c1">//#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="no">X</span><span class="p">:</span>
+<span class="w"> </span><span class="c1">//#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">     </span><span class="n">HAL2_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="w"> </span><span class="c1">//#endif /* TO_DO_RESOLVE_STUB */</span>
+<span class="w"> </span><span class="c1">//#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">     </span><span class="n">HAL2_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="w"> </span><span class="c1">//#endif /* TO_DO_RESOLVE_STUB */</span>
+<span class="w">     </span><span class="k">break</span><span class="p">;</span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="no">Y</span><span class="p">:</span>
+<span class="w"> </span><span class="c1">//#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">     </span><span class="n">HAL2_PPP_Function3</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="w"> </span><span class="c1">//#endif /* TO_DO_RESOLVE_STUB */</span>
+<span class="w"> </span><span class="c1">//#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">     </span><span class="n">HAL2_PPP_Function4</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,...);</span>
+<span class="w"> </span><span class="c1">//#endif /* TO_DO_RESOLVE_STUB */</span>
+<span class="w">     </span><span class="k">break</span><span class="p">;</span>
+<span class="w">   </span><span class="k">default</span><span class="o">:</span>
+<span class="w"> </span><span class="c1">//#ifdef TO_DO_RESOLVE_STUB</span>
+<span class="w">     </span><span class="n">HAL2_PPP_Other_Function3</span><span class="p">();</span>
+<span class="w"> </span><span class="c1">//#endif /* TO_DO_RESOLVE_STUB */</span>
+<span class="w">     </span><span class="k">break</span><span class="p">;</span>
+<span class="w"> </span><span class="c1">//#endif /* TO_DO_RESOLVE_STUB */</span>
+<span class="w"> </span><span class="p">}</span>
+</pre>
+             </div>
+            </div>
+            <p>
+             Finally remove the comments when completing the whole applicative file .
+            </p>
+            <div class="highlight-c notranslate">
+             <div class="highlight">
+              <pre><span></span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">Selector</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HAL2_func_return_value</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="no">X</span><span class="p">:</span>
+<span class="w">        </span><span class="n">HAL2_PPP_Function1</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="w">        </span><span class="n">HAL2_PPP_Function2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="no">Y</span><span class="p">:</span>
+<span class="w">        </span><span class="n">HAL2_PPP_Function3</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="w">        </span><span class="n">HAL2_PPP_Function4</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hppp</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="k">default</span><span class="o">:</span>
+<span class="w">        </span><span class="n">HAL2_PPP_Other_Function3</span><span class="p">();</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+             </div>
+            </div>
+            <hr class="docutils"/>
+           </section>
+          </section>
+         </section>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

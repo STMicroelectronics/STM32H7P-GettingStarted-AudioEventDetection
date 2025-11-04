@@ -1,0 +1,1897 @@
+<!DOCTYPE html>
+<html data-content_root="../../../../../" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="This metadata is used to be referenced properly in st.com and in the search engines." name="description"/>
+  <meta content="HAL migration, HAL2, HAL1, NOR, STM32H5, STM32G0, STM32F4, STM32L4, STM32C0, STM32H7" name="keywords"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+  <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+  <meta content="en" name="lang:search.language"/>
+  <meta content="True" name="lang:search.pipeline.stopwords"/>
+  <meta content="True" name="lang:search.pipeline.trimmer"/>
+  <meta content="No matching documents" name="lang:search.result.none"/>
+  <meta content="1 matching document" name="lang:search.result.one"/>
+  <meta content="# matching documents" name="lang:search.result.other"/>
+  <meta content="[\s\-]+" name="lang:search.tokenizer"/>
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+  <style>
+   body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+  </style>
+  <link href="../../../../../_static/stylesheets/application.css" rel="stylesheet">
+   <link href="../../../../../_static/stylesheets/application-palette.css" rel="stylesheet">
+    <link href="../../../../../_static/stylesheets/application-fixes.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom_doxygen.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/custom.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/like-buttons.css" rel="stylesheet"/>
+    <link href="../../../../../_static/stylesheets/cards.css" rel="stylesheet"/>
+    <link href="../../../../../_static/fonts/material-icons.css" rel="stylesheet"/>
+    <meta content="#3f51b5" name="theme-color"/>
+    <script src="../../../../../_static/javascripts/modernizr.js">
+    </script>
+    <script src="../../../../../_static/javascripts/fix_doxygen_scroll.js">
+    </script>
+    <title>
+     HAL NOR Types migration — HAL migration guide 0.2.0 documentation
+    </title>
+    <link href="../../../../../_static/pygments.css?v=75810a84" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/material.css?v=79c92029" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/drawio.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+    <link href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+    <script src="../../../../../_static/documentation_options.js?v=1be0d999">
+    </script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda">
+    </script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c">
+    </script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8">
+    </script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69">
+    </script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37">
+    </script>
+    <link href="../../../../../genindex.html" rel="index" title="Index"/>
+    <link href="../../../../../search.html" rel="search" title="Search"/>
+    <link href="hal_nor_exported_functions_init_config.html" rel="next" title="HAL NOR Initialization and configuration functions migration"/>
+    <link href="hal_nor_exported_macros.html" rel="prev" title="HAL NOR Macros migration"/>
+   </link>
+  </link>
+ </head>
+ <body data-md-color-accent="light-blue" data-md-color-primary="blue" dir="ltr">
+  <svg class="md-svg">
+   <defs data-children-count="0">
+    <svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg">
+     <path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor">
+     </path>
+    </svg>
+   </defs>
+  </svg>
+  <input class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+  <input class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+  <label class="md-overlay" data-md-component="overlay" for="__drawer">
+  </label>
+  <a class="md-skip" href="#docs/markup/drivers_documentation/hal_drivers/nor/hal_nor_exported_types" tabindex="1">
+   Skip to content
+  </a>
+  <header class="md-header" data-md-component="header">
+   <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <a href="../../../../../global_toc.html" title="HAL migration guide 0.2.0 documentation">
+       <img alt="STMicroelectronics Logo." src="../../../../../_static/images/st-logo.svg" style="width: 61.867px; height: 33.069px; display: inline-block; margin: .2rem;"/>
+      </a>
+     </div>
+     <div class="md-flex__cell md-flex__cell--stretch">
+      <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+      </div>
+     </div>
+     <div class="md-flex__cell md-flex__cell--shrink">
+      <label class="md-icon md-icon--search md-header-nav__button" for="__search">
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+       <label class="md-search__overlay" for="__search">
+       </label>
+       <div class="md-search__inner" role="search">
+        <form action="../../../../../search.html" class="md-search__form" method="get" name="search">
+         <input autocapitalize="off" autocomplete="off" class="md-search__input" data-md-component="query" data-md-state="active" name="q" placeholder="" search""="" spellcheck="false" type="text"/>
+         <label class="md-icon md-search__icon" for="__search">
+         </label>
+         <button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+          
+         </button>
+        </form>
+        <div class="md-search__output">
+         <div class="md-search__scrollwrap" data-md-scrollfix="">
+          <div class="md-search-result" data-md-component="result">
+           <div class="md-search-result__meta">
+            Type to start searching
+           </div>
+           <ol class="md-search-result__list">
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+  </header>
+  <div class="md-container">
+   <main class="md-main">
+    <div class="md-main__inner md-grid" data-md-component="container">
+     <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <nav class="md-nav md-nav--primary" data-md-level="0">
+         <link href="../../../../../_static/stylesheets/navbar.css" rel="stylesheet"/>
+         <ul class="md-nav__list">
+          <li class="md-nav__item">
+           <span class="md-nav__link caption">
+            <span class="caption-text">
+             Table Of Contents
+            </span>
+           </span>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../../../index.html">
+            Welcome to the HAL1 to HAL2 migration guide
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../getting_started/getting_started.html">
+            Getting started
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_script/migration_script_toc.html">
+            HAL1 detection
+           </a>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../drivers_toc.html">
+            HAL1 to HAL2 details
+           </a>
+           <ul class="md-nav__list">
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../breaking_concepts/breaking_concepts_toc.html">
+              Breaking changes in concepts
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../hal_drivers_toc.html">
+              HAL drivers migration
+             </a>
+             <ul class="md-nav__list">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../adc/hal_adc_toc.html">
+                ADC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../comp/hal_comp_toc.html">
+                COMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cortex/hal_cortex_toc.html">
+                CORTEX
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cordic/hal_cordic_toc.html">
+                CORDIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../crc/hal_crc_toc.html">
+                CRC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../cryp/hal_cryp_toc.html">
+                CRYP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dac/hal_dac_toc.html">
+                DAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dcache/hal_dcache_toc.html">
+                DCACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../dma/hal_dma_toc.html">
+                DMA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../exti/hal_exti_toc.html">
+                EXTI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../fmac/hal_fmac_toc.html">
+                FMAC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../generic/hal_generic_toc.html">
+                GENERIC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxmmu/hal_gfxmmu_toc.html">
+                GFXMMU
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gfxtim/hal_gfxtim_toc.html">
+                GFXTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../gpio/hal_gpio_toc.html">
+                GPIO
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2c/hal_i2c_toc.html">
+                I2C
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../i2s/hal_i2s_toc.html">
+                I2S
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../icache/hal_icache_toc.html">
+                ICACHE
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../irda/hal_irda_toc.html">
+                IRDA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../iwdg/hal_iwdg_toc.html">
+                IWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../lptim/hal_lptim_toc.html">
+                LPTIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="hal_nor_toc.html">
+                NOR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../opamp/hal_opamp_toc.html">
+                OPAMP
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ospi/hal_ospi_toc.html">
+                OSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pka/hal_pka_toc.html">
+                PKA
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../pwr/hal_pwr_toc.html">
+                PWR
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../qspi/hal_qspi_toc.html">
+                QSPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../ramcfg/hal_ramcfg_toc.html">
+                RAMCFG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rcc/hal_rcc_toc.html">
+                RCC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rng/hal_rng_toc.html">
+                RNG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../rtc/hal_rtc_toc.html">
+                RTC
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sdram/hal_sdram_toc.html">
+                SDRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smartcard/hal_smartcard_toc.html">
+                SMARTCARD
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../smbus/hal_smbus_toc.html">
+                SMBUS
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../spi/hal_spi_toc.html">
+                SPI
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../sram/hal_sram_toc.html">
+                SRAM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../tim/hal_tim_toc.html">
+                TIM
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../uart/hal_uart_toc.html">
+                UART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../usart/hal_usart_toc.html">
+                USART
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../wwdg/hal_wwdg_toc.html">
+                WWDG
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="../xspi/hal_xspi_toc.html">
+                XSPI
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="../../ll_drivers/ll_drivers_toc.html">
+              LL drivers migration
+             </a>
+            </li>
+           </ul>
+          </li>
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="../../../migration_example/example_toc.html">
+            Migration example
+           </a>
+          </li>
+         </ul>
+         <script>
+          window.onload = function() {
+    setTimeout(function() {
+      let activeNavLink = document.querySelector('a.md-nav__link.md-nav__link--active');
+
+      
+      
+      
+
+      
+      if (activeNavLink) {
+
+        
+        let ancestorLists = [];
+        let parent = activeNavLink.parentElement;
+        while (parent) {
+          if (parent.matches('.md-nav__list')) {
+            ancestorLists.push(parent);
+            
+            parent.classList.add('is-expanded');
+          }
+          parent = parent.parentElement;
+        }
+
+        
+        
+        
+        let childrenLists = activeNavLink.parentElement.querySelectorAll(':scope > .md-nav__list');
+        childrenLists.forEach(function(list) {
+          
+          list.classList.add('is-expanded');
+
+          
+          let links = list.querySelectorAll('a');
+          links.forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#') && href !== '#') {
+              
+              link.style.display = 'none';
+            }
+          });
+        });
+
+        
+        
+        
+        
+        
+
+        
+
+        if (!activeNavLink.hasAttribute('tabindex')) {
+          activeNavLink.setAttribute('tabindex', '-1');
+        }
+
+        
+        
+
+        activeNavLink.focus();
+        console.log("Is activeNavLink focused:", document.activeElement === activeNavLink);
+        activeNavLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 10);
+  };
+         </script>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+      <div class="md-sidebar__scrollwrap">
+       <div class="md-sidebar__inner">
+        <link href="../../../../../_static/stylesheets/localnavbar.css" rel="stylesheet"/>
+        <nav class="md-nav md-nav--secondary">
+         <label class="md-nav__title" for="__toc">
+          "Contents"
+         </label>
+         <ul class="md-nav__list2" data-md-scrollfix="">
+          <li class="md-nav__item">
+           <a class="md-nav__link" href="#docs-markup-drivers-documentation-hal-drivers-nor-hal-nor-exported-types--page-root">
+            HAL NOR Types migration
+           </a>
+           <nav class="md-nav">
+            <ul class="md-nav__list2">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#callback-id-definition">
+               CALLBACK ID Definition
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#hal-state-definition">
+               HAL STATE Definition
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#nor-flash-operation-status-codes">
+               NOR flash operation status codes
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#nor-cfitypedef-structure-type-definition">
+               NOR_CFITypeDef structure type Definition
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#nor-handletypedef-structure-type-definition">
+               NOR_HandleTypeDef structure type Definition
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#fmc-norsram-timingtypedef-structure-type-definition">
+               FMC_NORSRAM_TimingTypeDef structure type Definition
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#nor-idtypedef-structure-type-definition">
+               NOR_IDTypeDef structure type Definition
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#pnor-callback-typedef">
+               pNOR Callback TypeDef
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#fmc-norsram-init-typedef">
+               FMC NORSRAM Init TypeDef
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#fmc-data-address-bus-multiplexing">
+               FMC Data Address Bus Multiplexing
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#fmc-write-fifo">
+               FMC Write FIFO
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="#fmc-access-mode">
+               FMC Access mode
+              </a>
+             </li>
+            </ul>
+           </nav>
+          </li>
+         </ul>
+        </nav>
+       </div>
+      </div>
+     </div>
+     <div class="md-content">
+      <article class="md-content__inner md-typeset" role="main">
+       <section id="hal-nor-types-migration">
+        <span id="hal-nor-exported-types">
+        </span>
+        <h1 id="docs-markup-drivers-documentation-hal-drivers-nor-hal-nor-exported-types--page-root">
+         HAL NOR Types migration
+         <a class="headerlink" href="#docs-markup-drivers-documentation-hal-drivers-nor-hal-nor-exported-types--page-root" title="Link to this heading">
+          ¶
+         </a>
+        </h1>
+        <p>
+         This section provides information about the HAL NOR types migration.
+        </p>
+        <div class="admonition note">
+         <p class="admonition-title">
+          Note
+         </p>
+         <p>
+          Most of APIs are
+          <strong>
+           split
+          </strong>
+          according to the command set of the device.
+         </p>
+         <p>
+          See
+          <a class="reference internal" href="hal_nor_use_cases.html#hal-nor-use-cases">
+           <span class="std std-ref">
+            HAL NOR Typical use cases for migration
+           </span>
+          </a>
+          .
+         </p>
+        </div>
+        <section id="callback-id-definition">
+         <span id="hal-nor-exported-types-hal-nor-callbackidtypedef">
+         </span>
+         <span id="hal-nor-exported-types-enumerators-callback-id-definition">
+         </span>
+         <h2 id="callback-id-definition">
+          CALLBACK ID Definition
+          <a class="headerlink" href="#callback-id-definition" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_NOR_MSP_INIT_CB_ID</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_NOR_MSP_DEINIT_CB_ID</span><span class="p">,</span>
+<span class="p">}</span><span class="w"> </span><span class="n">HAL_NOR_CallbackIDTypeDef</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <p>
+              Removed: No more MSP, they are replaced by a user sequence.
+             </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <ul class="simple">
+          <li>
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_A.html#breaking-concepts-concept-a5">
+             <span class="std std-ref">
+              Remove MspInit and MspDeInit callbacks
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="hal-state-definition">
+         <span id="hal-nor-exported-types-hal-nor-statetypedef">
+         </span>
+         <span id="hal-nor-exported-types-enumerators-hal-state-definition">
+         </span>
+         <h2 id="hal-state-definition">
+          HAL STATE Definition
+          <a class="headerlink" href="#hal-state-definition" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_NOR_STATE_RESET</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_NOR_STATE_READY</span><span class="p">,</span>
+
+<span class="w">  </span><span class="n">HAL_NOR_STATE_BUSY</span><span class="p">,</span>
+
+
+
+<span class="w">  </span><span class="n">HAL_NOR_STATE_ERROR</span><span class="p">,</span>
+
+<span class="w">  </span><span class="n">HAL_NOR_STATE_PROTECTED</span><span class="p">,</span>
+<span class="w">  </span><span class="cm">/* ------------ */</span>
+<span class="w">  </span><span class="cm">/* ------------ */</span>
+<span class="w">  </span><span class="cm">/* ------------ */</span>
+<span class="w">  </span><span class="cm">/* ------------ */</span>
+<span class="w">  </span><span class="cm">/* ------------ */</span>
+<span class="p">}</span><span class="w"> </span><span class="n">HAL_NOR_StateTypeDef</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_NOR_STATE_RESET</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_NOR_STATE_IDLE</span><span class="p">,</span>
+
+<span class="w">  </span><span class="n">HAL_NOR_STATE_PROGRAM_ACTIVE</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_NOR_STATE_ERASE_ACTIVE</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_NOR_STATE_READ_ACTIVE</span><span class="p">,</span>
+
+<span class="w">  </span><span class="n">HAL_NOR_STATE_FAULT</span><span class="p">,</span>
+
+<span class="w">  </span><span class="cm">/* ------------ */</span>
+<span class="w">  </span><span class="n">HAL_NOR_STATE_INIT</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_NOR_STATE_CONFIGURED</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_NOR_STATE_MEMORY_CONFIGURED</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_NOR_STATE_PROGRAM_SUSPENDED</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_NOR_STATE_ERASE_SUSPENDED</span><span class="p">,</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_nor_state_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <div class="admonition note">
+          <p class="admonition-title">
+           Note
+          </p>
+          <ul class="simple">
+           <li>
+            <dl class="simple">
+             <dt>
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                HAL_NOR_STATE_BUSY
+               </span>
+              </code>
+              is
+              <strong>
+               split
+              </strong>
+              to :
+             </dt>
+             <dd>
+              <ul>
+               <li>
+                <p>
+                 <code class="docutils literal notranslate">
+                  <span class="pre">
+                   HAL_NOR_STATE_PROGRAM_ACTIVE
+                  </span>
+                 </code>
+                 for program API.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <code class="docutils literal notranslate">
+                  <span class="pre">
+                   HAL_NOR_STATE_ERASE_ACTIVE
+                  </span>
+                 </code>
+                 for Erase API.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <code class="docutils literal notranslate">
+                  <span class="pre">
+                   HAL_NOR_STATE_READ_ACTIVE
+                  </span>
+                 </code>
+                 for Read API.
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+           </li>
+           <li>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_NOR_STATE_ERROR
+              </span>
+             </code>
+             is
+             <strong>
+              replaced
+             </strong>
+             with
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_NOR_STATE_FAULT
+              </span>
+             </code>
+             .
+            </p>
+           </li>
+           <li>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_NOR_STATE_PROTECTED
+              </span>
+             </code>
+             is
+             <strong>
+              removed
+             </strong>
+             , no more state to reflect the NOR write protection instead use the function
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_NOR_IsEnabledWriteProtection
+              </span>
+             </code>
+             to know if the NOR is write protected.
+            </p>
+           </li>
+           <li>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_NOR_STATE_READY
+              </span>
+             </code>
+             is
+             <strong>
+              replaced
+             </strong>
+             with
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               HAL_NOR_STATE_IDLE
+              </span>
+             </code>
+             .
+            </p>
+           </li>
+          </ul>
+         </div>
+         <ul class="simple">
+          <li>
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_F.html#breaking-concepts-concept-f1">
+             <span class="std std-ref">
+              Revise and optimize the HAL state machine.
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="nor-flash-operation-status-codes">
+         <span id="hal-nor-exported-types-hal-nor-statustypedef">
+         </span>
+         <span id="hal-nor-exported-types-enumerators-nor-flash-operation-status-codes">
+         </span>
+         <h2 id="nor-flash-operation-status-codes">
+          NOR flash operation status codes
+          <a class="headerlink" href="#nor-flash-operation-status-codes" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_NOR_STATUS_SUCCESS</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_NOR_STATUS_ONGOING</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_NOR_STATUS_ERROR</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_NOR_STATUS_TIMEOUT</span>
+<span class="p">}</span><span class="w"> </span><span class="n">HAL_NOR_StatusTypeDef</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="w"> </span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_NOR_DEVICE_STATE_SUCCESS</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_NOR_DEVICE_STATE_ONGOING</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_NOR_DEVICE_STATE_ERROR</span>
+<span class="w">  </span><span class="cm">/* -------------------- */</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_nor_device_state_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              Parameter
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                HAL_NOR_STATUS_TIMEOUT
+               </span>
+              </code>
+             </p>
+            </td>
+            <td>
+             <p>
+              Memory Timeout status
+             </p>
+            </td>
+            <td>
+             <p>
+              <strong>
+               Removed
+              </strong>
+              : Timeout status is removed as NOR memory itself does not signal a timeout,
+             </p>
+             <p>
+              timeout are now managed in the process APIs by returning
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                HAL_TIMEOUT
+               </span>
+              </code>
+              ,
+             </p>
+             <p>
+              when the on-going status exceeds a predefined duration.
+             </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="nor-cfitypedef-structure-type-definition">
+         <span id="hal-nor-exported-types-nor-cfitypedef">
+         </span>
+         <h2 id="nor-cfitypedef-structure-type-definition">
+          NOR_CFITypeDef structure type Definition
+          <a class="headerlink" href="#nor-cfitypedef-structure-type-definition" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              Defines the information stored in the memory’s Common flash interface
+             </p>
+             <p>
+              which contains a description of
+              <strong>
+               various electrical
+              </strong>
+              and
+              <strong>
+               timing parameters
+              </strong>
+              ,
+             </p>
+             <p>
+              <strong>
+               density information
+              </strong>
+              and
+              <strong>
+               functions supported
+              </strong>
+              by the memory.
+             </p>
+            </td>
+            <td>
+             <p>
+              Defines the information stored in the memory’s Common flash interface
+             </p>
+             <p>
+              which contains a description of
+              <strong>
+               all parameters
+              </strong>
+              listed in the structure.
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">CFI_1</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">CFI_2</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">CFI_3</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">CFI_4</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">NOR_CFITypeDef</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">device_supply_min_mvolt</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">device_supply_max_mvolt</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">erase_program_supply_min_mvolt</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">erase_program_supply_max_mvolt</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">word_program_timeout_usec</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">buffer_program_timeout_usec</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">block_erase_timeout_msec</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">full_erase_timeout_msec</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">max_word_program_timeout_usec</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">max_buffer_program_timeout_usec</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">max_block_erase_timeout_msec</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">max_full_erase_timeout_msec</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">device_size_byte</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">max_buffer_byte</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">primary_command_set</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">extended_primary_table_address</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">alternate_command_set</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">extended_secondary_table_address</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">device_interface_code</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">query_unique_ascii</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+<span class="w">  </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">erase_block_region_nb</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_nor_cfi_device_info_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <div class="admonition note">
+          <p class="admonition-title">
+           Note
+          </p>
+          <p>
+           <strong>
+            HAL1
+           </strong>
+           provides
+           <strong>
+            basic info
+           </strong>
+           about the memory’s flash interface like key electrical, timing, and size details, while
+           <strong>
+            HAL2
+           </strong>
+           includes a
+           <strong>
+            full detailed set
+           </strong>
+           of all parameters for that interface.
+          </p>
+         </div>
+         <hr class="docutils"/>
+        </section>
+        <section id="nor-handletypedef-structure-type-definition">
+         <span id="hal-nor-exported-types-nor-handletypedef">
+         </span>
+         <h2 id="nor-handletypedef-structure-type-definition">
+          NOR_HandleTypeDef structure type Definition
+          <a class="headerlink" href="#nor-handletypedef-structure-type-definition" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">NOR_HandleTypeDef</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">hal_nor_handle_t</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <ul class="simple">
+          <li>
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_A.html#breaking-concepts-concept-a3">
+             <span class="std std-ref">
+              Rename handle structure
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="fmc-norsram-timingtypedef-structure-type-definition">
+         <span id="hal-nor-exported-types-fmc-norsram-timingtypedef">
+         </span>
+         <h2 id="fmc-norsram-timingtypedef-structure-type-definition">
+          FMC_NORSRAM_TimingTypeDef structure type Definition
+          <a class="headerlink" href="#fmc-norsram-timingtypedef-structure-type-definition" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">AddressSetupTime</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">AddressHoldTime</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">DataSetupTime</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">DataHoldTime</span><span class="p">;</span>
+
+
+
+
+
+
+
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">CLKDivision</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">DataLatency</span><span class="p">;</span>
+
+
+
+
+
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">BusTurnAroundDuration</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">AccessMode</span><span class="p">;</span>
+
+<span class="p">}</span><span class="w"> </span><span class="n">FMC_NORSRAM_TimingTypeDef</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">addr_setup_nsec</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">addr_hold_nsec</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">data_setup_nsec</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">data_hold_nsec</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_nor_timings_t</span><span class="p">;</span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">hal_nor_sync_wait_signal_state_t</span><span class="w"> </span><span class="n">wait_signal_state</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hal_nor_wait_timing_config_t</span><span class="w"> </span><span class="n">wait_timing_config</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hal_nor_continuous_clock_t</span><span class="w"> </span><span class="n">continuous_clock</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">clk_period_nsec</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">data_latency_nsec</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_nor_sync_protocol_config_t</span><span class="p">;</span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">hal_nor_timings_t</span><span class="w"> </span><span class="n">async_access_timings</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">bus_turnaround_nsec</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hal_nor_access_mode_t</span><span class="w"> </span><span class="n">write_access_mode</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hal_nor_access_mode_t</span><span class="w"> </span><span class="n">read_access_mode</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_nor_wr_async_timings_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <div class="admonition note">
+          <p class="admonition-title">
+           Note
+          </p>
+          <p>
+           The timing configuration is organized based on the configuration type:
+          </p>
+          <ul class="simple">
+           <li>
+            <p>
+             <strong>
+              Asynchronous read and asynchronous write
+             </strong>
+             with
+             <strong>
+              identical
+             </strong>
+             timing for both operations.
+            </p>
+           </li>
+           <li>
+            <p>
+             <strong>
+              Asynchronous read and asynchronous write
+             </strong>
+             with
+             <strong>
+              distinct
+             </strong>
+             timing for each operation.
+            </p>
+           </li>
+           <li>
+            <p>
+             <strong>
+              Synchronous read and asynchronous write
+             </strong>
+             .
+            </p>
+           </li>
+          </ul>
+         </div>
+         <ul class="simple">
+          <li>
+           <p>
+            Related concepts:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_A.html#breaking-concepts-concept-a3">
+             <span class="std std-ref">
+              Rename handle structure
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="nor-idtypedef-structure-type-definition">
+         <span id="hal-nor-exported-types-nor-idtypedef">
+         </span>
+         <h2 id="nor-idtypedef-structure-type-definition">
+          NOR_IDTypeDef structure type Definition
+          <a class="headerlink" href="#nor-idtypedef-structure-type-definition" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">Manufacturer_Code</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">Device_Code1</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">Device_Code2</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">Device_Code3</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">NOR_IDTypeDef</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">device_manufacturer_code</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">device_code</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_nor_cfi_0001_device_id_t</span><span class="p">,</span><span class="w"> </span><span class="n">hal_nor_cfi_0003_device_id_t</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">device_manufacturer_code</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">device_code_1</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">device_code_2</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">device_code_3</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">indicator_bits</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_nor_cfi_0002_device_id_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <div class="admonition note">
+          <p class="admonition-title">
+           Note
+          </p>
+          <p>
+           The
+           <strong>
+            ID structure
+           </strong>
+           definition has been
+           <strong>
+            separated
+           </strong>
+           based on the
+           <strong>
+            command set
+           </strong>
+           and device standard. This is aligned with CFI standard.
+          </p>
+         </div>
+         <ul class="simple">
+          <li>
+           <p>
+            Related concepts:
+            <a class="reference internal" href="hal_nor_concepts_list.html#hal-nor-other-concepts-list">
+             <span class="std std-ref">
+              Other HAL NOR changes
+             </span>
+            </a>
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="pnor-callback-typedef">
+         <span id="hal-nor-exported-types-pnor-callbacktypedef">
+         </span>
+         <h2 id="pnor-callback-typedef">
+          pNOR Callback TypeDef
+          <a class="headerlink" href="#pnor-callback-typedef" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="n">pNOR_CallbackTypeDef</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="nl">Removed</span><span class="p">:</span><span class="w"> </span><span class="n">No</span><span class="w"> </span><span class="n">more</span><span class="w"> </span><span class="n">Callback</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">HAL2</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <hr class="docutils"/>
+        </section>
+        <section id="fmc-norsram-init-typedef">
+         <span id="hal-nor-exported-types-fmc-norsram-inittypedef">
+         </span>
+         <h2 id="fmc-norsram-init-typedef">
+          FMC NORSRAM Init TypeDef
+          <a class="headerlink" href="#fmc-norsram-init-typedef" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">NSBank</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">DataAddressMux</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">MemoryType</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">MemoryDataWidth</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">BurstAccessMode</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">WaitSignalPolarity</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">WaitSignalActive</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">WriteOperation</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">WaitSignal</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">ExtendedMode</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">AsynchronousWait</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">WriteBurst</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">ContinuousClock</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">WriteFifo</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">PageSize</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">NBLSetupTime</span><span class="p">;</span>
+<span class="w">  </span><span class="n">FunctionalState</span><span class="w"> </span><span class="n">MaxChipSelectPulse</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">MaxChipSelectPulseTime</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">FMC_NORSRAM_InitTypeDef</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <p>
+              <strong>
+               FMC configurations (common)
+              </strong>
+             </p>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">hal_nor_write_fifo_t</span><span class="w">           </span><span class="n">write_fifo</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hal_nor_wait_signal_polarity_t</span><span class="w"> </span><span class="n">wait_signal_polarity</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_nor_config_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+            </td>
+            <td>
+             <p>
+              <strong>
+               Memory configurations:
+              </strong>
+              Asynchronous read and asynchronous write
+             </p>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">hal_nor_memory_config_t</span><span class="w"> </span><span class="n">memory</span><span class="p">;</span><span class="w"> </span><span class="c1">// See ⤵</span>
+<span class="w">  </span><span class="n">hal_nor_rd_wr_async_timings_t</span><span class="w"> </span><span class="n">timings</span><span class="p">;</span><span class="w"> </span><span class="c1">// See ⤵</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_nor_rd_wr_async_memory_config_t</span><span class="p">;</span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">hal_nor_mux_mode_t</span><span class="w"> </span><span class="n">mux_mode</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hal_nor_byte_lane_source_clock_cycle_t</span><span class="w"> </span><span class="n">byte_lane_setup_cycle</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_nor_memory_config_t</span><span class="p">;</span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">hal_nor_async_wait_signal_state_t</span><span class="w"> </span><span class="n">async_wait</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hal_nor_timings_t</span><span class="w"> </span><span class="n">access_timings</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">bus_turnaround_nsec</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_nor_rd_wr_async_timings_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+            </td>
+            <td>
+             <p>
+              <strong>
+               Memory configurations:
+              </strong>
+              Synchronous read and asynchronous write
+             </p>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">hal_nor_memory_config_t</span><span class="w"> </span><span class="n">memory</span><span class="p">;</span><span class="w"> </span><span class="c1">// See ⤵</span>
+<span class="w">  </span><span class="n">hal_nor_sync_async_timings_t</span><span class="w"> </span><span class="n">timings</span><span class="p">;</span><span class="w"> </span><span class="c1">// See ⤵</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_nor_rd_sync_wr_async_memory_config_t</span><span class="p">;</span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">hal_nor_mux_mode_t</span><span class="w"> </span><span class="n">mux_mode</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hal_nor_byte_lane_source_clock_cycle_t</span><span class="w"> </span><span class="n">byte_lane_setup_cycle</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_nor_memory_config_t</span><span class="p">;</span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">hal_nor_sync_protocol_config_t</span><span class="w"> </span><span class="n">sync_protocol</span><span class="p">;</span><span class="w"> </span><span class="c1">// See ⤵</span>
+<span class="w">  </span><span class="n">hal_nor_async_wait_signal_state_t</span><span class="w"> </span><span class="n">async_wait</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hal_nor_timings_t</span><span class="w"> </span><span class="n">async_access_timings</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">bus_turnaround_nsec</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_nor_sync_async_timings_t</span><span class="p">;</span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">hal_nor_sync_wait_signal_state_t</span><span class="w"> </span><span class="n">wait_signal_state</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hal_nor_wait_timing_config_t</span><span class="w"> </span><span class="n">wait_timing_config</span><span class="p">;</span>
+<span class="w">  </span><span class="n">hal_nor_continuous_clock_t</span><span class="w"> </span><span class="n">continuous_clock</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">clk_period_nsec</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">data_latency_nsec</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_nor_sync_protocol_config_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <ul class="simple">
+          <li>
+           <p>
+            Related use case:
+            <a class="reference internal" href="hal_nor_exported_functions_init_config.html#hal-nor-exported-functions-init-config">
+             <span class="std std-ref">
+              HAL NOR Initialization and configuration functions migration
+             </span>
+            </a>
+            .
+           </p>
+          </li>
+          <li>
+           <p>
+            Related concept:
+            <a class="reference internal" href="../../breaking_concepts/breaking_concepts_concept_A.html#breaking-concepts-concept-a2">
+             <span class="std std-ref">
+              Remove Init structure from handle and convert Init structure into configuration one
+             </span>
+            </a>
+            .
+           </p>
+          </li>
+         </ul>
+         <hr class="docutils"/>
+        </section>
+        <section id="fmc-data-address-bus-multiplexing">
+         <span id="hal-nor-exported-types-fmc-data-address-bus-multiplexing">
+         </span>
+         <h2 id="fmc-data-address-bus-multiplexing">
+          FMC Data Address Bus Multiplexing
+          <a class="headerlink" href="#fmc-data-address-bus-multiplexing" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define FMC_DATA_ADDRESS_MUX_DISABLE</span>
+<span class="cp">#define FMC_DATA_ADDRESS_MUX_ENABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_NOR_MUX_DATA_ADDR_DISABLE</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_NOR_MUX_DATA_ADDR_ENABLE</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_nor_mux_mode_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="fmc-write-fifo">
+         <span id="hal-nor-exported-types-fmc-write-fifo">
+         </span>
+         <h2 id="fmc-write-fifo">
+          FMC Write FIFO
+          <a class="headerlink" href="#fmc-write-fifo" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define FMC_WRITE_FIFO_DISABLE</span>
+<span class="cp">#define FMC_WRITE_FIFO_ENABLE</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">HAL_NOR_WRITE_FIFO_DISABLE</span>
+<span class="w">  </span><span class="n">HAL_NOR_WRITE_FIFO_ENABLE</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_nor_write_fifo_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="fmc-access-mode">
+         <span id="hal-nor-exported-types-access-mode">
+         </span>
+         <h2 id="fmc-access-mode">
+          FMC Access mode
+          <a class="headerlink" href="#fmc-access-mode" title="Link to this heading">
+           ¶
+          </a>
+         </h2>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              <strong>
+               HAL1
+              </strong>
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              <strong>
+               HAL2
+              </strong>
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="cm">/* */</span>
+
+<span class="cp">#define FMC_ACCESS_MODE_A</span>
+<span class="cp">#define FMC_ACCESS_MODE_B</span>
+<span class="cp">#define FMC_ACCESS_MODE_C</span>
+<span class="cp">#define FMC_ACCESS_MODE_D</span>
+</pre>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="highlight-c notranslate">
+              <div class="highlight">
+               <pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="cm">/* A mode for SRAM */</span>
+<span class="w">  </span><span class="n">HAL_NOR_ACCESS_MODE_B</span><span class="p">,</span>
+<span class="w">  </span><span class="n">HAL_NOR_ACCESS_MODE_C</span>
+<span class="w">  </span><span class="cm">/* D mode for SRAM */</span>
+<span class="p">}</span><span class="w"> </span><span class="n">hal_nor_access_mode_t</span><span class="p">;</span>
+</pre>
+              </div>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+       </section>
+      </article>
+     </div>
+    </div>
+   </main>
+  </div>
+  <footer class="md-footer">
+   <div class="md-footer-nav">
+    <nav class="md-footer-nav__inner md-grid">
+    </nav>
+   </div>
+   <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+     <div class="md-footer-copyright">
+      <div class="md-footer-copyright__highlight">
+       © Copyright 2025, STMicroelectronics.
+      </div>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script defer="" src="../../../../../_static/javascripts/tabs_links.js">
+  </script>
+  <script defer="" src="../../../../../_static/javascripts/navlink_break.js">
+  </script>
+  <script src="../../../../../_static/javascripts/application.js">
+  </script>
+  <script>
+   app.initialize({version: "1.0.4", url: {base: ".."}})
+  </script>
+ </body>
+</html>

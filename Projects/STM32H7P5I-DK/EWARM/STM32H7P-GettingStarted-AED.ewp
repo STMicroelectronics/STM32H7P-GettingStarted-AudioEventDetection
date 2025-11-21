@@ -2483,6 +2483,9 @@
             <file>
                 <name>$PROJ_DIR$\..\..\..\stm32cubefw_h7p\stm32h7pxx_drivers\hal\stm32h7pxx_hal_uart.c</name>
             </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\stm32cubefw_h7p\stm32h7pxx_drivers\hal\stm32h7pxx_hal_dbgmcu.c</name>
+            </file>
         </group>
         <group>
             <name>ll</name>

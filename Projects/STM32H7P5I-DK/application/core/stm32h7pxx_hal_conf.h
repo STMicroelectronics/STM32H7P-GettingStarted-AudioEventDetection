@@ -208,7 +208,7 @@ extern "C" {
   * @{
   */
 /* ########################## HAL_DBGMCU Config ################################# */
-#define USE_HAL_DBGMCU_MODULE                   0U
+#define USE_HAL_DBGMCU_MODULE                   1U
 /**
   * @}
   */

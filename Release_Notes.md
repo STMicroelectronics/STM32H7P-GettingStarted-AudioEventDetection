@@ -29,6 +29,10 @@ before exposing the results to the user in real time.
 
 ## Update history
 
-### 0.1.0 / Novemver 2025
+### 0.1.1 / November 2025
+
+Fix Issue cache maintenance.
+
+### 0.1.0 / November 2025
 
 Initial release of the STM32H7P-GettingStarted-AED.

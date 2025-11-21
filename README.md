@@ -211,9 +211,9 @@ application by hitting any key on the console and check real time statistics.
 ---------------------------------------------------------------
 | Statistics                  | Pre-Processing | AI inference |
 ---------------------------------------------------------------
-| Number of call              |             543|           347|
-| Average (ms)                |           16.61|        126.83|
-| Relative load (%)           |            0.22|          1.05|
+| Number of call              |              26|            13|
+| Average (ms)                |            7.77|          6.05|
+| Relative load (%)           |            0.54|          0.21|
 ---------------------------------------------------------------
 ```
 

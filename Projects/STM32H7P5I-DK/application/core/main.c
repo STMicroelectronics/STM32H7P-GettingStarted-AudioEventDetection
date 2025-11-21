@@ -79,6 +79,7 @@ int main(void)
   /* Enable Cache */
   SCB_EnableICache();
   SCB_EnableDCache();
+  HAL_DBGMCU_EnableDebugLowPowerMode(HAL_DBGMCU_LP_MODE_DEBUG_ALL);
 
   /* Initialize all configured peripherals */
   init_UART();
@@ -620,31 +621,6 @@ void HAL_UART_RxCpltCallback(hal_uart_handle_t *huart, uint32_t size_byte, hal_u
   STM32_UNUSED(size_byte);
   STM32_UNUSED(rx_event);
   exit_loop = 1;
-}
-
-
-
-
-static uint32_t t_init;
-static uint32_t t_out;
-void init_dwt()
-{
-  DWT->CYCCNT = 0;
-  DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
-}
-
-void time_in(void)
-{
-  DWT->CYCCNT = 0;
-  t_init = DWT->CYCCNT;
-}
-
-uint32_t time_out(void)
-{
-
-  t_out = DWT->CYCCNT;
-
-  return (t_out - t_init);
 }
 
 

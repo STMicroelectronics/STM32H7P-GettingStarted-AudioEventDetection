@@ -82,6 +82,7 @@ int audio_exec(void)
 
     if (audio_pre_proc_ctx.audiopreproc_ctx.S_Spectr.spectro_sum > CTRL_X_CUBE_AI_SPECTROGRAM_SILENCE_THR)
     {
+      /* run ATON inference */
       AudioPipeline_AIProcess(&audio_proc_ctx.ai, audio_proc_ctx.ai_out_p);
       PrintAIClassesOutput(audio_proc_ctx.ai_out_p, audio_proc_ctx.ai.classes);
     }

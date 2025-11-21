@@ -145,9 +145,9 @@ AudioPipeline_StatusTypeDef AudioPipeline_AIProcess(AIProcCtx_t *pxCtx, float *p
     stai_network_set_outputs(pxCtx->p_network, outputs_ptr,1);
   }
   port_dwt_reset();
-  uint32_t size_input = pxCtx->in_height * pxCtx->in_width * 2;
+  uint32_t size_input = pxCtx->in_height * pxCtx->in_width;
 
-  mcu_cache_clean_invalidate_range((uint32_t)pxCtx->p_stai_inputs, (uint32_t)(pxCtx->p_stai_inputs + size_input)*2);
+  mcu_cache_clean_invalidate_range((uint32_t)pxCtx->p_stai_inputs, (uint32_t)(pxCtx->p_stai_inputs + size_input));
   return_code = stai_network_run(pxCtx->p_network, STAI_MODE_SYNC);
   if ( STAI_SUCCESS != return_code )
   {

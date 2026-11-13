@@ -1,0 +1,91 @@
+{
+    "bomFormat": "CycloneDX",
+    "specVersion": "1.5",
+    "serialNumber": "urn:uuid:1f2d7a4f-7862-4bca-945b-da469dafa9f9",
+    "version": 1,
+    "metadata": {
+        "timestamp": "2026-08-27T09:16:48Z",
+        "tools": [
+            {
+                "vendor": "Black Duck",
+                "name": "Hub",
+                "version": "2026.7.0"
+            },
+            {
+                "vendor": "CycloneDX",
+                "name": "cyclonedx-core-java",
+                "version": "5.0.5"
+            }
+        ],
+        "authors": [
+            {
+                "name": "STMicroelectronics NV"
+            }
+        ],
+        "component": {
+            "type": "application",
+            "bom-ref": "c7f74e38-dbf6-4e3c-8d4c-85b85f543855",
+            "name": "stm32h7pxx_DFP",
+            "version": "v2.0.0",
+            "licenses": [
+                {
+                    "license": {
+                        "id": "BSD-3-Clause"
+                    }
+                }
+            ],
+            "pedigree": {
+                "notes": "BSD 3-clause \"New\" or \"Revised\" License"
+            },
+            "properties": [
+                {
+                    "name": "BlackDuck-Component",
+                    "value": "31727609-814d-4570-b9ac-f953e3bfc95b"
+                },
+                {
+                    "name": "BlackDuck-ComponentVersion",
+                    "value": "c7f74e38-dbf6-4e3c-8d4c-85b85f543855"
+                }
+            ]
+        },
+        "supplier": {
+            "name": "STMicroelectronics NV"
+        }
+    },
+    "components": [
+        {
+            "type": "library",
+            "bom-ref": "c7f74e38-dbf6-4e3c-8d4c-85b85f543855---bc729504-6d40-4668-82dc-f38ee0d249f9",
+            "name": "stm32h7pxx_DFP",
+            "version": "2.0.0",
+            "licenses": [
+                {
+                    "license": {
+                        "id": "BSD-3-Clause"
+                    }
+                }
+            ],
+            "pedigree": {
+                "notes": "BSD 3-clause \"New\" or \"Revised\" License"
+            },
+            "properties": [
+                {
+                    "name": "BlackDuck-Component",
+                    "value": "a19275fc-7612-4333-98f1-5756e3bfa7be"
+                },
+                {
+                    "name": "BlackDuck-ComponentVersion",
+                    "value": "bc729504-6d40-4668-82dc-f38ee0d249f9"
+                }
+            ]
+        }
+    ],
+    "dependencies": [
+        {
+            "ref": "c7f74e38-dbf6-4e3c-8d4c-85b85f543855",
+            "dependsOn": [
+                "c7f74e38-dbf6-4e3c-8d4c-85b85f543855---bc729504-6d40-4668-82dc-f38ee0d249f9"
+            ]
+        }
+    ]
+}

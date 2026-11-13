@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:stm32="https://stm32cube.st.com/schemas/stm32cube/1.0.0" schemaVersion="1.7.56" xs:noNamespaceSchemaLocation="PACK.xsd" xs:schemaLocation="https://stm32cube.st.com/schemas/stm32cube/1.0.0 stm32cube.xsd" Dvendor="STMicroelectronics:13" Dname="STM32*">
+  <vendor>STMicroelectronics</vendor>
+  <name>hsp_engine</name>
+  <environments>
+    <environment name="STM32Cube">
+      <stm32:pack type="MW" friendlyName="hsp_engine" shortDesc="HSP Engine Middleware">
+        <relocation-info parent="middleware" layer="" element=""/>
+        <compatibility>
+          <release version="2.0.0">
+            <applicable-api-group apiType="codegen-getters">
+              <applicable-api apiType="SWConfigurationAPI" apiVersion="1.0.0"/>
+            </applicable-api-group>
+          </release>
+        </compatibility>
+      </stm32:pack>
+    </environment>
+  </environments>
+  <ECCN>
+    <ECCN-EU>NEC</ECCN-EU>
+    <ECCN-US>EAR99</ECCN-US>
+  </ECCN>
+  <description>STMicroelectronics HSP Engine pack</description>
+  <repository type="git">https://github.com/STMicroelectronics/stm32-mw-hsp-engine/tree/hal2</repository>
+  <url>https://developer.st.com/st-pack-server/api/v1/pack/</url>
+  <license>LICENSE.md</license>
+  <releases>
+    <release date="2026-06-29" version="2.0.0">
+      ## Main Changes
+        Official release
+      ## Known Limitations
+        - Timestamp Capture with DMA triggered by TRGO not functional.
+        - Plugins is not supported.
+        - Not MISRA-C2012 compliant.
+    </release>
+  </releases>
+  <changelogs>
+    <changelog id="Readme" name="README.md"/>
+    <changelog id="Release Notes" name="Release_Notes.html"/>
+  </changelogs>
+  <keywords>
+    <keyword>ST</keyword>
+    <keyword>STMicroelectronics</keyword>
+    <keyword>STM32</keyword>
+    <keyword>Math</keyword>
+    <keyword>DSP</keyword>
+    <keyword>Middleware</keyword>
+    <keyword>HSP</keyword>
+    <keyword>HSP Engine</keyword>
+  </keywords>
+  <taxonomy>
+    <description Cclass="Utility">HSP</description>
+  </taxonomy>
+  <conditions>
+    <!-- HSP Firmware conditions -->
+    <condition id="HSP FW ROM v2.1.4">
+      <description>HSP embedded FW ROM v2.1.4</description>
+      <accept Dvendor="STMicroelectronics:13" Dname="STM32G5[CDRS]*"/>
+    </condition>
+    <condition id="HSP FW ROM v1.1.10">
+      <description>HSP embedded FW ROM v1.1.10</description>
+      <accept Dvendor="STMicroelectronics:13" Dname="STM32H7P*"/>
+    </condition>
+    <condition id="ROM v1.1.10 AND RAM v1.7">
+      <description>HSP FW ROM version 1.1.10 AND RAM version 1.7</description>
+      <require condition="HSP FW ROM v1.1.10"/>
+      <!-- Condition in gpdsc to take user choice RAM version into account -->
+    </condition>
+    <condition id="ROM v2.1.4 AND RAM v1.0">
+      <description>HSP FW ROM version 2.1.4 AND RAM version 1.0</description>
+      <require condition="HSP FW ROM v2.1.4"/>
+      <!-- Condition in gpdsc to take user choice RAM version into account -->
+    </condition>
+    <!-- HSP Engine Interfaces conditions -->
+    <condition id="HSP Engine HAL Interfaces">
+      <description>HSP Engine Interfaces build with HSP HAL Driver</description>
+      <require Cclass="Device" Cgroup="STM32 HAL" Csub="HSP"/>
+    </condition>
+    <!-- HSP Functional Mode conditions -->
+    <condition id="HSP Sequencer mode">
+    </condition>
+    <!-- HSP Modules conditions for Accelerator mode -->
+    <condition id="HSP Engine Modules DSP">
+      <accept Dvendor="STMicroelectronics:13" Dname="STM32*"/>
+    </condition>
+    <condition id="HSP Engine Modules CNN">
+    </condition>
+    <condition id="HSP Engine Modules CNN DMA">
+      <accept condition="HSP FW ROM v2.1.4"/>
+    </condition>
+    <!-- HSP Modules conditions for Sequencer mode -->
+    <condition id="HSP Engine Modules Proclist Digital Control">
+      <require condition="HSP Sequencer mode"/>
+      <accept condition="HSP FW ROM v2.1.4"/>
+    </condition>
+    <!-- Compiler conditions -->
+    <condition id="GNU ASM">
+      <accept condition="GCC"/>
+      <accept condition="ARMCLANG"/>
+    </condition>
+    <condition id="ARMASM">
+      <accept Tcompiler="ARMCC" Toptions="AC5"/>
+    </condition>
+    <condition id="ARMCLANG">
+      <accept Tcompiler="ARMCC" Toptions="AC6"/>
+    </condition>
+    <condition id="GCC">
+      <accept Tcompiler="GCC"/>
+    </condition>
+    <condition id="IAR">
+      <accept Tcompiler="IAR"/>
+    </condition>
+    <!-- CubeMX2 code generation condition -->
+    <condition id="MX HSP Engine needed components">
+      <description>Mandatory files to include in code generation of HSP Engine Middleware</description>
+      <require Cclass="Utility" Cgroup="HSP Engine" Csub="Core"/>
+      <require Cclass="Utility" Cgroup="HSP Engine" Csub="Interfaces"/>
+      <require Cclass="Utility" Cgroup="HSP Engine" Csub="Firmware"/>
+      <!-- <require Cclass="Utility" Cgroup="HSP Engine" Csub="DSP"/> -->
+      <!-- <require Cclass="Utility" Cgroup="HSP Engine" Csub="CNN"/> -->
+      <!-- <require Cclass="Utility" Cgroup="HSP Engine" Csub="Processing List"/> -->
+    </condition>
+  </conditions>
+  <generators>
+    <!-- This generator is launched if any component referencing this generator by 'id' is selected and the specified <gpdsc> file does not exist -->
+    <generator id="mw_hsp_engine_mx2codegen">
+      <description>ST Microelectronics: STM32 Cube Code Generator for HSP Engine Pack</description>
+      <exe>
+        <command host="win">.config/gen_code.bat</command>
+        <command host="linux">.config/gen_code.sh</command>
+        <command host="mac">.config/gen_code.sh</command>
+        <!-- #name of the gpdsc template contained in this PACK and aligned with GPDSC name-->
+        <argument>STMicroelectronics.hsp_engine.gpdsc.hbs</argument>
+        <!-- passing the generator name-->
+        <argument>mw_hsp_engine_mx2codegen</argument>
+        <argument>$G</argument>
+        <!-- Flag to indicate that this Generator is dry-run capable -->
+        <argument mode="dry-run">--dry-run</argument>
+      </exe>
+      <!-- workingDir></workingDir -->
+      <!-- path is specified either absolute or relative to PDSC or GPDSC file. If not specified it is the project directory configured by the environment -->
+      <gpdsc name="$P/STMicroelectronics.hsp_engine.gpdsc"/>
+    </generator>
+  </generators>
+  <components>
+    <!-- STM32 HSP Engine Common Core -->
+    <component Cclass="Utility" Cgroup="HSP Engine" Csub="Core" Cversion="2.0.0">
+      <description>HSP Engine Common Core</description>
+      <files>
+        <!-- HSP Document files -->
+        <file category="doc" name="README.md"/>
+        <file category="doc" name="Release_Notes.md"/>
+        <file category="doc" name="Release_Notes.html"/>
+        <file category="doc" name="SW_Security_Level.md"/>
+        <!-- HSP Core files -->
+        <file category="source" name="common/core/hsp_core.c"/>
+        <file category="source" name="common/core/hsp_bram.c"/>
+        <file category="include" name="common/core/"/>
+        <file category="include" name="common/core/legacy/"/>
+        <!-- HSP Utilities files -->
+        <file category="source" name="common/utilities/hsp_memcpy.c"/>
+        <file category="include" name="common/utilities/"/>
+        <file category="source" name="common/utilities/portable/Keil/st_hsp_memcpy32.s" condition="ARMASM"/>
+        <file category="source" name="common/utilities/portable/GCC/st_hsp_memcpy32.S" condition="GNU ASM"/>
+        <file category="source" name="common/utilities/portable/IAR/st_hsp_memcpy32.s" condition="IAR"/>
+        <!-- HSP ACC Modules -->
+        <file category="source" name="common/modules/direct_lib/hsp_direct_command.c"/>
+        <file category="include" name="common/modules/direct_lib/"/>
+        <file category="include" name="common/modules/"/>
+      </files>
+    </component>
+    <component Cclass="Utility" Cgroup="HSP Engine" Csub="Firmware" Cversion="2.0.0">
+      <description>HSP Engine Common Modules Firmware</description>
+      <files>
+        <file category="source" name="common/modules/firmware/crom_1_1_10/cram_1_7/hsp_fw_ram.c" condition="ROM v1.1.10 AND RAM v1.7"/>
+        <file category="include" name="common/modules/firmware/crom_1_1_10/cram_1_7/" condition="ROM v1.1.10 AND RAM v1.7"/>
+        <file category="source" name="common/modules/firmware/crom_2_1_4/cram_1_0/hsp_fw_ram.c" condition="ROM v2.1.4 AND RAM v1.0"/>
+        <file category="include" name="common/modules/firmware/crom_2_1_4/cram_1_0/" condition="ROM v2.1.4 AND RAM v1.0"/>
+        <file category="include" name="common/modules/firmware/"/>
+      </files>
+    </component>
+    <component Cclass="Utility" Cgroup="HSP Engine" Csub="Interfaces" condition="HSP Engine HAL Interfaces" Cversion="2.0.0">
+      <description>HSP Engine Interfaces build on HSP HAL Driver</description>
+      <files>
+        <file category="source" name="interfaces/hsp_bram_if.c"/>
+        <file category="source" name="interfaces/hsp_hw_if.c"/>
+        <file category="include" name="interfaces/"/>
+        <!-- Interfaces/Services -->
+        <file category="source" name="interfaces/services/hsp_services.c" condition="HSP Sequencer mode"/>
+        <file category="include" name="interfaces/services/" condition="HSP Sequencer mode"/>
+      </files>
+    </component>
+    <component Cclass="Utility" Cgroup="HSP Engine" Csub="DSP" condition="HSP Engine Modules DSP" Cversion="2.0.0">
+      <description>HSP Engine Common Modules DSP</description>
+      <files>
+        <file category="source" name="common/modules/dsp_lib/hsp_dsp.c"/>
+        <file category="include" name="common/modules/dsp_lib/"/>
+      </files>
+    </component>
+    <component Cclass="Utility" Cgroup="HSP Engine" Csub="CNN" condition="HSP Engine Modules CNN" Cversion="2.0.0">
+      <description>HSP Engine Common Modules CNN</description>
+      <files>
+        <file category="source" name="common/modules/cnn_lib/hsp_cnn.c"/>
+        <file category="source" name="common/modules/cnn_lib/hsp_cnn_dma.c" condition="HSP Engine Modules CNN DMA"/>
+        <file category="include" name="common/modules/cnn_lib/"/>
+      </files>
+    </component>
+    <!-- STM32 HSP Engine Modules Proclist -->
+    <component Cclass="Utility" Cgroup="HSP Engine" Csub="Processing List" condition="HSP Sequencer mode" Cversion="2.0.0">
+      <description>HSP Engine Common Modules Proclist</description>
+      <files>
+        <!-- Processing List -->
+        <file category="source" name="common/proclist/hsp_proclist.c"/>
+        <file category="include" name="common/proclist/"/>
+        <file category="source" name="common/modules/proclist_lib/hsp_proclist_complex.c"/>
+        <file category="source" name="common/modules/proclist_lib/hsp_proclist_conditional.c"/>
+        <file category="source" name="common/modules/proclist_lib/hsp_proclist_filter.c"/>
+        <file category="source" name="common/modules/proclist_lib/hsp_proclist_matrix.c"/>
+        <file category="source" name="common/modules/proclist_lib/hsp_proclist_scalar.c"/>
+        <file category="source" name="common/modules/proclist_lib/hsp_proclist_transform.c"/>
+        <file category="source" name="common/modules/proclist_lib/hsp_proclist_vector.c"/>
+        <file category="source" name="common/modules/proclist_lib/hsp_proclist_digital_control.c" condition="HSP Engine Modules Proclist Digital Control"/>
+        <file category="include" name="common/modules/proclist_lib/"/>
+        <file category="include" name="common/modules/"/>
+        <!-- Monitoring -->
+        <file category="source" name="common/monitoring/hsp_monitoring.c"/>
+        <file category="include" name="common/monitoring/"/>
+      </files>
+    </component>
+    <!-- STM32 HSP Engine MX2CodeGen -->
+    <component generator="mw_hsp_engine_mx2codegen" Cclass="Utility" Cgroup="STM32CubeMX2 Config" Csub="HSP Engine" Cversion="2.0.0" condition="MX HSP Engine needed components">
+      <description>Temporary component that will store all the resulting generated code and initialize code generation for HSP Engine MW</description>
+      <environments>
+        <environment name="STM32Cube">
+          <stm32:component>
+            <middleware-entry-point id="HSP Engine" name="HSP Engine" category="HSP Engine"/>
+          </stm32:component>
+        </environment>
+      </environments>
+      <files>
+        <file category="genAsset" name=".config/gen_code.bat"/>
+        <file category="genAsset" name=".config/gen_code.sh"/>
+        <file category="genAsset" name=".config/STMicroelectronics.hsp_engine.gpdsc.hbs"/>
+        <file category="genAsset" name=".config/hsp_engine_config_parameters.json"/>
+        <file category="genAsset" name=".config/template/hsp_engine_helpers.js"/>
+        <file category="genAsset" name=".config/template/partials/LICENSE_partial.hbs"/>
+        <file category="genAsset" name=".config/template/license/mx_hsp_engine_license_template.md.hbs"/>
+        <!-- hsp_conf -->
+        <file category="genAsset" name=".config/template/hsp_conf_template.h.hbs"/>
+        <file category="genAsset" name=".config/template/hsp_engine_rsrc_map_template.h.hbs"/>
+        <!-- mx_hsp_engine_app_template -->
+        <file category="genAsset" name=".config/template/mx_hsp_engine_app_template.c.hbs"/>
+        <file category="genAsset" name=".config/template/mx_hsp_engine_app_template.h.hbs"/>
+        <!-- Templates ready to use -->
+        <file category="genAsset" name="templates/hsp_engine_rsrc_map.h"/>
+        <file category="genAsset" name="templates/interfaces/hsp_bram_if.c"/>
+        <file category="genAsset" name="templates/interfaces/hsp_bram_if.h"/>
+        <file category="genAsset" name="templates/interfaces/hsp_hw_if.c"/>
+        <file category="genAsset" name="templates/interfaces/hsp_hw_if.h"/>
+        <file category="genAsset" name="templates/mx_hsp_engine_app.c"/>
+        <file category="genAsset" name="templates/mx_hsp_engine_app.h"/>
+        <file category="genAsset" name="templates/app/mx_app_hsp_engine_bram_alloc.c"/>
+        <file category="genAsset" name="templates/app/mx_app_hsp_engine_bram_alloc.h"/>
+        <file category="genAsset" name="templates/app/mx_app_hsp_engine_seq.c"/>
+        <file category="genAsset" name="templates/app/mx_app_hsp_engine_seq.h"/>
+        <file category="genAsset" name="templates/app/mx_app_hsp_engine_process.c"/>
+        <file category="genAsset" name="templates/app/mx_app_hsp_engine_process.h"/>
+      </files>
+    </component>
+  </components>
+</package>

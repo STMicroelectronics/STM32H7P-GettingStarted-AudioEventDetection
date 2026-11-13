@@ -1,0 +1,76 @@
+{{!
+/**
+  ******************************************************************************
+  * @file    mx_hsp_engine_app.c.hbs
+  * @brief   HSP Engine applicative file
+  ******************************************************************************
+   * @attention
+  *
+  * Copyright (c) 2025 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+~}}
+/**
+  ******************************************************************************
+  * @file           : mx_hsp_engine_app.c
+  * @brief          : HSP Engine applicative file.
+{{> LICENSE}}
+/* Includes ------------------------------------------------------------------*/
+#include "mx_hsp_engine_app.h"
+
+{{assign "hsp_engine_Filter" (JSONparse '{"cgroup": "STM32CubeMX2 Config", "csub": "HSP Engine"}')~}}
+{{assign 'hsp_eng_context' (@root.SWConfigurationAPI.getInstancesConfiguration @root.hsp_engine_Filter)~}}
+{{assign 'hsp_eng_cxt' @root.hsp_eng_context.[0].settings.parameters~}}
+{{#with @root.hsp_eng_cxt.interface.resources_allocation.select_the_hsp_instance}}
+/* Private typedef -----------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+/* Private macro -------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+static hsp_engine_context_t g_hsp_engine_ctx_{{lowercase selection}};
+
+/* Private function prototypes -----------------------------------------------*/
+/**
+  * @brief  Application HSP Engine Initialization for instance {{uppercase selection}}.
+  * @retval int
+  */
+
+uint32_t mx_hsp_engine_init_{{lowercase selection}}(void)
+{
+  uint32_t status = 0U;
+  hsp_engine_hw_context_t hsp_engine_hw_ctx;
+
+  hsp_engine_hw_ctx.hhsp_driver = mx_{{lowercase selection}}_gethandle();
+
+  if (HSP_CORE_Init(&g_hsp_engine_ctx_{{lowercase selection}}, &hsp_engine_hw_ctx) != HSP_CORE_OK)
+  {
+    return 1;
+  }
+
+  /* HSP Engine Configuration */
+
+   return status;
+}
+
+/**
+  * @brief  Application HSP Engine Deinitialization for instance {{uppercase selection}}.
+  */
+void mx_hsp_engine_deinit_{{lowercase selection}}(void)
+{
+  HSP_CORE_DeInit(&g_hsp_engine_ctx_{{lowercase selection}});
+}
+
+/** 
+  * @brief  Get the HSP Engine context for instance {{uppercase selection}}.
+  * @return Pointer to a @ref hsp_engine_context_t structure.
+  */
+hsp_engine_context_t *mx_hsp_engine_get_context_{{lowercase selection}}(void)
+{
+  return &g_hsp_engine_ctx_{{lowercase selection}};
+}
+{{/with}}

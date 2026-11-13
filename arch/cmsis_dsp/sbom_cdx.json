@@ -1,0 +1,88 @@
+{
+    "bomFormat": "CycloneDX",
+    "specVersion": "1.5",
+    "serialNumber": "urn:uuid:1970929a-c6b5-4f99-8f03-57e17fd9a806",
+    "version": 1,
+    "metadata": {
+        "timestamp": "2026-07-30T14:00:48Z",
+        "tools": [
+            {
+                "vendor": "Black Duck",
+                "name": "Hub",
+                "version": "2026.4.2"
+            },
+            {
+                "vendor": "CycloneDX",
+                "name": "cyclonedx-core-java",
+                "version": "5.0.5"
+            }
+        ],
+        "authors": [
+            {
+                "name": "STMicroelectronics NV"
+            }
+        ],
+        "component": {
+            "type": "application",
+            "bom-ref": "3d31ea6e-df06-42d5-ad5c-521548302d1a",
+            "name": "CMSIS_DSP",
+            "version": "1.17.1",
+            "licenses": [
+                {
+                    "license": {
+                        "id": "Apache-2.0"
+                    }
+                }
+            ],
+            "pedigree": {
+                "notes": "Apache License 2.0"
+            },
+            "properties": [
+                {
+                    "name": "BlackDuck-Component",
+                    "value": "08a95951-3cb0-4aeb-a08a-e90291fa646c"
+                },
+                {
+                    "name": "BlackDuck-ComponentVersion",
+                    "value": "3d31ea6e-df06-42d5-ad5c-521548302d1a"
+                }
+            ]
+        }
+    },
+    "components": [
+        {
+            "type": "library",
+            "bom-ref": "3d31ea6e-df06-42d5-ad5c-521548302d1a---7fcb1e7f-1eb7-4ae5-9ba3-c15eb13ec7e2",
+            "name": "ARM-software/CMSIS-DSP",
+            "version": "v1.17.1",
+            "licenses": [
+                {
+                    "license": {
+                        "id": "Apache-2.0"
+                    }
+                }
+            ],
+            "pedigree": {
+                "notes": "Apache License 2.0"
+            },
+            "properties": [
+                {
+                    "name": "BlackDuck-Component",
+                    "value": "9417918c-2ac0-474a-922b-77621e3c53b0"
+                },
+                {
+                    "name": "BlackDuck-ComponentVersion",
+                    "value": "7fcb1e7f-1eb7-4ae5-9ba3-c15eb13ec7e2"
+                }
+            ]
+        }
+    ],
+    "dependencies": [
+        {
+            "ref": "3d31ea6e-df06-42d5-ad5c-521548302d1a",
+            "dependsOn": [
+                "3d31ea6e-df06-42d5-ad5c-521548302d1a---7fcb1e7f-1eb7-4ae5-9ba3-c15eb13ec7e2"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,1299 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "version": "0.0.1",
+  "componentid": "::HSP:STM32CubeMX2 Config:HSP Engine",
+  "type": "object",
+  "grammarVersion": "3.8.0",
+  "functions": [
+    {
+      "path": ".config/template/hsp_engine_helpers.js",
+      "accessor": "common"
+    }
+  ],
+  "properties": {
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "title": "Profile",
+          "type": "object",
+          "properties": {
+            "profile_type": {
+              "title": "Profile selection",
+              "type": "string",
+              "readOnly": true,
+              "oneOf": [
+                {
+                  "title": "Default",
+                  "const": "DEFAULT"
+                },
+                {
+                  "title": "Sequencer",
+                  "const": "SEQUENCER",
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "false"
+                    }
+                  ]
+                }
+              ],
+              "default": "DEFAULT",
+              "variables": [
+                {
+                  "on": "update-value",
+                  "name": "USE_HSP_MW",
+                  "semaphore": true
+                }
+              ]
+            }
+          }
+        },
+        "core": {
+          "type": "object",
+          "title": "Core",
+          "properties": {
+            "basic": {
+              "type": "object",
+              "title": "Main features",
+              "properties": {
+                "perf_monitor": {
+                  "type": "boolean",
+                  "title": "Performance monitor",
+                  "description": "Enable performance monitor in the generated project.",
+                  "default": false,
+                  "actions": [
+                    {
+                      "type": "disable",
+                      "condition": "$profile.profile_type == 'DEFAULT'"
+                    },
+                    {
+                      "type": "set",
+                      "condition": "$profile.profile_type == 'DEFAULT'",
+                      "computed": {
+                        "const": false
+                      }
+                    },
+                    {
+                      "type": "include",
+                      "condition": "false"
+                    }
+                  ]
+                },
+                "plugins": {
+                  "title": "Plugin inclusion",
+                  "type": "array",
+                  "rendering": "horizontal-list",
+                  "source": "$common.helper_hsp_get_plugins_list($get('peripheral.hardwareIpDescription', 'HSP1').features.crom_version, $get('peripheral.hardwareIpDescription', 'HSP1').features.cram_version)",
+                  "itemId": "id",
+                  "itemVar": "plugin_item",
+                  "itemTitle": "name",
+                  "allowRanking": false,
+                  "actions": [
+                    {
+                      "type": "include",
+                      "condition": "false"
+                    }
+                  ],
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "plugin_name": {
+                        "type": "string",
+                        "default": "",
+                        "title": "Plugin",
+                        "actions": [
+                          {
+                            "type": "disable",
+                            "condition": "true",
+                            "message": "This field is read-only and cannot be edited here."
+                          },
+                          {
+                            "type": "set",
+                            "condition": "true",
+                            "computed": {
+                              "const": "$plugin_item.name"
+                            }
+                          }
+                        ]
+                      },
+                      "plugin_size": {
+                        "type": "string",
+                        "default": "",
+                        "title": "Size",
+                        "actions": [
+                          {
+                            "type": "disable",
+                            "condition": "true",
+                            "message": "This field is read-only and cannot be edited here."
+                          },
+                          {
+                            "type": "set",
+                            "condition": "true",
+                            "computed": {
+                              "const": "$plugin_item.features.size"
+                            }
+                          }
+                        ]
+                      },
+                      "plugin_activation": {
+                        "type": "boolean",
+                        "default": false,
+                        "title": "Included"
+                      }
+                    }
+                  }
+                },
+                "modules": {
+                  "type": "object",
+                  "title": "Modules",
+                  "properties": {
+                    "direct_lib": {
+                      "title": "Direct Library",
+                      "description": "Include direct library in the generated project.",
+                      "type": "boolean",
+                      "default": true,
+                      "readOnly": true
+                    },
+                    "dsp_lib": {
+                      "title": "DSP Library",
+                      "description": "Include DSP library in the generated project.",
+                      "type": "boolean",
+                      "default": false,
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "name": "HSP_ENGINE_USE_DSP_LIB",
+                          "condition": "$value === true",
+                          "semaphore": true
+                        }
+                      ]
+                    },
+                    "cnn_lib": {
+                      "title": "CNN Library",
+                      "description": "Include convolutional neural network library in the generated project.",
+                      "type": "boolean",
+                      "default": false,
+                      "variables": [
+                        {
+                          "on": "update-value",
+                          "name": "HSP_ENGINE_USE_CNN_LIB",
+                          "condition": "$value === true",
+                          "semaphore": true
+                        }
+                      ]
+                    }
+                  }
+                },
+                "bram_size": {
+                  "title": "BRAM CNN region size",
+                  "description": "Define the BRAM size in word reserved for CNN processing.",
+                  "type": "integer",
+                  "default": 0,
+                  "actions": [
+                    {
+                      "type": "disable",
+                      "condition": "$core.basic.modules.cnn_lib == false"
+                    },
+                    {
+                      "type": "set",
+                      "condition": "$core.basic.modules.cnn_lib == false",
+                      "computed": {
+                        "const": "0"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "interface": {
+          "title": "Interfaces",
+          "type": "object",
+          "properties": {
+            "resources_allocation": {
+              "title": "HW resources allocation",
+              "type": "object",
+              "properties": {
+                "select_the_hsp_instance": {
+                  "title": "Select the HSP instance",
+                  "type": "object",
+                  "objectType": "bind.peripheral.config",
+                  "description": "Get the configured HSP instance.",
+                  "criteria": {
+                    "peripheralType": [
+                      "hsp"
+                    ]
+                  },
+                  "actions": [
+                    {
+                      "type": "error",
+                      "condition": "$common.helper_hsp_engine_is_hsp_instance($interface.resources_allocation.select_the_hsp_instance) == false",
+                      "message": "Please select a HSP instance. If there is no HSP instance available, please check that the HSP peripheral has been added to the project."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "applicative": {
+          "type": "object",
+          "title": "Applicative",
+          "actions": [
+            {
+              "type": "include",
+              "condition": "$profile.profile_type == 'SEQUENCER'"
+            }
+          ],
+          "variables": [
+            {
+              "on": "include",
+              "name": "HSP_ENGINE_USE_SEQUENCER",
+              "semaphore": true
+            }
+          ],
+          "properties": {
+            "list": {
+              "title": "Processing list",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "default": 0,
+                    "minimum": 0,
+                    "maximum": 36
+                  },
+                  "use_event":{
+                    "title": "Use event",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "event_object": {
+                    "title": "Event configuration",
+                    "type": "object",
+                    "actions": [
+                      {
+                        "type": "include",
+                        "condition": "$item.use_event == true"
+                      }
+                    ],
+                    "properties": {
+                      "event_type": {
+                        "title": "Event type",
+                        "type": "string",
+                        "oneOf": [
+                          {
+                            "title": "RX/TX buffer",
+                            "const": "buffer"
+                          },
+                          {
+                            "title": "Trigger input",
+                            "const": "trgin"
+                          },
+                          {
+                            "title": "HSEG",
+                            "const": "hseg"
+                          },
+                          {
+                            "title": "CSEG",
+                            "const": "cseg"
+                          }
+                        ],
+                        "default": "buffer"
+                      },
+                      "buffer_event": {
+                        "title": "Buffer event configuration",
+                        "type": "object",
+                        "properties": {
+                          "direction": {
+                            "title": "Direction",
+                            "type": "string",
+                            "oneOf": [
+                              {
+                                "title": "RX",
+                                "const": "rx"
+                              },
+                              {
+                                "title": "TX",
+                                "const": "tx"
+                              }
+                            ],
+                            "default": "rx"
+                          },
+                          "synchro": {
+                            "title": "Synchronization",
+                            "type": "boolean",
+                            "default": false
+                          }
+                        },
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$item.event_object.event_type == 'buffer'"
+                          }
+                        ]
+                      },
+                      "trgin_event": {
+                        "title": "Trigger input event configuration",
+                        "type": "object",
+                        "properties": {
+                          "polarity": {
+                            "title": "Trigger input polarity",
+                            "type": "string",
+                            "oneOf": [
+                              {
+                                "title": "Active high",
+                                "const": "high"
+                              },
+                              {
+                                "title": "Active low",
+                                "const": "low"
+                              }
+                            ],
+                            "default": "high"
+                          },
+                          "trgin_source": {
+                            "title": "Trigger sources",
+                            "type": "string",
+                            "oneOf": [
+                              {
+                                "title": "Source1",
+                                "const": "src1"
+                              },
+                              {
+                                "title": "Source2",
+                                "const": "src2"
+                              }
+                            ],
+                            "default": "src1"
+                          }
+                        },
+                        "actions": [
+                          {
+                            "type": "include",
+                            "condition": "$item.event_type == 'trgin'"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "array_function": {
+                    "title": "Function",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "category": {
+                          "title": "Category",
+                          "type": "string",
+                          "default": "category_1",
+                          "oneOf": [
+                            {
+                              "title": "Filtering family functions",
+                              "const": "category_1"
+                            },
+                            {
+                              "title": "Complex family functions",
+                              "const": "category_2"
+                            },
+                            {
+                              "title": "Matrix family functions",
+                              "const": "category_3"
+                            },
+                            {
+                              "title": "Scalar trigonometric functions",
+                              "const": "category_4"
+                            },
+                            {
+                              "title": "Scalar floating arithmetic functions",
+                              "const": "category_5"
+                            },
+                            {
+                              "title": "Scalar exponential and logarithmic functions",
+                              "const": "category_6"
+                            },
+                            {
+                              "title": "Scalar family support functions",
+                              "const": "category_7"
+                            },
+                            {
+                              "title": "Scalar family miscellaneous functions",
+                              "const": "category_8"
+                            },
+                            {
+                              "title": "Transform family functions",
+                              "const": "category_9"
+                            },
+                            {
+                              "title": "Vector arithmetic functions",
+                              "const": "category_10"
+                            },
+                            {
+                              "title": "Vector exponential and logarithmic functions",
+                              "const": "category_11"
+                            },
+                            {
+                              "title": "Vector trigonometric functions",
+                              "const": "category_12"
+                            },
+                            {
+                              "title": "Vector support functions",
+                              "const": "category_13"
+                            },
+                            {
+                              "title": "Conditional expression family functions",
+                              "const": "category_14"
+                            },
+                            {
+                              "title": "Loop expression family functions",
+                              "const": "category_15"
+                            }
+                          ]
+                        },
+                        "function_category_1": {
+                          "title": "Function",
+                          "type": "string",
+                          "default": "HSP_SEQ_Fir_f32",
+                          "oneOf": [
+                            {
+                              "title": "HSP_SEQ_Fir_f32",
+                              "const": "HSP_SEQ_Fir_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_FirDecimate_f32",
+                              "const": "HSP_SEQ_FirDecimate_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_BiquadCascadeDf1_f32",
+                              "const": "HSP_SEQ_BiquadCascadeDf1_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_BiquadCascadeDf2T_f32",
+                              "const": "HSP_SEQ_BiquadCascadeDf2T_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_Conv_f32",
+                              "const": "HSP_SEQ_Conv_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_Correlate_f32",
+                              "const": "HSP_SEQ_Correlate_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_FltBank_f32",
+                              "const": "HSP_SEQ_FltBank_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_Lms_f32",
+                              "const": "HSP_SEQ_Lms_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_IirLattice_f32",
+                              "const": "HSP_SEQ_IirLattice_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_IirDf1_f32",
+                              "const": "HSP_SEQ_IirDf1_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_Iir3p3z_f32",
+                              "const": "HSP_SEQ_Iir3p3z_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_Iir2p2z_f32",
+                              "const": "HSP_SEQ_Iir2p2z_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_WinSym_f32",
+                              "const": "HSP_SEQ_WinSym_f32"
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$item.category == 'category_1'"
+                            }
+                          ]
+                        },
+                        "function_category_2": {
+                          "title": "Function",
+                          "type": "string",
+                          "default": "HSP_SEQ_CmplxConj_f32",
+                          "oneOf": [
+                            {
+                              "title": "HSP_SEQ_CmplxConj_f32",
+                              "const": "HSP_SEQ_CmplxConj_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_CmplxDotProd_f32",
+                              "const": "HSP_SEQ_CmplxDotProd_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_CmplxMag_f32",
+                              "const": "HSP_SEQ_CmplxMag_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_CmplxFastMag_f32",
+                              "const": "HSP_SEQ_CmplxFastMag_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_CmplxMagSquared_f32",
+                              "const": "HSP_SEQ_CmplxMagSquared_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_CmplxMul_f32",
+                              "const": "HSP_SEQ_CmplxMul_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_CmplxRMul_f32",
+                              "const": "HSP_SEQ_CmplxRMul_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_CmplxMulExp_f32",
+                              "const": "HSP_SEQ_CmplxMulExp_f32"
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$item.category == 'category_2'"
+                            }
+                          ]
+                        },
+                        "function_category_3": {
+                          "title": "Function",
+                          "type": "string",
+                          "default": "HSP_SEQ_MatrixAbs_f32",
+                          "oneOf": [
+                            {
+                              "title": "HSP_SEQ_MatrixAbs_f32",
+                              "const": "HSP_SEQ_MatrixAbs_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_MatrixAdd_f32",
+                              "const": "HSP_SEQ_MatrixAdd_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_MatrixMult_f32",
+                              "const": "HSP_SEQ_MatrixMult_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_MatrixOffset_f32",
+                              "const": "HSP_SEQ_MatrixOffset_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_MatrixScale_f32",
+                              "const": "HSP_SEQ_MatrixScale_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_MatrixSub_f32",
+                              "const": "HSP_SEQ_MatrixSub_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_MatrixTrans_f32",
+                              "const": "HSP_SEQ_MatrixTrans_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_MatrixInv_f32",
+                              "const": "HSP_SEQ_MatrixInv_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_Vector2MatCol_f32",
+                              "const": "HSP_SEQ_Vector2MatCol_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_MatCol2Vector_f32",
+                              "const": "HSP_SEQ_MatCol2Vector_f32"
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$item.category == 'category_3'"
+                            }
+                          ]
+                        },
+                        "function_category_4": {
+                          "title": "Function",
+                          "type": "string",
+                          "default": "HSP_SEQ_ScaSin_f32",
+                          "oneOf": [
+                            {
+                              "title": "HSP_SEQ_ScaSin_f32",
+                              "const": "HSP_SEQ_ScaSin_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaCos_f32",
+                              "const": "HSP_SEQ_ScaCos_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaSinCos_f32",
+                              "const": "HSP_SEQ_ScaSinCos_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaAtan2_f32",
+                              "const": "HSP_SEQ_ScaAtan2_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaFSin_f32",
+                              "const": "HSP_SEQ_ScaFSin_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaFCos_f32",
+                              "const": "HSP_SEQ_ScaFCos_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaFAtan2_f32",
+                              "const": "HSP_SEQ_ScaFAtan2_f32"
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$item.category == 'category_4'"
+                            }
+                          ]
+                        },
+                        "function_category_5": {
+                          "title": "Function",
+                          "type": "string",
+                          "default": "HSP_SEQ_ScaIAdd_f32",
+                          "oneOf": [
+                            {
+                              "title": "HSP_SEQ_ScaIAdd_f32",
+                              "const": "HSP_SEQ_ScaIAdd_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaISub_f32",
+                              "const": "HSP_SEQ_ScaISub_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaIMul_f32",
+                              "const": "HSP_SEQ_ScaIMul_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaMac_f32",
+                              "const": "HSP_SEQ_ScaMac_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaSub_f32",
+                              "const": "HSP_SEQ_ScaSub_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaSqrt_f32",
+                              "const": "HSP_SEQ_ScaSqrt_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaMul_f32",
+                              "const": "HSP_SEQ_ScaMul_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaDiv_f32",
+                              "const": "HSP_SEQ_ScaDiv_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaAdd_f32",
+                              "const": "HSP_SEQ_ScaAdd_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaAbs_f32",
+                              "const": "HSP_SEQ_ScaAbs_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaSat_f32",
+                              "const": "HSP_SEQ_ScaSat_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaNeg_f32",
+                              "const": "HSP_SEQ_ScaNeg_f32"
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$item.category == 'category_5'"
+                            }
+                          ]
+                        },
+                        "function_category_6": {
+                          "title": "Function",
+                          "type": "string",
+                          "default": "HSP_SEQ_ScaExp10_f32",
+                          "oneOf": [
+                            {
+                              "title": "HSP_SEQ_ScaExp10_f32",
+                              "const": "HSP_SEQ_ScaExp10_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaExp_f32",
+                              "const": "HSP_SEQ_ScaExp_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaLog10_f32",
+                              "const": "HSP_SEQ_ScaLog10_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaLn_f32",
+                              "const": "HSP_SEQ_ScaLn_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaFastExp2_f32",
+                              "const": "HSP_SEQ_ScaFastExp2_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaFastExp10_f32",
+                              "const": "HSP_SEQ_ScaFastExp10_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaFastExpe_f32",
+                              "const": "HSP_SEQ_ScaFastExpe_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaFastExpdB_f32",
+                              "const": "HSP_SEQ_ScaFastExpdB_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaFastLog2_f32",
+                              "const": "HSP_SEQ_ScaFastLog2_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaFastLog10_f32",
+                              "const": "HSP_SEQ_ScaFastLog10_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaFastLogdB_f32",
+                              "const": "HSP_SEQ_ScaFastLogdB_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaFastLn_f32",
+                              "const": "HSP_SEQ_ScaFastLn_f32"
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$item.category == 'category_6'"
+                            }
+                          ]
+                        },
+                        "function_category_7": {
+                          "title": "Function",
+                          "type": "string",
+                          "default": "HSP_SEQ_ScaQ312F",
+                          "oneOf": [
+                            {
+                              "title": "HSP_SEQ_ScaQ312F",
+                              "const": "HSP_SEQ_ScaQ312F"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaF2Q31",
+                              "const": "HSP_SEQ_ScaF2Q31"
+                            },
+                            {
+                              "title": "HSP_SEQ_Sca24S2F",
+                              "const": "HSP_SEQ_Sca24S2F"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaU2F",
+                              "const": "HSP_SEQ_ScaU2F"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaF2U",
+                              "const": "HSP_SEQ_ScaF2U"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaI2F",
+                              "const": "HSP_SEQ_ScaI2F"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaF2I",
+                              "const": "HSP_SEQ_ScaF2I"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaSet_f32",
+                              "const": "HSP_SEQ_ScaSet_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaISet_f32",
+                              "const": "HSP_SEQ_ScaISet_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaSet_u32",
+                              "const": "HSP_SEQ_ScaSet_u32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaISet_u32",
+                              "const": "HSP_SEQ_ScaISet_u32"
+                            },
+                            {
+                              "title": "HSP_SEQ_Sca2Vect_f32",
+                              "const": "HSP_SEQ_Sca2Vect_f32"
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$item.category == 'category_7'"
+                            }
+                          ]
+                        },
+                        "function_category_8": {
+                          "title": "Function",
+                          "type": "string",
+                          "default": "HSP_SEQ_GetSatFlag",
+                          "oneOf": [
+                            {
+                              "title": "HSP_SEQ_GetSatFlag",
+                              "const": "HSP_SEQ_GetSatFlag"
+                            },
+                            {
+                              "title": "HSP_SEQ_ClrSatFlag",
+                              "const": "HSP_SEQ_ClrSatFlag"
+                            },
+                            {
+                              "title": "HSP_SEQ_CounterAdd",
+                              "const": "HSP_SEQ_CounterAdd"
+                            },
+                            {
+                              "title": "HSP_SEQ_CounterSet",
+                              "const": "HSP_SEQ_CounterSet"
+                            },
+                            {
+                              "title": "HSP_SEQ_SendEvt",
+                              "const": "HSP_SEQ_SendEvt"
+                            },
+                            {
+                              "title": "HSP_SEQ_SetFlag",
+                              "const": "HSP_SEQ_SetFlag"
+                            },
+                            {
+                              "title": "HSP_SEQ_SetTrgo",
+                              "const": "HSP_SEQ_SetTrgo"
+                            },
+                            {
+                              "title": "HSP_SEQ_SetGpo",
+                              "const": "HSP_SEQ_SetGpo"
+                            },
+                            {
+                              "title": "HSP_SEQ_WaitCond",
+                              "const": "HSP_SEQ_WaitCond"
+                            },
+                            {
+                              "title": "HSP_SEQ_SetBits",
+                              "const": "HSP_SEQ_SetBits"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaIModAdd_u32",
+                              "const": "HSP_SEQ_ScaIModAdd_u32"
+                            },
+                            {
+                              "title": "HSP_SEQ_ScaCmpCnt_f32",
+                              "const": "HSP_SEQ_ScaCmpCnt_f32"
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$item.category == 'category_8'"
+                            }
+                          ]
+                        },
+                        "function_category_9": {
+                          "title": "Function",
+                          "type": "string",
+                          "default": "HSP_SEQ_Fft_f32",
+                          "oneOf": [
+                            {
+                              "title": "HSP_SEQ_Fft_f32",
+                              "const": "HSP_SEQ_Fft_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_Rfft_f32",
+                              "const": "HSP_SEQ_Rfft_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_Dct_f32",
+                              "const": "HSP_SEQ_Dct_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_IDct_f32",
+                              "const": "HSP_SEQ_IDct_f32"
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$item.category == 'category_9'"
+                            }
+                          ]
+                        },
+                        "function_category_10": {
+                          "title": "Function",
+                          "type": "string",
+                          "default": "HSP_SEQ_VectAbs_f32",
+                          "oneOf": [
+                            {
+                              "title": "HSP_SEQ_VectAbs_f32",
+                              "const": "HSP_SEQ_VectAbs_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectAdd_f32",
+                              "const": "HSP_SEQ_VectAdd_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectAvg_f32",
+                              "const": "HSP_SEQ_VectAvg_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectDiv_f32",
+                              "const": "HSP_SEQ_VectDiv_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectDotProd_f32",
+                              "const": "HSP_SEQ_VectDotProd_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectDecim_f32",
+                              "const": "HSP_SEQ_VectDecim_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectIOffset_f32",
+                              "const": "HSP_SEQ_VectIOffset_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectIScale_f32",
+                              "const": "HSP_SEQ_VectIScale_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectOffset_f32",
+                              "const": "HSP_SEQ_VectOffset_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectScale_f32",
+                              "const": "HSP_SEQ_VectScale_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectMul_f32",
+                              "const": "HSP_SEQ_VectMul_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectRms_f32",
+                              "const": "HSP_SEQ_VectRms_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectSqrt_f32",
+                              "const": "HSP_SEQ_VectSqrt_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectSub_f32",
+                              "const": "HSP_SEQ_VectSub_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectAbsmax_f32",
+                              "const": "HSP_SEQ_VectAbsmax_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectMulCos_f32",
+                              "const": "HSP_SEQ_VectMulCos_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectMulSin_f32",
+                              "const": "HSP_SEQ_VectMulSin_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectMax_f32",
+                              "const": "HSP_SEQ_VectMax_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectMin_f32",
+                              "const": "HSP_SEQ_VectMin_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectSat_f32",
+                              "const": "HSP_SEQ_VectSat_f32"
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$item.category == 'category_10'"
+                            }
+                          ]
+                        },
+                        "function_category_11": {
+                          "title": "Function",
+                          "type": "string",
+                          "default": "HSP_SEQ_VectExp_f32",
+                          "oneOf": [
+                            {
+                              "title": "HSP_SEQ_VectExp_f32",
+                              "const": "HSP_SEQ_VectExp_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectExp10_f32",
+                              "const": "HSP_SEQ_VectExp10_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectLn_f32",
+                              "const": "HSP_SEQ_VectLn_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectLog10_f32",
+                              "const": "HSP_SEQ_VectLog10_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectFastLn_f32",
+                              "const": "HSP_SEQ_VectFastLn_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectFastLog10_f32",
+                              "const": "HSP_SEQ_VectFastLog10_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectFastLog2_f32",
+                              "const": "HSP_SEQ_VectFastLog2_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectFastLogdB_f32",
+                              "const": "HSP_SEQ_VectFastLogdB_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectFastExpe_f32",
+                              "const": "HSP_SEQ_VectFastExpe_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectFastExp10_f32",
+                              "const": "HSP_SEQ_VectFastExp10_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectFastExp2_f32",
+                              "const": "HSP_SEQ_VectFastExp2_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectFastExpdB_f32",
+                              "const": "HSP_SEQ_VectFastExpdB_f32"
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$item.category == 'category_11'"
+                            }
+                          ]
+                        },
+                        "function_category_12": {
+                          "title": "Function",
+                          "type": "string",
+                          "default": "HSP_SEQ_VectCos_f32",
+                          "oneOf": [
+                            {
+                              "title": "HSP_SEQ_VectCos_f32",
+                              "const": "HSP_SEQ_VectCos_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectSin_f32",
+                              "const": "HSP_SEQ_VectSin_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectSinCos_f32",
+                              "const": "HSP_SEQ_VectSinCos_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectAtan2_f32",
+                              "const": "HSP_SEQ_VectAtan2_f32"
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$item.category == 'category_12'"
+                            }
+                          ]
+                        },
+                        "function_category_13": {
+                          "title": "Function",
+                          "type": "string",
+                          "default": "HSP_SEQ_VectF2I",
+                          "oneOf": [
+                            {
+                              "title": "HSP_SEQ_VectF2I",
+                              "const": "HSP_SEQ_VectF2I"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectF2Q15",
+                              "const": "HSP_SEQ_VectF2Q15"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectF2Q31",
+                              "const": "HSP_SEQ_VectF2Q31"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectF2U",
+                              "const": "HSP_SEQ_VectF2U"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectQ152F",
+                              "const": "HSP_SEQ_VectQ152F"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectQ312F",
+                              "const": "HSP_SEQ_VectQ312F"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectI2F",
+                              "const": "HSP_SEQ_VectI2F"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectU2F",
+                              "const": "HSP_SEQ_VectU2F"
+                            },
+                            {
+                              "title": "HSP_SEQ_Vect24s2F",
+                              "const": "HSP_SEQ_Vect24s2F"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectSet_f32",
+                              "const": "HSP_SEQ_VectSet_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectISet_f32",
+                              "const": "HSP_SEQ_VectISet_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectCopy_f32",
+                              "const": "HSP_SEQ_VectCopy_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectZins_f32",
+                              "const": "HSP_SEQ_VectZins_f32"
+                            },
+                            {
+                              "title": "HSP_SEQ_VectCmp_f32",
+                              "const": "HSP_SEQ_VectCmp_f32"
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$item.category == 'category_13'"
+                            }
+                          ]
+                        },
+                        "function_category_14": {
+                          "title": "Function",
+                          "type": "string",
+                          "default": "HSP_SEQ_IfIFloat",
+                          "oneOf": [
+                            {
+                              "title": "HSP_SEQ_IfIFloat",
+                              "const": "HSP_SEQ_IfIFloat"
+                            },
+                            {
+                              "title": "HSP_SEQ_IfIUint32",
+                              "const": "HSP_SEQ_IfIUint32"
+                            },
+                            {
+                              "title": "HSP_SEQ_IfIInt32",
+                              "const": "HSP_SEQ_IfIInt32"
+                            },
+                            {
+                              "title": "HSP_SEQ_IfFloat",
+                              "const": "HSP_SEQ_IfFloat"
+                            },
+                            {
+                              "title": "HSP_SEQ_IfUint32",
+                              "const": "HSP_SEQ_IfUint32"
+                            },
+                            {
+                              "title": "HSP_SEQ_IfInt32",
+                              "const": "HSP_SEQ_IfInt32"
+                            },
+                            {
+                              "title": "HSP_SEQ_IfCnt",
+                              "const": "HSP_SEQ_IfCnt"
+                            },
+                            {
+                              "title": "HSP_SEQ_IfElse",
+                              "const": "HSP_SEQ_IfElse"
+                            },
+                            {
+                              "title": "HSP_SEQ_IfEndif",
+                              "const": "HSP_SEQ_IfEndif"
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$item.category == 'category_14'"
+                            }
+                          ]
+                        },
+                        "function_category_15": {
+                          "title": "Function",
+                          "type": "string",
+                          "default": "HSP_SEQ_Loop",
+                          "oneOf": [
+                            {
+                              "title": "HSP_SEQ_Loop",
+                              "const": "HSP_SEQ_Loop"
+                            },
+                            {
+                              "title": "HSP_SEQ_LoopEnd",
+                              "const": "HSP_SEQ_LoopEnd"
+                            },
+                            {
+                              "title": "HSP_SEQ_IfLoop",
+                              "const": "HSP_SEQ_IfLoop"
+                            },
+                            {
+                              "title": "HSP_SEQ_IfILoop",
+                              "const": "HSP_SEQ_IfILoop"
+                            },
+                            {
+                              "title": "HSP_SEQ_IfLoopOdd",
+                              "const": "HSP_SEQ_IfLoopOdd"
+                            },
+                            {
+                              "title": "HSP_SEQ_IfLoopEven",
+                              "const": "HSP_SEQ_IfLoopEven"
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": "include",
+                              "condition": "$item.category == 'category_15'"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "buffers": {
+              "type": "object",
+              "title": "Buffers",
+              "properties": {}
+            },
+            "event": {
+              "type": "object",
+              "title": "Event",
+              "properties": {}
+            },
+            "output_trigger": {
+              "type": "object",
+              "title": "Output trigger",
+              "properties": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}

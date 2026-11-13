@@ -17,17 +17,25 @@ before exposing the results to the user in real time.
 
 ## Software components
 
-| Name                            | Version              | Release notes
-|-----                            | -------              | -------------
-| STEdge AI runtime               |  v3.2.0              |
-| stm32-audio-sensing-processing  |  v1.4.0              | [release notes](Middlewares/ST/stm32-audio-sensing-processing/Release_Notes.html)
-| STM32H7P CMSIS                  |                      |
-| STM32H7P CMSIS DSP              |                      |
-| stm32h7pxx_drivers              |  V2.0.0-alpha.2.0    | [release notes](stm32cubefw_h7p/stm32h7pxx_drivers/Release_Notes.html)
-| stm32h7pxx_dfp                  |  V2.0.0-alpha.1.rc3  | [release notes](stm32cubefw_h7p/stm32h7pxx_dfp/Release_Notes.html)
-| HSP engine                      |  V2.0.0-alpha.1.rc3  | [release notes](stm32cubefw_h7p/middleware/hsp_engine/st_readme.txt)
+| Name                            | Version  | Release notes
+|-----                            | -------  | -------------
+| STEdge AI runtime               |  v4.1.0  | -
+| stm32-audio-sensing-processing  |  v1.6.0  | [release notes](middleware\stm32-audio-sensing-processing\Release_Notes.html)
+| HSP engine                      |  V2.0.0  | [release notes](middleware\hsp_engine\Release_Notes.md)
+| STM32H7P CMSIS                  |  v6.3.0  | -
+| STM32H7P CMSIS DSP              |  v1.7.1  | -
+| LED Part Drivers                |  V2.2.0  | [release notes](part_drivers\led\Release_Notes.md)
+| ST7315 Part Drivers             |  V2.0.0  | [release notes](part_drivers\st7315\Release_Notes.md)
+| basic_stdio                     |  V2.1.0  | [release notes](utilities\basic_stdio\Release_Notes.md)
+| syscalls                        |  V2.0.2  | [release notes](utilities\syscalls\Release_Notes.md)
+| stm32h7pxx_drivers              |  V2.0.0  | [release notes](stm32h7pxx_drivers\Release_Notes.md)
+| stm32h7pxx_dfp                  |  V2.0.0  | [release notes](stm32h7pxx_dfp\Release_Notes.md)
 
 ## Update history
+
+### 1.0.0 / October 2026
+
+Updated all dependencies to their latest versions.
 
 ### 0.1.1 / November 2025
 
